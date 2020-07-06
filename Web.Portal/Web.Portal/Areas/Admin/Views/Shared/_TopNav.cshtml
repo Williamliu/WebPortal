@@ -1,0 +1,38 @@
+﻿@{Menus AdminMenu = Context.Items["AdminMenus"] as Menus;}
+<div left>
+    @Html.Words("you.are.here") : @AdminMenu.MenuTitle
+</div>
+<div right>
+    <div right-item>
+        <i wliu btn16 language></i>
+        <a class="language" lang="en">English</a>
+        <span class="seperator">|</span>
+        <a class="language" lang="cn">简体版</a>
+    </div>
+    <div right-item wliu top-menu>
+        <i wliu btn16 user></i> @Html.Words("profile")
+        <ul>
+            @foreach (Menu pmenu in AdminMenu.ProfileMenus)
+            {
+                <li @(pmenu.MenuId == AdminMenu.MenuId ? "selected" : "")><a @(pmenu.Url==""?"":"href=" + pmenu.Url)>@Html.Words(pmenu.Title)</a></li>
+            }
+        </ul>
+    </div>
+    <div right-item>
+        <a class="logout"><i wliu btn16 logout></i> @Html.Words("logout")</a>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("a.language[lang='@Context.Items["Lang"]'").addClass("active");
+        $("a.language").off("click.lang").on("click.lang", function (event) {
+            ChangeLang($(this).attr("lang"));
+        });
+
+        $("a.logout").off("click.logout").on("click.logout", function (event) {
+            $.post("/Admin/api/Home/Logout").then(d => { 
+                window.location.href = "/Admin/Home/Index";
+            });
+        });
+    })
+</script>

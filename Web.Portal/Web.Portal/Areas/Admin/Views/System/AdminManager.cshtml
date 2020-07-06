@@ -1,0 +1,259 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+            $scope.detail = function () {
+                $("#adminList").hide();
+                $("#adminDetail").show();
+            };
+            $scope.goBack = function () {
+                $("#adminDetail").hide();
+                $("#adminList").show();
+            }
+        });
+        viewData.Init("/Admin/api/System/InitAdminUser");
+        $(function () {
+            $("#detailInfo").diag({maskclick:false});
+        });
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl">
+    <ng-form>
+        <div id="adminList">
+            <fieldset>
+                <legend>@Html.Words("search.by")</legend>
+                <filter.label db="ViewData.database" tb="AdminUser" col="search_branch"></filter.label>
+                <filter.select db="ViewData.database" tb="AdminUser" col="search_branch"></filter.select>
+                <filter.label db="ViewData.database" tb="AdminUser" col="search_name"></filter.label>
+                <filter.textbox db="ViewData.database" tb="AdminUser" col="search_name"></filter.textbox>
+                <filter.label db="ViewData.database" tb="AdminUser" col="search_email"></filter.label>
+                <filter.textbox db="ViewData.database" tb="AdminUser" col="search_email"></filter.textbox>
+                <filter.label db="ViewData.database" tb="AdminUser" col="search_phone"></filter.label>
+                <filter.textbox db="ViewData.database" tb="AdminUser" col="search_phone"></filter.textbox>
+                <br />
+                <filter.checkcom db="ViewData.database" tb="AdminUser" col="search_role" icon="detail"></filter.checkcom>
+                <wliu.search db="ViewData.database" tb="AdminUser">Search</wliu.search>
+            </fieldset>
+            <div wliu table grow shrink style="margin-top:12px;">
+                <div row>
+                    <div cell style="background-color:#dddddd;">
+                        <wliu.navi db="ViewData.database" tb="AdminUser"></wliu.navi>
+                    </div>
+                </div>
+                <div row>
+                    <div head fixed style="width:40px;"></div>
+                    <div head><wliu.head db="ViewData.database" tb="AdminUser" col="BranchId"></wliu.head></div>
+                    <div head><wliu.head db="ViewData.database" tb="AdminUser" col="UserName"></wliu.head></div>
+                    <div head><wliu.head db="ViewData.database" tb="AdminUser" col="FirstName"></wliu.head></div>
+                    <div head><wliu.head db="ViewData.database" tb="AdminUser" col="LastName"></wliu.head></div>
+                    <div head large><wliu.head db="ViewData.database" tb="AdminUser" col="Email"></wliu.head></div>
+                    <div head><wliu.head db="ViewData.database" tb="AdminUser" col="Phone"></wliu.head></div>
+                    <div head small><wliu.head db="ViewData.database" tb="AdminUser" col="CreatedTime"></wliu.head></div>
+                    <div head fixed center style="width:80px;"><wliu.head db="ViewData.database" tb="AdminUser" col="Active"></wliu.head></div>
+                    <div head fixed style="width:56px;">
+                        <wliu.hicon db="ViewData.database" tb="AdminUser" icons="add,save,cancel"></wliu.hicon>
+                    </div>
+                </div>
+                <div row ng-repeat="row in ViewData.database.tables.AdminUser.rows">
+                    <div cell center fixed style="width:40px;">
+                        <wliu.rowstatus db="ViewData.database" tb="AdminUser" guid="{{row.guid}}"></wliu.rowstatus>
+                    </div>
+                    <div cell>
+                        <wliu.select db="ViewData.database" tb="AdminUser" guid="{{row.guid}}" col="BranchId"></wliu.select>
+                    </div>
+                    <div cell>
+                        <wliu.textbox db="ViewData.database" tb="AdminUser" guid="{{row.guid}}" col="UserName"></wliu.textbox>
+                    </div>
+                    <div cell>
+                        <wliu.textbox db="ViewData.database" tb="AdminUser" guid="{{row.guid}}" col="FirstName"></wliu.textbox>
+                    </div>
+                    <div cell>
+                        <wliu.textbox db="ViewData.database" tb="AdminUser" guid="{{row.guid}}" col="LastName"></wliu.textbox>
+                    </div>
+                    <div cell large>
+                        <wliu.textbox db="ViewData.database" tb="AdminUser" guid="{{row.guid}}" col="Email"></wliu.textbox>
+                    </div>
+                    <div cell>
+                        <wliu.textbox db="ViewData.database" tb="AdminUser" guid="{{row.guid}}" col="Phone"></wliu.textbox>
+                    </div>
+                    <div cell small>
+                        <wliu.intdate db="ViewData.database" tb="AdminUser" guid="{{row.guid}}" col="CreatedTime"></wliu.intdate>
+                    </div>
+                    <div cell center fixed style="width:80px;">
+                        <wliu.bool db="ViewData.database" tb="AdminUser" guid="{{row.guid}}" col="Active"></wliu.bool>
+                    </div>
+                    <div cell fixed style="width:56px;">
+                        <wliu.bicon db="ViewData.database" tb="AdminUser" guid="{{row.guid}}" icons="detail,save,cancel,delete" actiondetail="detail()"></wliu.bicon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+
+    <ng-form>
+        <div id="adminDetail" class="container" style="display:none; margin-top:12px;">
+            <a wliu button blue ng-click="goBack()">@Html.Words("go.back")</a>
+            <form.status db="ViewData.database" tb="AdminUser"></form.status>
+
+            <div wliu table grow shrink>
+                <div row>
+                    <div cell center>
+                        <form.save h2 db="ViewData.database" tb="AdminUser" label="@Html.Words("button.save")" style="margin:0px 12px;"></form.save>
+                        <form.cancel h2 db="ViewData.database" tb="AdminUser" label="@Html.Words("button.cancel")" action="goBack()" style="margin:0px 12px;"></form.cancel>
+                    </div>
+                </div>
+            </div>
+
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%;margin-top:20px;">
+                <tr>
+                    <td valign="top">
+                        <ul id="d1" wliu tab9 border color="">
+                            <li>@Html.Words("my.account")</li>
+                        </ul>
+                        <div wliu tab9 body style="border-right:none;">
+                            <div style="height:380px;">
+                                <table cellpadding="2" cellspacing="2" style="width:100%;">
+                                    <tr>
+                                        <td><assm.textbox border fixed h2 db="ViewData.database" tb="AdminUser" col="FirstName"></assm.textbox></td>
+                                    </tr>
+                                    <tr>
+                                        <td><assm.textbox border fixed h2 db="ViewData.database" tb="AdminUser" col="LastName"></assm.textbox></td>
+                                    </tr>
+                                    <tr>
+                                        <td><assm.textbox border fixed h2 db="ViewData.database" tb="AdminUser" col="Phone"></assm.textbox></td>
+                                    </tr>
+                                    <tr>
+                                        <td><assm.select border fixed h2 db="ViewData.database" tb="AdminUser" col="BranchId"></assm.select></td>
+                                    </tr>
+                                    <tr>
+                                        <td><assm.intdate h2 db="ViewData.database" tb="AdminUser" col="LastLogin"></assm.intdate></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top">
+                        <ul id="d2" wliu tab9 border color="mint">
+                            <li>@Html.Words("address.information")</li>
+                        </ul>
+                        <div wliu tab9 body style="border-right:none;">
+                            <div style="height:380px;">
+
+                                <table cellpadding="2" cellspacing="2" style="width:100%;">
+                                    <tr>
+                                        <td><assm.textbox border fixed h2 db="ViewData.database" tb="AdminUser" col="Address"></assm.textbox></td>
+                                    </tr>
+                                    <tr>
+                                        <td><assm.textbox border fixed h2 db="ViewData.database" tb="AdminUser" col="City"></assm.textbox></td>
+                                    </tr>
+                                    <tr>
+                                        <td><assm.select border fixed h2 db="ViewData.database" tb="AdminUser" col="Country"></assm.select></td>
+                                    </tr>
+                                    <tr>
+                                        <td><assm.fselect border fixed h2 db="ViewData.database" tb="AdminUser" col="State" fcol="Country"></assm.fselect></td>
+                                    </tr>
+                                    <tr>
+                                        <td><assm.textbox border fixed h2 db="ViewData.database" tb="AdminUser" col="Postal"></assm.textbox></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top">
+                        <ul id="d3" wliu tab9 border color="fuzzy">
+                            <li>@Html.Words("login.information")</li>
+                        </ul>
+                        <div wliu tab9 body>
+                            <div style="height:380px;">
+                                <table cellpadding="2" cellspacing="2" style="width:100%;">
+                                    <tr>
+                                        <td><assm.textbox border fixed h2 db="ViewData.database" tb="AdminUser" col="UserName"></assm.textbox></td>
+                                    </tr>
+                                    <tr>
+                                        <td><assm.textbox border fixed h2 db="ViewData.database" tb="AdminUser" col="Email"></assm.textbox></td>
+                                    </tr>
+                                    <tr>
+                                        <td><assm.password border fixed h2 db="ViewData.database" tb="AdminUser" col="Password"></assm.password></td>
+                                    </tr>
+                                    <tr>
+                                        <td><assm.confirm border fixed h2 db="ViewData.database" tb="AdminUser" col="Password"></assm.confirm></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table cellpadding="0" cellspacing="0" style="width:100%;">
+                                                <tr>
+                                                    <td width="33%"><assm.bool fixed h2 db="ViewData.database" tb="AdminUser" col="IsAdmin" label="@Html.Words("col.isadmin")"></assm.bool></td>
+                                                    <td width="33%"><assm.bool fixed h2 db="ViewData.database" tb="AdminUser" col="Active" label="@Html.Words("status.active")"></assm.bool></td>
+                                                    <td width="33%"><assm.label fixed h2 db="ViewData.database" tb="AdminUser" col="LoginTotal"></assm.label></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="border-top:1px solid #cccccc;">
+                    <td colspan="5" align="center" style="padding:6px 0px;">
+                    </td>
+                </tr>
+            </table>
+
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%;margin-top:20px;">
+                <tr>
+                    <td width="50%" valign="top">
+                        <ul id="d1" wliu tab9 color="awesome">
+                            <li>@Html.Words("admin.role")</li>
+                        </ul>
+                        <div wliu tab9 body style="border-right:none;">
+                            <div>
+                                <form.checkcom db="ViewData.database" tb="AdminUser" col="UserRole" icon="detail"></form.checkcom>
+                                <form.checklist db="ViewData.database" tb="AdminUser" col="UserRole" style="max-height:250px;"></form.checklist>
+                            </div>
+                        </div>
+                    </td>
+                    <td width="50%" valign="top">
+                        <ul id="d2" wliu tab9 color="earth">
+                            <li>@Html.Words("col.branch")</li>
+                        </ul>
+                        <div wliu tab9 body>
+                            <div>
+
+                                <label wliu style="vertical-align:middle;">@Html.Words("col.branch")</label>
+                                <ul wliu tree root>
+                                    <li nodes open ng-repeat="frow in ViewData.database.tables.Branch.rows">
+                                        <s folder></s>
+                                        <tree.text db="ViewData.database" tb="Branch" guid="{{frow.guid}}" col="Title"></tree.text>
+                                        <tree.fbool db="ViewData.database" tb="AdminUser" col="UserBranch" fkey="{{frow.key}}"></tree.fbool>
+                                        <ul wliu tree>
+                                            <li node ng-repeat="srow in ViewData.database.tables.Site.FilterRows({BranchId:frow.key})">
+                                                <s folder></s>
+                                                <tree.text db="ViewData.database" tb="Site" guid="{{srow.guid}}" col="Title"></tree.text>
+                                                <tree.fbool db="ViewData.database" tb="AdminUser" col="UserSite" fkey="{{srow.key}}"></tree.fbool>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ng-form>
+
+    <table.error></table.error>
+    <form.error></form.error>
+    <checkcom.diag db="ViewData.database" maxhh="250px"></checkcom.diag>
+    <checkcom.fdiag db="ViewData.database" maxhh="250px"></checkcom.fdiag>
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loadding oper="get"></wliu.loadding>
+    <wliu.loadding oper="save"></wliu.loadding>
+</div>

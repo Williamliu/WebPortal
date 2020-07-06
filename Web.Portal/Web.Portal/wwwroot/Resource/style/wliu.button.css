@@ -1,0 +1,910 @@
+﻿/****************************************************************/
+i[wliu][btn16],
+a[wliu][btn16] {
+    display:                    inline-block;
+    position:                   relative;
+    cursor:                     pointer;
+    width:                      16px;
+    height:                     16px;
+    vertical-align:             middle;
+    background-color:           transparent;
+    background-image:           url(images/wliu-buttons-16.png);
+
+    padding:                    0px;
+    margin:                     2px 1px;
+}
+
+/*** 1 *****/
+[wliu][btn16][close] {
+    background-position:        0px 0px;
+}
+[wliu][btn16][close]:hover {
+    background-position:        -20px 0px;
+}
+[wliu][btn16][close][disabled] {
+    background-position:        -40px 0px;
+}
+[wliu][btn16][close][disabled]:hover {
+    background-position:        -40px 0px;
+}
+
+
+/*** 2 *****/
+[wliu][btn16][input-search] {
+    background-position:        0px -20px;
+}
+[wliu][btn16][input-search]:hover {
+    background-position:        -20px -20px;
+}
+[wliu][btn16][input-search][disabled] {
+    background-position:        -40px -20px;
+}
+[wliu][btn16][input-search][disabled]:hover {
+    background-position:        -40px -20px;
+}
+
+
+/*** 3 *****/
+[wliu][btn16][checkall] {
+    background-position:        0px -40px;
+}
+[wliu][btn16][checkall]:hover {
+    background-position:        -20px -40px;
+}
+[wliu][btn16][checkall][disabled] {
+    background-position:        -40px -40px;
+}
+[wliu][btn16][checkall][disabled]:hover {
+    background-position:        -40px -40px;
+}
+
+/*** 4 *****/
+[wliu][btn16][removeall] {
+    background-position:        0px -60px;
+}
+[wliu][btn16][removeall]:hover {
+    background-position:        -20px -60px;
+}
+[wliu][btn16][removeall][disabled] {
+    background-position:        -40px -60px;
+}
+[wliu][btn16][removeall][disabled]:hover {
+    background-position:        -40px -60px;
+}
+
+/*** 5 *****/
+[wliu][btn16][selectlist] {
+    background-position:        0px -80px;
+}
+[wliu][btn16][selectlist]:hover {
+    background-position:        -20px -80px;
+}
+[wliu][btn16][selectlist][disabled] {
+    background-position:        -40px -80px;
+}
+[wliu][btn16][selectlist][disabled]:hover {
+    background-position:        -40px -80px;
+}
+
+/*** 6 *****/
+[wliu][btn16][checkbox] {
+    background-position:        0px -100px;
+}
+[wliu][btn16][checkbox]:hover {
+    background-position:        -20px -100px;
+}
+[wliu][btn16][checkbox][disabled] {
+    background-position:        -40px -100px;
+}
+[wliu][btn16][checkbox][disabled]:hover {
+    background-position:        -40px -100px;
+}
+
+/*** 7 *****/
+[wliu][btn16][radio] {
+    background-position:        0px -120px;
+}
+[wliu][btn16][radio]:hover {
+    background-position:        -20px -120px;
+}
+[wliu][btn16][radio][disabled] {
+    background-position:        -40px -120px;
+}
+[wliu][btn16][radio][disabled]:hover {
+    background-position:        -40px -120px;
+}
+
+/*** 8 *****/
+[wliu][btn16][save] {
+    background-position:        0px -140px;
+}
+[wliu][btn16][save]:hover {
+    background-position:        -20px -140px;
+}
+[wliu][btn16][save][disabled] {
+    background-position:        -40px -140px;
+}
+[wliu][btn16][save][disabled]:hover {
+    background-position:        -40px -140px;
+}
+
+/*** 9 *****/
+[wliu][btn16][detail] {
+    background-position:        0px -160px;
+}
+[wliu][btn16][detail]:hover {
+    background-position:        -20px -160px;
+}
+[wliu][btn16][detail][disabled] {
+    background-position:        -40px -160px;
+}
+[wliu][btn16][detail][disabled]:hover {
+    background-position:        -40px -160px;
+}
+
+/*** 10 Cancel *****/
+[wliu][btn16][cancel] {
+    background-position:        0px -180px;
+}
+[wliu][btn16][cancel]:hover {
+    background-position:        -20px -180px;
+}
+[wliu][btn16][cancel][disabled] {
+    background-position:        -40px -180px;
+}
+[wliu][btn16][cancel][disabled]:hover {
+    background-position:        -40px -180px;
+}
+
+/*** 11 Delete *****/
+[wliu][btn16][delete] {
+    background-position:        0px -200px;
+}
+[wliu][btn16][delete]:hover {
+    background-position:        -20px -200px;
+}
+[wliu][btn16][delete][disabled] {
+    background-position:        -40px -200px;
+}
+[wliu][btn16][delete][disabled]:hover {
+    background-position:        -40px -200px;
+}
+
+
+/*** 12 output *****/
+[wliu][btn16][output] {
+    background-position:        0px -220px;
+}
+[wliu][btn16][output]:hover {
+    background-position:        -20px -220px;
+}
+[wliu][btn16][output][disabled] {
+    background-position:        -40px -220px;
+}
+[wliu][btn16][output][disabled]:hover {
+    background-position:        -40px -220px;
+}
+
+
+/*** 13 Print *****/
+[wliu][btn16][print] {
+    background-position:        0px -240px;
+}
+[wliu][btn16][print]:hover {
+    background-position:        -20px -240px;
+}
+[wliu][btn16][print][disabled] {
+    background-position:        -40px -240px;
+}
+[wliu][btn16][print][disabled]:hover {
+    background-position:        -40px -240px;
+}
+
+
+/*** 14 Add *****/
+[wliu][btn16][add] {
+    background-position:        0px -260px;
+}
+[wliu][btn16][add]:hover {
+    background-position:        -20px -260px;
+}
+[wliu][btn16][add][disabled] {
+    background-position:        -40px -260px;
+}
+[wliu][btn16][add][disabled]:hover {
+    background-position:        -40px -260px;
+}
+
+/*** 15 Email *****/
+[wliu][btn16][email] {
+    background-position:        0px -280px;
+}
+[wliu][btn16][email]:hover {
+    background-position:        -20px -280px;
+}
+[wliu][btn16][email][disabled] {
+    background-position:        -40px -280px;
+}
+[wliu][btn16][email][disabled]:hover {
+    background-position:        -40px -280px;
+}
+
+
+/*** 16 rowstate *****/
+[wliu][btn16][rowstate-add] {
+    background-position:        0px -300px;
+}
+[wliu][btn16][rowstate-delete] {
+    background-position:        -20px -300px;
+}
+[wliu][btn16][rowstate-save] {
+    background-position:        -40px -300px;
+}
+[wliu][btn16][rowstate-ok] {
+    background-position:        0px -320px;
+}
+[wliu][btn16][rowstate-error] {
+    background-position:        -20px -320px;
+}
+[wliu][btn16][order] {
+    background-position:        -40px -320px;
+}
+
+
+/*** 17 sortable *****/
+[wliu][btn16][sort] {
+    width:                      11px;
+    height:                     13px;
+    background-position:        0px -340px;
+}
+[wliu][btn16][sort-asc] {
+    width:                      11px;
+    height:                     13px;
+    background-position:        -20px -340px;
+}
+[wliu][btn16][sort-desc] {
+    widows:                     11px;
+    height:                     13px;
+    background-position:        -40px -340px;
+}
+
+
+/*** 18 Navi First *****/
+[wliu][btn16][first] {
+    background-position:        0px -360px;
+}
+[wliu][btn16][first]:hover {
+    background-position:        -20px -360px;
+}
+[wliu][btn16][first][disabled] {
+    background-position:        -40px -360px;
+}
+[wliu][btn16][first][disabled]:hover {
+    background-position:        -40px -360px;
+}
+
+/*** 19 Navi Previous *****/
+[wliu][btn16][previous] {
+    background-position:        0px -380px;
+}
+[wliu][btn16][previous]:hover {
+    background-position:        -20px -380px;
+}
+[wliu][btn16][previous][disabled] {
+    background-position:        -40px -380px;
+}
+[wliu][btn16][previous][disabled]:hover {
+    background-position:        -40px -380px;
+}
+
+/*** 20 Navi Last *****/
+[wliu][btn16][last] {
+    background-position:        0px -400px;
+}
+[wliu][btn16][last]:hover {
+    background-position:        -20px -400px;
+}
+[wliu][btn16][last][disabled] {
+    background-position:        -40px -400px;
+}
+[wliu][btn16][last][disabled]:hover {
+    background-position:        -40px -400px;
+}
+
+/*** 21 Navi Next *****/
+[wliu][btn16][next] {
+    background-position:        0px -420px;
+}
+[wliu][btn16][next]:hover {
+    background-position:        -20px -420px;
+}
+[wliu][btn16][next][disabled] {
+    background-position:        -40px -420px;
+}
+[wliu][btn16][next][disabled]:hover {
+    background-position:        -40px -420px;
+}
+
+/*** 22 Navi Reload *****/
+[wliu][btn16][reload] {
+    background-position:        0px -440px;
+}
+[wliu][btn16][reload]:hover {
+    background-position:        -20px -440px;
+}
+[wliu][btn16][reload][disabled] {
+    background-position:        -40px -440px;
+}
+[wliu][btn16][reload][disabled]:hover {
+    background-position:        -40px -440px;
+}
+
+
+/*** 23 Navi Go *****/
+[wliu][btn16][go] {
+    background-position:        0px -460px;
+}
+[wliu][btn16][go]:hover {
+    background-position:        -20px -460px;
+}
+[wliu][btn16][go][disabled] {
+    background-position:        -40px -460px;
+}
+[wliu][btn16][go][disabled]:hover {
+    background-position:        -40px -460px;
+}
+
+/*** 24 mix button : help , upload, crop *****/
+[wliu][btn16][error-help] {
+    background-position:        0px -480px;
+}
+[wliu][btn16][upload] {
+    background-position:        -20px -480px;
+}
+[wliu][btn16][crop] {
+    background-position:        -40px -480px;
+}
+
+/*** 25 mix button : rotate , undo, okey *****/
+[wliu][btn16][rotate-right] {
+    background-position:        0px -500px;
+}
+[wliu][btn16][restore] {
+    background-position:        -20px -500px;
+}
+[wliu][btn16][okey] {
+    background-position:        -40px -500px;
+}
+
+/*** 26 mix button : dispose *****/
+[wliu][btn16][dispose] {
+    background-position:        0px -520px;
+}
+[wliu][btn16][empty] {
+    background-position:        -20px -520px;
+}
+[wliu][btn16][image] {
+    background-position:        -40px -520px;
+}
+
+/*** 27 mix button : img[print], upload, comments *****/
+[wliu][btn16][img-print] {
+    background-position:        0px -540px;
+}
+[wliu][btn16][file-upload] {
+    background-position:        -20px -540px;
+}
+[wliu][btn16][comments] {
+    background-position:        -40px -540px;
+}
+
+/*** 28 mix button : notes, nav-left, nav-right *****/
+[wliu][btn16][notes] {
+    background-position:        0px -560px;
+}
+[wliu][btn16][nav-left] {
+    background-position:        -20px -560px;
+}
+[wliu][btn16][nav-right] {
+    background-position:        -40px -560px;
+}
+
+/*** 29 mix button : download,  *****/
+[wliu][btn16][download] {
+    background-position:        0px -580px;
+}
+[wliu][btn16][status-true] {
+    background-position:        -20px -580px;
+}
+[wliu][btn16][status],
+[wliu][btn16][status-false] {
+    background-position:        -40px -580px;
+}
+
+/*** 30 mix button : User, Language,  Logout,  *****/
+[wliu][btn16][user] {
+    background-position: 0px -600px;
+}
+
+[wliu][btn16][language] {
+    background-position: -20px -600px;
+}
+
+[wliu][btn16][logout] {
+    background-position: -40px -600px;
+}
+
+/*** 31 mix button : arrow-right  *****/
+[wliu][btn16][arrow-right] {
+    background-position: 0px -620px;
+}
+
+[wliu][btn16][camera] {
+    background-position: -20px -620px;
+}
+
+[wliu][btn16][today] {
+    background-position: -40px -620px;
+}
+
+
+[wliu][btn16][na] {
+    display:            none;
+}
+
+/****************************************************************/
+i[wliu][btn24], 
+a[wliu][btn24] {
+    display:                    inline-block;
+    position:                   relative;
+    cursor:                     pointer;
+    width:                      24px;
+    height:                     24px;
+    vertical-align:             middle;
+    background-color:           transparent;
+    background-image:           url(images/wliu-buttons-24.png);
+
+    padding:                    0px;
+    margin:                     2px 1px;
+}
+
+/*** 1 *****/
+[wliu][btn24][close] {
+    background-position:        0px 0px;
+}
+[wliu][btn24][close]:hover {
+    background-position:        -30px 0px;
+}
+[wliu][btn24][close][disabled] {
+    background-position:        -60px 0px;
+}
+[wliu][btn24][close][disabled]:hover {
+    background-position:        -60px 0px;
+}
+
+/*** 2 *****/
+[wliu][btn24][input-search] {
+    background-position:        0px -30px;
+}
+[wliu][btn24][input-search]:hover {
+    background-position:        -30px -30px;
+}
+[wliu][btn24][input-search][disabled] {
+    background-position:        -60px -30px;
+}
+[wliu][btn24][input-search][disabled]:hover {
+    background-position:        -60px -30px;
+}
+
+/*** 3 *****/
+[wliu][btn24][checkall] {
+    background-position:        0px -60px;
+}
+[wliu][btn24][checkall]:hover {
+    background-position:        -30px -60px;
+}
+[wliu][btn24][checkall][disabled] {
+    background-position:        -60px -60px;
+}
+[wliu][btn24][checkall][disabled]:hover {
+    background-position:        -60px -60px;
+}
+
+/*** 4 *****/
+[wliu][btn24][removeall] {
+    background-position:        0px -90px;
+}
+[wliu][btn24][removeall]:hover {
+    background-position:        -30px -90px;
+}
+[wliu][btn24][removeall][disabled] {
+    background-position:        -60px -90px;
+}
+[wliu][btn24][removeall][disabled]:hover {
+    background-position:        -60px -90px;
+}
+
+/*** 5 *****/
+[wliu][btn24][selectlist] {
+    background-position:        0px -120px;
+}
+[wliu][btn24][selectlist]:hover {
+    background-position:        -30px -120px;
+}
+[wliu][btn24][selectlist][disabled] {
+    background-position:        -60px -120px;
+}
+[wliu][btn24][selectlist][disabled]:hover {
+    background-position:        -60px -120px;
+}
+
+/*** 6 *****/
+[wliu][btn24][checkbox] {
+    background-position:        0px -150px;
+}
+[wliu][btn24][checkbox]:hover {
+    background-position:        -30px -150px;
+}
+[wliu][btn24][checkbox][disabled] {
+    background-position:        -60px -150px;
+}
+[wliu][btn24][checkbox][disabled]:hover {
+    background-position:        -60px -150px;
+}
+
+/*** 7 *****/
+[wliu][btn24][radio] {
+    background-position:        0px -180px;
+}
+[wliu][btn24][radio]:hover {
+    background-position:        -30px -180px;
+}
+[wliu][btn24][radio][disabled] {
+    background-position:        -60px -180px;
+}
+[wliu][btn24][radio][disabled]:hover {
+    background-position:        -60px -180px;
+}
+
+/*** 8 *****/
+[wliu][btn24][save] {
+    background-position:        0px -210px;
+}
+[wliu][btn24][save]:hover {
+    background-position:        -30px -210px;
+}
+[wliu][btn24][save][disabled] {
+    background-position:        -60px -210px;
+}
+[wliu][btn24][save][disabled]:hover {
+    background-position:        -60px -210px;
+}
+
+/*** 9 *****/
+[wliu][btn24][detail] {
+    background-position:        0px -240px;
+}
+[wliu][btn24][detail]:hover {
+    background-position:        -30px -240px;
+}
+[wliu][btn24][detail][disabled] {
+    background-position:        -60px -240px;
+}
+[wliu][btn24][detail][disabled]:hover {
+    background-position:        -60px -240px;
+}
+
+/*** 10 Cancel *****/
+[wliu][btn24][cancel] {
+    background-position:        0px -270px;
+}
+[wliu][btn24][cancel]:hover {
+    background-position:        -30px -270px;
+}
+[wliu][btn24][cancel][disabled] {
+    background-position:        -60px -270px;
+}
+[wliu][btn24][cancel][disabled]:hover {
+    background-position:        -60px -270px;
+}
+
+/*** 11 Delete *****/
+[wliu][btn24][delete] {
+    background-position:        0px -300px;
+}
+[wliu][btn24][delete]:hover {
+    background-position:        -30px -300px;
+}
+[wliu][btn24][delete][disabled] {
+    background-position:        -60px -300px;
+}
+[wliu][btn24][delete][disabled]:hover {
+    background-position:        -60px -300px;
+}
+
+/*** 12 output *****/
+[wliu][btn24][output] {
+    background-position:        0px -330px;
+}
+[wliu][btn24][output]:hover {
+    background-position:        -30px -330px;
+}
+[wliu][btn24][output][disabled] {
+    background-position:        -60px -330px;
+}
+[wliu][btn24][output][disabled]:hover {
+    background-position:        -60px -330px;
+}
+
+/*** 13 print *****/
+[wliu][btn24][print] {
+    background-position:        0px -360px;
+}
+[wliu][btn24][print]:hover {
+    background-position:        -30px -360px;
+}
+[wliu][btn24][print][disabled] {
+    background-position:        -60px -360px;
+}
+[wliu][btn24][print][disabled]:hover {
+    background-position:        -60px -360px;
+}
+
+/*** 14 Add *****/
+[wliu][btn24][add] {
+    background-position:        0px -390px;
+}
+[wliu][btn24][add]:hover {
+    background-position:        -30px -390px;
+}
+[wliu][btn24][add][disabled] {
+    background-position:        -60px -390px;
+}
+[wliu][btn24][add][disabled]:hover {
+    background-position:        -60px -390px;
+}
+
+/*** 15 Email *****/
+[wliu][btn24][email] {
+    background-position:        0px -420px;
+}
+[wliu][btn24][email]:hover {
+    background-position:        -30px -420px;
+}
+[wliu][btn24][email][disabled] {
+    background-position:        -60px -420px;
+}
+[wliu][btn24][email][disabled]:hover {
+    background-position:        -60px -420px;
+}
+
+/*** 16 rowstate *****/
+[wliu][btn24][rowstate-add] {
+    background-position:        0px -450px;
+}
+[wliu][btn24][rowstate-delete] {
+    background-position:        -30px -450px;
+}
+[wliu][btn24][rowstate-save] {
+    background-position:        -60px -450px;
+}
+[wliu][btn24][rowstate-ok] {
+    background-position:        0px -480px;
+}
+[wliu][btn24][rowstate-error] {
+    background-position:        -30px -480px;
+}
+[wliu][btn24][order] {
+    background-position:        -60px -480px;
+}
+
+/*** 17 sort *****/
+[wliu][btn24][sort] {
+    background-position:        0px -510px;
+}
+[wliu][btn24][sort-asc] {
+    background-position:        -30px -510px;
+}
+[wliu][btn24][sort-desc] {
+    background-position:        -60px -510px;
+}
+[wliu][btn24][sort-desc]:hover {
+    background-position:        -60px -510px;
+}
+
+/*** 18 Navi First *****/
+[wliu][btn24][first] {
+    background-position:        0px -540px;
+}
+[wliu][btn24][first]:hover {
+    background-position:        -30px -540px;
+}
+[wliu][btn24][first][disabled] {
+    background-position:        -60px -540px;
+}
+[wliu][btn24][first][disabled]:hover {
+    background-position:        -60px -540px;
+}
+
+/*** 19 Navi Previous *****/
+[wliu][btn24][previous] {
+    background-position:        0px -570px;
+}
+[wliu][btn24][previous]:hover {
+    background-position:        -30px -570px;
+}
+[wliu][btn24][previous][disabled] {
+    background-position:        -60px -570px;
+}
+[wliu][btn24][previous][disabled]:hover {
+    background-position:        -60px -570px;
+}
+
+/*** 20 Navi Last *****/
+[wliu][btn24][last] {
+    background-position:        0px -600px;
+}
+[wliu][btn24][last]:hover {
+    background-position:        -30px -600px;
+}
+[wliu][btn24][last][disabled] {
+    background-position:        -60px -600px;
+}
+[wliu][btn24][last][disabled]:hover {
+    background-position:        -60px -600px;
+}
+
+/*** 21 Navi Next *****/
+[wliu][btn24][next] {
+    background-position:        0px -630px;
+}
+[wliu][btn24][next]:hover {
+    background-position:        -30px -630px;
+}
+[wliu][btn24][next][disabled] {
+    background-position:        -60px -630px;
+}
+[wliu][btn24][next][disabled]:hover {
+    background-position:        -60px -630px;
+}
+
+/*** 22 Navi Reload *****/
+[wliu][btn24][reload] {
+    background-position:        0px -660px;
+}
+[wliu][btn24][reload]:hover {
+    background-position:        -30px -660px;
+}
+[wliu][btn24][reload][disabled] {
+    background-position:        -60px -660px;
+}
+[wliu][btn24][reload][disabled]:hover {
+    background-position:        -60px -660px;
+}
+
+
+/*** 23 Navi Go *****/
+[wliu][btn24][go] {
+    background-position:        0px -690px;
+}
+[wliu][btn24][go]:hover {
+    background-position:        -30px -690px;
+}
+[wliu][btn24][go][disabled] {
+    background-position:        -60px -690px;
+}
+[wliu][btn24][go][disabled]:hover {
+    background-position:        -60px -690px;
+}
+
+/*** 24 Mix button : help, upload *****/
+[wliu][btn24][error-help] {
+    background-position:        0px -720px;
+}
+[wliu][btn24][upload] {
+    background-position:        -30px -720px;
+}
+[wliu][btn24][crop] {
+    background-position:        -60px -720px;
+}
+
+/*** 25 mix button : rotate , undo, okey *****/
+[wliu][btn24][rotate-right] {
+    background-position:        0px -750px;
+}
+[wliu][btn24][restore] {
+    background-position:        -30px -750px;
+}
+[wliu][btn24][okey] {
+    background-position:        -60px -750px;
+}
+
+/*** 26 mix button : dispose , undo *****/
+[wliu][btn24][dispose] {
+    background-position:        0px -780px;
+}
+[wliu][btn24][empty] {
+    background-position:        -30px -780px;
+}
+[wliu][btn24][image] {
+    background-position:        -60px -780px;
+}
+
+/*** 27 mix button : img-print, upload, comments *****/
+[wliu][btn24][img-print] {
+    background-position:        0px -810px;
+}
+[wliu][btn24][file-upload] {
+    background-position:        -30px -810px;
+}
+[wliu][btn24][comments] {
+    background-position:        -60px -810px;
+}
+
+/*** 28 mix button : notes, nav-left, nav-right *****/
+[wliu][btn24][notes] {
+    background-position:        0px -840px;
+}
+[wliu][btn24][nav-left] {
+    background-position:        -30px -840px;
+}
+[wliu][btn24][nav-right] {
+    background-position:        -60px -840px;
+}
+
+/*** 29 mix button : download,  *****/
+[wliu][btn24][download] {
+    background-position:        0px -870px;
+}
+[wliu][btn24][status-true] {
+    background-position:        -30px -870px;
+}
+[wliu][btn24][status],
+[wliu][btn24][status-false] {
+    background-position:        -60px -870px;
+}
+
+/*** 29 mix button : download,  *****/
+[wliu][btn24][download] {
+    background-position: 0px -870px;
+}
+
+[wliu][btn24][status-true] {
+    background-position: -30px -870px;
+}
+
+[wliu][btn24][status],
+[wliu][btn24][status-false] {
+    background-position: -60px -870px;
+}
+
+/*** 30 mix button : user, language, logout,  *****/
+[wliu][btn24][user] {
+    background-position: 0px -900px;
+}
+
+[wliu][btn24][language] {
+    background-position: -30px -900px;
+}
+
+[wliu][btn24][logout] {
+    background-position: -60px -900px;
+}
+
+/*** 31 mix button : arrow-right  *****/
+[wliu][btn24][arrow-right] {
+    background-position: 0px -930px;
+}
+
+[wliu][btn24][camera] {
+    background-position: -30px -930px;
+}
+
+[wliu][btn24][today] {
+    background-position: -60px -930px;
+}
+
+
+[wliu][btn24][na] {
+    display: none;
+}

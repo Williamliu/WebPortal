@@ -1,0 +1,126 @@
+div[wliu-tooltip] {
+    display:            none;
+    position:           absolute;
+    border: 		    1px solid #cccccc;
+    box-shadow:		    1px 1px 5px #666666;
+    padding: 		    0px;
+    z-index:            9600;
+    background-color: #ffffff;
+    overflow:          visible;
+    
+    max-width:          50vw;
+    margin:             0px 12px 12px 12px;
+}
+
+div[wliu-tooltip] div[wliu-tooltip-head] {
+    display:            block;
+    position:           relative;
+    padding:            2px 5px;
+    color:              #ffffff;
+    background-color: #0099CC;
+    text-align:         center;
+    font-weight:        bold;
+    font-size:          0.8em;
+} 
+
+div[wliu-tooltip] div[wliu-tooltip-body] {
+    display:            block;
+    position:           relative;
+    padding:            5px;
+    background-color:   #ffffff;
+    text-align:         left;
+}
+
+div[wliu-tooltip][active] {
+	display:					inline-block;
+	opacity:					1;
+    animation-name:             popupFadein;
+    animation-duration:         0.6s;
+    animation-timing-function:  cubic-bezier(0.735, 0.275, 0.220, 1);
+}
+
+/*** JQuery popup ***/
+div[wliu-tooltip] s[arrow] {
+    display:            inline-block;
+    position:           absolute;
+    background-color:   transparent;
+    background-image:   url(images/wliu-tooltip-arrow.png);
+    background-repeat:  no-repeat;
+}
+
+div[wliu-tooltip] s[arrow][left] {
+	display: 			none;
+    width:              12px;
+    height:             22px;
+    left:               0px;
+    top:                50%;
+    margin-top:         -11px;
+    margin-left:        -12px;
+    background-position: 0px 0px;
+}
+div[wliu-tooltip] s[arrow][right] {
+	display: 			none;
+    width:              12px;
+    height:             22px;
+    left:               100%;
+    top:                50%;
+    margin-top:         -11px;
+    margin-right:        -12px;
+    background-position: -25px 0px;
+}
+div[wliu-tooltip] s[arrow][up] {
+	display: 			none;
+    width:              22px;
+    height:             12px;
+    left:               50%;
+    top:                0px;
+    margin-top:         -12px;
+    margin-left:        -11px;
+    background-position: -75px 0px;
+}
+div[wliu-tooltip] s[arrow][head-up] {
+	display: 			none;
+    width:              22px;
+    height:             12px;
+    left:               50%;
+    top:                0px;
+    margin-top:         -12px;
+    margin-left:        -11px;
+    background-position: -100px 0px;
+}
+div[wliu-tooltip] s[arrow][down] {
+	display: 			none;
+    width:              22px;
+    height:             12px;
+    left:               50%;
+    top:                100%;
+    margin-bottom:      -11px;
+    margin-left:        -12px;
+    background-position: -50px 0px;
+}
+
+
+div[wliu-tooltip] div[wliu-tooltip-head] ~ s[arrow][left] {
+    margin-top: 0px;
+}
+div[wliu-tooltip] div[wliu-tooltip-head] ~ s[arrow][right] {
+    margin-top: 0px;
+}
+
+div[wliu-tooltip] s[arrow][active] {
+	display: 			inline-block;
+}
+/********************/
+
+
+@keyframes popupFadein {
+    from    { opacity: 0;}
+    to      { opacity: 1; }
+    /*
+    to      { opacity: 0.8; }
+    0%      { opacity: 0}
+    25%     { opacity: 0.1}
+    50%     { opacity: 0.2}
+    100%    { opacity: 0.6}
+    */
+}

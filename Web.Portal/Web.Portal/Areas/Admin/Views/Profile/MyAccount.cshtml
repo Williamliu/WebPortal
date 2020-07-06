@@ -1,0 +1,137 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+        });
+        viewData.Init("/Admin/api/Profile/InitUser");
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl" class="container" style="margin-top:24px;">
+    <ng-form>
+        <table cellpadding="0" cellspacing="0" style="width:100%;">
+            <tr>
+                <td valign="top">
+                    <ul id="d1" wliu tab9 border color="">
+                        <li>@Html.Words("my.account")</li>
+                    </ul>
+                    <div wliu tab9 body style="border-right:none;">
+                        <div style="height:480px;">
+                            <div wliu table grow shrink>
+                                <div row>
+                                    <div cell large>
+                                        <assm.textbox fixed border h2 db="ViewData.database" tb="AdminUser" col="FirstName"></assm.textbox>
+                                    </div>
+                                </div>
+                                <div row style="margin-top:12px;">
+                                    <div cell large>
+                                        <assm.textbox fixed border h2 db="ViewData.database" tb="AdminUser" col="LastName"></assm.textbox>
+                                    </div>
+                                </div>
+                                <div row style="margin-top:12px;">
+                                    <div cell large>
+                                        <assm.textbox fixed border h2 db="ViewData.database" tb="AdminUser" col="Phone"></assm.textbox>
+                                    </div>
+                                </div>
+                                <div row style="margin-top:12px;">
+                                    <div cell large>
+                                        <assm.stext fixed h2 db="ViewData.database" tb="AdminUser" col="BranchId"></assm.stext>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td valign="top">
+                    <ul id="d2" wliu tab9 border color="mint">
+                        <li>@Html.Words("address.information")</li>
+                    </ul>
+                    <div wliu tab9 body style="border-right:none;">
+                        <div style="height:480px;">
+                            <div wliu table grow shrink>
+                                <div row>
+                                    <div cell large>
+                                        <assm.textbox fixed border h2 db="ViewData.database" tb="AdminUser" col="Address"></assm.textbox>
+                                    </div>
+                                </div>
+                                <div row style="margin-top:12px;">
+                                    <div cell large>
+                                        <assm.textbox fixed border h2 db="ViewData.database" tb="AdminUser" col="City"></assm.textbox>
+                                    </div>
+                                </div>
+                                <div row style="margin-top:12px;">
+                                    <div cell large>
+                                        <assm.select fixed border h2 db="ViewData.database" tb="AdminUser" col="Country"></assm.select>
+                                    </div>
+                                </div>
+                                <div row style="margin-top:12px;">
+                                    <div cell large>
+                                        <assm.fselect fixed border h2 db="ViewData.database" tb="AdminUser" col="State" fcol="Country"></assm.fselect>
+                                    </div>
+                                </div>
+                                <div row style="margin-top:12px;">
+                                    <div cell large>
+                                        <assm.textbox fixed border h2 db="ViewData.database" tb="AdminUser" col="Postal"></assm.textbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+                <td valign="top">
+                    <ul id="d3" wliu tab9 border color="fuzzy">
+                        <li>@Html.Words("login.information")</li>
+                    </ul>
+                    <div wliu tab9 body>
+                        <div style="height:480px;">
+                            <div wliu table grow shrink>
+                                <div row>
+                                    <div cell large>
+                                        <assm.label fixed h2 db="ViewData.database" tb="AdminUser" col="UserName"></assm.label>
+                                    </div>
+                                </div>
+                                <div row style="margin-top:12px;">
+                                    <div cell large>
+                                        <assm.label fixed h2 db="ViewData.database" tb="AdminUser" col="Email"></assm.label>
+                                    </div>
+                                </div>
+                                <div row style="margin-top:12px;">
+                                    <div cell large>
+                                        <assm.intdate fixed h2 db="ViewData.database" tb="AdminUser" col="CreatedTime"></assm.intdate>
+                                    </div>
+                                </div>
+                                <div row style="margin-top:12px;">
+                                    <div cell large>
+                                        <assm.intdate fixed h2 db="ViewData.database" tb="AdminUser" col="LastLogin"></assm.intdate>
+                                    </div>
+                                </div>
+                                <div row style="margin-top:12px;">
+                                    <div cell large>
+                                        <assm.label fixed h2 db="ViewData.database" tb="AdminUser" col="LoginTotal"></assm.label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center" style="padding-top:24px;">
+                    <form.save h1 db="ViewData.database" tb="AdminUser" label="@Html.Words("button.save")" style="margin:0px 20px;"></form.save>
+                    <form.cancel h1 db="ViewData.database" tb="AdminUser" label="@Html.Words("button.cancel")" style="margin:0px 20px;"></form.cancel>
+                </td>
+            </tr>
+        </table>
+    </ng-form>
+    <table.error></table.error>
+    <form.error></form.error>
+
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loadding oper="get"></wliu.loadding>
+    <wliu.loadding oper="save"></wliu.loadding>
+</div>

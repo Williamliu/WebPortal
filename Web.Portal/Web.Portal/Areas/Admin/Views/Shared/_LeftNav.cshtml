@@ -1,0 +1,89 @@
+﻿@{Menus AdminMenu = Context.Items["AdminMenus"] as Menus;}
+<div menu-block>
+    <div wliu logo>
+        <img src="~/resource/style/Images/company-logo.png" />
+    </div>
+    <div menu-upper>
+        <ul wliu menu>
+            @foreach (Menu tmenu in AdminMenu.TopMenu)
+            {
+                if (tmenu.Nodes.Count > 0)
+                {
+                    <li @(tmenu.MenuId == AdminMenu.MenuId ? "selected" : "") nodes>
+                        <a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a>
+                        <ul>
+                            @foreach (Menu smenu in tmenu.Nodes)
+                            {
+                                if (smenu.MenuId.ToLower() == "space")
+                                {
+                                    <li space><div wliu border></div></li>
+                                }
+                                else
+                                {
+                                    <li @(smenu.MenuId == AdminMenu.MenuId ? "selected" : "")><a @(smenu.Url == "" ? "" : "href=" + smenu.Url)>@smenu.Title</a></li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    if (tmenu.MenuId.ToLower() == "space")
+                    {
+                        <li space><div wliu border></div></li>
+                    }
+                    else
+                    {
+                        <li @(tmenu.MenuId == AdminMenu.MenuId ? "selected" : "")><a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a></li>
+                    }
+
+                }
+
+            }
+        </ul>
+    </div>
+    <div menu-lower>
+        <ul wliu menu>
+            @foreach (Menu tmenu in AdminMenu.BottomMenu)
+            {
+                if (tmenu.Nodes.Count > 0)
+                {
+                    <li @(tmenu.MenuId == AdminMenu.MenuId ? "selected" : "") nodes>
+                        <a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a>
+                        <ul>
+                            @foreach (Menu smenu in tmenu.Nodes)
+                            {
+                                if (smenu.MenuId.ToLower() == "space")
+                                {
+                                    <li space><div wliu border></div></li>
+                                }
+                                else
+                                {
+                                    <li @(smenu.MenuId == AdminMenu.MenuId ? "selected" : "")><a @(smenu.Url == "" ? "" : "href=" + smenu.Url) > @smenu.Title </a></li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    if (tmenu.MenuId.ToLower() == "space")
+                    {
+                        <li space><div wliu border></div></li>
+                    }
+                    else
+                    {
+                        <li @(tmenu.MenuId == AdminMenu.MenuId ? "selected" : "")><a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a></li>
+                    }
+                }
+
+            }
+        </ul>
+    </div>
+    <div menu-footer></div>
+</div>
+<script>
+    $(function () {
+        $("ul > li[selected]").parents("ul[wliu][menu] > li").addAttr("selected");
+    })
+</script>

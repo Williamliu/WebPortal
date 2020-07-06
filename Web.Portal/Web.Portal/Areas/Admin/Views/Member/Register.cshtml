@@ -1,0 +1,231 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var gallery = new WLIU.Gallery();
+
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+            gallery.LinkScope($scope);
+
+            $scope.saveOk = function () {
+                let refKey = $scope.ViewData.database.tables.PubUser.rows[0].key;
+
+                $scope.Gallery.SetKey(refKey);
+                $scope.Gallery.SaveImage($scope.Gallery.CurrentGuid(), 1);
+
+                $scope.ViewData.database.tables.PubUserId.refKey = refKey;
+                $scope.ViewData.database.tables.PubUserId.SaveAll().then(d => { $scope.$apply(); }).catch(e => { $scope.$apply(); });
+            }
+            $scope.cancelAct = function () {
+                $scope.ViewData.database.tables.PubUserId.CancelAll();
+            }
+            $scope.newUser = function () {
+                $scope.Gallery.Clear();
+                $scope.Gallery.NewRowB();
+                $scope.ViewData.database.tables.PubUserId.refKey = 0;
+                $scope.ViewData.database.tables.PubUserId.rows = [];
+                $scope.ViewData.database.tables.PubUserId.Reload().then(d => { $scope.$apply(); }).catch(e => { $scope.$apply(); });
+            }
+        });
+        viewData.Init("/Admin/api/Member/InitRegister").then(data => {
+            data.database.tables.PubUser.NewRowB();
+            data.Apply();
+        });
+
+        gallery.Init("/api/Image/InitGallery/PubUser?view=small&edit=large").then(d => {
+            gallery.NewRowB();
+        });
+    </script>
+}
+<div class="container" ng-app="myApp" ng-controller="mycontrl" style="margin-top:12px; min-width:600px;">
+    <ng-form>
+        <table cellpadding="0" cellspacing="0" style="width:100%;">
+            <tr>
+                <td align="center" style="position:relative;">
+                    <div style="display:inline-block;position:absolute;left:0px;">
+                        <form.add h2 db="ViewData.database" tb="PubUser" label="@Html.Words("button.new")" action="newUser()"></form.add>
+                        <form.status db="ViewData.database" tb="PubUser"></form.status>
+                    </div>
+                    <cener>
+                        <form.save h2 db="ViewData.database" tb="PubUser" label="@Html.Words("button.save")" action="saveOk()"></form.save>
+                        <form.cancel h2 db="ViewData.database" tb="PubUser" label="@Html.Words("button.cancel")" action="cancelAct()" style="margin-left:12px;"></form.cancel>
+                    </cener>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <ul id="d2" wliu tab9 border color="grey">
+            <li>@Html.Words("personal.information")</li>
+        </ul>
+        <div wliu tab9 body>
+            <div>
+                <table border="0" cellpadding="2" cellspacing="2" style="width:100%;">
+                    <tr>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="FirstName"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="LastName"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="DisplayName"></td>
+                        <td rowspan="3" width="25%" valign="top" align="center">
+                            <label wliu bold>@Html.Words("col.photo")</label>
+                            <div style="display:block;">
+                                <image.main gallery="Gallery" ww="160" hh="160" icons="upload,camera,text,delete"></image.main>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="FirstNameLegal"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="LastNameLegal"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="CertificateName"></td>
+                    </tr>
+                    <tr>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="AliasName"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="DharmaName"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="Occupation"></td>
+                    </tr>
+                </table>
+                <table border="0" cellpadding="2" cellspacing="2" style="width:100%;">
+                    <tr>
+                        <td width="25%"><assm.validate fixed border h2 db="ViewData.database" tb="PubUser" col="Email"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="Phone"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="Cell"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="IDNumber"></td>
+                    </tr>
+                    <tr>
+                        <td width="25%" valign="top"><assm.select fixed border h2 db="ViewData.database" tb="PubUser" col="BranchId"></td>
+                        <td width="25%" valign="top"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="Memo"></td>
+                        <td colspan="2" rowspan="3" width="50%" valign="top">
+                            <div wliu table grow shrink>
+                                <div row>
+                                    <div head fixed style="width:40px;"></div>
+                                    <div head><wliu.head db="ViewData.database" tb="PubUserId" col="IdType"></wliu.head></div>
+                                    <div head><wliu.head db="ViewData.database" tb="PubUserId" col="IdNumber"></wliu.head></div>
+                                    <div head fixed style="width:30px;">
+                                        <wliu.micon db="ViewData.database" tb="PubUserId" icons="add"></wliu.micon>
+                                    </div>
+                                </div>
+                                <div row ng-repeat="row in ViewData.database.tables.PubUserId.rows">
+                                    <div cell center fixed style="width:40px;">
+                                        <wliu.rowstatus db="ViewData.database" tb="PubUserId" guid="{{row.guid}}"></wliu.rowstatus>
+                                    </div>
+                                    <div cell>
+                                        <wliu.select db="ViewData.database" tb="PubUserId" guid="{{row.guid}}" col="IdType"></wliu.select>
+                                    </div>
+                                    <div cell>
+                                        <wliu.textbox db="ViewData.database" tb="PubUserId" guid="{{row.guid}}" col="IdNumber"></wliu.textbox>
+                                    </div>
+                                    <div cell fixed style="width:30px;">
+                                        <wliu.bicon db="ViewData.database" tb="PubUserId" guid="{{row.guid}}" icons="cancel,delete"></wliu.bicon>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="25%" valign="top"><assm.ymd db="ViewData.database" tb="PubUser" col="Birth"></assm.ymd></td>
+                        <td width="25%" valign="top"><assm.ymd db="ViewData.database" tb="PubUser" col="Member"></assm.ymd></td>
+                    </tr>
+                    <tr>
+                        <td width="25%" valign="top"><assm.radio fixed border h2 db="ViewData.database" tb="PubUser" col="Gender"></td>
+                        <td width="25%" valign="top"><assm.label fixed h2 db="ViewData.database" tb="PubUser" col="MemberId"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br />
+        <ul id="d5" wliu tab9 border color="grey">
+            <li>@Html.Words("other.information")</li>
+            <li>@Html.Words("question.information")</li>
+        </ul>
+        <div wliu tab9 body>
+            <div>
+                <table cellpadding="2" cellspacing="2" style="width:100%;">
+                    <tr>
+                        <td colspan="4" width="100%">
+                            <table cellpadding="2" cellspacing="2" style="width:100%;">
+                                <tr>
+                                    <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="Address"></td>
+                                    <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="City"></td>
+                                    <td width="20%"><assm.select fixed border h2 db="ViewData.database" tb="PubUser" col="Country"></td>
+                                    <td width="20%"><assm.fselect fixed border h2 db="ViewData.database" tb="PubUser" col="State" fcol="Country"></td>
+                                    <td width="10%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="Postal"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" width="100%" style="border-bottom:1px solid #cccccc;"></td>
+                    </tr>
+                    <tr>
+                        <td width="25%"><assm.select fixed border h2 db="ViewData.database" tb="PubUser" col="Nationality"></td>
+                        <td width="25%"><assm.select fixed border h2 db="ViewData.database" tb="PubUser" col="Education"></assm.select></td>
+                        <td width="25%"><assm.select fixed border h2 db="ViewData.database" tb="PubUser" col="MotherLang"></td>
+                        <td width="25%"><assm.select fixed border h2 db="ViewData.database" tb="PubUser" col="Religion"></td>
+                    </tr>
+                    <tr>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="EmergencyRelation"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="EmergencyPerson"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="EmergencyPhone"></td>
+                        <td width="25%"><assm.textbox fixed border h2 db="ViewData.database" tb="PubUser" col="EmergencyCell"></td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table cellpadding="2" cellspacing="2" style="width:100%;">
+                    <tr>
+                        <td>
+                            <assm.checkbox h2 style="display:inline-block;width:auto;" db="ViewData.database" tb="PubUser" col="MultiLang"></assm.checkbox>
+                            <form.label style="display:inline-block;width:auto;" db="ViewData.database" tb="PubUser" col="MultiLang_Other"></form.label>
+                            <form.textbox style="display:inline-block;width:auto;" db="ViewData.database" tb="PubUser" col="MultiLang_Other"></form.textbox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%" style="border-bottom:1px solid #cccccc;"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <assm.checkbox h2 style="display:inline-block;width:auto;" fixed db="ViewData.database" tb="PubUser" col="HearUs"></assm.checkbox>
+                            <form.label style="display:inline-block;width:auto;" db="ViewData.database" tb="PubUser" col="HearUs_Other"></form.label>
+                            <form.textbox style="display:inline-block;width:auto;" db="ViewData.database" tb="PubUser" col="HearUs_Other"></form.textbox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%" style="border-bottom:1px solid #cccccc;"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <assm.checkbox h2 style="display:inline-block;width:auto;" fixed db="ViewData.database" tb="PubUser" col="Symbol"></assm.checkbox>
+                            <form.label style="display:inline-block;width:auto;" db="ViewData.database" tb="PubUser" col="Symbol_Other"></form.label>
+                            <form.textbox style="display:inline-block;width:auto;" db="ViewData.database" tb="PubUser" col="Symbol_Other"></form.textbox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%" style="border-bottom:1px solid #cccccc;"></td>
+                    </tr>
+                    <tr>
+                        <td><assm.textarea fixed border h2 db="ViewData.database" tb="PubUser" col="MedicalConcern"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <table cellpadding="0" cellspacing="0" style="width:100%; margin-top:12px;margin-bottom:160px;">
+            <tr>
+                <td align="center" style="padding:12px 0px;">
+                    <form.save h2 db="ViewData.database" tb="PubUser" label="@Html.Words("button.save")" action="saveOk()"></form.save>
+                    <form.cancel h2 db="ViewData.database" tb="PubUser" label="@Html.Words("button.cancel")" style="margin-left:12px;"></form.cancel>
+                </td>
+            </tr>
+        </table>
+    </ng-form>
+    <image.imgedit gallery="Gallery"></image.imgedit>
+    <image.maintext gallery="Gallery"></image.maintext>
+    <image.camera gallery="Gallery"></image.camera>
+
+    <table.error></table.error>
+    <form.error></form.error>
+    <wliu.loading oper="save"></wliu.loading>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+</div>

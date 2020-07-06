@@ -1,0 +1,1135 @@
+﻿body {
+    margin:         0px;
+    padding:        0px;
+    user-select:    none;
+    font-family:    sans-serif, Arial, 'Franklin Gothic Medium', 'Arial Narrow', Montserrat;
+}
+*:focus {
+    outline: none;
+}
+
+img[src=""] {
+    display:    none;
+}
+
+img[wliu] {
+    max-width:  80vw;
+    max-height: 80vh;
+    object-fit: contain;
+}
+img[wliu][src=""] {
+    display:    none;
+}
+
+/* override bootstrap */
+.col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12,
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12,
+.col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12,
+.col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12,
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12
+{
+    padding:                0px 6px;
+}
+
+/* label */
+label {
+    margin:                 2px 0px;
+    padding:                0px;
+    color:                  #333333;
+}
+label[wliu] {
+    display:                inline-block;
+    position:               relative;
+    color:                  #333333;
+    box-sizing:             border-box;
+    margin:                 2px 0px;
+    padding:                3px 2px; /* 1px for border */
+    user-select:            none;
+    font-size:              16px;
+    line-height:            1.5; /* 24px; actual height: font-size X 1.5 + 10px */
+    font-weight:            500;
+    user-select:            text;
+    vertical-align:         middle;
+}
+label[wliu][center] {
+    width:                  100%;
+    text-align:             center;
+    overflow:               hidden;
+    text-overflow:          ellipsis;
+}
+label[wliu][right] {
+    width:                  100%;
+    text-align:             right;
+    overflow:               hidden;
+    text-overflow:          ellipsis;
+}
+label[wliu][fit] {
+    width:                  100%;
+    overflow:               hidden;
+    text-overflow:          ellipsis;
+}
+label[wliu][nowrap] {
+    width:                  100%;
+    white-space:            nowrap;
+    overflow:               hidden;
+    text-overflow:          ellipsis;
+}
+label[wliu][bold] {
+    font-weight:            700;
+}
+
+label[wliu][need]:after {
+    content:                "*";
+    color:                  red;
+    display:                inline-block;
+    width:                  12px;
+    font-size:              16px;
+    font-weight:            bold;
+    text-align:             left;
+}
+
+label[wliu][h1] {
+    font-size:              32px;
+}
+
+label[wliu][h2] {
+    font-size:              24px;
+}
+
+
+input[wliu],
+select[wliu],
+textarea[wliu] {
+    display:                inline-block;
+    background-color:       rgb(255,255,255);
+    color:                  #000000;
+    box-shadow:             0px 1px 1px 0px rgba(0,0,0,0.1) inset;
+    border-radius:          6px;
+    border:                 1px solid rgb(204,204,204);
+    margin:                 2px 0px;
+    padding:                2px 2px;
+    line-height:            1.5; /* actual height: 24+2x2+2x2+1x2=34px */
+    min-width:              40px;
+}
+select[wliu] {
+    height:                 30px;
+    line-height:            30px;   /* doesn't work */
+    vertical-align:         middle;
+}
+
+input[type="text"][wliu],
+input[type="password"][wliu],
+select[wliu],
+textarea[wliu] {
+    font-size:              16px;
+}
+textarea[wliu] {
+    min-height:             60px;
+    vertical-align:         top !important;
+}
+input[type="text"][wliu][checklist] {
+    padding-left:   20px!important;
+    background:     0px center url(Images/wliu-checklist-16.png) no-repeat;
+    border:         0px;
+    border-bottom:  1px solid #cccccc;
+    box-shadow:     none;
+    border-radius:  0px;
+}
+input[type="text"][wliu][radiolist] {
+    padding-left:   24px!important;
+    background:     0px center url(Images/wliu-radiolist-16.png) no-repeat;
+    border:         0px;
+    border-bottom:  1px solid #cccccc;
+    box-shadow:     none;
+    border-radius:  0px;
+}
+input[type="text"][wliu][date-picker] {
+    padding-left:   24px !important;
+    background:     0px center url(Images/wliu-date-16.png) no-repeat;
+    border:         0px;
+    border-bottom:  1px solid #cccccc;
+    box-shadow:     none;
+    border-radius:  0px;
+    max-width:      120px;
+}
+input[type="text"][wliu][date-picker][input-invalid] {
+    border: 1px solid pink;
+    box-shadow: 0px 0px 3px pink;
+}
+input[type="text"][wliu][date-picker][h2] {
+    max-width: 160px;
+}
+input[type="text"][wliu][date-picker][h1] {
+    max-width:      200px;
+}
+input[type="text"][wliu][time-picker] {
+    padding-left:   20px !important;
+    background:     0px center url(Images/wliu-clock-16.png) no-repeat;
+    border:         0px;
+    border-bottom:  1px solid #cccccc;
+    box-shadow:     none;
+    border-radius:  0px;
+    max-width:      72px;
+}
+input[type="text"][wliu][time-picker][input-invalid] {
+    border: 1px solid pink;
+    box-shadow: 0px 0px 3px pink;
+}
+input[type="text"][wliu][time-picker][h2] {
+    max-width: 86px;
+}
+
+input[type="text"][wliu][time-picker][h1] {
+    max-width:      112px;
+}
+input[type="text"][wliu][date-picker]:focus,
+input[type="text"][wliu][time-picker]:focus {
+    border:         0px;
+    border-bottom:  1px solid #cccccc;
+    outline:        none;
+    box-shadow:     none;
+    border-radius:  0px;
+}
+input[type="text"][wliu][date-picker][fit],
+input[type="text"][wliu][time-picker][fit] {
+    max-width:      initial;
+
+}
+
+input[type="text"][wliu][fit],
+input[type="password"][wliu][fit],
+select[wliu][fit],
+textarea[wliu][fit] {
+    width: 100%;
+}
+input[type="text"][wliu][right],
+input[type="password"][wliu][right],
+select[wliu][right],
+textarea[wliu][right] {
+    text-align:             right;
+}
+input[type="text"][wliu][center],
+input[type="password"][wliu][center],
+select[wliu][center],
+textarea[wliu][center] {
+    text-align:             center;
+}
+input[type="text"][wliu][bold],
+input[type="password"][wliu][bold],
+select[wliu][bold],
+textarea[wliu][bold] {
+    font-weight:            bold;
+}
+
+input[type="text"][wliu][h1],
+input[type="password"][wliu][h1],
+select[wliu][h1],
+textarea[wliu][h1] {
+    font-size:              32px;
+}
+select[wliu][h1] {
+    height:                 54px; /* 32 x 1.5 + 3 x 2*/
+    line-height:            54px;
+}
+
+input[type="text"][wliu][h2],
+input[type="password"][wliu][h2],
+select[wliu][h2],
+textarea[wliu][h2] {
+    font-size:              24px;
+}
+select[wliu][h2] {
+    height:                 42px;   /* 32 x 1.5 + 3 x 2*/
+    line-height:            42px;
+}
+
+
+input[type="text"][wliu]:focus,
+input[type="password"][wliu]:focus,
+select[wliu]:focus,
+textarea[wliu]:focus {
+    border:                 1px solid #66afe9;
+    box-shadow:             0px 1px 1px 0px #4285F4;
+    border-radius:          6px;
+    outline:                none!important;  /* remove browser focus border */
+}
+input[type="text"][wliu][checklist]:focus,
+input[type="text"][wliu][radiolist]:focus {
+    border: 0px;
+    border-bottom: 1px solid #cccccc;
+    box-shadow: none;
+    border-radius: 0px;
+}
+
+input[type="text"][wliu][tiny],
+input[type="password"][wliu][tiny],
+select[wliu][tiny],
+textarea[wliu][tiny] {
+    width: 50px;
+}
+
+input[type="text"][wliu][short],
+input[type="password"][wliu][short],
+select[wliu][short],
+textarea[wliu][short] {
+    width: 80px;
+}
+
+input[type="text"][wliu][small],
+input[type="password"][wliu][small],
+select[wliu][small],
+textarea[wliu][small] {
+    width: 120px;
+}
+
+input[type="text"][wliu][medium],
+input[type="password"][wliu][medium],
+select[wliu][medium],
+textarea[wliu][medium] {
+    width: 160px;
+}
+
+input[type="text"][wliu][large],
+input[type="password"][wliu][large],
+select[wliu][large],
+textarea[wliu][large] {
+    width: 250px;
+}
+
+input[type="text"][wliu][long],
+input[type="password"][wliu][long],
+select[wliu][long],
+textarea[wliu][long] {
+    width: 300px;
+}
+
+/* CheckBox and Radio Box */
+input[type="checkbox"][wliu],
+input[type="radio"][wliu] {
+    display:                none;
+    font-size:              16px;
+    line-height:            1;
+    height:                 16px;
+}
+
+
+input[wliu][type="checkbox"] + label[wliu][checkbox],
+input[wliu][type="radio"] + label[wliu][radio] {
+    user-select:            none;
+    line-height:            1;
+    margin-right:           12px;
+}
+
+
+input[wliu][type="checkbox"] + label[wliu][checkbox]:before,
+input[wliu][type="radio"] + label[wliu][radio]:before
+{
+    content:                " ";
+    display:                inline-block;
+    height:                 16px;
+    width:                  16px;
+    background-color:       transparent;
+    background-repeat:      no-repeat;
+    background-image:       url(images/wliu-buttons-16.png);
+    vertical-align:         middle;
+    margin-top:             -4px;
+    margin-right:           2px;
+}
+input[wliu][type="checkbox"] + label[wliu][checkbox][after]:before,
+input[wliu][type="radio"] + label[wliu][radio][after]:before {
+    content:                "";
+    display:                none;
+}
+input[wliu][type="checkbox"] + label[wliu][checkbox][after]:after,
+input[wliu][type="radio"] + label[wliu][radio][after]:after {
+    content:                " ";
+    display:                inline-block;
+    height:                 16px;
+    width:                  16px;
+    background-color:       transparent;
+    background-repeat:      no-repeat;
+    background-image:       url(images/wliu-buttons-16.png);
+    vertical-align:         middle;
+    margin-top:             -4px;
+    margin-left:            2px;
+}
+input[wliu][type="checkbox"] + label[wliu][checkbox]:before,
+input[wliu][type="checkbox"] + label[wliu][checkbox][after]:after {
+    background-position:    -40px -100px;
+}
+input[wliu][type="checkbox"]:hover + label[wliu][checkbox]:before,
+input[wliu][type="checkbox"]:hover + label[wliu][checkbox][after]:after {
+    background-position:    -20px -100px;
+}
+input[wliu][type="radio"] + label[wliu][radio]:before,
+input[wliu][type="radio"] + label[wliu][radio][after]:after {
+    background-position:    -40px -120px;
+}
+input[wliu][type="radio"]:hover + label[wliu][radio]:before,
+input[wliu][type="radio"]:hover + label[wliu][radio][after]:after {
+    background-position:    -20px -120px;
+}
+input[wliu][type="checkbox"]:hover + label[wliu][checkbox],
+input[wliu][type="radio"]:hover + label[wliu][radio]
+{
+    color: 		            blue;
+}
+input[wliu][type="checkbox"]:checked + label[wliu][checkbox],
+input[wliu][type="radio"]:checked + label[wliu][radio]
+{
+    color: 		            #A807C4;
+}
+input[wliu][type="checkbox"]:checked + label[wliu][checkbox]:before,
+input[wliu][type="checkbox"]:checked + label[wliu][checkbox][after]:after {
+    background-position:    0px -100px;
+}
+input[wliu][type="radio"]:checked + label[wliu][radio]:before,
+input[wliu][type="radio"]:checked + label[wliu][radio][after]:after {
+    background-position:    0px -120px;
+}
+
+ul[wliu][checkcom] {
+    display:    inline-block;
+    position:   relative;
+    text-align: left;
+    padding:    0px;
+    margin:     0px !important;
+    list-style: none;
+}
+ul[wliu][checkcom] > li {
+    display:    inline-block;
+    padding:    2px;
+    margin:     2px;
+    border:     1px solid #cccccc;
+    border-radius: 8px;
+}
+
+div[wliu][checklist] {
+    display: block;
+    position: relative;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 2px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    overflow-y: auto;
+    white-space: nowrap;
+}
+
+span[input-invalid],
+span[wliu][input-invalid],
+label[input-invalid],
+label[wliu][input-invalid],
+input[wliu][input-invalid],
+select[wliu][input-invalid],
+textarea[wliu][input-invalid] {
+    border: 1px solid pink;
+    box-shadow: 0px 0px 3px pink;
+}
+
+input[type="text"][wliu]:disabled,
+input[type="password"][wliu]:disabled,
+select[wliu]:disabled,
+textarea[wliu]:disabled {
+    background-color: #dddddd;
+}
+
+/*** Button ***/
+a[wliu][button] {
+    cursor:                 pointer;
+    display:                inline-block;
+    padding:                1px 12px;
+    margin:                 2px;
+    font-size:              12px;
+    line-height:            2;
+    border:                 2px solid #666666;
+    border-radius:          6px;
+    box-shadow:             2px 2px 4px grey;
+    text-transform:         uppercase;
+    background-color:       #efefef;
+    color:                  #000000;
+}
+a[wliu][button]:hover {
+    box-shadow:             1px 1px 1px grey;
+    background-color:       #ffffff;
+}
+a[wliu][button][h1] {
+    padding:                0px 32px;
+    font-size:              24px;
+}
+a[wliu][button][h2] {
+    padding:                0px 24px;
+    font-size:              18px;
+}        
+
+a[wliu][button][solid] {
+    color:                  #ffffff;
+    background-color:       #999999;
+}
+a[wliu][button][solid]:hover {
+    background-color:       #999999;
+}
+
+a[wliu][button][blue] {
+    border-color:           #0049b1;
+}
+a[wliu][button][blue][solid] {
+    color:                  #ffffff;
+    background-color:       #0049b1;
+}
+a[wliu][button][blue][solid]:hover {
+    background-color:       #0049b1;
+}
+a[wliu][button][green] {
+    border-color:           #028c1c;
+}
+a[wliu][button][green][solid] {
+    color:                  #ffffff;
+    background-color:       #028c1c;
+}
+a[wliu][button][green][solid]:hover {
+    background-color:       #028c1c;
+}
+a[wliu][button][navi] {
+    border-color:           #00c1c1;
+}
+a[wliu][button][navi][solid] {
+    color:                  #ffffff;
+    background-color:       #00c1c1;
+}
+a[wliu][button][navi][solid]:hover {
+    background-color:       #00c1c1;
+}
+a[wliu][button][mint] {
+    border-color:           #01a598;
+}
+a[wliu][button][mint][solid] {
+    color:                  #ffffff;
+    background-color:       #01a598;
+}
+a[wliu][button][mint][solid]:hover {
+    background-color:       #01a598;
+}
+a[wliu][button][rose] {
+    border-color:           #dd04dd;
+}
+a[wliu][button][rose][solid] {
+    color:                  #ffffff;
+    background-color:       #dd04dd;
+}
+a[wliu][button][rose][solid]:hover {
+    background-color:       #dd04dd;
+}
+a[wliu][button][orange] {
+    border-color:           #f7a21b;
+}
+a[wliu][button][orange][solid] {
+    color:                  #ffffff;
+    background-color:       #f7a21b;
+}
+a[wliu][button][orange][solid]:hover {
+    background-color:       #f7a21b;
+}
+
+
+/* William Table */
+div[wliu][table] {
+    display:                flex;
+    position:               relative;
+    flex-wrap:              wrap !important; /* important for Row Wrap : width:100% */
+    justify-content:        flex-start;
+    align-items:            flex-start; /* important for row auto fit height*/
+    align-content:          flex-start; /* important for row auto fit height*/
+    margin:                 2px 0px;
+    padding:                0px;
+    box-sizing:             border-box;
+    min-width:              300px;
+}
+div[wliu][table] > div[caption] {
+    display:                flex;
+    justify-content:        center;
+    width:                  100%;
+    box-sizing:             border-box;
+    font-size:              20px;
+    line-height:            1.5;
+    font-weight:            600;
+    color:                  #666666;
+}
+
+div[wliu][table] > div[scroll-bar] {
+    display:            flex;
+    position:           relative;
+    flex-wrap:          wrap !important; /* important for Row Wrap : width:100% */
+    justify-content:    flex-start;
+    align-items:        flex-start; /* important for row auto fit height*/
+    align-content:      flex-start; /* important for row auto fit height*/
+    margin:             0px;
+    padding:            0px;
+    box-sizing:         border-box;
+    min-width:          300px;
+    overflow-x:         hidden;
+    overflow-y:         scroll;
+    border-bottom:      1px solid #cccccc;
+    padding-bottom:     16px;
+    box-sizing:         content-box;
+}
+
+
+div[wliu][table] div[row] {
+    display:            flex;
+    justify-content:    flex-start;
+    width:              100%;
+    box-sizing:         border-box;
+}
+div[wliu][table] div[row][center] {
+    justify-content:    center;
+}
+
+div[wliu][table] > div[row][scroll-head]:after {
+    display:            inline-block;
+    content:            " ";
+    margin:             1px 0px 1px 1px;
+    border-bottom:      1px solid #cccccc;
+    width:              16px;
+    flex-basis:         16px;
+    flex-grow:          0;
+    flex-shrink:        0;
+}
+
+div[wliu][table] div[row] > div[head] {
+    display:            block;
+    width:              100px;
+    box-sizing:         border-box;
+    line-height:        2;
+    font-size:          14px;
+    font-weight:        bold;
+    overflow:           hidden;
+    white-space:        nowrap;
+    text-overflow:      ellipsis;
+    margin:             1px;
+    padding:            0px 2px;
+    border-bottom:      1px solid #cccccc;
+    user-select:        none;
+    flex-grow:          0; /* default no grow */
+    flex-shrink:        0;
+}
+div[wliu][table] div[row] > div[head][center] {
+    text-align:         center;
+}
+
+div[wliu][table] div[row] > div[cell] {
+    display:            block;
+    width:              100px;
+    box-sizing:         border-box;
+    overflow:           hidden;
+    font-size:          16px;
+    line-height:        1.5;
+    font-weight:        500;
+    margin:             1px;
+    padding:            0px 2px;
+    flex-grow:          0; /* default no grow */
+    flex-shrink:        0;
+}
+div[wliu][table] div[row] > div[cell][center] {
+    text-align:         center;
+}
+/*** table cell size: large, medium, fixed ***/
+div[wliu][table] div[row] > div[cell][large],
+div[wliu][table] div[row] > div[head][large] {
+    width:              200px;
+}
+
+div[wliu][table] div[row] > div[cell][medium],
+div[wliu][table] div[row] > div[head][medium] {
+    width:              120px;
+}
+
+div[wliu][table] div[row] > div[cell][fixed],
+div[wliu][table] div[row] > div[head][fixed] {
+    flex-grow:          0;
+    flex-shrink:        0;
+}
+/********************************************/
+
+/****** table resize : grow and shrink *****/
+div[wliu][table][grow] div[row] > div[head],
+div[wliu][table][grow] div[row] > div[cell] {
+    flex-grow:          1;
+}
+
+div[wliu][table][grow] div[row] > div[cell][large],
+div[wliu][table][grow] div[row] > div[head][large] {
+    flex-grow:          2;
+}
+
+div[wliu][table][grow] div[row] > div[cell][medium],
+div[wliu][table][grow] div[row] > div[head][medium] {
+    flex-grow:          1.5;
+}
+
+div[wliu][table][grow] div[row] > div[cell][fixed],
+div[wliu][table][grow] div[row] > div[head][fixed] {
+    flex-grow:          0;
+    flex-shrink:        0;
+}
+
+div[wliu][table][shrink] div[row] > div[cell],
+div[wliu][table][shrink] div[row] > div[head] {
+    flex-shrink:        1;
+}
+
+div[wliu][table][shrink] div[row] > div[cell][fixed],
+div[wliu][table][shrink] div[row] > div[head][fixed] {
+    flex-grow:          0;
+    flex-shrink:        0;
+}
+/******************************************/
+
+
+/****** table: other features ************/
+div[wliu][table] div[row] > div[cell][nowrap] {
+    white-space:        nowrap;
+    text-overflow:      ellipsis;
+}
+
+div[wliu][table][border] div[row] > div[cell] {
+    border:             1px solid #eeeeee;
+    border-radius:      0px;
+}
+div[wliu][table][underline] div[row] > div[cell] {
+    border-bottom:      1px solid #cccccc;
+}
+div[wliu][table][hover] div[row]:hover > div[cell] {
+    background-color:   #efefef;
+}
+/******************************************/
+
+
+/*** tabel: background - bg-grey *****/
+div[wliu][table][color="grey"] div[row] > div[head] {
+    background-color:   #f3f3f3;
+    border-right:       1px solid #cccccc;
+    border-top:         1px solid #cccccc;
+    border-bottom:      1px solid #cccccc;
+    margin:             0px;
+}
+div[wliu][table][color="grey"] div[row] > div[head]:first-child {
+    border-left:        1px solid #cccccc;
+}
+div[wliu][table][color="grey"] div[row] > div[cell] {
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    margin: 0px;
+}
+div[wliu][table][color="grey"] div[row] > div[cell]:first-child {
+    border-left: 1px solid #cccccc;
+}
+div[wliu][table][color="grey"][hover] div[row]:hover > div[cell] {
+    background-color: #efefef;
+}
+
+
+div[wliu][table][color="grey"] > div[row][scroll-head]:after {
+    background-color:   #eeeeee;
+    border-right:       1px solid #cccccc;
+    border-top:         1px solid #cccccc;
+    border-bottom:      1px solid #cccccc;
+    margin:             0px;
+    width:              16px;
+    flex-basis:         16px;
+    flex-grow:          0;
+    flex-shrink:        0;
+
+}
+div[wliu][table][color="grey"] > div[scroll-bar] {
+    border-top:         0px solid #cccccc;
+    border-bottom:      1px solid #cccccc;
+    border-left:        1px solid #cccccc;
+    border-right:       1px solid #cccccc;
+}
+div[wliu][table][color="grey"] > [scroll-bar] > div[row] > div[cell]:first-child {
+    border-left: 0px solid #cccccc;
+}
+/******************************************/
+
+/*** tabel: background - bg-blue *****/
+div[wliu][table][color="blue"] div[row] > div[head] {
+    background-image:   linear-gradient(135deg, #025bd8, #0150bf, #0049b1, #0150bf, #025bd8);;
+    border-right:       1px solid #ffffff;
+    border-top:         1px solid #0049b1;
+    border-bottom:      1px solid #0049b1;
+    margin:             0px;
+    color:              #ffffff;
+}
+div[wliu][table][color="blue"] div[row] > div[head]:first-child {
+    border-left:        1px solid #0049b1;
+}
+div[wliu][table][color="blue"] div[row] > div[cell] {
+    border-right: 1px solid #0049b1;
+    border-bottom: 1px solid #0049b1;
+    margin: 0px;
+}
+div[wliu][table][color="blue"] div[row] > div[cell]:first-child {
+    border-left: 1px solid #0049b1;
+}
+div[wliu][table][color="blue"][hover] div[row]:hover > div[cell] {
+    background-color: #efefef;
+}
+
+div[wliu][table][color="blue"] > div[row][scroll-head]:after {
+    background-image:   linear-gradient(135deg, #025bd8, #0049b1, #0049b1, #0049b1, #025bd8);
+    border-right:       1px solid #0049b1;
+    border-top:         1px solid #0049b1;
+    border-bottom:      1px solid #0049b1;
+    margin:             0px;
+    width:              16px;
+    flex-basis:         16px;
+    flex-grow:          0;
+    flex-shrink:        0;
+
+}
+div[wliu][table][color="blue"] > div[scroll-bar] {
+    border-top:         0px solid #0049b1;
+    border-bottom:      1px solid #0049b1;
+    border-left:        1px solid #0049b1;
+    border-right:       1px solid #0049b1;
+}
+div[wliu][table][color="blue"] > [scroll-bar] > div[row] > div[cell]:first-child {
+    border-left: 0px solid #0049b1;
+}
+/******************************************/
+
+/*** tabel: background - bg-green *****/
+div[wliu][table][color="green"] div[row] > div[head] {
+    background-image:   linear-gradient(135deg, #0cb72c, #039e1f, #028c1c, #039e1f, #0cb72c);
+    border-right:       1px solid #ffffff;
+    border-top:         1px solid #028c1c;
+    border-bottom:      1px solid #028c1c;
+    margin:             0px;
+    color:              #ffffff;
+}
+div[wliu][table][color="green"] div[row] > div[head]:first-child {
+    border-left:        1px solid #028c1c;
+}
+div[wliu][table][color="green"] div[row] > div[cell] {
+    border-right: 1px solid #028c1c;
+    border-bottom: 1px solid #028c1c;
+    margin: 0px;
+}
+div[wliu][table][color="green"] div[row] > div[cell]:first-child {
+    border-left: 1px solid #028c1c;
+}
+div[wliu][table][color="green"][hover] div[row]:hover > div[cell] {
+    background-color: #efefef;
+}
+
+div[wliu][table][color="green"] > div[row][scroll-head]:after {
+    background-image:   linear-gradient(135deg, #0cb72c, #039e1f, #028c1c, #039e1f, #0cb72c);
+    border-right:       1px solid #028c1c;
+    border-top:         1px solid #028c1c;
+    border-bottom:      1px solid #028c1c;
+    margin:             0px;
+    width:              16px;
+    flex-basis:         16px;
+    flex-grow:          0;
+    flex-shrink:        0;
+
+}
+div[wliu][table][color="green"] > div[scroll-bar] {
+    border-top:         0px solid #028c1c;
+    border-bottom:      1px solid #028c1c;
+    border-left:        1px solid #028c1c;
+    border-right:       1px solid #028c1c;
+}
+div[wliu][table][color="green"] > [scroll-bar] > div[row] > div[cell]:first-child {
+    border-left: 0px solid #028c1c;
+}
+/******************************************/
+
+/*** tabel: background - bg-navi *****/
+div[wliu][table][color="navi"] div[row] > div[head] {
+    background-image:   linear-gradient(135deg, #02c9c9, #02c9c9, #00c1c1, #02c9c9, #02c9c9);
+    border-right:       1px solid #ffffff;
+    border-top:         1px solid #00c1c1;
+    border-bottom:      1px solid #00c1c1;
+    margin:             0px;
+    color:              #ffffff;
+}
+div[wliu][table][color="navi"] div[row] > div[head]:first-child {
+    border-left:        1px solid #00c1c1;
+}
+div[wliu][table][color="navi"] div[row] > div[cell] {
+    border-right: 1px solid #00c1c1;
+    border-bottom: 1px solid #00c1c1;
+    margin: 0px;
+}
+div[wliu][table][color="navi"] div[row] > div[cell]:first-child {
+    border-left: 1px solid #00c1c1;
+}
+div[wliu][table][color="navi"][hover] div[row]:hover > div[cell] {
+    background-color: #efefef;
+}
+
+div[wliu][table][color="navi"] > div[row][scroll-head]:after {
+    background-image:   linear-gradient(135deg, #02c9c9, #02c9c9, #00c1c1, #02c9c9, #02c9c9);
+    border-right:       1px solid #00c1c1;
+    border-top:         1px solid #00c1c1;
+    border-bottom:      1px solid #00c1c1;
+    margin:             0px;
+    width:              16px;
+    flex-basis:         16px;
+    flex-grow:          0;
+    flex-shrink:        0;
+
+}
+div[wliu][table][color="navi"] > div[scroll-bar] {
+    border-top:         0px solid #00c1c1;
+    border-bottom:      1px solid #00c1c1;
+    border-left:        1px solid #00c1c1;
+    border-right:       1px solid #00c1c1;
+}
+div[wliu][table][color="navi"] > [scroll-bar] > div[row] > div[cell]:first-child {
+    border-left: 0px solid #00c1c1;
+}
+/******************************************/
+
+/*** tabel: background - bg-mint *****/
+div[wliu][table][color="mint"] div[row] > div[head] {
+    background-color:   #01a598;
+    border-right:       1px solid #ffffff;
+    border-top:         1px solid #43b289;
+    border-bottom:      1px solid #43b289;
+    margin:             0px;
+    color:              #ffffff;
+}
+div[wliu][table][color="mint"] div[row] > div[head]:first-child {
+    border-left:        1px solid #43b289;
+}
+div[wliu][table][color="mint"] div[row] > div[cell] {
+    border-right:       1px solid #43b289;
+    border-bottom:      1px solid #43b289;
+    margin:             0px;
+}
+div[wliu][table][color="mint"] div[row] > div[cell]:first-child {
+    border-left:        1px solid #43b289;
+}
+div[wliu][table][color="mint"][hover] div[row]:hover > div[cell] {
+    background-color:   #efefef;
+}
+
+div[wliu][table][color="mint"] > div[row][scroll-head]:after {
+    background-color:   #01a598;
+    border-right:       1px solid #43b289;
+    border-top:         1px solid #43b289;
+    border-bottom:      1px solid #43b289;
+    margin:             0px;
+    width:              16px;
+    flex-basis:         16px;
+    flex-grow:          0;
+    flex-shrink:        0;
+
+}
+div[wliu][table][color="mint"] > div[scroll-bar] {
+    border-top:         0px solid #43b289;
+    border-bottom:      1px solid #43b289;
+    border-left:        1px solid #43b289;
+    border-right:       1px solid #43b289;
+}
+div[wliu][table][color="mint"] > [scroll-bar] > div[row] > div[cell]:first-child {
+    border-left:        0px solid #43b289;
+}
+
+/*******************************************/
+fieldset {
+    display:            block;
+    width:              100%;
+    padding:            6px 2px 2px 2px;
+    background-color:   #efefef;
+    box-sizing:         border-box;
+    border-radius:      5px;
+    margin:             1px 0px;
+}
+fieldset > legend {
+    display:            inline-block;
+    width:              auto;
+    font-size:          16px;
+    font-weight:        500;
+    color:              #ffffff;
+    padding:            3px;
+    margin-top:         0px;
+    border-radius:      8px;
+    background-color:   #222222;
+}
+
+/******************************************/
+div[spin] {
+    display:        block;
+    position:       absolute;
+    height:         48px;
+    background:     center center url(Images/wliu-loading.gif) no-repeat;
+    top:            50%;
+    left:           50%;
+    transform:      translate(-50%, -50%);
+    z-index:        99;
+}
+[wcenter] {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+span[normal] {
+    display:            inline-block;
+    padding:            0px;
+    margin:             0px;
+    line-height:        1.2;
+}
+
+span[wliu] {
+    display:            inline-block;
+    font-size:          16px;
+    line-height:        1.5;
+    box-sizing:         border-box;
+    margin:             2px 0px;
+    padding:            3px 2px; 
+    vertical-align:     middle;
+
+}
+
+div[wliu][border] {
+    display:            block;
+    width:              100%;
+    margin:             0px;
+    margin-top:         2px;
+    margin-bottom:      8px;
+    border-top:         1px solid #cccccc;
+}
+
+span.seperator {
+    margin:             0px 4px;
+    font-weight:        100;
+}
+a.language {
+    cursor:             pointer;
+    font-size:          14px;
+    vertical-align:     middle;
+    border-radius:      4px;
+    padding:            4px 6px;
+}
+a.language:hover {
+    background-color:   #5297b5;
+}
+a.language.active {
+    background-color:   #36B3E4;
+}
+a.logout {
+    cursor:             pointer;
+    border-radius:      4px;
+    padding:            4px 6px;
+}
+a.logout:hover {
+    background-color:   #5297b5;
+}
+
+
+/***Image Crop*****/
+div.wliu-image-frame {
+    display:            inline-block;
+    position:           relative;
+    width:              100%;
+    height:             100%;
+    border:             1px solid #cccccc;
+    margin:             0px;
+    box-sizing:         border-box;
+    padding:            0px;
+    background-color:   #000000;
+    opacity:            1;
+}
+
+
+div.wliu-image-frame > img {
+    display:    block;
+    position:   relative;
+    height:     100%;
+    object-fit: contain;
+    padding:    0px;
+    margin:     0px;
+    opacity:    0.7;
+}
+
+div.wliu-image-crop {
+    cursor:     move;
+    display:    block;
+    position:   absolute;
+    top:        5%;
+    left:       5%;
+    width:      90%;
+    height:     90%;
+    border:     2px solid white;
+    box-sizing: content-box;
+    z-index:    99;
+    overflow:   visible;
+}
+
+div.wliu-image-crop div.wliu-image-crop-h {
+    display: block;
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 33%;
+    top: 33%;
+    border: 1px dotted #cccccc;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+div.wliu-image-crop div.wliu-image-crop-v {
+    display: block;
+    position: absolute;
+    box-sizing: border-box;
+    height: 100%;
+    width: 33%;
+    left: 33%;
+    border: 1px dotted #cccccc;
+    border-top: 0px;
+    border-bottom: 0px;
+}
+
+img[src=''] + div.wliu-image-crop,
+div.wliu-image-crop + img[src=''] {
+    display: none;
+}
+
+/*** File upload and list ****/
+/*** overwrite resize handle ***/
+div.wliu-image-frame div.ui-resizable-se {
+    background-image: url("Images/wliu-resize.png");
+    background-position: center center;
+    width: 16px;
+    height: 16px;
+    margin-left: -12px;
+    margin-top: -12px;
+    top: 100%;
+    left: 100%;
+}
+
+
+/*** ***/
+div[wliu][nophoto] {
+    display:    block;
+    width:      260px;
+    height:     260px;
+    max-width:  50vw;
+    max-height: 50vh;
+    background: center center url(Images/no-image.jpg) no-repeat;
+    object-fit: contain;
+}
+div[wliu][image][gallery] {
+    display:            inline-block;
+    border:             1px solid #cccccc;
+    background-color:   #efefef;      /*center center url(Images/gallery-bg.jpg) repeat;*/
+    border-radius:      6px;
+    overflow:           hidden;
+    box-sizing:         border-box;
+}
