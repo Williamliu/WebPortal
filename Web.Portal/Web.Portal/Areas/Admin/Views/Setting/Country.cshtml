@@ -1,0 +1,75 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+        });
+        viewData.Init("/Admin/api/Setting/InitCountry");
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl">
+    <ng-form>
+        <fieldset>
+            <legend>@Html.Words("search.by")</legend>
+            <filter.label db="ViewData.database" tb="Country" col="search_keyword"></filter.label>
+            <filter.textbox db="ViewData.database" tb="Country" col="search_keyword"></filter.textbox>
+            <wliu.search db="ViewData.database" tb="Country">Search</wliu.search>
+        </fieldset>
+        <div wliu table grow shrink style="margin-top:12px;">
+            <div row>
+                <div cell style="background-color:#dddddd;">
+                    <wliu.navi db="ViewData.database" tb="Country"></wliu.navi>
+                </div>
+            </div>
+            <div row>
+                <div head fixed style="width:40px;"></div>
+                <div head medium><wliu.head db="ViewData.database" tb="Country" col="TitleEN"></wliu.head></div>
+                <div head large><wliu.head db="ViewData.database" tb="Country" col="DetailEN"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="Country" col="TitleCN"></wliu.head></div>
+                <div head large><wliu.head db="ViewData.database" tb="Country" col="DetailCN"></wliu.head></div>
+                <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="Country" col="Sort"></wliu.head></div>
+                <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="Country" col="Active"></wliu.head></div>
+                <div head fixed style="width:56px;">
+                    <wliu.hicon db="ViewData.database" tb="Country" icons="add,save,cancel"></wliu.hicon>
+                </div>
+            </div>
+            <div row ng-repeat="row in ViewData.database.tables.Country.rows">
+                <div cell center fixed style="width:40px;">
+                    <wliu.rowstatus db="ViewData.database" tb="Country" guid="{{row.guid}}"></wliu.rowstatus>
+                </div>
+                <div cell medium>
+                    <wliu.textbox db="ViewData.database" tb="Country" guid="{{row.guid}}" col="TitleEN"></wliu.textbox>
+                </div>
+                <div cell large>
+                    <wliu.textbox db="ViewData.database" tb="Country" guid="{{row.guid}}" col="DetailEN"></wliu.textbox>
+                </div>
+                <div cell medium>
+                    <wliu.textbox db="ViewData.database" tb="Country" guid="{{row.guid}}" col="TitleCN"></wliu.textbox>
+                </div>
+                <div cell large>
+                    <wliu.textbox db="ViewData.database" tb="Country" guid="{{row.guid}}" col="DetailCN"></wliu.textbox>
+                </div>
+                <div cell center fixed style="width:60px;">
+                    <wliu.textbox db="ViewData.database" tb="Country" guid="{{row.guid}}" col="Sort"></wliu.textbox>
+                </div>
+                <div cell center fixed style="width:60px;">
+                    <wliu.bool db="ViewData.database" tb="Country" guid="{{row.guid}}" col="Active"></wliu.bool>
+                </div>
+                <div cell fixed style="width:56px;">
+                    <wliu.bicon db="ViewData.database" tb="Country" guid="{{row.guid}}" icons="save,cancel"></wliu.bicon>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+
+    <table.error></table.error>
+    <form.error></form.error>
+
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+
+</div>

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Library.V1.Common;
 using Library.V1.Entity;
-using Library.V1.SQL;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 

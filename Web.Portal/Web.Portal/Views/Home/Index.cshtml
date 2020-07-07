@@ -1,25 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-    AppSetting appCon = ViewBag.AppConf as AppSetting;
+﻿@section Scripts {
+    <script>
+    </script>
 }
-
-@section Scripts {
-<script>
-    var viewData = new WLIU.ViewData();
-    viewData.Init("/Admin/api/Home/Reload").then(d => {
-        console.log(viewData.database);
-    });
-
-</script>
-}
-
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-        <br />
-        Language : @appCon.Lang<br />
-        SQL Lang: @appCon.DataAccount.Lang<br />
-        SQL FLang: @appCon.FileAccount.Lang<br />
-        Connect: @appCon.DataAccount.ConnectString<br />
-        Environment: @appCon.CurrentEnvir
-    </div>
+<div ng-app="myApp" ng-controller="mycontrl" style="position:absolute; width:100vw; height:100vh; box-sizing:border-box;">
+    <img src="~/resource/style/Images/ShaolinBackground/shiyongxintizi.png" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);" />
+</div>

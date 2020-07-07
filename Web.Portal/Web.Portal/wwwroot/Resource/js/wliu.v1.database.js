@@ -1074,8 +1074,8 @@ WLIU.Table.prototype = {
     },
     SyncGetTable: function (gtable) {
         if (gtable) {
-            //this.refKey = gtable.refKey;
-            //this.rowGuid = gtable.rowGuid;
+            this.refKey = gtable.refKey;
+            this.rowGuid = gtable.rowGuid;
 
             let getError = false;
 

@@ -4,15 +4,16 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Library.V1.Common;
-using Library.V1.Entity;
-using Library.V1.SQL;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using System.Text.RegularExpressions;
 using System.IO;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Library.V1.Common;
+using Library.V1.Entity;
+using Library.V1.SQL;
 
 namespace Web.Portal.WebApi.Controllers
 {

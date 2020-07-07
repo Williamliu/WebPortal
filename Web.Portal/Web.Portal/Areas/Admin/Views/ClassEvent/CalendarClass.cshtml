@@ -1,0 +1,134 @@
+﻿@section scripts {
+    <script src="~/resource/jquery/jq.wliu.calendar.js"></script>
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("myControl", function ($scope) {
+            viewData.LinkScope($scope);
+
+            $scope.reloadCalendar = function () {
+                $("div[wliu][calendar]").calendar({
+                    data: {
+                        BranchId: viewData.database.tables.ClassCalendar.filters["search_branch"].value1,
+                        SiteId: viewData.database.tables.ClassCalendar.filters["search_site"].value1
+                    }
+                });
+            };
+
+            $scope.rowSaveAction = function () {
+                $("div[wliu][calendar]").calendar({});
+            };
+            $scope.rowCancelAction = function () {
+                $scope.ViewData.database.tables.DateEvent.CancelAll();
+            };
+
+        });
+
+        $(function () {
+            let today = new Date();
+            let dt = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+            let et = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+            $("div[wliu][calendar]").calendar({
+                lang: "en", start: dt, end: et,
+                url: "/Admin/api/ClassEvent/LoadCalendar",
+                data: { BranchId: -1, SiteId: -1 },
+                dateclick: function (evt, date, isActive) {
+                },
+                eventclick: function (evt, eid) {
+                    viewData.database.tables.DateEvent.Clear();
+                    viewData.database.tables.DateEvent.refKey = eid;
+                    viewData.database.tables.DateEvent.firstPage().then(d => {
+                        $("#detailInfo").diag("show");
+                        viewData.Apply();
+                    });
+                },
+                change: function (evt, start, end, isActive) {
+                }
+            });
+        })
+        viewData.Init("/Admin/api/ClassEvent/InitCalendarClass").then(d => {
+            $("div[wliu][calendar]").calendar({
+                data: {
+                    BranchId: d.database.tables.ClassCalendar.filters["search_branch"].value1,
+                    SiteId: d.database.tables.ClassCalendar.filters["search_site"].value1
+                }
+            });
+        });
+    </script>
+}
+<div ng-app="myApp" ng-controller="myControl">
+    <div class="container-fluid">
+        <ng-form>
+            <fieldset>
+                <legend>@Html.Words("search.by")</legend>
+                <filter.label db="ViewData.database" tb="ClassCalendar" col="search_branch"></filter.label>
+                <filter.select db="ViewData.database" tb="ClassCalendar" col="search_branch" reload="0" action="reloadCalendar()"></filter.select>
+                <filter.label db="ViewData.database" tb="ClassCalendar" col="search_site"></filter.label>
+                <filter.fselect db="ViewData.database" tb="ClassCalendar" col="search_site" fcol="search_branch" reload="0" action="reloadCalendar()"></filter.fselect>
+                <wliu.search db="ViewData.database" tb="ClassCalendar" action="reloadCalendar()">Search</wliu.search>
+            </fieldset>
+            <div wliu calendar style="margin-top:20px;"></div>
+            <div>
+                <span style="vertical-align:middle;">@Html.Words("col.status"):</span>
+                <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#b8870d;"></div>
+                -
+                <span style="vertical-align:middle;">@Html.Words("status.hidden")</span>
+                <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#ff5103;"></div>
+                -
+                <span style="vertical-align:middle;">@Html.Words("status.internal")</span>
+                <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#000000;"></div>
+                -
+                <span style="vertical-align:middle;">@Html.Words("status.publish")</span>
+                <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#c101c4;"></div>
+                -
+                <span style="vertical-align:middle;">@Html.Words("status.progress")</span>
+                <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#008743;"></div>
+                -
+                <span style="vertical-align:middle;">@Html.Words("status.close")</span>
+            </div>
+        </ng-form>
+    </div>
+
+    <div wliu diag maskable movable resizable id="detailInfo" style="width:800px;" diag-toggle="detailInfo">
+        <div head>@Html.Words("detail.information")</div>
+        <div body style="padding-top:6px;">
+            <div>
+                <table border="0" cellpadding="2" cellspacing="2" style="width:100%;">
+                    <tr>
+                        <td width="15%"><assm.select fixed border style="width:auto;" db="ViewData.database" tb="DateEvent" col="ClassStatus"></td>
+                        <td width="40%"><assm.label fixed db="ViewData.database" tb="DateEvent" col="ClassTitle"></td>
+                        <td width="20%"><assm.label fixed db="ViewData.database" tb="DateEvent" col="StartDate"></td>
+                        <td width="20%"><assm.label fixed db="ViewData.database" tb="DateEvent" col="EndDate"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" width="100%" style="border-bottom:1px solid #cccccc;"></td>
+                    </tr>
+                </table>
+                <table border="0" cellpadding="2" cellspacing="2" style="width:100%;">
+                    <tr>
+                        <td width="15%"><assm.bool fixed border style="width:auto;" db="ViewData.database" tb="DateEvent" col="DateStatus"></td>
+                        <td width="40%"><assm.label fixed db="ViewData.database" tb="DateEvent" col="DateTitle"></td>
+                        <td width="15%"><assm.date fixed db="ViewData.database" tb="DateEvent" col="ClassDate"></td>
+                        <td width="15%"><assm.time fixed db="ViewData.database" tb="DateEvent" col="StartTime"></td>
+                        <td width="15%"><assm.time fixed db="ViewData.database" tb="DateEvent" col="EndTime"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" width="100%" style="border-bottom:1px solid #cccccc;"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <center style="margin-top:12px;">
+            <form.save db="ViewData.database" tb="DateEvent" label="@Html.Words("button.save")" action="rowSaveAction()" style="margin:0px 6px;"></form.save>
+            <form.cancel db="ViewData.database" tb="DateEvent" label="@Html.Words("button.cancel")" action="rowCancelAction()" style="margin:0px 6px;" diag-toggle="detailInfo"></form.cancel>
+        </center>
+    </div>
+
+    <table.error></table.error>
+    <form.error></form.error>
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+</div>

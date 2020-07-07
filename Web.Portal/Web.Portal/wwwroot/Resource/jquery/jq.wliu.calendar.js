@@ -390,7 +390,7 @@ WLIU.Calendar.prototype = {
             ncal.start      = this.start;
             ncal.end        = this.end;
             ncal.data       = this.data;
-
+            console.log(ncal);
             let defer = $.Deferred();
             AJAX.Post(self.url, ncal).then(data => {
                 self.error = new WLIU.Error(data.error);

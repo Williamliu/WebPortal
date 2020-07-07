@@ -497,7 +497,7 @@ namespace Library.V1.SQL
             string query = $"SELECT {row.ColumnGet} FROM {tableName} WHERE {whereFilter.WhereGetFilter}";
             if (string.IsNullOrWhiteSpace(orderBy) == false && string.IsNullOrWhiteSpace(paging) == false)
                 query = $"SELECT { (n>0?$"TOP {n}":"") } {row.ColumnGet} FROM {tableName} WHERE {whereFilter.WhereGetFilter} {orderBy} {paging}";
-            if (string.IsNullOrWhiteSpace(orderBy)==false)
+            else if (string.IsNullOrWhiteSpace(orderBy)==false)
                 query = $"SELECT { (n>0?$"TOP {n}":"") } {row.ColumnGet} FROM {tableName} WHERE {whereFilter.WhereGetFilter} {orderBy}";
 
             try

@@ -1,0 +1,78 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+        });
+        viewData.Init("/Admin/api/Setting/InitCategory");
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl">
+    <ng-form>
+        <fieldset>
+            <legend>@Html.Words("search.by")</legend>
+            <filter.label db="ViewData.database" tb="Category" col="search_keyword"></filter.label>
+            <filter.textbox db="ViewData.database" tb="Category" col="search_keyword"></filter.textbox>
+            <wliu.search db="ViewData.database" tb="Category">Search</wliu.search>
+        </fieldset>
+        <div wliu table grow shrink style="margin-top:12px;">
+            <div row>
+                <div cell style="background-color:#dddddd;">
+                    <wliu.navi db="ViewData.database" tb="Category"></wliu.navi>
+                </div>
+            </div>
+            <div row>
+                <div head fixed style="width:40px;"></div>
+                <div head medium><wliu.head db="ViewData.database" tb="Category" col="TableName"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="Category" col="TitleEN"></wliu.head></div>
+                <div head large><wliu.head db="ViewData.database" tb="Category" col="DetailEN"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="Category" col="TitleCN"></wliu.head></div>
+                <div head large><wliu.head db="ViewData.database" tb="Category" col="DetailCN"></wliu.head></div>
+                <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="Category" col="Sort"></wliu.head></div>
+                <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="Category" col="Active"></wliu.head></div>
+                <div head fixed style="width:56px;">
+                    <wliu.hicon db="ViewData.database" tb="Category" icons="add,save,cancel"></wliu.hicon>
+                </div>
+            </div>
+            <div row ng-repeat="row in ViewData.database.tables.Category.rows">
+                <div cell center fixed style="width:40px;">
+                    <wliu.rowstatus db="ViewData.database" tb="Category" guid="{{row.guid}}"></wliu.rowstatus>
+                </div>
+                <div cell medium>
+                    <wliu.textbox db="ViewData.database" tb="Category" guid="{{row.guid}}" col="TableName"></wliu.textbox>
+                </div>
+                <div cell medium>
+                    <wliu.textbox db="ViewData.database" tb="Category" guid="{{row.guid}}" col="TitleEN"></wliu.textbox>
+                </div>
+                <div cell large>
+                    <wliu.textbox db="ViewData.database" tb="Category" guid="{{row.guid}}" col="DetailEN"></wliu.textbox>
+                </div>
+                <div cell medium>
+                    <wliu.textbox db="ViewData.database" tb="Category" guid="{{row.guid}}" col="TitleCN"></wliu.textbox>
+                </div>
+                <div cell large>
+                    <wliu.textbox db="ViewData.database" tb="Category" guid="{{row.guid}}" col="DetailCN"></wliu.textbox>
+                </div>
+                <div cell center fixed style="width:60px;">
+                    <wliu.textbox db="ViewData.database" tb="Category" guid="{{row.guid}}" col="Sort"></wliu.textbox>
+                </div>
+                <div cell center fixed style="width:60px;">
+                    <wliu.bool db="ViewData.database" tb="Category" guid="{{row.guid}}" col="Active"></wliu.bool>
+                </div>
+                <div cell fixed style="width:56px;">
+                    <wliu.bicon db="ViewData.database" tb="Category" guid="{{row.guid}}" icons="save,cancel,delete"></wliu.bicon>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+
+    <table.error></table.error>
+    <form.error></form.error>
+
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+</div>

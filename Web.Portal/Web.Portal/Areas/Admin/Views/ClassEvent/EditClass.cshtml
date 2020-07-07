@@ -1,0 +1,283 @@
+﻿@section scripts {
+    <script src="~/resource/js/ckeditor_full/ckeditor.js" type="text/javascript"></script>
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+            $scope.SelectGuid = function (guid) {
+                if ($("ul[wliu][tree][root]").tree("option", "select")) {
+                    viewData.database.tables.CourseDefine.rowGuid = guid;
+                    let courseId = viewData.database.tables.CourseDefine.CurrentKey();
+                    viewData.database.tables.ClassEvent.Clear();
+                    viewData.database.tables.ClassEvent.filters["fitler_courseId"].value1 = courseId;
+                    viewData.database.tables.ClassEvent.firstPage().then(d => { viewData.Apply(); }).catch(e => { viewData.Apply();});
+                }
+            };
+            $scope.addNew = function () {
+                viewData.database.tables.ClassEvent.CurrentSet("CourseId", viewData.database.tables.CourseDefine.CurrentKey());
+                viewData.database.tables.ClassEvent.CurrentSet("Title_en", viewData.database.tables.CourseDefine.CurrentValue("Title_en"));
+                viewData.database.tables.ClassEvent.CurrentSet("Title_cn", viewData.database.tables.CourseDefine.CurrentValue("Title_cn"));
+                viewData.database.tables.ClassEvent.CurrentSet("Detail_en", viewData.database.tables.CourseDefine.CurrentValue("Detail_en"));
+                viewData.database.tables.ClassEvent.CurrentSet("Detail_cn", viewData.database.tables.CourseDefine.CurrentValue("Detail_cn"));
+                viewData.database.tables.ClassEvent.CurrentSet("IsFree", viewData.database.tables.CourseDefine.CurrentValue("IsFree"));
+                viewData.database.tables.ClassEvent.CurrentSet("FeeAmount", viewData.database.tables.CourseDefine.CurrentValue("FeeAmount"));
+                viewData.database.tables.ClassEvent.CurrentSet("Currency", viewData.database.tables.CourseDefine.CurrentValue("Currency"));
+            };
+            $scope.saveAct = function () {
+                let refKey = viewData.database.tables.ClassEvent.CurrentKey();
+                viewData.database.tables.ClassDetail.refkey = refKey;
+                viewData.database.tables.ClassDetail.SaveAll().then(d => {
+                    $scope.$apply();
+                }).catch(e => {
+                    $scope.$apply();
+                });
+            };
+            $scope.cancelAct = function () {
+                viewData.database.tables.ClassDetail.CancelAll();
+            };
+
+            $scope.detail = function () {
+                $("#class_list").hide();
+                $("#class_detail").show();
+
+                let refKey = viewData.database.tables.ClassEvent.CurrentKey();
+                viewData.database.tables.ClassDetail.Clear();
+                viewData.database.tables.ClassDetail.refKey = refKey;
+                viewData.database.tables.ClassDetail.firstPage().then(d => {
+                    $scope.$apply();
+                }).catch(e => {
+                    $scope.$apply();
+                });
+            };
+            $scope.addDetail = function () {
+                viewData.database.tables.ClassDetail.CurrentSet("Title_en", viewData.database.tables.ClassEvent.CurrentValue("Title_en"));
+                viewData.database.tables.ClassDetail.CurrentSet("Title_cn", viewData.database.tables.ClassEvent.CurrentValue("Title_cn"));
+            };
+            $scope.goBack = function () {
+                $("#class_detail").hide();
+                $("#class_list").show();
+            }
+
+        });
+        viewData.Init("/Admin/api/ClassEvent/InitEditClass").then(d => {
+            d.database.tables.ClassEvent.CKEditor = ["Detail_en", "Detail_cn"];
+            $("ul[wliu][tree][root]").tree({ name: "CourseAll", icon: "folder", select: true });
+            $(`li[node][guid='${d.database.tables.CourseDefine.CurrentGuid()}']`).addAttr("selected");
+            let courseId = viewData.database.tables.CourseDefine.CurrentKey();
+            viewData.database.tables.ClassEvent.Clear();
+            viewData.database.tables.ClassEvent.filters["fitler_courseId"].value1 = courseId;
+            viewData.database.tables.ClassEvent.firstPage().then(d1 => { viewData.Apply(); }).catch(e => { viewData.Apply(); });
+            d.Apply();
+        });
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl">
+    <div class="container-fluid">
+        <ng-form>
+            <div id="class_list">
+                <table border="0" cellpadding="2" cellspacing="2" style="width:100%;margin-top:20px;">
+                    <tr>
+                        <td valign="top" width="30%" style="white-space:nowrap;">
+                            <ul id="d1" wliu tab9 color="">
+                                <li>@Html.Words("all.course")</li>
+                            </ul>
+                            <div wliu tab9 body style="border-right:none;">
+                                <div>
+                                    <ul wliu tree root>
+                                        <li nodes open ng-repeat="brow in ViewData.database.tables.Branch.rows">
+                                            <tree.text short db="ViewData.database" tb="Branch" guid="{{brow.guid}}" col="Title"></tree.text>
+                                            <ul wliu tree>
+                                                <li nodes open ng-repeat="srow in ViewData.database.tables.Site.FilterRows({BranchId:brow.key})">
+                                                    <tree.text short db="ViewData.database" tb="Site" guid="{{srow.guid}}" col="Title"></tree.text>
+                                                    <ul wliu tree>
+                                                        <li node guid="{{crow.guid}}" ng-click="SelectGuid(crow.guid)" ng-repeat="crow in ViewData.database.tables.CourseDefine.FilterRows({BranchId:brow.key, SiteId:srow.key})">
+                                                            <tree.text short db="ViewData.database" tb="CourseDefine" guid="{{crow.guid}}" col="Title" style="min-width:120px;"></tree.text>
+                                                            <tree.booltext db="ViewData.database" tb="CourseDefine" guid="{{crow.guid}}" col="Active"></tree.booltext>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td valign="top" width="70%">
+                            <ul id="d1" wliu tab9 color="awesome">
+                                <li>@Html.Words("class.define")</li>
+                            </ul>
+                            <div wliu tab9 body style="border-right:none;">
+                                <div>
+                                    <div wliu table grow shrink>
+                                        <div row style="margin-top:12px;">
+                                            <div cell>
+                                                <label wliu h2>@Html.Words("class.list")</label><br />
+                                                <div wliu table grow shrink>
+                                                    <div row>
+                                                        <div cell style="background-color:#dddddd;">
+                                                            <wliu.navi db="ViewData.database" tb="ClassEvent"></wliu.navi>
+                                                        </div>
+                                                    </div>
+                                                    <div row>
+                                                        <div head fixed style="width:40px;"></div>
+                                                        <div head small center fixed style="width:80px;"><wliu.head db="ViewData.database" tb="ClassEvent" col="Active"></wliu.head></div>
+                                                        <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassEvent" col="StartDate"></wliu.head></div>
+                                                        <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassEvent" col="EndDate"></wliu.head></div>
+                                                        <div head small><wliu.head db="ViewData.database" tb="ClassEvent" col="Title_en"></wliu.head></div>
+                                                        <div head small><wliu.head db="ViewData.database" tb="ClassEvent" col="Title_cn"></wliu.head></div>
+                                                        <div head fixed style="width:60px;">
+                                                            <wliu.hicon db="ViewData.database" tb="ClassEvent" icons="add,save,cancel" actionadd="addNew()"></wliu.hicon>
+                                                        </div>
+                                                    </div>
+                                                    <div row ng-repeat="row in ViewData.database.tables.ClassEvent.rows">
+                                                        <div cell center fixed style="width:40px;">
+                                                            <wliu.rowstatus db="ViewData.database" tb="ClassEvent" guid="{{row.guid}}"></wliu.rowstatus>
+                                                        </div>
+                                                        <div cell small center fixed style="width:80px;">
+                                                            <wliu.select db="ViewData.database" tb="ClassEvent" guid="{{row.guid}}" col="Status"></wliu.select>
+                                                        </div>
+                                                        <div cell fixed style="width:140px;">
+                                                            <wliu.date db="ViewData.database" tb="ClassEvent" guid="{{row.guid}}" col="StartDate"></wliu.date>
+                                                        </div>
+                                                        <div cell fixed style="width:140px;">
+                                                            <wliu.date db="ViewData.database" tb="ClassEvent" guid="{{row.guid}}" col="EndDate"></wliu.date>
+                                                        </div>
+                                                        <div cell small>
+                                                            <wliu.textbox db="ViewData.database" tb="ClassEvent" guid="{{row.guid}}" col="Title_en"></wliu.textbox>
+                                                        </div>
+                                                        <div cell small>
+                                                            <wliu.textbox db="ViewData.database" tb="ClassEvent" guid="{{row.guid}}" col="Title_cn"></wliu.textbox>
+                                                        </div>
+                                                        <div cell fixed style="width:60px;">
+                                                            <wliu.bicon db="ViewData.database" tb="ClassEvent" guid="{{row.guid}}" icons="save,cancel,delete,detail" actiondetail="detail()"></wliu.bicon>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="class_detail" style="display:none;margin-top:12px;">
+                <a wliu button blue ng-click="goBack()">@Html.Words("go.back")</a>
+                <div>
+                    <form.status db="ViewData.database" tb="ClassEvent" style="float:left;"></form.status>
+                    <center>
+                        <form.save h2 db="ViewData.database" tb="ClassEvent" label="@Html.Words("button.save")" action="saveAct()"></form.save>
+                        <form.cancel h2 db="ViewData.database" tb="ClassEvent" label="@Html.Words("button.cancel")" action="cancelAct()"></form.cancel>
+                    </center>
+                    <div wliu table grow shrink>
+                        <div row style="margin-top:12px;">
+                            <div cell>
+                                <label wliu h2>@Html.Words("class.schedule"): </label>
+                                <form.label db="ViewData.database" tb="ClassEvent" col="StartDate"></form.label>
+                                <form.date db="ViewData.database" tb="ClassEvent" col="StartDate"></form.date>
+                                <form.label db="ViewData.database" tb="ClassEvent" col="EndDate"></form.label>
+                                <form.date db="ViewData.database" tb="ClassEvent" col="EndDate"></form.date>
+                                <br />
+                                <div wliu table grow shrink>
+                                    <div row>
+                                        <div cell style="background-color:#dddddd;">
+                                            <wliu.navi db="ViewData.database" tb="ClassDetail"></wliu.navi>
+                                        </div>
+                                    </div>
+                                    <div row>
+                                        <div head fixed style="width:40px;"></div>
+                                        <div head small center fixed style="width:80px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="Active"></wliu.head></div>
+                                        <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
+                                        <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
+                                        <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
+                                        <div head small><wliu.head db="ViewData.database" tb="ClassDetail" col="Title_en"></wliu.head></div>
+                                        <div head small><wliu.head db="ViewData.database" tb="ClassDetail" col="Title_cn"></wliu.head></div>
+                                        <div head large><wliu.head db="ViewData.database" tb="ClassDetail" col="Detail_en"></wliu.head></div>
+                                        <div head large><wliu.head db="ViewData.database" tb="ClassDetail" col="Detail_cn"></wliu.head></div>
+                                        <div head fixed style="width:30px;">
+                                            <wliu.micon db="ViewData.database" tb="ClassDetail" icons="add" actionadd="addDetail()"></wliu.micon>
+                                        </div>
+                                    </div>
+                                    <div row ng-repeat="row in ViewData.database.tables.ClassDetail.rows">
+                                        <div cell center fixed style="width:40px;">
+                                            <wliu.rowstatus db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}"></wliu.rowstatus>
+                                        </div>
+                                        <div cell small center fixed style="width:80px;">
+                                            <wliu.bool db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Active"></wliu.bool>
+                                        </div>
+                                        <div cell fixed style="width:140px;">
+                                            <wliu.date db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="ClassDate"></wliu.date>
+                                        </div>
+                                        <div cell fixed style="width:100px;">
+                                            <wliu.time db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="StartTime"></wliu.time>
+                                        </div>
+                                        <div cell fixed style="width:100px;">
+                                            <wliu.time db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="EndTime"></wliu.time>
+                                        </div>
+                                        <div cell small>
+                                            <wliu.textbox db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title_en"></wliu.textbox>
+                                        </div>
+                                        <div cell small>
+                                            <wliu.textbox db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title_cn"></wliu.textbox>
+                                        </div>
+                                        <div cell large>
+                                            <wliu.textbox db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Detail_en"></wliu.textbox>
+                                        </div>
+                                        <div cell large>
+                                            <wliu.textbox db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Detail_cn"></wliu.textbox>
+                                        </div>
+                                        <div cell fixed style="width:30px;">
+                                            <wliu.bicon db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" icons="cancel,delete"></wliu.bicon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div row style="margin-top:12px;">
+                            <div cell>
+                                <label wliu h2>@Html.Words("class.detail")</label>
+                                <table>
+                                    <tr>
+                                        <td align="left" width="33%"><assm.bool fixed border h2 db="ViewData.database" tb="ClassEvent" col="IsFree"></assm.bool></td>
+                                        <td align="left" width="33%" style="padding-left:10px;"><assm.textbox fixed small border h2 db="ViewData.database" tb="ClassEvent" col="FeeAmount"></assm.textbox></td>
+                                        <td align="left" width="33%" style="padding-left:10px;"><assm.select fixed small border h2 db="ViewData.database" tb="ClassEvent" col="Currency"></assm.select></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div row style="margin-top:12px;">
+                            <div cell>
+                                <br />
+                                <ul id="d1" wliu tab9 border color="mint">
+                                    <li>@Html.Words("detail.en")</li>
+                                    <li>@Html.Words("detail.cn")</li>
+                                </ul>
+                                <div wliu tab9 body>
+                                    <div>
+                                        <form.ckeditor db="ViewData.database" tb="ClassEvent" col="Detail_en" hh="300px"></form.ckeditor>
+                                    </div>
+                                    <div>
+                                        <form.ckeditor db="ViewData.database" tb="ClassEvent" col="Detail_cn" hh="300px"></form.ckeditor>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </ng-form>
+    </div>
+
+    <table.error></table.error>
+    <form.error></form.error>
+
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+</div>

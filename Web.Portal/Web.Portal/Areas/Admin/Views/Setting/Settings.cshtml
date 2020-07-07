@@ -1,0 +1,61 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+        });
+        viewData.Init("/Admin/api/Setting/InitSettings");
+    </script>
+}
+<div class="container" ng-app="myApp" ng-controller="mycontrl">
+    <ng-form>
+        <div wliu table grow shrink style="margin-top:12px;">
+            <div row>
+                <div cell style="background-color:#dddddd;">
+                    <wliu.navi db="ViewData.database" tb="GSetting"></wliu.navi>
+                </div>
+            </div>
+            <div row>
+                <div head fixed style="width:40px;"></div>
+                <div head><wliu.head db="ViewData.database" tb="GSetting" col="ItemName"></wliu.head></div>
+                <div head><wliu.head db="ViewData.database" tb="GSetting" col="ItemTitle"></wliu.head></div>
+                <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="GSetting" col="Active"></wliu.head></div>
+                <div head><wliu.head db="ViewData.database" tb="GSetting" col="LastUpdated"></wliu.head></div>
+                <div head fixed style="width:56px;">
+                    <wliu.hicon db="ViewData.database" tb="GSetting" icons="add,save,cancel"></wliu.hicon>
+                </div>
+            </div>
+            <div row ng-repeat="row in ViewData.database.tables.GSetting.rows">
+                <div cell center fixed style="width:40px;">
+                    <wliu.rowstatus db="ViewData.database" tb="GSetting" guid="{{row.guid}}"></wliu.rowstatus>
+                </div>
+                <div cell>
+                    <wliu.textbox db="ViewData.database" tb="GSetting" guid="{{row.guid}}" col="ItemName"></wliu.textbox>
+                </div>
+                <div cell>
+                    <wliu.textbox db="ViewData.database" tb="GSetting" guid="{{row.guid}}" col="ItemTitle"></wliu.textbox>
+                </div>
+                <div cell center fixed style="width:60px;">
+                    <wliu.bool db="ViewData.database" tb="GSetting" guid="{{row.guid}}" col="Active"></wliu.bool>
+                </div>
+                <div cell>
+                    <wliu.intdate db="ViewData.database" tb="GSetting" guid="{{row.guid}}" col="LastUpdated"></wliu.intdate>
+                </div>
+                <div cell fixed style="width:56px;">
+                    <wliu.bicon db="ViewData.database" tb="GSetting" guid="{{row.guid}}" icons="save,cancel"></wliu.bicon>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+
+    <table.error></table.error>
+    <form.error></form.error>
+
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+
+</div>

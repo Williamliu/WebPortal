@@ -1,0 +1,160 @@
+﻿@section scripts {
+    <script src="~/resource/js/ckeditor_full/ckeditor.js" type="text/javascript"></script>
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+
+            $scope.detail = function () {
+                $("#course_List").hide();
+                $("#course_Detail").show();
+            };
+            $scope.goBack = function () {
+                $("#course_Detail").hide();
+                $("#course_List").show();
+            };
+
+        });
+        viewData.Init("/Admin/api/Course/InitCourse");
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl">
+    <div class="container-fluid" id="course_List">
+        <ng-form>
+            <fieldset>
+                <legend>@Html.Words("search.by")</legend>
+                <filter.label db="ViewData.database" tb="CourseDefine" col="search_branch"></filter.label>
+                <filter.select db="ViewData.database" tb="CourseDefine" col="search_branch"></filter.select>
+                <filter.label db="ViewData.database" tb="CourseDefine" col="search_site"></filter.label>
+                <filter.fselect db="ViewData.database" tb="CourseDefine" col="search_site" fcol="search_branch"></filter.fselect>
+                <filter.label db="ViewData.database" tb="CourseDefine" col="search_keyword"></filter.label>
+                <filter.textbox db="ViewData.database" tb="CourseDefine" col="search_keyword"></filter.textbox>
+                <wliu.search db="ViewData.database" tb="CourseDefine">Search</wliu.search>
+            </fieldset>
+            <div wliu table grow shrink style="margin-top:12px;">
+                <div row>
+                    <div cell style="background-color:#dddddd;">
+                        <wliu.navi db="ViewData.database" tb="CourseDefine"></wliu.navi>
+                    </div>
+                </div>
+                <div row>
+                    <div head fixed style="width:40px;"></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="CourseDefine" col="BranchId"></wliu.head></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="CourseDefine" col="SiteId"></wliu.head></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="CourseDefine" col="Title_en"></wliu.head></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="CourseDefine" col="Title_cn"></wliu.head></div>
+                    <div head center small><wliu.head db="ViewData.database" tb="CourseDefine" col="IsFree"></wliu.head></div>
+                    <div head fixed center style="width:80px;"><wliu.head db="ViewData.database" tb="CourseDefine" col="FeeAmount"></wliu.head></div>
+                    <div head fixed center style="width:80px;"><wliu.head db="ViewData.database" tb="CourseDefine" col="Currency"></wliu.head></div>
+                    <div head fixed center style="width:60px;"><wliu.head db="ViewData.database" tb="CourseDefine" col="Sort"></wliu.head></div>
+                    <div head center small><wliu.head db="ViewData.database" tb="CourseDefine" col="Status"></wliu.head></div>
+                    <div head fixed style="width:56px;">
+                        <wliu.hicon db="ViewData.database" tb="CourseDefine" icons="add,save,cancel"></wliu.hicon>
+                    </div>
+                </div>
+                <div row ng-repeat="row in ViewData.database.tables.CourseDefine.rows">
+                    <div cell center fixed style="width:40px;">
+                        <wliu.rowstatus db="ViewData.database" tb="CourseDefine" guid="{{row.guid}}"></wliu.rowstatus>
+                    </div>
+                    <div cell medium>
+                        <wliu.select db="ViewData.database" tb="CourseDefine" guid="{{row.guid}}" col="BranchId"></wliu.select>
+                    </div>
+                    <div cell medium>
+                        <wliu.fselect db="ViewData.database" tb="CourseDefine" guid="{{row.guid}}" col="SiteId" fcol="BranchId"></wliu.fselect>
+                    </div>
+                    <div cell medium>
+                        <wliu.textbox db="ViewData.database" tb="CourseDefine" guid="{{row.guid}}" col="Title_en"></wliu.textbox>
+                    </div>
+                    <div cell medium>
+                        <wliu.textbox db="ViewData.database" tb="CourseDefine" guid="{{row.guid}}" col="Title_cn"></wliu.textbox>
+                    </div>
+                    <div cell center small>
+                        <wliu.bool db="ViewData.database" tb="CourseDefine" guid="{{row.guid}}" col="IsFree"></wliu.bool>
+                    </div>
+                    <div cell center fixed style="width:80px;">
+                        <wliu.textbox right db="ViewData.database" tb="CourseDefine" guid="{{row.guid}}" col="FeeAmount"></wliu.textbox>
+                    </div>
+                    <div cell center fixed style="width:80px;">
+                        <wliu.select right db="ViewData.database" tb="CourseDefine" guid="{{row.guid}}" col="Currency"></wliu.select>
+                    </div>
+                    <div cell center fixed style="width:60px;">
+                        <wliu.textbox db="ViewData.database" tb="CourseDefine" guid="{{row.guid}}" col="Sort"></wliu.textbox>
+                    </div>
+                    <div cell center small>
+                        <wliu.bool db="ViewData.database" tb="CourseDefine" guid="{{row.guid}}" col="Active"></wliu.bool>
+                    </div>
+                    <div cell fixed style="width:56px;">
+                        <wliu.bicon db="ViewData.database" tb="CourseDefine" guid="{{row.guid}}" icons="save,cancel,detail,deleted" actiondetail="detail()"></wliu.bicon>
+                    </div>
+                </div>
+            </div>
+        </ng-form>
+    </div>
+    <div id="course_Detail" class="container" style="display:none; margin-top:12px;">
+        <a wliu button blue ng-click="goBack()">@Html.Words("go.back")</a>
+        <form.status db="ViewData.database" tb="CourseDefine"></form.status>
+        <div wliu table grow shrink>
+            <div row style="margin-top:12px;">
+                <div cell>
+                    <assm.textbox fixed border h2 db="ViewData.database" tb="CourseDefine" col="Title_en"></assm.textbox>
+                </div>
+                <div cell>
+                    <assm.textbox fixed border h2 db="ViewData.database" tb="CourseDefine" col="Title_cn"></assm.textbox>
+                </div>
+            </div>
+            <div row style="margin-top:12px;">
+                <div cell>
+                    <assm.select fixed border h2 db="ViewData.database" tb="CourseDefine" col="AgreeId"></assm.select>
+                </div>
+                <div cell>
+                    <assm.textbox fixed border h2 db="ViewData.database" tb="CourseDefine" col="Category"></assm.textbox>
+                </div>
+            </div>
+            <div row style="margin-top:12px;">
+                <div cell>
+                    <table>
+                        <tr>
+                            <td align="left" width="33%"><assm.bool fixed border h2 db="ViewData.database" tb="CourseDefine" col="IsFree"></assm.bool></td>
+                            <td align="left" width="33%" style="padding-left:10px;"><assm.textbox fixed small border h2 db="ViewData.database" tb="CourseDefine" col="FeeAmount"></assm.textbox></td>
+                            <td align="left" width="33%" style="padding-left:10px;"><assm.select fixed small border h2 db="ViewData.database" tb="CourseDefine" col="Currency"></assm.select></td>
+                        </tr>
+                    </table>
+                </div>
+                <div cell>
+                </div>
+            </div>
+            <div row style="margin-top:12px;">
+                <div cell style="padding-top:10px;">
+                    <ul id="d1" wliu tab9 border color="mint">
+                        <li>@Html.Words("detail.en")</li>
+                        <li>@Html.Words("detail.cn")</li>
+                    </ul>
+                    <div wliu tab9 body>
+                        <div>
+                            <form.ckeditor db="ViewData.database" tb="CourseDefine" col="Detail_en" hh="300px"></form.ckeditor>
+                        </div>
+                        <div>
+                            <form.ckeditor db="ViewData.database" tb="CourseDefine" col="Detail_cn" hh="300px"></form.ckeditor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div row style="margin-top:12px;">
+                <div cell center>
+                    <form.save h2 db="ViewData.database" tb="CourseDefine" label="@Html.Words("button.save")"></form.save>
+                    <form.cancel h2 db="ViewData.database" tb="CourseDefine" label="@Html.Words("button.cancel")" action="goBack()"></form.cancel>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table.error></table.error>
+    <form.error></form.error>
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+
+</div>

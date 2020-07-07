@@ -19,6 +19,7 @@ namespace Library.V1.Entity
         Long,
         Float,
         Date,
+        DateTime,
         Time,
         Checkbox
     }
@@ -297,6 +298,9 @@ namespace Library.V1.Entity
                 case EFilter.Float:
                     val = this.Value1.GetFloat();
                     break;
+                case EFilter.DateTime:
+                    val = this.Value1.GetDateTime();
+                    break;
                 case EFilter.Date:
                     val = this.Value1.GetDateTime();
                     break;
@@ -329,6 +333,9 @@ namespace Library.V1.Entity
                     break;
                 case EFilter.Float:
                     val = this.Value2.GetFloat();
+                    break;
+                case EFilter.DateTime:
+                    val = this.Value2.GetDateTime();
                     break;
                 case EFilter.Date:
                     val = this.Value2.GetDateTime();
@@ -500,6 +507,18 @@ namespace Library.V1.Entity
                     else
                     {
                         this.Value1 = this.Value1.GetDate();
+                        this.Value2 = this.Value1.GetDateTime()?.AddTicks(TimeSpan.FromSeconds(24 * 3600 - 1).Ticks);
+                    }
+                    break;
+                case EFilter.DateTime:
+                    if (this.Compare == ECompare.Range)
+                    {
+                        this.Value1 = this.Value1.GetDateTime();
+                        this.Value2 = this.Value2.GetDateTime()?.AddTicks(TimeSpan.FromSeconds(24 * 3600 - 1).Ticks);
+                    }
+                    else
+                    {
+                        this.Value1 = this.Value1.GetDateTime();
                         this.Value2 = this.Value1.GetDateTime()?.AddTicks(TimeSpan.FromSeconds(24 * 3600 - 1).Ticks);
                     }
                     break;

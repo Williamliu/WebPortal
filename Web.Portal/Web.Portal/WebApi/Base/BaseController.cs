@@ -3,26 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
-using Web.Portal.Common;
 using Library.V1.Common;
+using Library.V1.SQL;
 using Library.V1.Entity;
+using Web.Portal.Common;
 
-namespace Web.Portal.Controllers
+namespace Web.Portal.WebApi.Controllers
 {
-    public abstract class PubBaseController : Controller
+    public abstract class BaseController : ControllerBase
     {
-        #region Protected Fields
         protected AppSetting AppConfig { get; set; }
         protected Database DB;
-        #endregion
-
-        public PubBaseController(AppSetting appConfig)
+        public BaseController(AppSetting appConfig)
         {
             this.AppConfig = appConfig;
         }
-
-        #region Methods
+        #region Database
         protected abstract void InitDatabase(string menuId);
         protected void Init(string menuId)
         {
@@ -37,12 +33,12 @@ namespace Web.Portal.Controllers
 
 
             //Step4: Get AdminUser for DB User.
-            this.DB.User = this.HttpContext.GetPubUser(this.DB.DSQL, menuId);
+            //this.DB.User = this.HttpContext.GetPubUser(this.DB.DSQL, menuId);
+
 
             //Step5: Init Database Schema defined in Controller
             this.InitDatabase(menuId);
         }
-
-        #endregion
+        #endregion Database
     }
 }

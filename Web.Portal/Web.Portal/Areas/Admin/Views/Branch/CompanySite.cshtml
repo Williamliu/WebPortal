@@ -1,0 +1,170 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+            $scope.detail = function () {
+                $("#detailInfo").diag("show");
+            };
+            $scope.closeDiag = function () {
+                $("#detailInfo").diag("hide");
+            }
+        });
+        viewData.Init("/Admin/api/Branch/InitSite");
+        $(function () {
+            $("#detailInfo").diag({maskclick:false});
+        });
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl">
+    <ng-form>
+        <div wliu table grow shrink style="margin-top:12px;">
+            <div row>
+                <div cell small right>
+                    <filter.label h1 fit right db="ViewData.database" tb="Site" col="BranchFilter"></filter.label>
+                </div>
+                <div cell large>
+                    <filter.linkselect h1 style="min-width:320px;" db="ViewData.database" tb="Site" col="BranchFilter"></filter.linkselect>
+                </div>
+                <div cell small>
+                </div>
+            </div>
+        </div>
+        <div wliu table grow shrink style="margin-top:12px;">
+            <div row>
+                <div cell style="background-color:#dddddd;">
+                    <wliu.navi db="ViewData.database" tb="Site"></wliu.navi>
+                </div>
+            </div>
+            <div row>
+                <div head fixed style="width:40px;"></div>
+                <div head medium><wliu.head db="ViewData.database" tb="Site" col="TitleEN"></wliu.head></div>
+                <div head large><wliu.head db="ViewData.database" tb="Site" col="DetailEN"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="Site" col="TitleCN"></wliu.head></div>
+                <div head large><wliu.head db="ViewData.database" tb="Site" col="DetailCN"></wliu.head></div>
+                <div head fixed style="width:120px;"><wliu.head db="ViewData.database" tb="Site" col="FoundDate"></wliu.head></div>
+                <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="Site" col="Sort"></wliu.head></div>
+                <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="Site" col="Status"></wliu.head></div>
+                <div head fixed style="width:56px;">
+                    <wliu.hicon db="ViewData.database" tb="Site" icons="add,save,cancel"></wliu.hicon>
+                </div>
+            </div>
+            <div row ng-repeat="row in ViewData.database.tables.Site.rows">
+                <div cell center fixed style="width:40px;">
+                    <wliu.rowstatus db="ViewData.database" tb="Site" guid="{{row.guid}}"></wliu.rowstatus>
+                </div>
+                <div cell medium>
+                    <wliu.textbox db="ViewData.database" tb="Site" guid="{{row.guid}}" col="TitleEN"></wliu.textbox>
+                </div>
+                <div cell large>
+                    <wliu.textbox db="ViewData.database" tb="Site" guid="{{row.guid}}" col="DetailEN"></wliu.textbox>
+                </div>
+                <div cell medium>
+                    <wliu.textbox db="ViewData.database" tb="Site" guid="{{row.guid}}" col="TitleCN"></wliu.textbox>
+                </div>
+                <div cell large>
+                    <wliu.textbox db="ViewData.database" tb="Site" guid="{{row.guid}}" col="DetailCN"></wliu.textbox>
+                </div>
+                <div cell fixed style="width:120px;">
+                    <wliu.date db="ViewData.database" tb="Site" guid="{{row.guid}}" col="FoundDate"></wliu.date>
+                </div>
+                <div cell center fixed style="width:60px;">
+                    <wliu.textbox db="ViewData.database" tb="Site" guid="{{row.guid}}" col="Sort"></wliu.textbox>
+                </div>
+                <div cell center fixed style="width:60px;">
+                    <wliu.bool db="ViewData.database" tb="Site" guid="{{row.guid}}" col="Status"></wliu.bool>
+                </div>
+                <div cell fixed style="width:56px;">
+                    <wliu.bicon db="ViewData.database" tb="Site" guid="{{row.guid}}" icons="save,cancel,detail,delete" actiondetail="detail()"></wliu.bicon>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+
+    <div wliu diag maskable movable resizable id="detailInfo" style="width:600px;">
+        <div head>@Html.Words("detail.information")</div>
+        <div body>
+            <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+                <tr>
+                    <td style="padding:0px 4px 4px 0px;" valign="top">
+                        <table cellpadding="2" cellspacing="2" style="width:100%;">
+                            <tr>
+                                <td><assm.textbox border fixed db="ViewData.database" tb="Site" col="TitleEN"></assm.textbox></td>
+                            </tr>
+                            <tr>
+                                <td><assm.textbox border fixed db="ViewData.database" tb="Site" col="DetailEN"></assm.textbox></td>
+                            </tr>
+                            <tr>
+                                <td><assm.textbox border fixed db="ViewData.database" tb="Site" col="TitleCN"></assm.textbox></td>
+                            </tr>
+                            <tr>
+                                <td><assm.textbox border fixed db="ViewData.database" tb="Site" col="DetailCN"></assm.textbox></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:12px;">
+                                    <form.label db="ViewData.database" tb="Site" col="Sort"></form.label> :
+                                    <form.textbox fixed style="width:40px;" db="ViewData.database" tb="Site" col="Sort"></form.textbox>
+                                    <form.bool db="ViewData.database" tb="Site" col="Status" label="@Html.Words("status.active")"></form.bool>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left:1px solid #cccccc;width:1px;"></td>
+                    <td style="padding:0px 4px 4px 4px;" valign="top">
+                        <table cellpadding="2" cellspacing="2" style="width:100%;">
+                            <tr>
+                                <td><assm.textbox border fixed db="ViewData.database" tb="Site" col="Address"></assm.textbox></td>
+                            </tr>
+                            <tr>
+                                <td><assm.textbox border fixed db="ViewData.database" tb="Site" col="City"></assm.textbox></td>
+                            </tr>
+                            <tr>
+                                <td><assm.select border fixed db="ViewData.database" tb="Site" col="Country"></assm.select></td>
+                            </tr>
+                            <tr>
+                                <td><assm.fselect border fixed db="ViewData.database" tb="Site" col="State" fcol="Country"></assm.fselect></td>
+                            </tr>
+                            <tr>
+                                <td><assm.textbox border fixed db="ViewData.database" tb="Site" col="Postal"></assm.textbox></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="border-left:1px solid #cccccc;width:1px;"></td>
+                    <td style="padding:0px 0px 4px 4px;" valign="top">
+                        <table cellpadding="2" cellspacing="2" style="width:100%;">
+                            <tr>
+                                <td><assm.textbox border fixed db="ViewData.database" tb="Site" col="EmailEN"></assm.textbox></td>
+                            </tr>
+                            <tr>
+                                <td><assm.textbox border fixed db="ViewData.database" tb="Site" col="EmailCN"></assm.textbox></td>
+                            </tr>
+                            <tr>
+                                <td><assm.textbox border fixed db="ViewData.database" tb="Site" col="PhoneEN"></assm.textbox></td>
+                            </tr>
+                            <tr>
+                                <td><assm.textbox border fixed db="ViewData.database" tb="Site" col="PhoneCN"></assm.textbox></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr style="border-top:1px solid #cccccc;">
+                    <td colspan="5" align="center" style="padding:6px 0px;">
+                        <form.save h2 db="ViewData.database" tb="Site" label="@Html.Words("button.save")" style="margin:0px 12px;"></form.save>
+                        <form.cancel h2 db="ViewData.database" tb="Site" label="@Html.Words("button.cancel")" action="closeDiag()" style="margin:0px 12px;"></form.cancel>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <table.error></table.error>
+    <form.error></form.error>
+
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+
+</div>

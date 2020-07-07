@@ -2144,6 +2144,7 @@ WLIU_NG.directive("form.checkcom", function () {
             '</div>'
         ].join(''),
         controller: function ($scope) {
+            $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value = $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value || {}; 
             $scope.triggerDiag = function (collect, tb, guid, col) {
                 $scope.db.checkList = $scope.db.checkList || {};
                 $scope.db.checkList.collect = $scope.db.checkList.collect || "";
@@ -2214,6 +2215,7 @@ WLIU_NG.directive("form.checklist", function () {
             '</div>'
         ].join(''),
         controller: function ($scope) {
+            $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value = $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value || {}; 
             $scope.maxww = $scope.maxww || "auto";
             $scope.maxhh = $scope.maxhh || "auto";
         }
@@ -3917,7 +3919,7 @@ WLIU_NG.directive("filter.linkselect", function () {
         },
         template: [
             '<select wliu ',
-                'ng-model="db.tables[tb].key" ',
+                'ng-model="db.tables[tb].refKey" ',
                 'ng-options="sObj.value as sObj.title for sObj in db.collections[db.tables[tb].filters[col].listRef.collection].items" ',
                 'ng-change="db.tables[tb].FilterChange(col);ChangeKey()" ',
                 'ng-disabled="!db.collections[db.tables[tb].filters[col].listRef.collection]" ',
