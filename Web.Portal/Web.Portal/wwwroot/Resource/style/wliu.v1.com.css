@@ -1,8 +1,8 @@
 ﻿body {
-    margin:         0px;
-    padding:        0px;
-    user-select:    none;
-    font-family:    sans-serif, Arial, 'Franklin Gothic Medium', 'Arial Narrow', Montserrat;
+    margin: 0px;
+    padding: 0px;
+    user-select: none;
+    font-family: 'Times New Roman', Times, serif;
 }
 *:focus {
     outline: none;

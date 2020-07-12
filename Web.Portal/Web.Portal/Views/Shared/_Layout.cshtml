@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Portal</title>
     <link rel="shortcut icon" type="image/png" href="~/favicon.png" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="~/resource/angularjs/angular.min.js" type="text/javascript"></script>
     <script src="~/resource/angularjs/ng.wliu.database.js" type="text/javascript"></script>
 
@@ -16,54 +15,81 @@
     <link href="~/resource/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
 
-    <link href="~/resource/style/wliu.layout.css" rel="stylesheet" />
-    <script src="~/resource/jquery/jq.wliu.widget.js" type="text/javascript"></script>
-    <link href="~/resource/jquery/jq.wliu.widget.css" rel="stylesheet" />
-    <script src="~/resource/jquery/jq.wliu.com.js" type="text/javascript"></script>
-    <link href="~/resource/style/wliu.button.css" rel="stylesheet" />
-    <link href="~/resource/style/wliu.com.css" rel="stylesheet" />
+    <link href="~/resource/style/wliu.v1.layout.css" rel="stylesheet" />
+    <script src="~/resource/jquery/jq.wliu.v1.widget.js" type="text/javascript"></script>
+    <link href="~/resource/jquery/jq.wliu.v1.widget.css" rel="stylesheet" />
+    <script src="~/resource/jquery/jq.wliu.v1.com.js" type="text/javascript"></script>
+    <link href="~/resource/style/wliu.v1.button.css" rel="stylesheet" />
+    <link href="~/resource/style/wliu.v1.com.css" rel="stylesheet" />
     <script src="~/resource/js/wliu.v1.com.js" type="text/javascript"></script>
     <script src="~/resource/js/wliu.v1.database.js" type="text/javascript"></script>
-    <script src="~/resource/js/wliu.image.js" type="text/javascript"></script>
+    <script src="~/resource/js/wliu.v1.image.js" type="text/javascript"></script>
     <!--
     <script src="~/resource/js/wliu.qrcode.js" type="text/javascript"></script>
     -->
     <script src="~/resource/js/datepicker/picker.js"></script>
     <link href="~/resource/js/datepicker/picker.css" rel="stylesheet" />
+    <script>
+        window.onscroll = function () { scrollFunction() };
+        function scrollFunction() {
+            if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+                $("div[pub][menu]").addAttr("short");
+                $("div[pub][menu][body] ul[first]").addAttr("short");
+            } else {
+                +
+                    $("div[pub][menu]").removeAttr("short");
+                $("div[pub][menu][body] ul[first]").removeAttr("short");
+            }
+        }
+        $(function () {
+            $(document).off("click", "a[pub][menu][toggle]").on("click", "a[pub][menu][toggle]", function (evt) {
+                if ($("div[pub][menu][body] ul[first]").is(":hidden"))
+                    $("div[pub][menu][body] ul[first]").addAttr("show");
+                else
+                    $("div[pub][menu][body] ul[first]").removeAttr("show");
+            });
+            $(document).off("click", "a[wliu][btn-drop][dropdown]>ul>li").on("click", "a[wliu][btn-drop][dropdown]>ul>li", function (evt) {
+                ChangeLang($(this).attr("lang"));
+                $("span", $(this).closest("a[wliu][btn-drop][dropdown]")).html($(this).html());
+
+            });
+        });
+    </script>
+    @Html.JWords()
+    @RenderSection("Scripts", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web.Portal</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    <div pub menu shadow>
+        <div pub menu body>
+            <div pub menu left>
+                <img src="~/Resource/style/Images/shaolin_log.png" style="height: 100%;">
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - Web.Portal - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div pub menu center>
+                <a pub menu toggle>@Html.Words("pub.menu")</a>
+                <partial name="_TopNav.cshtml" />
+            </div>
+            <div pub menu right>
+                <table style="float:right;margin-top:">
+                    <tr>
+                        <td>
+                            <a wliu btn-drop dropdown>
+                                <span>@(Context.Items["Lang"].GetString() == "cn" ? "中文版" : "English")</span>
+                                <ul>
+                                    <li lang="en">English</li>
+                                    <li lang="cn">中文版</li>
+                                </ul>
+                            </a>
+                        </td>
+                        <td style="padding-left:5px; padding-right:5px;">|</td>
+                        <td><a wliu btn-drop>@Html.Words("sign.in")</a></td>
+                    </tr>
+                </table>
+            </div>
         </div>
-    </footer>
-    @RenderSection("Scripts", required: false)
+    </div>
+    <div pub webcontent>
+        @RenderBody()
+    </div>
+    @Html.LangForm()
 </body>
 </html>

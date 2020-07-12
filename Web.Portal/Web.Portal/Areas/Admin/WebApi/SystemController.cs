@@ -323,7 +323,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta detail_en_f = new Meta { Name = "Detail_en", DbName = "Detail_en", Title = Words("detail.en"), Type = EInput.String, MaxLength = 256 };
                         Meta detail_cn_f = new Meta { Name = "Detail_cn", DbName = "Detail_cn", Title = Words("detail.cn"), Type = EInput.String, MaxLength = 256 };
                         Meta url_f = new Meta { Name = "Url", DbName = "Url", Title = Words("col.url"), Type = EInput.String, MaxLength = 1024 };
-                        Meta pos_f = new Meta { Name = "Position", DbName = "Position", Title = Words("col.position"), Type = EInput.Int };
+                        Meta pos_f = new Meta { Name = "Position", DbName = "Position", Title = Words("col.position"), Type = EInput.Int, Required=true, Value=1 };
                         pos_f.AddListRef("PositionList");
                         Meta sort_f = new Meta { Name = "Sort", DbName = "Sort", Title = Words("col.sort"), Type = EInput.Int };
                         Meta active_f = new Meta { Name = "Active", DbName = "Active", Title = Words("col.status"), Description = Words("status.active.inactive"), Type = EInput.Bool };
@@ -338,7 +338,9 @@ namespace Web.Portal.Areas.Admin.WebApi
                         firstMenu.Navi.IsActive = false;
                         firstMenu.Navi.By = "Position,Sort";
                         firstMenu.Navi.Order = "ASC,DESC";
-                        firstMenu.AddQueryKV("Deleted", false).AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds()).AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds()).AddInsertKV("Deleted", false).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
+                        firstMenu.AddQueryKV("Deleted", false).AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds())
+                            .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
+                            .AddInsertKV("Deleted", false).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
                         firstMenu.SaveUrl = "/Admin/api/System/SaveAdminMenu";
 
                         Table secondMenu = new Table("SecondMenu", "Admin_Menu", Words("second.menu"));
@@ -350,7 +352,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta detail_en_s = new Meta { Name = "Detail_en", DbName = "Detail_en", Title = Words("detail.en"), Type = EInput.String, MaxLength = 256 };
                         Meta detail_cn_s = new Meta { Name = "Detail_cn", DbName = "Detail_cn", Title = Words("detail.cn"), Type = EInput.String, MaxLength = 256 };
                         Meta url_s = new Meta { Name = "Url", DbName = "Url", Title = Words("col.url"), Type = EInput.String, MaxLength = 1024 };
-                        Meta pos_s = new Meta { Name = "Position", DbName = "Position", Title = Words("col.position"), Type = EInput.Int };
+                        Meta pos_s = new Meta { Name = "Position", DbName = "Position", Title = Words("col.position"), Type = EInput.Int, Value=1 };
                         pos_s.AddListRef("PositionList");
                         Meta sort_s = new Meta { Name = "Sort", DbName = "Sort", Title = Words("col.sort"), Type = EInput.Int };
                         Meta active_s = new Meta { Name = "Active", DbName = "Active", Title = Words("col.status"), Description = Words("status.active.inactive"), Type = EInput.Bool };
@@ -364,7 +366,9 @@ namespace Web.Portal.Areas.Admin.WebApi
                         secondMenu.Navi.IsActive = false;
                         secondMenu.Navi.By = "Position,Sort";
                         secondMenu.Navi.Order = "ASC,DESC";
-                        secondMenu.AddQueryKV("Deleted", false).AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds()).AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds()).AddInsertKV("Deleted", false).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
+                        secondMenu.AddQueryKV("Deleted", false).AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds())
+                            .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
+                            .AddInsertKV("Deleted", false).AddInsertKV("Position",1).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
                         secondMenu.SaveUrl = "/Admin/api/System/SaveAdminMenu";
 
                         CollectionTable c1 = new CollectionTable("AdminRightList", "Admin_Right", true, "Id", "Title", "Detail", "", "DESC", "Sort");

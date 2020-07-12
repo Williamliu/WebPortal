@@ -118,7 +118,7 @@ namespace Library.V1.Entity
                                 }
                                 else if (ObjectHelper.IsEmpty(this.Value1) == false)
                                 {
-                                    wcolumn.Add($"{dbName} LIKE @filter_{this.Name}_{dbName}_value1", new SqlParameter($"@filter_{this.Name}_{dbName}_value1", this.GetValue1()));
+                                    wcolumn.Add($"{dbName} LIKE '%' + @filter_{this.Name}_{dbName}_value1 +'%'", new SqlParameter($"@filter_{this.Name}_{dbName}_value1", this.GetValue1()));
                                 }
                                 break;
                             case ECompare.Equal:

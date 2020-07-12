@@ -1,0 +1,22 @@
+﻿@{Menus PubMenu = Context.Items["PubMenus"] as Menus;}
+    <ul first>
+        @foreach (Menu tmenu in PubMenu.TopMenu)
+        {
+            if (tmenu.Nodes.Count > 0)
+            {
+                <li @(tmenu.MenuId == PubMenu.MenuId ? "selected" : "") submenu>
+                    <a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a>
+                    <ul second>
+                        @foreach (Menu smenu in tmenu.Nodes)
+                        {
+                            <li @(smenu.MenuId == PubMenu.MenuId ? "selected" : "")><a @(smenu.Url == "" ? "" : "href=" + smenu.Url)>@smenu.Title</a></li>
+                        }
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <li @(tmenu.MenuId == PubMenu.MenuId ? "selected" : "")><a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a></li>
+            }
+        }
+    </ul>

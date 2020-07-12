@@ -21,6 +21,7 @@
                 <div head fixed style="width:40px;"></div>
                 <div head><wliu.head db="ViewData.database" tb="GSetting" col="ItemName"></wliu.head></div>
                 <div head><wliu.head db="ViewData.database" tb="GSetting" col="ItemTitle"></wliu.head></div>
+                <div head><wliu.head db="ViewData.database" tb="GSetting" col="ItemValue"></wliu.head></div>
                 <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="GSetting" col="Active"></wliu.head></div>
                 <div head><wliu.head db="ViewData.database" tb="GSetting" col="LastUpdated"></wliu.head></div>
                 <div head fixed style="width:56px;">
@@ -36,6 +37,9 @@
                 </div>
                 <div cell>
                     <wliu.textbox db="ViewData.database" tb="GSetting" guid="{{row.guid}}" col="ItemTitle"></wliu.textbox>
+                </div>
+                <div cell>
+                    <wliu.textbox db="ViewData.database" tb="GSetting" guid="{{row.guid}}" col="ItemValue"></wliu.textbox>
                 </div>
                 <div cell center fixed style="width:60px;">
                     <wliu.bool db="ViewData.database" tb="GSetting" guid="{{row.guid}}" col="Active"></wliu.bool>

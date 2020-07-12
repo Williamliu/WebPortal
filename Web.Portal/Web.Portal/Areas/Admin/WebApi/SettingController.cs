@@ -352,9 +352,10 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
                         Meta itemName = new Meta { Name = "ItemName", DbName = "ItemName", Title = Words("col.itemname"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 32, Unique = true };
                         Meta itemTitle = new Meta { Name = "ItemTitle", DbName = "ItemTitle", Title = Words("col.itemtitle"), Order = "ASC", Type = EInput.String, MaxLength = 64 };
+                        Meta itemValue = new Meta { Name = "ItemValue", DbName = "ItemValue", Title = Words("col.itemvalue"), Order = "ASC", Type = EInput.String, MaxLength = 64 };
                         Meta lastUpdate = new Meta { Name = "LastUpdated", DbName = "LastUpdated", Title = Words("col.lastupdated"), Order = "DESC", Type = EInput.Int };
                         Meta active = new Meta { Name = "Active", DbName = "Active", Title = Words("status.active"), Order = "", Type = EInput.Bool, Value = true };
-                        table.AddMetas(id, itemName, itemTitle, lastUpdate, active);
+                        table.AddMetas(id, itemName, itemTitle, itemValue, lastUpdate, active);
 
                         table.Navi.IsActive = true;
                         table.GetUrl = "/Admin/api/Setting/ReloadSettings";

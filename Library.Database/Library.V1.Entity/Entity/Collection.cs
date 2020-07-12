@@ -263,6 +263,9 @@ namespace Library.V1.Entity
                 case "PositionList":
                     items = GetPosition().Items;
                     break;
+                case "MenuTypeList":
+                    items = GetMenuType().Items;
+                    break;
                 case "StatusList":
                     items = GetStatus().Items;
                     break;
@@ -305,14 +308,21 @@ namespace Library.V1.Entity
         public static Collection GetPosition()
         {
             Collection list = new Collection("PositionList");
-            list.AddItem(0, LanguageHelper.Words("position.top"), LanguageHelper.Words("position.top"));
-            list.AddItem(1, LanguageHelper.Words("position.bottom"), LanguageHelper.Words("position.bottom"));
+            list.AddItem(1, LanguageHelper.Words("position.top"), LanguageHelper.Words("position.top"));
+            list.AddItem(2, LanguageHelper.Words("position.bottom"), LanguageHelper.Words("position.bottom"));
             return list;
         }
+        public static Collection GetMenuType()
+        {
+            Collection list = new Collection("MenuTypeList");
+            list.AddItem(1, LanguageHelper.Words("menutype.public"), LanguageHelper.Words("menutype.public"));
+            list.AddItem(2, LanguageHelper.Words("menutype.private"), LanguageHelper.Words("menutype.private"));
+            return list;
+        }
+
         public static Collection GetStatus()
         {
             Collection list = new Collection("StatusList");
-            list.AddItem(0, "", "");
             list.AddItem(1, LanguageHelper.Words("status.hidden"), LanguageHelper.Words("status.hidden"));
             list.AddItem(2, LanguageHelper.Words("status.internal"), LanguageHelper.Words("status.internal"));
             list.AddItem(3, LanguageHelper.Words("status.publish"), LanguageHelper.Words("status.publish"));

@@ -104,9 +104,9 @@ namespace Library.V1.Common
             get
             {
                 if (Trust)
-                    return $"Data Source={this.Server};Initial Catalog={this.Database};Integrated Security=True;Connection Timeout=5;";
+                    return $"Data Source={this.Server};Initial Catalog={this.Database};Integrated Security=True;Connection Timeout=60;";
                 else
-                    return $"Data Source={this.Server};Initial Catalog={this.Database};Persist Security Info=True;User ID={this.User};Password={this.Password};Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=5;";
+                    return $"Data Source={this.Server};Initial Catalog={this.Database};Persist Security Info=True;User ID={this.User};Password={this.Password};Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=60;";
             }
         }
         #endregion

@@ -92,4 +92,33 @@ namespace Library.V1.Entity
             return pubMenus;
         }
     }
+
+    public class PubPubMenus : PubMenus
+    {
+        public PubPubMenus() : base()
+        {
+            this.ProfileMenus = new List<Menu>();
+            this.HideMenus = new List<Menu>();
+            InitProfile();
+            InitHide();
+        }
+        public void InitProfile()
+        {
+            this.ProfileMenus.Add(new Menu { MenuId = "P01", Title = "my.account", Detail = "my.account", Url = "/Admin/Profile/MyAccount" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P02", Title = "reset.password", Detail = "reset.password", Url = "/Admin/Profile/ResetPassword" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P03", Title = "my.message", Detail = "my.account", Url = "/Admin/Profile/MyMessage" });
+        }
+        public void InitHide()
+        {
+            this.HideMenus.Add(new Menu { MenuId = "Login", Title = "Login", Url = "/Home/User/Login" });
+        }
+        public List<string> GetPublicMenus()
+        {
+            List<string> pubMenus = new List<string>();
+            foreach (Menu m1 in this.HideMenus) pubMenus.Add(m1.MenuId);
+            foreach (Menu m1 in this.ProfileMenus) pubMenus.Add(m1.MenuId);
+            return pubMenus;
+        }
+    }
+
 }
