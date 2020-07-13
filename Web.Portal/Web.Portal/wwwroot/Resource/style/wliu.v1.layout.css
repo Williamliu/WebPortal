@@ -508,6 +508,7 @@ div[pub][webcontent] {
     max-width:          1240px;
     margin:             auto;
     margin-top:         68px;
+    padding:            6px;
     box-sizing:         border-box;
     white-space:        pre-wrap;
     overflow-wrap:      break-word;
@@ -585,7 +586,7 @@ a[pub][menu][toggle]:hover {
         font-size:          18px;
         font-weight:        500;
         color:              #333333;
-        text-shadow:        1px 2px #eeeeee;
+        text-shadow:        1px 2px #dddddd;
         line-height:        2em;
         vertical-align:     middle;
         margin:             0px 6px;
@@ -706,7 +707,7 @@ a[pub][menu][toggle]:hover {
         font-size:          18px;
         font-weight:        500;
         color:              #333333;
-        text-shadow:        1px 2px #eeeeee;
+        text-shadow:        1px 2px #dddddd;
         margin:             0px 6px;
         padding:            0px 6px;
         border-bottom:      2px solid transparent;
@@ -730,6 +731,7 @@ a[pub][menu][toggle]:hover {
         margin:             0px;
         padding:            0px 12px;
         text-align:         left;
+        text-shadow:        1px 2px #dddddd;
         white-space:        nowrap;
         border-bottom:      2px solid transparent;
         transition:         0.5s;
