@@ -657,7 +657,7 @@ a[pub][menu][toggle]:hover {
         transition:         0.5s;
     }
     div[pub][menu][body] ul[first] > li > ul[second] > li:hover {
-        color:                  #666666;
+        color:                  #333333;
         text-decoration-style:  none;
         border-bottom:          2px solid orange;
     }
@@ -665,7 +665,7 @@ a[pub][menu][toggle]:hover {
     ul[first] > li a[href]:hover,
     ul[second] > li a[href],
     ul[second] > li a[href]:hover {
-        color: #666666 !important;
+        color: #333333 !important;
         text-decoration: none !important;
     }
     a[pub][menu][toggle] {
@@ -739,7 +739,7 @@ a[pub][menu][toggle]:hover {
     ul[first] > li a[href]:hover,
     ul[second] > li a[href],
     ul[second] > li a[href]:hover {
-        color: #666666 !important;
+        color: #333333 !important;
         text-decoration: none !important;
     }
     div[pub][menu][body] ul[first] > li > ul[second] > li:hover {
