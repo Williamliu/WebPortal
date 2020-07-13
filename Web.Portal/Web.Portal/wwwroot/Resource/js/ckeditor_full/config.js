@@ -16,8 +16,9 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeButtons = 'Form,Checkbox,Radio,TextField,Select,Button,ImageButton,Image,Textarea,HiddenField,Flash,Iframe';
 
 	config.enterMode = CKEDITOR.ENTER_BR;
-    config.shiftEnterMode = CKEDITOR.ENTER_BR;
+	config.shiftEnterMode = CKEDITOR.ENTER_BR;
     config.height = 360;
-    config.extraPlugins = "base64image,imagepaste";
+	config.extraPlugins = "base64image,imagepaste";
+	config.basicEntities = false;
     //config.extraPlugins = "imagepaste";
 };

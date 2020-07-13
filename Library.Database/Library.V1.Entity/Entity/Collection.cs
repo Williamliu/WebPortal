@@ -105,7 +105,7 @@ namespace Library.V1.Entity
         {
             this.DSQL = dsql;
         }
-        public Collection AddItem(int value, string title, string detail = "", int refVal = 0)
+        public Collection AddItem(string value, string title, string detail = "", string refVal = "0")
         {
             this.Items.Add(new CollectItem { Value = value, Title = title, Detail = detail, RefValue = refVal });
             return this;
@@ -152,9 +152,10 @@ namespace Library.V1.Entity
 
                         if (this.DSQL.IsDebug) this.Debug += $"Query:[{query}]\n\n";
                         GTable stable = this.DSQL.ExecuteTable(query, this.SqlWhere.GetParameters());
+
                         foreach (var row in stable.Rows)
                         {
-                            this.AddItem(row.GetValue("value").GetInt()??0, row.GetValue("title"), row.GetValue("detail"), row.GetValue("rvalue").GetInt() ?? 0);
+                            this.AddItem(row.GetValue("value"), row.GetValue("title"), row.GetValue("detail"), row.GetValue("rvalue"));
                         }
 
                         if (this.DSQL.Error.HasError) this.Error = this.DSQL.Error;
@@ -175,7 +176,7 @@ namespace Library.V1.Entity
                         GTable stable = this.DSQL.ExecuteTable(query, this.SqlWhere.GetParameters());
                         foreach (var row in stable.Rows)
                         {
-                            this.AddItem(row.GetValue("value").GetInt() ?? 0, row.GetValue("title"), row.GetValue("detail"), row.GetValue("rvalue").GetInt() ?? 0);
+                            this.AddItem(row.GetValue("value"), row.GetValue("title"), row.GetValue("detail"), row.GetValue("rvalue"));
                         }
 
                         if (this.DSQL.Error.HasError) this.Error = this.DSQL.Error;
@@ -236,8 +237,8 @@ namespace Library.V1.Entity
     public class CollectItem
     {
         #region Publid Fields
-        public int Value { get; set; }
-        public int RefValue { get; set; }
+        public string Value { get; set; }
+        public string RefValue { get; set; }
         public string Title { get; set; }
         public string Detail { get; set; }
         #endregion
@@ -275,25 +276,25 @@ namespace Library.V1.Entity
         public static Collection GetGender()
         {
             Collection list = new Collection("GenderList");
-            list.AddItem(1, LanguageHelper.Words("gender.male"), LanguageHelper.Words("gender.male"));
-            list.AddItem(2, LanguageHelper.Words("gender.female"), LanguageHelper.Words("gender.female"));
+            list.AddItem("1", LanguageHelper.Words("gender.male"), LanguageHelper.Words("gender.male"));
+            list.AddItem("2", LanguageHelper.Words("gender.female"), LanguageHelper.Words("gender.female"));
             return list;
         }
         public static Collection GetMonth()
         {
             Collection list = new Collection("MonthList");
-            list.AddItem(1, LanguageHelper.Words("month.jan"), LanguageHelper.Words("month.jan"));
-            list.AddItem(2, LanguageHelper.Words("month.feb"), LanguageHelper.Words("month.feb"));
-            list.AddItem(3, LanguageHelper.Words("month.mar"), LanguageHelper.Words("month.mar"));
-            list.AddItem(4, LanguageHelper.Words("month.apr"), LanguageHelper.Words("month.apr"));
-            list.AddItem(5, LanguageHelper.Words("month.may"), LanguageHelper.Words("month.may"));
-            list.AddItem(6, LanguageHelper.Words("month.jun"), LanguageHelper.Words("month.jun"));
-            list.AddItem(7, LanguageHelper.Words("month.jul"), LanguageHelper.Words("month.jul"));
-            list.AddItem(8, LanguageHelper.Words("month.aug"), LanguageHelper.Words("month.aug"));
-            list.AddItem(9, LanguageHelper.Words("month.sep"), LanguageHelper.Words("month.sep"));
-            list.AddItem(10, LanguageHelper.Words("month.oct"), LanguageHelper.Words("month.oct"));
-            list.AddItem(11, LanguageHelper.Words("month.nov"), LanguageHelper.Words("month.nov"));
-            list.AddItem(12, LanguageHelper.Words("month.dec"), LanguageHelper.Words("month.dec"));
+            list.AddItem("1", LanguageHelper.Words("month.jan"), LanguageHelper.Words("month.jan"));
+            list.AddItem("2", LanguageHelper.Words("month.feb"), LanguageHelper.Words("month.feb"));
+            list.AddItem("3", LanguageHelper.Words("month.mar"), LanguageHelper.Words("month.mar"));
+            list.AddItem("4", LanguageHelper.Words("month.apr"), LanguageHelper.Words("month.apr"));
+            list.AddItem("5", LanguageHelper.Words("month.may"), LanguageHelper.Words("month.may"));
+            list.AddItem("6", LanguageHelper.Words("month.jun"), LanguageHelper.Words("month.jun"));
+            list.AddItem("7", LanguageHelper.Words("month.jul"), LanguageHelper.Words("month.jul"));
+            list.AddItem("8", LanguageHelper.Words("month.aug"), LanguageHelper.Words("month.aug"));
+            list.AddItem("9", LanguageHelper.Words("month.sep"), LanguageHelper.Words("month.sep"));
+            list.AddItem("10", LanguageHelper.Words("month.oct"), LanguageHelper.Words("month.oct"));
+            list.AddItem("11", LanguageHelper.Words("month.nov"), LanguageHelper.Words("month.nov"));
+            list.AddItem("12", LanguageHelper.Words("month.dec"), LanguageHelper.Words("month.dec"));
             return list;
         }
         public static Collection GetDay()
@@ -301,33 +302,33 @@ namespace Library.V1.Entity
             Collection list = new Collection("DayList");
             for (int i = 1; i <= 31; i++)
             {
-                list.AddItem(i, i.ToString(), i.ToString());
+                list.AddItem(i.ToString(), i.ToString(), i.ToString());
             }
             return list;
         }
         public static Collection GetPosition()
         {
             Collection list = new Collection("PositionList");
-            list.AddItem(1, LanguageHelper.Words("position.top"), LanguageHelper.Words("position.top"));
-            list.AddItem(2, LanguageHelper.Words("position.bottom"), LanguageHelper.Words("position.bottom"));
+            list.AddItem("1", LanguageHelper.Words("position.top"), LanguageHelper.Words("position.top"));
+            list.AddItem("2", LanguageHelper.Words("position.bottom"), LanguageHelper.Words("position.bottom"));
             return list;
         }
         public static Collection GetMenuType()
         {
             Collection list = new Collection("MenuTypeList");
-            list.AddItem(1, LanguageHelper.Words("menutype.public"), LanguageHelper.Words("menutype.public"));
-            list.AddItem(2, LanguageHelper.Words("menutype.private"), LanguageHelper.Words("menutype.private"));
+            list.AddItem("1", LanguageHelper.Words("menutype.public"), LanguageHelper.Words("menutype.public"));
+            list.AddItem("2", LanguageHelper.Words("menutype.private"), LanguageHelper.Words("menutype.private"));
             return list;
         }
 
         public static Collection GetStatus()
         {
             Collection list = new Collection("StatusList");
-            list.AddItem(1, LanguageHelper.Words("status.hidden"), LanguageHelper.Words("status.hidden"));
-            list.AddItem(2, LanguageHelper.Words("status.internal"), LanguageHelper.Words("status.internal"));
-            list.AddItem(3, LanguageHelper.Words("status.publish"), LanguageHelper.Words("status.publish"));
-            list.AddItem(4, LanguageHelper.Words("status.progress"), LanguageHelper.Words("status.progress"));
-            list.AddItem(5, LanguageHelper.Words("status.close"), LanguageHelper.Words("status.close"));
+            list.AddItem("1", LanguageHelper.Words("status.hidden"), LanguageHelper.Words("status.hidden"));
+            list.AddItem("2", LanguageHelper.Words("status.internal"), LanguageHelper.Words("status.internal"));
+            list.AddItem("3", LanguageHelper.Words("status.publish"), LanguageHelper.Words("status.publish"));
+            list.AddItem("4", LanguageHelper.Words("status.progress"), LanguageHelper.Words("status.progress"));
+            list.AddItem("5", LanguageHelper.Words("status.close"), LanguageHelper.Words("status.close"));
             return list;
         }
         #endregion

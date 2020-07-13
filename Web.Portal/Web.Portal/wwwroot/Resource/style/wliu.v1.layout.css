@@ -505,11 +505,16 @@ div[pub][menu][right] {
 div[pub][webcontent] {
     display:            block;
     position:           relative;
-    width:              1240px;
+    max-width:          1240px;
     margin:             auto;
-    margin-top:         72px;
+    margin-top:         68px;
     box-sizing:         border-box;
-    border:             1px solid #cccccc;
+    white-space:        pre-wrap;
+    overflow-wrap:      break-word;
+    transition:         0.5s;
+}
+div[pub][webcontent][short] {
+    margin-top:         52px;
 }
 a[pub][button] {
     cursor:             pointer;
@@ -649,6 +654,7 @@ a[pub][menu][toggle]:hover {
         text-align:         center;
         white-space:        nowrap;
         border-bottom:      2px solid transparent;
+        transition:         0.5s;
     }
     div[pub][menu][body] ul[first] > li > ul[second] > li:hover {
         color:                  #666666;
@@ -726,6 +732,7 @@ a[pub][menu][toggle]:hover {
         text-align:         left;
         white-space:        nowrap;
         border-bottom:      2px solid transparent;
+        transition:         0.5s;
     }
 
     ul[first] > li a[href],

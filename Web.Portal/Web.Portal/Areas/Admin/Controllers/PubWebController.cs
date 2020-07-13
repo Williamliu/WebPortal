@@ -14,6 +14,11 @@ namespace Web.Portal.Areas.Admin.Controllers
             this.Init("M7010");
             return View();
         }
+        public IActionResult WebContent()
+        {
+            this.Init("M7020");
+            return View();
+        }
         protected override void InitDatabase(string menuId)
         {
         }

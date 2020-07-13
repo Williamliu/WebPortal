@@ -31,6 +31,25 @@ namespace Web.Portal.Areas.Admin.WebApi
             this.Init("M7010");
             return Ok(this.DB.SaveTable(jsTable));
         }
+        [HttpGet("InitWebContent")]
+        public IActionResult InitWebContent()
+        {
+            this.Init("M7020");
+            this.DB.FillAll();
+            return Ok(this.DB);
+        }
+        [HttpPost("ReloadWebContent")]
+        public IActionResult ReloadWebContent(JSTable jsTable)
+        {
+            this.Init("M7020");
+            return Ok(this.DB.ReloadTable(jsTable));
+        }
+        [HttpPost("SaveWebContent")]
+        public IActionResult SaveCourseDetail(JSTable jsTable)
+        {
+            this.Init("M7020");
+            return Ok(this.DB.SaveTable(jsTable));
+        }
         protected override void InitDatabase(string menuId)
         {
             switch (menuId)
@@ -92,6 +111,41 @@ namespace Web.Portal.Areas.Admin.WebApi
 
                         Collection MenuTypeList = new Collection("MenuTypeList");
                         this.DB.AddTables(firstMenu, secondMenu).AddCollections(MenuTypeList);
+                    }
+                    break;
+                case "M7020":
+                    {
+                        Table table = new Table("WebContent", "Pub_WebContent", Words("Web.Content"));
+                        Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
+                        Meta menu = new Meta { Name = "MenuId", DbName = "MenuId", Title = Words("pub.menu"), Type = EInput.String, Required = true,  MaxLength=16, Order = "ASC" };
+                        menu.AddListRef("PubMenuList");
+                        Meta place = new Meta { Name = "Place", DbName = "Place", Title = Words("col.position"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 16 };
+                        Meta titleEN = new Meta { Name = "Title_en", DbName = "Title_en", Title = Words("title.en"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 64 };
+                        Meta titleCN = new Meta { Name = "Title_cn", DbName = "Title_cn", Title = Words("title.cn"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 64 };
+                        Meta detailEN = new Meta { Name = "Detail_en", DbName = "Detail_en", Title = Words("detail.en"), Order = "ASC", Type = EInput.String, MaxLength = 500 * 1024 };
+                        Meta detailCN = new Meta { Name = "Detail_cn", DbName = "Detail_cn", Title = Words("detail.cn"), Order = "ASC", Type = EInput.String, MaxLength = 500 * 1024 };
+                        Meta active = new Meta { Name = "Active", DbName = "Active", Title = Words("status.active"), Description = Words("status.active.inactive"), Type = EInput.Bool };
+                        Meta sort = new Meta { Name = "Sort", DbName = "Sort", Title = Words("col.sort"), Type = EInput.Int, Order = "DESC" };
+                
+                        table.AddMetas(id, menu, place, titleEN, titleCN, detailEN, detailCN, active, sort);
+
+                        CollectionTable c1 = new CollectionTable("PubMenuList", "VW_Pub_Menu_List", true, "MenuId", "Title", "Detail", "", "DESC", "Sort");
+                        Collection PubMenuList = new Collection(ECollectionType.Table, c1);
+
+                        Filter f1 = new Filter() { Name = "search_keyword", DbName = "Title_en,Title_cn", Title = Words("col.keyword"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f2 = new Filter() { Name = "search_menu", DbName = "MenuId", Title = Words("col.menu"), Type = EFilter.String, Compare = ECompare.Equal };
+                        f2.AddListRef("PubMenuList");
+                        table.AddFilters(f1, f2);
+                        table.Navi.IsActive = true;
+                        table.Navi.Order = "DESC";
+                        table.Navi.By = "Sort";
+                        table.GetUrl = "/Admin/api/PubWeb/ReloadWebContent";
+                        table.SaveUrl = "/Admin/api/PubWeb/SaveWebContent";
+                        table.AddQueryKV("Deleted", false).AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds())
+                              .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
+                              .AddInsertKV("Deleted", false).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
+
+                        this.DB.AddCollection(PubMenuList).AddTable(table);
                     }
                     break;
             }

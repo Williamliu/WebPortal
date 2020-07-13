@@ -67,6 +67,15 @@ namespace Web.Portal.Common
             ret.Append("</form>");
             return new HtmlString(ret.ToString());
         }
+        public static IHtmlContent WebContent<t>(this Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<t> htmlHelper, string menuId)
+        {
+            WebContent webContent = htmlHelper.ViewContext.HttpContext.Items["WebContent"] as WebContent;
+            if(webContent!=null)
+                return htmlHelper.Raw(webContent.HTML(menuId));
+            else 
+                return htmlHelper.Raw(string.Empty);
+        }
+
     }
 
     public static class WebStartUp

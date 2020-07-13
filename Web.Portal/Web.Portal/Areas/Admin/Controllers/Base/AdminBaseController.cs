@@ -38,7 +38,7 @@ namespace Web.Portal.Areas.Admin.Controllers
             this.DB.User = this.HttpContext.GetAdminUser(this.DB.DSQL, menuId);
 
             //Step5: Init Admin Menus base on User Rights
-            InitAdminMenus(this.DB.DSQL, menuId);
+            InitAdminMenus(menuId);
 
             if (this.DB.User.Id <= 0 || (
                 this.DB.User.ViewMenus.Contains(menuId) == false &&
@@ -49,11 +49,10 @@ namespace Web.Portal.Areas.Admin.Controllers
             //Step6: Init Database Schema defined in Controller
             this.InitDatabase(menuId);
         }
-        private void InitAdminMenus(SqlHelper dsql, string menuId)
+        private void InitAdminMenus(string menuId)
         {
-            SqlHelper DSQL = dsql;
-            string query0 = $"SELECT Id, ParentId, MenuId, Url, Position, MenuImage, Sort, {DSQL.LangSmartColumn("Title")} AS Title, {DSQL.LangSmartColumn("Detail")} AS Detail FROM Admin_Menu WHERE Position=1 AND Active=1 AND Deleted=0 AND ParentId=0 ORDER BY Sort DESC";
-            GTable parent = DSQL.ExecuteTable(query0, new Dictionary<string, object>());
+            string query0 = $"SELECT Id, ParentId, MenuId, Url, Position, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM Admin_Menu WHERE Position=1 AND Active=1 AND Deleted=0 AND ParentId=0 ORDER BY Sort DESC";
+            GTable parent = this.DB.DSQL.ExecuteTable(query0, new Dictionary<string, object>());
 
             AdminPubMenus adminPubMenus = new AdminPubMenus();
             Menus adminMenu = new Menus(menuId, adminPubMenus);
@@ -72,8 +71,8 @@ namespace Web.Portal.Areas.Admin.Controllers
                 pmenu.Detail = srow.GetValue("Detail");
                 if (this.DB.User.ViewMenus.Contains(pmenu.MenuId) == false) continue;
 
-                string query1 = $"SELECT Id, ParentId, MenuId, Url, Position, MenuImage, Sort, {DSQL.LangSmartColumn("Title")} AS Title, {DSQL.LangSmartColumn("Detail")} AS Detail FROM Admin_Menu WHERE Active=1 AND Deleted=0 AND ParentId={pmenu.Id} ORDER BY Sort DESC";
-                GTable child = DSQL.ExecuteTable(query1, new Dictionary<string, object>());
+                string query1 = $"SELECT Id, ParentId, MenuId, Url, Position, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM Admin_Menu WHERE Active=1 AND Deleted=0 AND ParentId={pmenu.Id} ORDER BY Sort DESC";
+                GTable child = this.DB.DSQL.ExecuteTable(query1, new Dictionary<string, object>());
                 foreach (GRow srow1 in child.Rows)
                 {
                     Menu cmenu = new Menu();
@@ -94,8 +93,8 @@ namespace Web.Portal.Areas.Admin.Controllers
                 adminMenu.AddTop(pmenu);
             }
 
-            query0 = $"SELECT Id, ParentId, MenuId, Url, Position, MenuImage, Sort, {DSQL.LangSmartColumn("Title")} AS Title, {DSQL.LangSmartColumn("Detail")} AS Detail FROM Admin_Menu WHERE Position=2 AND Active=1 AND Deleted=0 AND ParentId=0 ORDER BY Sort DESC";
-            parent = DSQL.ExecuteTable(query0, new Dictionary<string, object>());
+            query0 = $"SELECT Id, ParentId, MenuId, Url, Position, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM Admin_Menu WHERE Position=2 AND Active=1 AND Deleted=0 AND ParentId=0 ORDER BY Sort DESC";
+            parent = this.DB.DSQL.ExecuteTable(query0, new Dictionary<string, object>());
             foreach (GRow srow in parent.Rows)
             {
                 Menu pmenu = new Menu();
@@ -110,8 +109,8 @@ namespace Web.Portal.Areas.Admin.Controllers
                 pmenu.Detail = srow.GetValue("Detail");
                 if (this.DB.User.ViewMenus.Contains(pmenu.MenuId) == false) continue;
 
-                string query1 = $"SELECT Id, ParentId, MenuId, Url, Position, MenuImage, Sort, {DSQL.LangSmartColumn("Title")} AS Title, {DSQL.LangSmartColumn("Detail")} AS Detail FROM Admin_Menu WHERE Active=1 AND Deleted=0 AND ParentId={pmenu.Id} ORDER BY Sort DESC";
-                GTable child = DSQL.ExecuteTable(query1, new Dictionary<string, object>());
+                string query1 = $"SELECT Id, ParentId, MenuId, Url, Position, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM Admin_Menu WHERE Active=1 AND Deleted=0 AND ParentId={pmenu.Id} ORDER BY Sort DESC";
+                GTable child = this.DB.DSQL.ExecuteTable(query1, new Dictionary<string, object>());
                 foreach (GRow srow1 in child.Rows)
                 {
                     Menu cmenu = new Menu();

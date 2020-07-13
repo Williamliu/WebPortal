@@ -17,8 +17,11 @@ namespace Web.Portal.Controllers
 
         public IActionResult Index()
         {
-            Init("Index");
+            Init("M10");
+            this.GetWebContent("M10");
             return View();
+            
+           
         }
 
         protected override void InitDatabase(string menuId)

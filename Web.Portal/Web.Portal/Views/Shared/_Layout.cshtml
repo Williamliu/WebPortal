@@ -35,10 +35,11 @@
             if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
                 $("div[pub][menu]").addAttr("short");
                 $("div[pub][menu][body] ul[first]").addAttr("short");
+                $("div[pub][webcontent]").addAttr("short");
             } else {
-                +
-                    $("div[pub][menu]").removeAttr("short");
+                $("div[pub][menu]").removeAttr("short");
                 $("div[pub][menu][body] ul[first]").removeAttr("short");
+                $("div[pub][webcontent]").removeAttr("short");
             }
         }
         $(function () {

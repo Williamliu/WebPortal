@@ -3849,7 +3849,7 @@ WLIU_NG.directive("filter.select", function () {
             $scope.reload = $scope.reload || 1;
             $scope.ChangeKey = function () {
                 if (parseInt($scope.reload)>0) {
-                    $scope.db.tables[$scope.tb].filters[$scope.col].value1 = $scope.db.tables[$scope.tb].filters[$scope.col].value1 || 0;
+                    $scope.db.tables[$scope.tb].filters[$scope.col].value1 = $scope.db.tables[$scope.tb].filters[$scope.col].value1 || "";
                     $scope.db.tables[$scope.tb].navi.pageNo = 0;
                     $scope.db.tables[$scope.tb].firstPage().then(data => {
                         if ($scope.action) if ($.isFunction($scope.action)) $scope.action();
@@ -3892,7 +3892,7 @@ WLIU_NG.directive("filter.fselect", function () {
             $scope.reload = $scope.reload || 1;
             $scope.ChangeKey = function () {
                 if (parseInt($scope.reload) > 0) {
-                    $scope.db.tables[$scope.tb].filters[$scope.col].value1 = $scope.db.tables[$scope.tb].filters[$scope.col].value1 || 0;
+                    $scope.db.tables[$scope.tb].filters[$scope.col].value1 = $scope.db.tables[$scope.tb].filters[$scope.col].value1 || "";
                     $scope.db.tables[$scope.tb].navi.pageNo = 0;
                     $scope.db.tables[$scope.tb].firstPage().then(data => {
                         if ($scope.action) if ($.isFunction($scope.action)) $scope.action();
