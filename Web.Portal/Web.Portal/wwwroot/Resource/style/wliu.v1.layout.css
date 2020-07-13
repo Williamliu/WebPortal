@@ -624,50 +624,56 @@ a[pub][menu][toggle]:hover {
     }
     /***Second Menu**********************************/
     div[pub][menu][body] ul[first] > li > ul[second] {
-        display:            none;
-        position:           absolute;
-        border:             1px solid #eeeeee;
-        border-top:         2px solid orange;
-        border-radius:      6px;
-        list-style-type:    none;
-        padding:            0px;
-        margin:             0px;
-        top:                100%;
-        left:               50%;
-        transform:          translateX(-50%); 
-        background-color:   #eeeeee;
-        opacity:            0;               
-        transition:         1s;
-        overflow:           visible;
-        box-shadow:         2px 5px 5px #666666;
+        display:                none;
+        position:               absolute;
+        border:                 1px solid #eeeeee;
+        border-top:             2px solid orange;
+        border-radius:          6px;
+        list-style-type:        none;
+        padding:                0px;
+        margin:                 0px;
+        top:                    100%;
+        left:                   50%;
+        transform:              translateX(-50%); 
+        background-color:       #eeeeee;
+        opacity:                0;               
+        transition:             1s;
+        overflow:               visible;
+        box-shadow:             2px 5px 5px #666666;
 
     }
 
     div[pub][menu][body] ul[first] > li:hover > ul[second] {
-        opacity:            1;
-        display:            inline-block;
+        opacity:                1;
+        display:                inline-block;
     }
 
     div[pub][menu][body] ul[first] > li > ul[second] > li {
-        display:            block;
-        margin:             0px;
-        padding:            0px 12px;
-        text-align:         center;
-        white-space:        nowrap;
-        border-bottom:      2px solid transparent;
-        transition:         0.5s;
+        display:                block;
+        margin:                 0px;
+        padding:                0px 12px;
+        text-align:             left; /*center;*/
+        white-space:            nowrap;
+        border-bottom:          2px solid transparent;
+        transition:             0.5s;
     }
     div[pub][menu][body] ul[first] > li > ul[second] > li:hover {
         color:                  #333333;
-        text-decoration-style:  none;
+        text-decoration:        none;
         border-bottom:          2px solid orange;
     }
+
+    div[pub][menu][body] ul[first] > li > ul[second] > li[space],
+    div[pub][menu][body] ul[first] > li > ul[second] > li[space]:hover {
+        border-bottom:          2px solid transparent;
+    }
+
     ul[first] > li a[href],
     ul[first] > li a[href]:hover,
     ul[second] > li a[href],
     ul[second] > li a[href]:hover {
-        color: #333333 !important;
-        text-decoration: none !important;
+        color:                  #333333 !important;
+        text-decoration:        none !important;
     }
     a[pub][menu][toggle] {
         display: none;
@@ -736,6 +742,13 @@ a[pub][menu][toggle]:hover {
         border-bottom:      2px solid transparent;
         transition:         0.5s;
     }
+    div[pub][menu][body] ul[first] > li > ul[second] > li:hover {
+        background-color:   #dddddd;
+    }
+    div[pub][menu][body] ul[first] > li > ul[second] > li[space],
+    div[pub][menu][body] ul[first] > li > ul[second] > li[space]:hover {
+        border-bottom: 2px solid transparent;
+    }
 
     ul[first] > li a[href],
     ul[first] > li a[href]:hover,
@@ -743,9 +756,6 @@ a[pub][menu][toggle]:hover {
     ul[second] > li a[href]:hover {
         color: #333333 !important;
         text-decoration: none !important;
-    }
-    div[pub][menu][body] ul[first] > li > ul[second] > li:hover {
-        background-color:   #dddddd;
     }
     a[pub][menu][toggle] {
         display: inline-block;

@@ -14,7 +14,7 @@
 <div class="container-fluid" ng-app="myApp" ng-controller="mycontrl">
     <ng-form>
         <div style="display:block">
-            <label wliu h2 style="vertical-align:middle;">@Html.Words("admin.menu")</label>
+            <label wliu h2 style="vertical-align:middle;">@Html.Words("menutype.public")</label>
             <tree.add db="ViewData.database" tb="FirstMenu" ftb="SecondMenu" kvs="{ParentId: 0}" style="vertical-align:middle;"></tree.add>
             <ul wliu tree root>
                 <li nodes open ng-repeat="frow in ViewData.database.tables.FirstMenu.rows">
@@ -34,6 +34,7 @@
                             <tree.textbox medium db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Title_en"></tree.textbox>
                             <tree.textbox medium db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Title_cn"></tree.textbox>
                             <tree.textbox large db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Url"></tree.textbox>
+                            <tree.textbox tiny db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Indent"></tree.textbox>
                             <tree.bool db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Active"></tree.bool>
                             <tree.textbox tiny db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Sort"></tree.textbox>
                             <tree.bicon db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" icons="save,cancel,delete"></tree.bicon>

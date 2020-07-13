@@ -51,6 +51,7 @@ namespace Library.V1.Entity
         public string Detail { get; set; }
         public string Url { get; set; }
         public string Position { get; set; }
+        public string Indent { get; set; }
         public string MenuImage { get; set; }
         public string Sort { get; set; }
         public IList<Menu> Nodes { get; set; }

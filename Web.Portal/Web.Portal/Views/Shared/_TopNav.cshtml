@@ -9,7 +9,15 @@
                     <ul second>
                         @foreach (Menu smenu in tmenu.Nodes)
                         {
-                            <li @(smenu.MenuId == PubMenu.MenuId ? "selected" : "")><a @(smenu.Url == "" ? "" : "href=" + smenu.Url)>@smenu.Title</a></li>
+                            if (smenu.MenuId.ToLower() == "space")
+                            {
+                                <li space><div wliu border></div></li>
+                            }
+                            else
+                            {
+                                <li @(smenu.MenuId == PubMenu.MenuId ? "selected" : "") style="text-indent:@(string.IsNullOrWhiteSpace(smenu.Indent)?"0px":@smenu.Indent);"><a @(smenu.Url==""?"":"href=" + smenu.Url)>@smenu.Title</a></li>
+                            }
+
                         }
                     </ul>
                 </li>
