@@ -513,6 +513,7 @@ div[pub][webcontent] {
     white-space:        pre-wrap;
     overflow-wrap:      break-word;
     transition:         0.5s;
+    text-align:         justify;
 }
 div[pub][webcontent][short] {
     margin-top:         52px;

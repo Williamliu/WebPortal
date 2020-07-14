@@ -97,6 +97,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                     {
                         Table table = new Table("Site", "GSite", Words("col.site"));
                         Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
+                        Meta branchId = new Meta { Name = "BranchId", DbName = "BranchId", Title = Words("col.branch"), Type = EInput.Hidden, MaxLength = 64 };
                         Meta titleEN = new Meta { Name = "TitleEN", DbName = "Title_en", Title = Words("title.en"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 64 };
                         Meta titleCN = new Meta { Name = "TitleCN", DbName = "Title_cn", Title = Words("title.cn"), Order = "ASC", Type = EInput.String, MaxLength = 64 };
                         Meta detailEN = new Meta { Name = "DetailEN", DbName = "Detail_en", Title = Words("detail.en"), Order = "ASC", Type = EInput.String, MaxLength = 256 };
@@ -118,7 +119,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta phoneEn = new Meta { Name = "PhoneEN", DbName = "Phone_en", Title = Words("col.phone.en"), Type = EInput.String, MaxLength = 32 };
                         Meta phoneCn = new Meta { Name = "PhoneCN", DbName = "Phone_cn", Title = Words("col.phone.cn"), Type = EInput.String, MaxLength = 32 };
 
-                        table.AddMetas(id, titleEN, titleCN, detailEN, detailCN, foundDate, active, sort)
+                        table.AddMetas(id, branchId, titleEN, titleCN, detailEN, detailCN, foundDate, active, sort)
                             .AddMetas(address, city, state, country, postal)
                             .AddMetas(emailEn, emailCn, phoneEn, phoneCn);
 

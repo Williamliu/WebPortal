@@ -92,6 +92,7 @@ namespace Library.V1.Entity
             get
             {
                 bool IsAllow = true;
+                if (this.Type == EInput.Hidden) IsAllow = false;
                 if (this.Type == EInput.ImageUrl) IsAllow = false;
                 if (this.Type == EInput.ImageContent) IsAllow = false;
                 if (this.Type == EInput.FileUrl) IsAllow = false;

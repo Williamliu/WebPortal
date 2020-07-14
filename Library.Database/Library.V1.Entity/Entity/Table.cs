@@ -317,6 +317,7 @@ namespace Library.V1.Entity
                 switch (this.Metas[colName].Type)
                 {
                     case EInput.Hidden:
+                        break;
                     case EInput.Object:
                     case EInput.String:
                     case EInput.Email:
@@ -530,7 +531,9 @@ namespace Library.V1.Entity
                     case EState.Added:
                         if(this.Relation.RefType== ERef.O2O || this.Relation.RefType==ERef.O2M)
                         {
-                            if(this.Relation.RefKey<=0) row.Error.Append(ErrorCode.ValueValidate, $"{LanguageHelper.Words("key.missing")} - {this.Relation.ForeignKey}");
+                            string fkName = this.Relation.ForeignKey;
+                            if (this.Metas.ContainsKey(this.Relation.ForeignKey)) fkName = this.Metas[this.Relation.ForeignKey].Title;
+                            if(this.Relation.RefKey<=0) row.Error.Append(ErrorCode.ValueValidate, $"{LanguageHelper.Words("key.missing")} {fkName}");
                         }
                         break;
                     case EState.Changed:
