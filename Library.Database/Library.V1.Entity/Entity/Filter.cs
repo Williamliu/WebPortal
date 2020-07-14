@@ -26,14 +26,15 @@ namespace Library.V1.Entity
     public enum ECompare
     {
         Like = 0,
-        Equal = 1,
-        NotEqual = 2,
-        Gthan = 3,
-        Lthan = 4,
-        Range = 5,
-        Include = 6,
-        Checkbox = 7,
-        In
+        NotLike =1,
+        Equal = 2,
+        NotEqual = 3,
+        Gthan = 4,
+        Lthan = 5,
+        Range = 6,
+        Include = 7,
+        Checkbox = 8,
+        In = 9
     }
     public class Filter
     {
@@ -119,6 +120,16 @@ namespace Library.V1.Entity
                                 else if (ObjectHelper.IsEmpty(this.Value1) == false)
                                 {
                                     wcolumn.Add($"{dbName} LIKE '%' + @filter_{this.Name}_{dbName}_value1 +'%'", new SqlParameter($"@filter_{this.Name}_{dbName}_value1", this.GetValue1()));
+                                }
+                                break;
+                            case ECompare.NotLike:
+                                if (this.Required && ObjectHelper.IsEmpty(this.Value1))
+                                {
+                                    wcolumn.Add("1=0");
+                                }
+                                else if (ObjectHelper.IsEmpty(this.Value1) == false)
+                                {
+                                    wcolumn.Add($"{dbName} NOT LIKE '%' + @filter_{this.Name}_{dbName}_value1 +'%'", new SqlParameter($"@filter_{this.Name}_{dbName}_value1", this.GetValue1()));
                                 }
                                 break;
                             case ECompare.Equal:

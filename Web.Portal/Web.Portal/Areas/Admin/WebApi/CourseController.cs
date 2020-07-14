@@ -133,11 +133,11 @@ namespace Web.Portal.Areas.Admin.WebApi
 
                         CollectionTable c1 = new CollectionTable("BranchList", "GBranch", true,"Id", "Title","Detail", "", "DESC", "Sort");
                         Collection BranchList = new Collection(ECollectionType.Table, c1);
-                        BranchList.AddFilter("Id", this.DB.User.ActiveBranches);
+                        BranchList.AddFilter("Id", ECompare.In, this.DB.User.ActiveBranches);
 
                         CollectionTable c2 = new CollectionTable("SiteList", "GSite", true, "Id", "Title", "Detail", "BranchId", "DESC", "Sort");
                         Collection SiteList = new Collection(ECollectionType.Table, c2);
-                        SiteList.AddFilter("Id", this.DB.User.ActiveSites);
+                        SiteList.AddFilter("Id", ECompare.In, this.DB.User.ActiveSites);
 
                         CollectionTable c3 = new CollectionTable("AgreeList", "Course_Agreement", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection AgreeList = new Collection(ECollectionType.Table, c3);
@@ -215,11 +215,11 @@ namespace Web.Portal.Areas.Admin.WebApi
 
                         CollectionTable c1 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection BranchList = new Collection(ECollectionType.Table, c1);
-                        BranchList.AddFilter("Id", this.DB.User.ActiveBranches);
+                        BranchList.AddFilter("Id", ECompare.In, this.DB.User.ActiveBranches);
 
                         CollectionTable c2 = new CollectionTable("SiteList", "GSite", true, "Id", "Title", "Detail", "BranchId", "DESC", "Sort");
                         Collection SiteList = new Collection(ECollectionType.Table, c2);
-                        SiteList.AddFilter("Id", this.DB.User.Sites);
+                        SiteList.AddFilter("Id", ECompare.In, this.DB.User.Sites);
 
                         CollectionTable c3 = new CollectionTable("AgreeList", "Course_Agreement", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection AgreeList = new Collection(ECollectionType.Table, c3);

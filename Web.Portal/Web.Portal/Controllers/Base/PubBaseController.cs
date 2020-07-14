@@ -41,6 +41,7 @@ namespace Web.Portal.Controllers
 
             InitPubMenus(menuId);
 
+            WriteWebLog(menuId);
             //Step5: Init Database Schema defined in Controller
             this.InitDatabase(menuId);
         }
@@ -151,6 +152,18 @@ namespace Web.Portal.Controllers
             WebContent webcon = new WebContent(this.DB.DSQL, menuId);
             webcon.FillData();
             this.HttpContext.Items.Add("WebContent", webcon);
+        }
+        private void WriteWebLog(string menuId)
+        {
+            SQLRow row = new SQLRow();
+            row.Add("MenuId", "MenuId", menuId);
+            row.Add("Url", "Url", $"{this.HttpContext.Request.Path.ToString()}{this.HttpContext.Request.QueryString.ToString()}");
+            row.Add("UserAgent", "UserAgent", this.HttpContext.Request.Headers["User-Agent"].ToString());
+            row.Add("PubUserId", "PubUserId", 0);
+            row.Add("IPAddress", "IPAddress", this.HttpContext.Connection.RemoteIpAddress.ToString());
+            row.Add("Lang", "Lang", this.DB.DSQL.Lang);
+            
+            this.DB.DSQL.InsertTable("Pub_WebAccessLog", row);
         }
         #endregion
     }

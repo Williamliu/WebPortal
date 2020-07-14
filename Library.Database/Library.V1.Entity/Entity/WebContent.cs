@@ -28,7 +28,15 @@ namespace Library.V1.Entity
 
         public void FillData()
         {
-            GTable gtable = this.DSQL.ExecuteTable($"SELECT Place, {this.DSQL.LangSmartColumn("Detail")} as Detail FROM Pub_WebContent WHERE Deleted=0 AND Active=1 AND MenuId=@MenuId", new Dictionary<string, object>{{"MenuId", this.MenuId}} );
+            string query = $@"SELECT Place, {this.DSQL.LangSmartColumn("Pub_WebContent.Detail")} as Detail 
+FROM Pub_WebContent 
+INNER JOIN Pub_Menu 
+ON Pub_Menu.Id = Pub_WebContent.PubMenuId 
+WHERE 
+	Pub_Menu.Deleted = 0 AND Pub_Menu.Active = 1 AND 	
+	Pub_WebContent.Deleted = 0 AND Pub_WebContent.Active = 1 AND
+	Pub_Menu.MenuId = @MenuId";
+            GTable gtable = this.DSQL.ExecuteTable(query, new Dictionary<string, object>{{"MenuId", this.MenuId}} );
             foreach(GRow row in  gtable.Rows)
             {
                 this.Content.Add(row.GetValue("Place").ToLower(), row.GetValue("Detail"));

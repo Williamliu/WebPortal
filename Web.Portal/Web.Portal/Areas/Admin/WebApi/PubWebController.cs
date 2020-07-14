@@ -119,7 +119,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                     {
                         Table table = new Table("WebContent", "Pub_WebContent", Words("Web.Content"));
                         Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
-                        Meta menu = new Meta { Name = "MenuId", DbName = "MenuId", Title = Words("pub.menu"), Type = EInput.String, Required = true,  MaxLength=16, Order = "ASC" };
+                        Meta menu = new Meta { Name = "PubMenuId", DbName = "PubMenuId", Title = Words("pub.menu"), Type = EInput.Int, Required = true,  MaxLength=16, Order = "ASC" };
                         menu.AddListRef("PubMenuList");
                         Meta place = new Meta { Name = "Place", DbName = "Place", Title = Words("col.position"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 16 };
                         Meta titleEN = new Meta { Name = "Title_en", DbName = "Title_en", Title = Words("title.en"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 64 };
@@ -131,11 +131,12 @@ namespace Web.Portal.Areas.Admin.WebApi
                 
                         table.AddMetas(id, menu, place, titleEN, titleCN, detailEN, detailCN, active, sort);
 
-                        CollectionTable c1 = new CollectionTable("PubMenuList", "VW_Pub_Menu_List", true, "MenuId", "Title", "Detail", "", "DESC", "Sort");
+                        CollectionTable c1 = new CollectionTable("PubMenuList", "VW_Pub_Menu_List", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection PubMenuList = new Collection(ECollectionType.Table, c1);
+                        PubMenuList.AddFilter("MenuId", ECompare.NotEqual, "space");
 
                         Filter f1 = new Filter() { Name = "search_keyword", DbName = "Title_en,Title_cn", Title = Words("col.keyword"), Type = EFilter.String, Compare = ECompare.Like };
-                        Filter f2 = new Filter() { Name = "search_menu", DbName = "MenuId", Title = Words("col.menu"), Type = EFilter.String, Compare = ECompare.Equal };
+                        Filter f2 = new Filter() { Name = "search_menu", DbName = "PubMenuId", Title = Words("col.menu"), Type = EFilter.String, Compare = ECompare.Equal };
                         f2.AddListRef("PubMenuList");
                         table.AddFilters(f1, f2);
                         table.Navi.IsActive = true;

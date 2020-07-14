@@ -137,7 +137,7 @@ namespace Web.Portal.Areas.Admin.WebApi
 
                         CollectionTable c1 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection BranchList = new Collection(ECollectionType.Table, c1);
-                        BranchList.AddFilter("Id", this.DB.User.ActiveBranches);
+                        BranchList.AddFilter("Id", ECompare.In, this.DB.User.ActiveBranches);
 
                         CollectionTable c2 = new CollectionTable("CountryList", "GCountry", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection CountryList = new Collection(ECollectionType.Table, c2);

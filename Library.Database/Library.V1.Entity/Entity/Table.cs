@@ -213,7 +213,7 @@ namespace Library.V1.Entity
             {
                 SQLRow sqlRow = new SQLRow();
                 sqlRow.Add(this.DeleteKVs);
-                sqlRow.Add("Deleted", true);
+                sqlRow.Add("Deleted", "Deleted", true);
                 return sqlRow;
             }
         }
@@ -530,7 +530,7 @@ namespace Library.V1.Entity
                     case EState.Added:
                         if(this.Relation.RefType== ERef.O2O || this.Relation.RefType==ERef.O2M)
                         {
-                            if(this.Relation.RefKey<=0) row.Error.Append(ErrorCode.ValueValidate, string.Format(LanguageHelper.Words("key.missing")));
+                            if(this.Relation.RefKey<=0) row.Error.Append(ErrorCode.ValueValidate, $"{LanguageHelper.Words("key.missing")} - {this.Relation.ForeignKey}");
                         }
                         break;
                     case EState.Changed:
@@ -687,7 +687,7 @@ namespace Library.V1.Entity
                                             if (this.Metas[colName].AllowSave && this.Metas[colName].IsKey == false)
                                             {
                                                 string dbName = this.Metas[colName].IsLang ? this.DSQL.LangColumn(this.Metas[colName].DbName) : this.Metas[colName].DbName;
-                                                sqlRow.Add(this.Metas[colName].DbName, row.Columns[colName].Value);
+                                                sqlRow.Add(this.Metas[colName].DbName, this.Metas[colName].DbName, row.Columns[colName].Value);
                                             }
                                         }
                                         int result = this.DSQL.UpdateTable(this.DbName, sqlRow, sqlWhere);
@@ -756,7 +756,7 @@ namespace Library.V1.Entity
                                         {
                                             string dbName = this.Metas[colName].IsLang ? this.DSQL.LangColumn(this.Metas[colName].DbName) : this.Metas[colName].DbName;
                                             if(sqlRow.ContainCol(dbName)==false)
-                                                sqlRow.Add(this.Metas[colName].DbName, row.Columns[colName].Value);
+                                                sqlRow.Add(this.Metas[colName].DbName, this.Metas[colName].DbName, row.Columns[colName].Value);
                                         }
                                     }
 

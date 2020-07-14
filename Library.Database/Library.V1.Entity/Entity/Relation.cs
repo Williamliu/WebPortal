@@ -40,7 +40,7 @@ namespace Library.V1.Entity
                         break;
                     case ERef.O2O:
                     case ERef.O2M:
-                        row.Add(this.ForeignKey, this.RefKey);
+                        row.Add(this.ForeignKey, this.ForeignKey, this.RefKey);
                         break;
                 }
                 return row;

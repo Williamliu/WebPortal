@@ -997,11 +997,6 @@ namespace Library.V1.SQL
             this.Add(new SQLCol(dbName, colName));
             return this;
         }
-        public SQLRow Add(string dbName, object value)
-        {
-            this.Add(new SQLCol(dbName, value));
-            return this;
-        }
         public SQLRow Add(string dbName, string colName, object value)
         {
             this.Add(new SQLCol(dbName, colName, value));
@@ -1011,7 +1006,7 @@ namespace Library.V1.SQL
         {
             foreach(string dbName in colKVs.Keys)
             {
-                this.Add(dbName, colKVs[dbName]);
+                this.Add(dbName, dbName, colKVs[dbName]);
             }
             return this;
         }

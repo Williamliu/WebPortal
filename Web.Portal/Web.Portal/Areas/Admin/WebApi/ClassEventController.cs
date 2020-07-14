@@ -323,11 +323,11 @@ namespace Web.Portal.Areas.Admin.WebApi
 
                         CollectionTable c1 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection BranchList = new Collection(ECollectionType.Table, c1);
-                        BranchList.AddFilter("Id", this.DB.User.ActiveBranches);
+                        BranchList.AddFilter("Id", ECompare.In, this.DB.User.ActiveBranches);
 
                         CollectionTable c2 = new CollectionTable("SiteList", "GSite", true, "Id", "Title", "Detail", "BranchId", "DESC", "Sort");
                         Collection SiteList = new Collection(ECollectionType.Table, c2);
-                        SiteList.AddFilter("Id", this.DB.User.ActiveSites);
+                        SiteList.AddFilter("Id", ECompare.In, this.DB.User.ActiveSites);
 
                         int def_site = this.DB.User.ActiveSites.Count > 0 ? this.DB.User.Sites[0] : -1;
                         Filter f1 = new Filter() { Name = "search_branch", DbName = "BranchId", Title = Words("col.branch"), Required = true, Type = EFilter.Int, Compare = ECompare.Equal, Value1 = this.DB.User.Branch };
@@ -465,7 +465,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         // Collection
                         CollectionTable c1 = new CollectionTable("ClassList", "VW_Class_Enroll", true, "ClassId", "Title", "Detail", "", "DESC", "StartDate");
                         Collection ClassList = new Collection(ECollectionType.Table, c1);
-                        ClassList.AddFilter("SiteId", this.DB.User.ActiveSites);
+                        ClassList.AddFilter("SiteId", ECompare.In, this.DB.User.ActiveSites);
 
                         CollectionTable c2 = new CollectionTable("MemberTypeList", "MemberType", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection MemberTypeList = new Collection(ECollectionType.Category, c2);

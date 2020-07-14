@@ -23,9 +23,9 @@
                     <tree.textbox medium db="ViewData.database" tb="FirstMenu" guid="{{frow.guid}}" col="Title_en"></tree.textbox>
                     <tree.textbox medium db="ViewData.database" tb="FirstMenu" guid="{{frow.guid}}" col="Title_cn"></tree.textbox>
                     <tree.textbox large db="ViewData.database" tb="FirstMenu" guid="{{frow.guid}}" col="Url"></tree.textbox>
-                    <tree.bool db="ViewData.database" tb="FirstMenu" guid="{{frow.guid}}" col="Active"></tree.bool>
                     <tree.textbox tiny db="ViewData.database" tb="FirstMenu" guid="{{frow.guid}}" col="Sort"></tree.textbox>
                     <tree.select small db="ViewData.database" tb="FirstMenu" guid="{{frow.guid}}" col="Position"></tree.select>
+                    <tree.bool db="ViewData.database" tb="FirstMenu" guid="{{frow.guid}}" col="Active"></tree.bool>
                     <tree.bicon db="ViewData.database" tb="FirstMenu" guid="{{frow.guid}}" icons="save,cancel,delete"></tree.bicon><tree.add db="ViewData.database" tb="SecondMenu" ftb="FirstMenu" kvs="{ParentId: frow.key}"></tree.add>
                     <ul wliu tree>
                         <li node ng-repeat="srow in ViewData.database.tables.SecondMenu.FilterRows({ParentId:frow.key})">
@@ -35,8 +35,8 @@
                             <tree.textbox medium db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Title_cn"></tree.textbox>
                             <tree.textbox large db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Url"></tree.textbox>
                             <tree.textbox tiny db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Indent"></tree.textbox>
-                            <tree.bool db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Active"></tree.bool>
                             <tree.textbox tiny db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Sort"></tree.textbox>
+                            <tree.bool db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Active"></tree.bool>
                             <tree.bicon db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" icons="save,cancel,delete"></tree.bicon>
                         </li>
                     </ul>
