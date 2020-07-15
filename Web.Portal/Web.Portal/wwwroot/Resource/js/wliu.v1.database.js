@@ -1709,7 +1709,7 @@ var AJAX = {
             */
             beforeSend: function (xhr) {   //Include the bearer token in header
                 xhr.setRequestHeader("Authorization", 'Bearer ' + GSiteJwtToken);
-                xhr.setRequestHeader("AdminSession", GSiteSession);
+                xhr.setRequestHeader("SiteSession", GSiteSession);
             },
             /*
             beforeSend: function (xhr) {

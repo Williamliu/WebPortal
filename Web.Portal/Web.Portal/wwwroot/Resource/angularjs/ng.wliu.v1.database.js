@@ -2558,7 +2558,8 @@ WLIU_NG.directive("form.date", function () {
                     format: "yyyy-mm-dd",
                     formatSubmit: "yyyy-mm-dd",
                     closeOnSelect: true,
-                    disable: [{ from: [2016, 9, 1], to: [2016, 9, 10] }, [2016, 10, 5]],
+                    disable: [],
+                    //disable: [{ from: [2016, 9, 1], to: [2016, 9, 10] }, [2016, 10, 5]],
                     //min: new Date(2015,3,20),
                     //max: new Date(2016,11,14),
                     selectYears: 100,
@@ -3796,7 +3797,7 @@ WLIU_NG.directive("filter.textbox", function () {
                 'ng-disabled="!db.tables[tb].filters[col]" ',
                 filterToolTip,
             '/> ',
-            '{{db.tables[tb].error.Message()}}',
+            '{{db.tables[tb].filters[col].error.Message()}}',
             '</span>'
         ].join(''),
         controller: function ($scope) {
@@ -3821,6 +3822,107 @@ WLIU_NG.directive("filter.textbox", function () {
         }
     };
 });
+WLIU_NG.directive("filter.daterange", function () {
+    return {
+        restrict: "E",
+        replace: true,
+        transclude: true,
+        scope: {
+            db: "=",
+            tb: "@",
+            col: "@",
+            action: "&"
+        },
+        template: [
+            '<span>{{Words(\'col.from\')}} : ',
+            '<input wliu date-picker="from" type="text" ',
+            'ng-attr="{\'input-invalid\': db.tables[tb].filters[col].error.HasError()}" ',
+            'ng-model="db.tables[tb].filters[col].value1" ',
+            'ng-change="db.tables[tb].FilterChange(col)" ',
+            'ng-keypress="keypress($event)" ',
+            'ng-disabled="!db.tables[tb].filters[col]" ',
+            filterToolTip,
+            '/> {{Words(\'col.to\')}} : ',
+            '<input wliu date-picker="to" type="text" ',
+            'ng-attr="{\'input-invalid\': db.tables[tb].filters[col].error.HasError()}" ',
+            'ng-model="db.tables[tb].filters[col].value2" ',
+            'ng-change="db.tables[tb].FilterChange(col)" ',
+            'ng-keypress="keypress($event)" ',
+            'ng-disabled="!db.tables[tb].filters[col]" ',
+            filterToolTip,
+            '/>',
+            '{{db.tables[tb].filters[col].error.Message()}}',
+            '</span>'
+        ].join(''),
+        controller: function ($scope, $window) {
+            $scope.Words = $window.Words;
+            $scope.keypress = function (ev) {
+                if (ev.keyCode === 13) {
+                    $(ev.target).select();
+                    $scope.db.tables[$scope.tb].Reload().then(data => {
+                        if ($scope.action) if ($.isFunction($scope.action)) $scope.action();
+                        $scope.$apply();
+                    }).catch(data => {
+                        $scope.$apply();
+                    });
+                }
+            };
+        },
+        link: function (sc, el, attr) {
+            $(function () {
+                $("input", el).off("focus").on("focus", function (ev) {
+                    $(this).select();
+                });
+
+                let today = new Date();
+                $("input[wliu][date-picker='from']", el).pickadate({
+                    format: "yyyy-mm-dd",
+                    formatSubmit: "yyyy-mm-dd",
+                    closeOnSelect: true,
+                    disable: [],
+                    //disable: [{ from: [2016, 9, 1], to: [2016, 9, 10] }, [2016, 10, 5]],
+                    //min: new Date(2015,3,20),
+                    //max: new Date(2016,11,14),
+                    selectYears: 100,
+                    min: new Date(today.getFullYear() - 90, 1, 1),
+                    max: new Date(today.getFullYear() + 10, 12, 31),
+                    onSet: function (dobj) {
+                        if (dobj.select) {
+                            let dt = new Date(dobj.select);
+                            sc.db.tables[sc.tb].filters[sc.col].value1 = dt.format("Y-m-d");
+                        } else {
+                            sc.db.tables[sc.tb].filters[sc.col].value1 = null;
+                        }
+                        sc.$apply();
+                    }
+                });
+
+                $("input[wliu][date-picker='to']", el).pickadate({
+                    format: "yyyy-mm-dd",
+                    formatSubmit: "yyyy-mm-dd",
+                    closeOnSelect: true,
+                    disable: [],
+                    //disable: [{ from: [2016, 9, 1], to: [2016, 9, 10] }, [2016, 10, 5]],
+                    //min: new Date(2015,3,20),
+                    //max: new Date(2016,11,14),
+                    selectYears: 100,
+                    min: new Date(today.getFullYear() - 90, 1, 1),
+                    max: new Date(today.getFullYear() + 10, 12, 31),
+                    onSet: function (dobj) {
+                        if (dobj.select) {
+                            let dt = new Date(dobj.select);
+                            sc.db.tables[sc.tb].filters[sc.col].value2 = dt.format("Y-m-d");
+                        } else {
+                            sc.db.tables[sc.tb].filters[sc.col].value2 = null;
+                        }
+                        sc.$apply();
+                    }
+                });
+            });
+        }
+    };
+});
+
 WLIU_NG.directive("filter.select", function () {
     return {
         restrict: "E",
@@ -3963,7 +4065,7 @@ WLIU_NG.directive("filter.scan", function () {
                 'ng-disabled="!db.tables[tb].filters[col]" ',
                 filterToolTip,
             '/> ',
-            '{{db.tables[tb].error.Message()}}',
+            '{{db.tables[tb].filters[col].error.Message()}}',
             '</span>'
         ].join(''),
         controller: function ($scope) {
@@ -4096,6 +4198,8 @@ WLIU_NG.directive("filter.checkcom", function () {
         }
     };
 });
+
+
 WLIU_NG.directive("checkcom.fdiag", function () {
     return {
         restrict: "E",

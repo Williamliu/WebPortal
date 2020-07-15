@@ -202,7 +202,7 @@
                 <li>@Html.Words("tab.question")</li>
                 <li>@Html.Words("tab.member")</li>
             </ul>
-            <div wliu tab9 body>
+            <div wliu tab9 body style="min-height:400px;">
                 <div>
                     <table border="0" cellpadding="2" cellspacing="2" style="width:100%;">
                         <tr>
@@ -390,6 +390,11 @@
                 <div>
                     <table border="0" cellpadding="2" cellspacing="2" style="width:100%;">
                         <tr>
+                            <td colspan="2" width="100%" style="border-bottom:1px solid #cccccc;">
+                                <form.checkcom db="ViewData.database" tb="Member" col="UserRole" icon="detail"></form.checkcom>
+                            </td>
+                        </tr>
+                        <tr>
                             <td width="50%" valign="top" align="center">
                                 <vcard.select gallery="Gallery" action="vcardClick()"></vcard.select>
                                 <br />
@@ -429,6 +434,7 @@
     </div>
 
     <checkbox.diag db="ViewData.database"></checkbox.diag>
+    <checkcom.diag db="ViewData.database" maxhh="250px"></checkcom.diag>
     <radio.diag db="ViewData.database"></radio.diag>
 
     <image.imgview></image.imgview>

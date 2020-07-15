@@ -346,10 +346,10 @@ namespace Library.V1.Entity
                     val = this.Value2.GetFloat();
                     break;
                 case EFilter.DateTime:
-                    val = this.Value2.GetDateTime();
+                    val = this.Value2.GetTimeSpan()?.Add(TimeSpan.FromSeconds(59));
                     break;
                 case EFilter.Date:
-                    val = this.Value2.GetDateTime();
+                    val = this.Value2.GetDateTime()?.AddTicks(TimeSpan.FromSeconds(24 * 3600 - 1).Ticks);
                     break;
                 case EFilter.Checkbox:
                     val = this.Value2.GetCheckbox();
@@ -513,24 +513,24 @@ namespace Library.V1.Entity
                     if (this.Compare == ECompare.Range)
                     {
                         this.Value1 = this.Value1.GetDate();
-                        this.Value2 = this.Value2.GetDateTime()?.AddTicks(TimeSpan.FromSeconds(24 * 3600 - 1).Ticks);
+                        this.Value2 = this.Value2.GetDate();
                     }
                     else
                     {
                         this.Value1 = this.Value1.GetDate();
-                        this.Value2 = this.Value1.GetDateTime()?.AddTicks(TimeSpan.FromSeconds(24 * 3600 - 1).Ticks);
+                        this.Value2 = this.Value1.GetDate();
                     }
                     break;
                 case EFilter.DateTime:
                     if (this.Compare == ECompare.Range)
                     {
                         this.Value1 = this.Value1.GetDateTime();
-                        this.Value2 = this.Value2.GetDateTime()?.AddTicks(TimeSpan.FromSeconds(24 * 3600 - 1).Ticks);
+                        this.Value2 = this.Value2.GetDateTime();
                     }
                     else
                     {
                         this.Value1 = this.Value1.GetDateTime();
-                        this.Value2 = this.Value1.GetDateTime()?.AddTicks(TimeSpan.FromSeconds(24 * 3600 - 1).Ticks);
+                        this.Value2 = this.Value1.GetDateTime();
                     }
                     break;
                 case EFilter.Time:
@@ -542,7 +542,7 @@ namespace Library.V1.Entity
                     else
                     {
                         this.Value1 = this.Value1.GetTime();
-                        this.Value2 = this.Value1.GetTimeSpan()?.Add(TimeSpan.FromSeconds(59));
+                        this.Value2 = this.Value1.GetTime();
                     }
                     break;
                 case EFilter.Checkbox:

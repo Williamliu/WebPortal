@@ -253,7 +253,7 @@ Number.prototype.intDate = function () {
         return "";
     } else {
         var ndate = new Date(parseInt(this) * 1000);
-        return ndate.format("Y-m-d H:i")
+        return ndate.format("Y-m-d H:i");
     }
 };
 
@@ -264,7 +264,7 @@ Date.prototype.diff = function (d2) {
 };
 
 Date.prototype.timezone = function () {
-    return this.getTimezoneOffset() >= 0 ? "+" + (this.getTimezoneOffset() / 60) + ":00" : "-" + (Math.abs(this.getTimezoneOffset()) / 60) + ":00";
+    return this.getTimezoneOffset() >= 0 ? "-" + (this.getTimezoneOffset() / 60) + ":00" : "+" + (Math.abs(this.getTimezoneOffset()) / 60) + ":00";
 };
 
 Date.prototype.ticks = function () {
@@ -292,8 +292,6 @@ Date.prototype.ymd = function () {
 Date.prototype.ymdString = function () {
     return this.getFullYear() + "-" +  (parseInt(this.getMonth()) + 1) + "-" + this.getDate();
 };
-
-
 
 Date.replaceChars = {
     shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

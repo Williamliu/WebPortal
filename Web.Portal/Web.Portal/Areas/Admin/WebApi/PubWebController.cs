@@ -72,6 +72,22 @@ namespace Web.Portal.Areas.Admin.WebApi
             this.Init("M7050");
             return Ok(this.DB.SaveTable(jsTable));
         }
+        [HttpGet("InitAccessLog")]
+        public IActionResult InitAccessLog()
+        {
+            this.Init("M7080");
+            this.DB.FillAll();
+            if (this.DB.Error.HasError)
+                return BadRequest(this.DB);
+            else
+                return Ok(this.DB);
+        }
+        [HttpPost("ReloadAccessLog")]
+        public IActionResult ReloadAccessLog(JSTable jsTable)
+        {
+            this.Init("M7080");
+            return Ok(this.DB.ReloadTable(jsTable));
+        }
         protected override void InitDatabase(string menuId)
         {
             switch (menuId)
@@ -212,7 +228,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         PubMenuList.AddFilter("MenuId", ECompare.NotEqual, "space");
 
                         Filter f1 = new Filter() { Name = "search_keyword", DbName = "Title_en,Title_cn", Title = Words("col.keyword"), Type = EFilter.String, Compare = ECompare.Like };
-                        Filter f2 = new Filter() { Name = "search_menu", DbName = "PubMenuId", Title = Words("col.menu"), Type = EFilter.String, Compare = ECompare.Equal };
+                        Filter f2 = new Filter() { Name = "search_menu", DbName = "PubMenuId", Title = Words("menutype.public"), Type = EFilter.String, Compare = ECompare.Equal };
                         f2.AddListRef("PubMenuList");
                         table.AddFilters(f1, f2);
                         table.Navi.IsActive = true;
@@ -225,6 +241,44 @@ namespace Web.Portal.Areas.Admin.WebApi
                               .AddInsertKV("Deleted", false).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
 
                         this.DB.AddCollection(PubMenuList).AddTable(table);
+                    }
+                    break;
+                case "M7080":
+                    {
+                        Table table = new Table("AccessLog", "VW_RPT_AccessLog", Words("access.log"));
+                        Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
+                        Meta menuName = new Meta { Name = "MenuName", DbName = "MenuName", Title = Words("menutype.public"), IsLang=true, Order = "ASC", Type = EInput.String, MaxLength = 64 };
+                        Meta firstName = new Meta { Name = "FirstName", DbName = "FirstName", Title = Words("col.fullname"), Type = EInput.String, MaxLength = 64, Order = "ASC" };
+                        Meta lastName = new Meta { Name = "LastName", DbName = "LastName", Title = Words("col.lastname"), Type = EInput.String, MaxLength = 64, Order = "ASC" };
+                        Meta email = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Type = EInput.Email, MaxLength = 256 };
+                        Meta url = new Meta { Name = "Url", DbName = "Url", Title = Words("col.url"), Order = "ASC", Type = EInput.String, MaxLength = 256 };
+                        Meta userAgent = new Meta { Name = "UserAgent", DbName = "UserAgent", Title = Words("col.user.agent"), Order = "ASC", Type = EInput.String, MaxLength = 256 };
+                        Meta ipAddr = new Meta { Name = "IPAddress", DbName = "IPAddress", Title = Words("col.ip.address"), Type = EInput.String, MaxLength=64 };
+                        Meta lang = new Meta { Name = "Lang", DbName = "Lang", Title = Words("language"), Type = EInput.String, MaxLength = 64 };
+                        Meta userLang = new Meta { Name = "UserLang", DbName = "UserLang", Title = Words("language"), Type = EInput.String, MaxLength = 64 };
+                        Meta createdTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.createdtime"), Type = EInput.Read, Order = "DESC" };
+                        table.AddMetas(id, menuName, firstName, lastName, email, url, userAgent, ipAddr, lang, userLang, createdTime);
+
+                        Filter f1 = new Filter() { Name = "search_person", DbName = "FirstName,LastName,Email", Title = Words("search.person"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f2 = new Filter() { Name = "search_menu", DbName = "PubMenuId", Title = Words("menutype.public"), Type = EFilter.String, Compare = ECompare.Equal };
+                        f2.AddListRef("PubMenuList");
+                        Filter f3 = new Filter() { Name = "search_url", DbName = "Url", Title = Words("col.url"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f4 = new Filter() { Name = "search_agent", DbName = "userAgent", Title = Words("col.user.agent"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f5 = new Filter() { Name = "search_lang", DbName = "Lang", Title = Words("language"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f6 = new Filter() { Name = "search_ipaddr", DbName = "IPAddress", Title = Words("col.ip.address"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f7 = new Filter() { Name = "search_date",   DbName = "CreatedTime", Title = Words("start.date"), Type = EFilter.Date, Compare = ECompare.Range, Value1=DateTime.Now.AddDays(-30).YMD(), Value2=DateTime.Now.YMD()};
+
+                        table.AddFilters(f1, f2, f3, f4, f5, f6, f7);
+                        table.Navi.IsActive = true;
+                        table.Navi.Order = "DESC";
+                        table.Navi.By = "CreatedTime";
+                        table.GetUrl = "/Admin/api/PubWeb/ReloadAccessLog";
+
+                        CollectionTable c1 = new CollectionTable("PubMenuList", "VW_Pub_Menu_List", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection PubMenuList = new Collection(ECollectionType.Table, c1);
+                        PubMenuList.AddFilter("MenuId", ECompare.NotEqual, "space");
+
+                        this.DB.AddTable(table).AddCollection(PubMenuList);
                     }
                     break;
             }

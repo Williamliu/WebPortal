@@ -1,0 +1,89 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+        });
+        viewData.Init("/Admin/api/PubWeb/InitAccessLog");
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl" style="user-select:text;">
+    <ng-form>
+        <fieldset>
+            <legend>@Html.Words("search.by")</legend>
+            <filter.label db="ViewData.database" tb="AccessLog" col="search_menu"></filter.label>
+            <filter.select db="ViewData.database" tb="AccessLog" col="search_menu"></filter.select>
+            <filter.label db="ViewData.database" tb="AccessLog" col="search_lang"></filter.label>
+            <filter.textbox db="ViewData.database" tb="AccessLog" col="search_lang"></filter.textbox>
+            <filter.label db="ViewData.database" tb="AccessLog" col="search_url"></filter.label>
+            <filter.textbox db="ViewData.database" tb="AccessLog" col="search_url"></filter.textbox>
+            <filter.label db="ViewData.database" tb="AccessLog" col="search_ipaddr"></filter.label>
+            <filter.textbox db="ViewData.database" tb="AccessLog" col="search_ipaddr"></filter.textbox>
+            <filter.label db="ViewData.database" tb="AccessLog" col="search_agent"></filter.label>
+            <filter.textbox db="ViewData.database" tb="AccessLog" col="search_agent"></filter.textbox>
+            <filter.label db="ViewData.database" tb="AccessLog" col="search_person"></filter.label>
+            <filter.textbox db="ViewData.database" tb="AccessLog" col="search_person"></filter.textbox>
+            <wliu.search db="ViewData.database" tb="AccessLog">Search</wliu.search>
+            <br />
+            <filter.label db="ViewData.database" tb="AccessLog" col="search_date"></filter.label>
+            <filter.daterange db="ViewData.database" tb="AccessLog" col="search_date"></filter.daterange>
+        </fieldset>
+        <div wliu table grow shrink style="margin-top:12px;">
+            <div row>
+                <div cell style="background-color:#dddddd;">
+                    <wliu.navi db="ViewData.database" tb="AccessLog"></wliu.navi>
+                </div>
+            </div>
+            <div row>
+                <div head fixed style="width:40px;"></div>
+                <div head small><wliu.head db="ViewData.database" tb="AccessLog" col="MenuName"></wliu.head></div>
+                <div head small><wliu.head db="ViewData.database" tb="AccessLog" col="Lang"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="AccessLog" col="Url"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="AccessLog" col="IPAddress"></wliu.head></div>
+                <div head large><wliu.head db="ViewData.database" tb="AccessLog" col="UserAgent"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="AccessLog" col="UserLang"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="AccessLog" col="FirstName"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="AccessLog" col="CreatedTime"></wliu.head></div>
+            </div>
+            <div row ng-repeat="row in ViewData.database.tables.AccessLog.rows">
+                <div cell center fixed style="width:40px;">
+                    <wliu.rowstatus db="ViewData.database" tb="AccessLog" guid="{{row.guid}}"></wliu.rowstatus>
+                </div>
+                <div cell small>
+                    <wliu.text db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="MenuName"></wliu.text>
+                </div>
+                <div cell small>
+                    <wliu.text db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="Lang"></wliu.text>
+                </div>
+                <div cell medium>
+                    <wliu.text db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="Url"></wliu.text>
+                </div>
+                <div cell medium>
+                    <wliu.text db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="IPAddress"></wliu.text>
+                </div>
+                <div cell large>
+                    <wliu.text db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="UserAgent"></wliu.text>
+                </div>
+                <div cell medium>
+                    <wliu.text db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="UserLang"></wliu.text>
+                </div>
+                <div cell medium>
+                    <wliu.template db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="{FirstName} {LastName}<br>{Email}"></wliu.template>
+                </div>
+                <div cell medium>
+                    <wliu.text db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="CreatedTime"></wliu.text>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+
+    <table.error></table.error>
+    <form.error></form.error>
+
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+</div>

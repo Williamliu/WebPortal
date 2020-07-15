@@ -167,8 +167,8 @@ namespace Web.Portal.Common
             WebUser adminUser = new WebUser();
             string guid = string.Empty;
             // Request Header -> Session -> Cookie
-            if (string.IsNullOrWhiteSpace(httpContext.Request.Headers["AdminSession"].GetString()) == false) 
-                guid = httpContext.Request.Headers["AdminSession"].GetString();
+            if (string.IsNullOrWhiteSpace(httpContext.Request.Headers["SiteSession"].GetString()) == false) 
+                guid = httpContext.Request.Headers["SiteSession"].GetString();
             else if (string.IsNullOrWhiteSpace(httpContext.Session.GetString("adminSite_Session")) == false) 
                 guid = httpContext.Session.GetString("adminSite_Session");
             else if(string.IsNullOrWhiteSpace(httpContext.Request.Cookies["adminSite_Session"].GetString()) == false) 
@@ -296,7 +296,15 @@ namespace Web.Portal.Common
         public static WebUser GetPubUser(this HttpContext httpContext, SqlHelper DSQL, string menuId)
         {
             WebUser publicUser = new WebUser();
-            string guid = httpContext.Request.Cookies["WebPortal_Session"] ?? httpContext.Session.GetString("WebPortal_Session") ?? httpContext.Request.Headers["PublicSession"].GetString() ?? "";
+            string guid = string.Empty;
+            // Request Header -> Session -> Cookie
+            if (string.IsNullOrWhiteSpace(httpContext.Request.Headers["SiteSession"].GetString()) == false)
+                guid = httpContext.Request.Headers["SiteSession"].GetString();
+            else if (string.IsNullOrWhiteSpace(httpContext.Session.GetString("pubSite_Session")) == false)
+                guid = httpContext.Session.GetString("pubSite_Session");
+            else if (string.IsNullOrWhiteSpace(httpContext.Request.Cookies["pubSite_Session"].GetString()) == false)
+                guid = httpContext.Request.Cookies["pubSite_Session"].GetString();
+
             if (string.IsNullOrWhiteSpace(guid) == false)
             {
                 #region Get User by Session

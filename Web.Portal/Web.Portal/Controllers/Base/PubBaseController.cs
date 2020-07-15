@@ -156,13 +156,13 @@ namespace Web.Portal.Controllers
         private void WriteWebLog(string menuId)
         {
             SQLRow row = new SQLRow();
-            row.Add("MenuId", "MenuId", menuId);
-            row.Add("Url", "Url", $"{this.HttpContext.Request.Path.ToString()}{this.HttpContext.Request.QueryString.ToString()}");
-            row.Add("UserAgent", "UserAgent", this.HttpContext.Request.Headers["User-Agent"].ToString());
-            row.Add("PubUserId", "PubUserId", 0);
-            row.Add("IPAddress", "IPAddress", this.HttpContext.Connection.RemoteIpAddress.ToString());
-            row.Add("Lang", "Lang", this.DB.DSQL.Lang);
-            
+            row.Add("MenuId",       "MenuId",       menuId);
+            row.Add("Url",          "Url",          $"{this.HttpContext.Request.Path.ToString()}{this.HttpContext.Request.QueryString.ToString()}");
+            row.Add("UserAgent",    "UserAgent",    this.HttpContext.Request.Headers["User-Agent"].ToString());
+            row.Add("PubUserId",    "PubUserId",    0);
+            row.Add("IPAddress",    "IPAddress",    this.HttpContext.Connection.RemoteIpAddress.ToString());
+            row.Add("Lang",         "Lang",         this.DB.DSQL.Lang);
+            row.Add("UserLang",     "UserLang",     this.HttpContext.Request.Headers["Accept-Language"].ToString());
             this.DB.DSQL.InsertTable("Pub_WebAccessLog", row);
         }
         #endregion

@@ -293,13 +293,15 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta country = new Meta { Name = "Country", DbName = "Country", Title = Words("col.country"), Type = EInput.Int, Value = 1 };
                         country.AddListRef("CountryList");
                         Meta postal = new Meta { Name = "Postal", DbName = "Postal", Title = Words("col.postal"), Type = EInput.String, MaxLength = 16 };
+                        Meta userRole = new Meta { Name = "UserRole", DbName = "UserId", Title = Words("col.user.role"), Type = EInput.Checkbox };
+                        userRole.AddListRef("PubRoleList", "Pub_User_Role", "RoleId");
 
 
                         Member.AddMetas(id, memberId, firstName, lastName, firstNameLegal, lastNameLegl, dharmaName, displayName, certName, aliasname, occupation, memo)
                         .AddMetas(userName, gender, education, nationality, religion, motherLang, multiLang)
                         .AddMetas(medicalConcern, hearUsOther, symbolOther, multiLangOther, idNumber, email, phone, cell, branch, address, city, state, country, postal)
                         .AddMetas(birthYY, birthMM, birthDD, memberYY, memberMM, memberDD, dharmaYY, dharmaMM, dharmaDD)
-                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, photo, active, loginTime, loginTotal, createdTime);
+                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, photo, active, loginTime, loginTotal, createdTime, userRole);
 
                         Filter f1 = new Filter() { Name = "search_name", DbName = "FirstName,LastName,FirstNameLegal,LastNameLegal,DharmaName,DisplayName,CertificateName,AliasName,UserName", Title = Words("col.fullname"), Type = EFilter.String, Compare = ECompare.Like };
                         Filter f2 = new Filter() { Name = "search_email", DbName = "Email", Title = Words("col.email"), Type = EFilter.String, Compare = ECompare.Like };
@@ -351,10 +353,13 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Collection StateList = new Collection(ECollectionType.Table, c8);
                         CollectionTable c9 = new CollectionTable("CountryList", "GCountry", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection CountryList = new Collection(ECollectionType.Table, c9);
+                        CollectionTable c10 = new CollectionTable("PubRoleList", "Pub_Role", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection PubRoleList = new Collection(ECollectionType.Table, c10);
+
                         Collection genderList = new Collection("GenderList");
                         Collection monthList = new Collection("MonthList");
                         Collection dayList = new Collection("DayList");
-                        this.DB.AddTables(Member, PubUserId).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, genderList, monthList, dayList);
+                        this.DB.AddTables(Member, PubUserId).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, PubRoleList, genderList, monthList, dayList);
                     }
                     break;
             }

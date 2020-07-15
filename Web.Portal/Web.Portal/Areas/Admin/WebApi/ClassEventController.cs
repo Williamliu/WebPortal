@@ -578,13 +578,15 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta country = new Meta { Name = "Country", DbName = "Country", Title = Words("col.country"), Type = EInput.Int, Value = 1 };
                         country.AddListRef("CountryList");
                         Meta postal = new Meta { Name = "Postal", DbName = "Postal", Title = Words("col.postal"), Type = EInput.String, MaxLength = 16 };
+                        Meta userRole = new Meta { Name = "UserRole", DbName = "UserId", Title = Words("col.user.role"), Type = EInput.Checkbox };
+                        userRole.AddListRef("PubRoleList", "Pub_User_Role", "RoleId");
 
 
                         Member.AddMetas(id, memberId, firstName, lastName, firstNameLegal, lastNameLegl, dharmaName, displayName, certName, aliasname, occupation, memo)
                         .AddMetas(userName, password, gender, education, nationality, religion, motherLang, multiLang)
                         .AddMetas(medicalConcern, hearUsOther, symbolOther, multiLangOther, idNumber, email, phone, cell, branch, address, city, state, country, postal)
                         .AddMetas(birthYY, birthMM, birthDD, memberYY, memberMM, memberDD, dharmaYY, dharmaMM, dharmaDD)
-                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, photo, active, loginTime, loginTotal, createdTime);
+                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, photo, active, loginTime, loginTotal, createdTime, userRole);
 
                         Member.Navi.IsActive = false;
                         Member.Navi.Order = "";
@@ -628,6 +630,9 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Collection StateList = new Collection(ECollectionType.Table, c18);
                         CollectionTable c19 = new CollectionTable("CountryList", "GCountry", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection CountryList = new Collection(ECollectionType.Table, c19);
+                        CollectionTable c23 = new CollectionTable("PubRoleList", "Pub_Role", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection PubRoleList = new Collection(ECollectionType.Table, c23);
+
                         CollectionTable c20 = new CollectionTable("GenderList", "GenderList");
                         Collection GenderList = new Collection(ECollectionType.Common, c20);
                         CollectionTable c21 = new CollectionTable("MonthList", "MonthList");
@@ -639,7 +644,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         // Add Objects 
                         this.DB.AddTables(pubUser, classEnroll, Member, PubUserId)
                                 .AddCollections(ClassList, MemberTypeList)
-                                .AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList)
+                                .AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, PubRoleList)
                                 .AddCollections(GenderList, MonthList, DayList);
                     }
                     break;
