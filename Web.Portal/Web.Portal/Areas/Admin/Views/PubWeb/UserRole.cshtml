@@ -1,0 +1,159 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+            $scope.detail = function () {
+                $("#UserRole_List").hide();
+                $("#UserRole_Detail").show();
+            };
+            $scope.goBack = function () {
+                $("#UserRole_Detail").hide();
+                $("#UserRole_List").show();
+            };
+        });
+
+        viewData.Init("/Admin/api/PubWeb/InitUserRole");
+    </script>
+}
+<div class="container" ng-app="myApp" ng-controller="mycontrl">
+    <ng-form>
+        <div id="UserRole_List" style="margin-top:12px;">
+            <fieldset>
+                <legend>@Html.Words("search.by")</legend>
+                <filter.label db="ViewData.database" tb="UserRole" col="search_name"></filter.label>
+                <filter.textbox db="ViewData.database" tb="UserRole" col="search_name"></filter.textbox>
+                <wliu.search db="ViewData.database" tb="UserRole">Search</wliu.search>
+            </fieldset>
+            <div wliu table grow shrink style="margin-top:12px;">
+                <div row>
+                    <div cell style="background-color:#dddddd;">
+                        <wliu.navi db="ViewData.database" tb="UserRole"></wliu.navi>
+                    </div>
+                </div>
+                <div row>
+                    <div head fixed style="width:40px;"></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="UserRole" col="TitleEN"></wliu.head></div>
+                    <div head large><wliu.head db="ViewData.database" tb="UserRole" col="DetailEN"></wliu.head></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="UserRole" col="TitleCN"></wliu.head></div>
+                    <div head large><wliu.head db="ViewData.database" tb="UserRole" col="DetailCN"></wliu.head></div>
+                    <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="UserRole" col="Sort"></wliu.head></div>
+                    <div head fixed center style="width:100px;"><wliu.head db="ViewData.database" tb="UserRole" col="Active"></wliu.head></div>
+                    <div head fixed style="width:56px;">
+                        <wliu.hicon db="ViewData.database" tb="UserRole" icons="add,save,cancel"></wliu.hicon>
+                    </div>
+                </div>
+                <div row ng-repeat="row in ViewData.database.tables.UserRole.rows">
+                    <div cell center fixed style="width:40px;">
+                        <wliu.rowstatus db="ViewData.database" tb="UserRole" guid="{{row.guid}}"></wliu.rowstatus>
+                    </div>
+                    <div cell medium>
+                        <wliu.textbox db="ViewData.database" tb="UserRole" guid="{{row.guid}}" col="TitleEN"></wliu.textbox>
+                    </div>
+                    <div cell large>
+                        <wliu.textbox db="ViewData.database" tb="UserRole" guid="{{row.guid}}" col="DetailEN"></wliu.textbox>
+                    </div>
+                    <div cell medium>
+                        <wliu.textbox db="ViewData.database" tb="UserRole" guid="{{row.guid}}" col="TitleCN"></wliu.textbox>
+                    </div>
+                    <div cell large>
+                        <wliu.textbox db="ViewData.database" tb="UserRole" guid="{{row.guid}}" col="DetailCN"></wliu.textbox>
+                    </div>
+                    <div cell center fixed style="width:60px;">
+                        <wliu.textbox db="ViewData.database" tb="UserRole" guid="{{row.guid}}" col="Sort"></wliu.textbox>
+                    </div>
+                    <div cell center fixed style="width:100px;">
+                        <wliu.bool db="ViewData.database" tb="UserRole" guid="{{row.guid}}" col="Active"></wliu.bool>
+                    </div>
+                    <div cell fixed style="width:56px;">
+                        <wliu.bicon db="ViewData.database" tb="UserRole" guid="{{row.guid}}" icons="save,cancel,detail,delete" actiondetail="detail()"></wliu.bicon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="UserRole_Detail" style="display:none; margin-top:12px;">
+            <a wliu button blue ng-click="goBack()">@Html.Words("go.back")</a>
+            <table cellpadding="0" cellspacing="0" style="width:100%;margin-top:20px;">
+                <tr>
+                    <td valign="top" width="40%">
+                        <ul id="d1" wliu tab9 color="">
+                            <li>@Html.Words("admin.role")</li>
+                        </ul>
+                        <div wliu tab9 body style="border-right:none;">
+                            <div>
+                                <div wliu table grow shrink>
+                                    <div row>
+                                        <div cell large>
+                                            <assm.textbox fixed border h2 db="ViewData.database" tb="UserRole" col="TitleEN"></assm.textbox>
+                                        </div>
+                                    </div>
+                                    <div row>
+                                        <div cell large>
+                                            <assm.textarea fixed border h2 db="ViewData.database" tb="UserRole" col="DetailEN" style="height:120px;"></assm.textarea>
+                                        </div>
+                                    </div>
+                                    <div row>
+                                        <div cell large>
+                                            <assm.textbox fixed border h2 db="ViewData.database" tb="UserRole" col="TitleCN"></assm.textbox>
+                                        </div>
+                                    </div>
+                                    <div row>
+                                        <div cell large>
+                                            <assm.textarea fixed h2 db="ViewData.database" tb="UserRole" col="DetailCN" style="height:120px;"></assm.textarea>
+                                        </div>
+                                    </div>
+                                    <div row>
+                                        <div cell large>
+                                            <table>
+                                                <tr>
+                                                    <td width="50%"><assm.bool db="ViewData.database" tb="UserRole" col="Active"></assm.bool></td>
+                                                    <td width="50%"><assm.textbox fixed border db="ViewData.database" tb="UserRole" col="Sort" style="width:50px;"></assm.textbox></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div row style="margin-top:12px;">
+                                        <div cell center>
+                                            <form.save h2 db="ViewData.database" tb="UserRole" label="@Html.Words("button.save")"></form.save>
+                                            <form.cancel h2 db="ViewData.database" tb="UserRole" label="@Html.Words("button.cancel")" style="margin-left:12px;" action="goBack()"></form.cancel>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top" width="60%">
+                        <ul id="d2" wliu tab9 color="mint">
+                            <li>@Html.Words("role.right")</li>
+                        </ul>
+                        <div wliu tab9 body style="border-right:none;">
+                            <label wliu style="vertical-align:middle;">@Html.Words("pub.menu")</label>
+                            <ul wliu tree root>
+                                <li nodes open ng-repeat="frow in ViewData.database.tables.FirstMenu.rows">
+                                    <s folder></s>
+                                    <tree.text  db="ViewData.database" tb="FirstMenu" guid="{{frow.guid}}" col="Title"></tree.text>
+                                    <tree.fbool db="ViewData.database" tb="UserRole" col="RoleMenu" fkey="{{frow.key}}"></tree.fbool>
+                                    <ul wliu tree>
+                                        <li node ng-repeat="srow in ViewData.database.tables.SecondMenu.FilterRows({ParentId:frow.key})">
+                                            <s folder></s>
+                                            <tree.text  db="ViewData.database" tb="SecondMenu" guid="{{srow.guid}}" col="Title"></tree.text>
+                                            <tree.fbool db="ViewData.database" tb="UserRole" col="RoleMenu" fkey="{{srow.key}}"></tree.fbool>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ng-form>
+    <table.error></table.error>
+    <form.error></form.error>
+    <wliu.loading oper="save"></wliu.loading>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+</div>

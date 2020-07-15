@@ -19,14 +19,14 @@ namespace Library.V1.Entity
             this.Tables = new Dictionary<string, Table>();
             this.Other = new Dictionary<string, object>();
             this.Collections = new Dictionary<string, Collection>();
-            this.User = new AdminUser();
+            this.User = new WebUser();
             this.Error = new Error();
 
             this.DSQL = new SqlHelper(appConfig.DataAccount);
             this.FSQL = new SqlHelper(appConfig.FileAccount);
             this.IsDebug = this.DSQL.IsDebug;
         }
-        public Database(AppSetting appConfig, AdminUser user):this(appConfig)
+        public Database(AppSetting appConfig, WebUser user):this(appConfig)
         {
             this.User = user;
         }
@@ -51,7 +51,7 @@ namespace Library.V1.Entity
         public Dictionary<string, Table> Tables { get; set; }
         public Dictionary<string, object> Other { get; set; }
         public Dictionary<string, Collection> Collections { get; set; }
-        public AdminUser User { get; set; }
+        public WebUser User { get; set; }
         public Error Error { get; set; }
         #endregion
 

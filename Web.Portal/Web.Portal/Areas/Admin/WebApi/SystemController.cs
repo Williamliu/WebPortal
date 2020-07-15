@@ -439,11 +439,9 @@ namespace Web.Portal.Areas.Admin.WebApi
                         AdminRole.SaveUrl = "/Admin/api/System/SaveAdminRole";
                         AdminRole.GetUrl = "/Admin/api/System/ReloadAdminRole";
 
-                        CollectionTable c1 = new CollectionTable("AdminRoleList", "Admin_Role",true, "Id", "Title", "Detail", "", "DESC", "Sort");
-                        Collection AdminRoleList = new Collection(ECollectionType.Table, c1);
-                        CollectionTable c2 = new CollectionTable("AdminRightList", "Admin_Right", true, "Id", "Title", "Detail", "", "DESC", "Sort");
-                        Collection AdminRightList = new Collection(ECollectionType.Table, c2);
-                        this.DB.AddTables(firstMenu, secondMenu, AdminRole).AddCollections(AdminRoleList, AdminRightList);
+                        CollectionTable c1 = new CollectionTable("AdminRightList", "Admin_Right", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection AdminRightList = new Collection(ECollectionType.Table, c1);
+                        this.DB.AddTables(firstMenu, secondMenu, AdminRole).AddCollections(AdminRightList);
                     }
                     break;
             }

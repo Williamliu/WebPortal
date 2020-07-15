@@ -1,5 +1,5 @@
 ﻿@{
-    string jwtToken = ViewContext.HttpContext.Session.GetString("adminSite_jwtToken") ?? ViewContext.HttpContext.Request.Cookies["adminSite_jwtToken"] ?? "";
+    string admJWTToken = ViewContext.HttpContext.Session.GetString("adminSite_jwtToken") ?? ViewContext.HttpContext.Request.Cookies["adminSite_jwtToken"] ?? "";
     string admSession = ViewContext.HttpContext.Session.GetString("adminSite_Session") ?? ViewContext.HttpContext.Request.Cookies["adminSite_Session"] ?? "";
 }
 <!DOCTYPE html>
@@ -37,8 +37,8 @@
     <script src="~/resource/js/datepicker/picker.js"></script>
     <link href="~/resource/js/datepicker/picker.css" rel="stylesheet" />
     <script>
-        var GAdminSiteJwtToken = '@jwtToken';
-        var GAdminSiteSession = '@admSession';
+        var GSiteJwtToken   = '@admJWTToken';
+        var GSiteSession    = '@admSession';
     </script>
     @Html.JWords()
     @RenderSection("Scripts", required: false)

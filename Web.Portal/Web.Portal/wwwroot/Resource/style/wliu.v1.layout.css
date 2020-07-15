@@ -769,20 +769,21 @@ a[wliu][btn-drop] {
     cursor:             pointer;
     display:            inline-block;
     position:           relative;
-    box-sizing:         content-box;
+    box-sizing:         border-box;
     color:              #ffffff;
     background:         linear-gradient(40deg, rgb(69, 202, 252), rgb(48, 63, 159));
     font-size:          12px;
     font-weight:        500;
     text-shadow:        1px 2px #333333;
     box-shadow:         1px 2px 1px #333333;
-    height:             18px;
-    line-height:        18px;
+    height:             24px;
+    line-height:        24px;
     text-align:         center;
-    padding:            4px 8px 3px 8px;
+    padding:            0px 2px; /* 4px 8px 3px 8px; */
     border:             1px solid #33B5E5;
     border-radius:      14px;
     transition:         0.5s;
+    min-width:          72px;
 }
 a[wliu][btn-drop]:hover {
     color:              #ffffff;
@@ -801,7 +802,7 @@ a[wliu][btn-drop][dropdown]:before {
     left: 100%;
     top: 50%;
     transform: translateY(-50%);
-    margin-left: -14px;
+    margin-left: -16px;
     border-top: 8px solid #ffffff;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;

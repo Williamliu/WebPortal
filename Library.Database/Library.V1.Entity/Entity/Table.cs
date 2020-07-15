@@ -44,7 +44,7 @@ namespace Library.V1.Entity
             this.Other = new Dictionary<string, object>();
             this.DSQL = new SqlHelper();
             this.FSQL = new SqlHelper();
-            this.User = new AdminUser();
+            this.User = new WebUser();
             this.Index = -1;
         }
         public Table(string name, string dbName, string title = "", string desc = "") : this()
@@ -104,7 +104,7 @@ namespace Library.V1.Entity
         private string DbName { get; set; }
         private SqlHelper DSQL { get; set; }
         private SqlHelper FSQL { get; set; }
-        private AdminUser User { get; set; }
+        private WebUser User { get; set; }
         private int Index { get; set; }
         private Relation Relation { get; set; }
         private Dictionary<string, object> QueryKVs { get; set; }
@@ -221,7 +221,7 @@ namespace Library.V1.Entity
         #endregion
 
         #region KVs & Filters Methods
-        public void SetConfig(SqlHelper dsql, SqlHelper fsql, AdminUser user)
+        public void SetConfig(SqlHelper dsql, SqlHelper fsql, WebUser user)
         {
             this.DSQL = dsql;
             this.FSQL = fsql;

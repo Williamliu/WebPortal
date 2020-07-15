@@ -1777,8 +1777,8 @@ var AJAX = {
                 },
                 */
                 beforeSend: function (xhr) {   //Include the bearer token in header
-                    xhr.setRequestHeader("Authorization", 'Bearer ' + GAdminSiteJwtToken);
-                    xhr.setRequestHeader("AdminSession", GAdminSiteSession);
+                    xhr.setRequestHeader("Authorization", 'Bearer ' + GSiteJwtToken);
+                    xhr.setRequestHeader("AdminSession", GSiteSession);
                 },
                 /*
                 beforeSend: function (xhr) {

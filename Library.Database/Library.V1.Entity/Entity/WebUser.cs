@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Library.V1.Entity
 {
-    public class AdminUser
+    public class WebUser
     {
-        public AdminUser()
+        public WebUser()
         {
             this.Branches = new List<int>();
             this.ActiveBranches = new List<int>();

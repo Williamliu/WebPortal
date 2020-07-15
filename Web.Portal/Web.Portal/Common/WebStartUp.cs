@@ -162,9 +162,9 @@ namespace Web.Portal.Common
             httpContext.Items.Add("Lang", queryLang);
             return queryLang;
         }
-        public static AdminUser GetAdminUser(this HttpContext httpContext, SqlHelper DSQL, string menuId)
+        public static WebUser GetAdminUser(this HttpContext httpContext, SqlHelper DSQL, string menuId)
         {
-            AdminUser adminUser = new AdminUser();
+            WebUser adminUser = new WebUser();
             string guid = string.Empty;
             // Request Header -> Session -> Cookie
             if (string.IsNullOrWhiteSpace(httpContext.Request.Headers["AdminSession"].GetString()) == false) 
@@ -293,9 +293,9 @@ namespace Web.Portal.Common
 
             return adminUser;
         }
-        public static AdminUser GetPubUser(this HttpContext httpContext, SqlHelper DSQL, string menuId)
+        public static WebUser GetPubUser(this HttpContext httpContext, SqlHelper DSQL, string menuId)
         {
-            AdminUser publicUser = new AdminUser();
+            WebUser publicUser = new WebUser();
             string guid = httpContext.Request.Cookies["WebPortal_Session"] ?? httpContext.Session.GetString("WebPortal_Session") ?? httpContext.Request.Headers["PublicSession"].GetString() ?? "";
             if (string.IsNullOrWhiteSpace(guid) == false)
             {

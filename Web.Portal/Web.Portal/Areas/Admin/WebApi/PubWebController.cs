@@ -31,23 +31,45 @@ namespace Web.Portal.Areas.Admin.WebApi
             this.Init("M7010");
             return Ok(this.DB.SaveTable(jsTable));
         }
+        [HttpGet("InitUserRole")]
+        public IActionResult InitAdminRole()
+        {
+            this.Init("M7020");
+            this.DB.FillAll();
+            return Ok(this.DB);
+        }
+
+        [HttpPost("SaveUserRole")]
+        public IActionResult SaveUserRole(JSTable jsTable)
+        {
+            this.Init("M7020");
+            return Ok(this.DB.SaveTable(jsTable));
+        }
+        [HttpPost("ReloadUserRole")]
+        public IActionResult ReloadUserRole(JSTable jsTable)
+        {
+            this.Init("M7020");
+            return Ok(this.DB.ReloadTable(jsTable));
+        }
+
+
         [HttpGet("InitWebContent")]
         public IActionResult InitWebContent()
         {
-            this.Init("M7020");
+            this.Init("M7050");
             this.DB.FillAll();
             return Ok(this.DB);
         }
         [HttpPost("ReloadWebContent")]
         public IActionResult ReloadWebContent(JSTable jsTable)
         {
-            this.Init("M7020");
+            this.Init("M7050");
             return Ok(this.DB.ReloadTable(jsTable));
         }
         [HttpPost("SaveWebContent")]
         public IActionResult SaveCourseDetail(JSTable jsTable)
         {
-            this.Init("M7020");
+            this.Init("M7050");
             return Ok(this.DB.SaveTable(jsTable));
         }
         protected override void InitDatabase(string menuId)
@@ -116,6 +138,60 @@ namespace Web.Portal.Areas.Admin.WebApi
                     }
                     break;
                 case "M7020":
+                    {
+                        Table firstMenu = new Table("FirstMenu", "VW_Pub_User_FirstMenu", Words("first.menu"));
+                        Meta id_f = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true };
+                        Meta pid_f = new Meta { Name = "ParentId", DbName = "ParentId", Title = Words("col.parentid"), Type = EInput.Int };
+                        Meta title_f = new Meta { Name = "Title", DbName = "Title", Title = Words("col.title"), IsLang = true, Type = EInput.String, MaxLength = 64 };
+                        Meta detail_f = new Meta { Name = "Detail", DbName = "Detail", Title = Words("col.detail"), IsLang = true, Type = EInput.String, MaxLength = 256 };
+                        firstMenu.AddMetas(id_f, pid_f, title_f, detail_f);
+
+                        firstMenu.Navi.IsActive = false;
+                        firstMenu.Navi.By = "Sort";
+                        firstMenu.Navi.Order = "DESC";
+
+                        Table secondMenu = new Table("SecondMenu", "VW_Pub_User_SecondMenu", Words("second.menu"));
+                        Meta id_s = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true };
+                        Meta pid_s = new Meta { Name = "ParentId", DbName = "ParentId", Title = Words("col.parentid"), Required = true, Type = EInput.Int };
+                        Meta title_s = new Meta { Name = "Title", DbName = "Title", Title = Words("title.en"), IsLang = true, Type = EInput.String, MaxLength = 64 };
+                        Meta detail_s = new Meta { Name = "Detail", DbName = "Detail", Title = Words("detail.en"), IsLang = true, Type = EInput.String, MaxLength = 256 };
+
+                        secondMenu.AddMetas(id_s, pid_s, title_s, detail_s);
+
+                        secondMenu.Navi.IsActive = false;
+                        secondMenu.Navi.By = "Sort";
+                        secondMenu.Navi.Order = "DESC";
+
+
+                        Table UserRole = new Table("UserRole", "Pub_Role", Words("user.role"));
+                        Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
+                        Meta titleEN = new Meta { Name = "TitleEN", DbName = "Title_en", Title = Words("title.en"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 64 };
+                        Meta titleCN = new Meta { Name = "TitleCN", DbName = "Title_cn", Title = Words("title.cn"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 64 };
+                        Meta detailEN = new Meta { Name = "DetailEN", DbName = "Detail_en", Title = Words("detail.en"), Order = "ASC", Type = EInput.String, MaxLength = 256 };
+                        Meta detailCN = new Meta { Name = "DetailCN", DbName = "Detail_cn", Title = Words("detail.cn"), Order = "ASC", Type = EInput.String, MaxLength = 256 };
+                        Meta active = new Meta { Name = "Active", DbName = "Active", Title = Words("status.active"), Description = Words("status.active.inactive"), Type = EInput.Bool };
+                        Meta sort = new Meta { Name = "Sort", DbName = "Sort", Title = Words("col.sort"), Type = EInput.Int, Order = "DESC" };
+                        Meta roleMenu = new Meta { Name = "RoleMenu", DbName = "RoleId", Title = Words("col.role"), Description = Words("status.allow.deny"), Type = EInput.Checkbox, Value = new { } };
+                        roleMenu.AddListRef("", "Pub_Role_Menu","MenuId");
+
+                        UserRole.AddMetas(id, titleEN, titleCN, detailEN, detailCN, active, sort, roleMenu);
+                        Filter f1 = new Filter() { Name = "search_name", DbName = "Title_en,Title_cn", Title = Words("search.name"), Type = EFilter.String, Compare = ECompare.Like };
+                        UserRole.AddFilters(f1);
+                        UserRole.Navi.IsActive = true;
+                        UserRole.Navi.By = "Title_en";
+
+                        UserRole.AddQueryKV("Deleted", false)
+                            .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
+                            .AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds())
+                            .AddInsertKV("Deleted", false);
+
+                        UserRole.SaveUrl = "/Admin/api/PubWeb/SaveUserRole";
+                        UserRole.GetUrl = "/Admin/api/PubWeb/ReloadUserRole";
+
+                        this.DB.AddTables(firstMenu, secondMenu, UserRole);
+                    }
+                    break;
+                case "M7050":
                     {
                         Table table = new Table("WebContent", "Pub_WebContent", Words("Web.Content"));
                         Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
