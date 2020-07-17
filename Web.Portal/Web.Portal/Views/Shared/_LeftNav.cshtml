@@ -1,15 +1,28 @@
-﻿@{Menus AdminMenu = Context.Items["AdminMenus"] as Menus;}
+﻿@{
+    Menus PrivateMenu = Context.Items["PubMenus"] as Menus;
+    WebUser PubUser = Context.Items["PubUser"] as WebUser;
+}
 <div menu-block>
     <div wliu logo>
-        <img src="~/resource/style/Images/company-logo.png" />
+        @{
+            if (string.IsNullOrWhiteSpace(PubUser.ImageUrl))
+            {
+                <img src="~/resource/style/Images/login-user.png" style="width:40px; object-fit:contain; margin:auto;" />
+            }
+            else
+            {
+                <img src="@PubUser.ImageUrl" style="width:60px; object-fit:contain; margin:auto;" />
+            }
+        }
+        <span>@PubUser.FirstName @PubUser.LastName</span>
     </div>
     <div menu-upper>
         <ul wliu menu>
-            @foreach (Menu tmenu in AdminMenu.MenuSet1)
+            @foreach (Menu tmenu in PrivateMenu.MenuSet2)
             {
                 if (tmenu.Nodes.Count > 0)
                 {
-                    <li @(tmenu.MenuId == AdminMenu.MenuId ? "selected" : "") nodes>
+                    <li @(tmenu.MenuId == PrivateMenu.MenuId ? "selected" : "") nodes>
                         <a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a>
                         <ul>
                             @foreach (Menu smenu in tmenu.Nodes)
@@ -20,7 +33,7 @@
                                 }
                                 else
                                 {
-                                    <li @(smenu.MenuId == AdminMenu.MenuId ? "selected" : "")><a @(smenu.Url == "" ? "" : "href=" + smenu.Url)>@smenu.Title</a></li>
+                                    <li @(smenu.MenuId == PrivateMenu.MenuId ? "selected" : "")><a @(smenu.Url == "" ? "" : "href=" + smenu.Url)>@smenu.Title</a></li>
                                 }
                             }
                         </ul>
@@ -34,7 +47,7 @@
                     }
                     else
                     {
-                        <li @(tmenu.MenuId == AdminMenu.MenuId ? "selected" : "")><a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a></li>
+                        <li @(tmenu.MenuId == PrivateMenu.MenuId ? "selected" : "")><a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a></li>
                     }
 
                 }
@@ -44,11 +57,11 @@
     </div>
     <div menu-lower>
         <ul wliu menu>
-            @foreach (Menu tmenu in AdminMenu.MenuSet2)
+            @foreach (Menu tmenu in PrivateMenu.ProfileMenus)
             {
                 if (tmenu.Nodes.Count > 0)
                 {
-                    <li @(tmenu.MenuId == AdminMenu.MenuId ? "selected" : "") nodes>
+                    <li @(tmenu.MenuId == PrivateMenu.MenuId ? "selected" : "") nodes>
                         <a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a>
                         <ul>
                             @foreach (Menu smenu in tmenu.Nodes)
@@ -59,7 +72,7 @@
                                 }
                                 else
                                 {
-                                    <li @(smenu.MenuId == AdminMenu.MenuId ? "selected" : "")><a @(smenu.Url == "" ? "" : "href=" + smenu.Url) > @smenu.Title </a></li>
+                                    <li @(smenu.MenuId == PrivateMenu.MenuId ? "selected" : "")><a @(smenu.Url == "" ? "" : "href=" + smenu.Url)> @smenu.Title </a></li>
                                 }
                             }
                         </ul>
@@ -73,7 +86,7 @@
                     }
                     else
                     {
-                        <li @(tmenu.MenuId == AdminMenu.MenuId ? "selected" : "")><a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a></li>
+                        <li @(tmenu.MenuId == PrivateMenu.MenuId ? "selected" : "")><a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a></li>
                     }
                 }
 
@@ -82,8 +95,3 @@
     </div>
     <div menu-footer></div>
 </div>
-<script>
-    $(function () {
-        $("ul > li[selected]").parents("ul[wliu][menu] > li").addAttr("selected");
-    })
-</script>

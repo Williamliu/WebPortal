@@ -14,8 +14,8 @@ namespace Library.V1.Entity
             this.Sites = new List<int>();
             this.ActiveSites = new List<int>();
             this.Fields = new List<string>();
-            this.ViewMenus = new List<string>();
-            this.PubMenus = new List<string>();
+            this.PrivateMenuIDs = new List<string>();
+            this.PublicMenuIDs = new List<string>();
             this.Rights = new Dictionary<string, bool>();
         }
         [JsonIgnore]
@@ -31,6 +31,8 @@ namespace Library.V1.Entity
         [JsonIgnore]
         public string Phone { get; set; }
         [JsonIgnore]
+        public string ImageUrl { get; set; }
+        [JsonIgnore]
         public int Branch { get; set; }
         [JsonIgnore]
         public bool IsAdmin { get; set; }
@@ -45,9 +47,9 @@ namespace Library.V1.Entity
         [JsonIgnore]
         public List<string> Fields { get; set; }
         [JsonIgnore]
-        public List<string> ViewMenus { get; set; }
+        public List<string> PrivateMenuIDs { get; set; }
         [JsonIgnore]
-        public List<string> PubMenus { get; set; }
+        public List<string> PublicMenuIDs { get; set; }
         public Dictionary<string, bool> Rights { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Library.V1.Entity
@@ -8,30 +9,60 @@ namespace Library.V1.Entity
     {
         public Menus()
         {
-            this.TopMenu = new List<Menu>();
-            this.BottomMenu = new List<Menu>();
+            this.MenuSet1 = new List<Menu>();
+            this.MenuSet2 = new List<Menu>();
             this.ProfileMenus = new List<Menu>();
             this.HideMenus = new List<Menu>();
         }
-        public Menus(string menuId, PubMenus pubMenus) : this()
+        public Menus(string menuId, SharedMenus shareMenus) : this()
         {
             this.MenuId = menuId;
-            this.ProfileMenus = pubMenus.ProfileMenus;
-            this.HideMenus = pubMenus.HideMenus;
+            this.ProfileMenus = shareMenus.ProfileMenus;
+            this.HideMenus = shareMenus.HideMenus;
         }
-        public IList<Menu> TopMenu { get; set; }
-        public IList<Menu> BottomMenu { get; set; }
+        public IList<Menu> MenuSet1 { get; set; }
+        public IList<Menu> MenuSet2 { get; set; }
         public IList<Menu> ProfileMenus { get; set; }
         public IList<Menu> HideMenus { get; set; }
         public string MenuId { get; set; }
-        public string MenuTitle { get; set; }
-        public void AddTop(Menu menu)
-        {
-            this.TopMenu.Add(menu);
+        public string MenuTitle { 
+            get
+            {
+                string mtitle = string.Empty;
+                mtitle = this.MenuSet1.Where(p => p.MenuId.ToLower() == this.MenuId.ToLower()).Select(p => p.Title).FirstOrDefault();
+                if (string.IsNullOrWhiteSpace(mtitle) == false) return mtitle;
+
+                foreach(Menu root1 in this.MenuSet1)
+                {
+                    mtitle = root1.Nodes.Where(p => p.MenuId.ToLower() == this.MenuId.ToLower()).Select(p => p.Title).FirstOrDefault();
+                    if (string.IsNullOrWhiteSpace(mtitle)==false) return mtitle;
+                }
+
+                mtitle = this.MenuSet2.Where(p => p.MenuId.ToLower() == this.MenuId.ToLower()).Select(p => p.Title).FirstOrDefault();
+                if (string.IsNullOrWhiteSpace(mtitle) == false) return mtitle;
+
+                foreach (Menu root2 in this.MenuSet2)
+                {
+                    mtitle = root2.Nodes.Where(p => p.MenuId.ToLower() == this.MenuId.ToLower()).Select(p => p.Title).FirstOrDefault();
+                    if (string.IsNullOrWhiteSpace(mtitle) == false) return mtitle;
+                }
+
+                mtitle = this.ProfileMenus.Where(p => p.MenuId.ToLower() == this.MenuId.ToLower()).Select(p => p.Title).FirstOrDefault();
+                if (string.IsNullOrWhiteSpace(mtitle) == false) return mtitle;
+
+                mtitle = this.HideMenus.Where(p => p.MenuId.ToLower() == this.MenuId.ToLower()).Select(p => p.Title).FirstOrDefault();
+                if (string.IsNullOrWhiteSpace(mtitle) == false) return mtitle;
+
+                return mtitle;
+            }
         }
-        public void AddBottom(Menu menu)
+        public void AddSet1(Menu menu)
         {
-            this.BottomMenu.Add(menu);
+            this.MenuSet1.Add(menu);
+        }
+        public void AddSet2(Menu menu)
+        {
+            this.MenuSet2.Add(menu);
         }
     }
     public class Menu
@@ -56,19 +87,26 @@ namespace Library.V1.Entity
         public string Sort { get; set; }
         public IList<Menu> Nodes { get; set; }
     }
-    public abstract class PubMenus
+    public abstract class SharedMenus
     {
-        public PubMenus()
+        public SharedMenus()
         {
             this.ProfileMenus = new List<Menu>();
             this.HideMenus = new List<Menu>();
         }
         public List<Menu> ProfileMenus { get; set; }
         public List<Menu> HideMenus { get; set; }
+        public List<string> GetSharedMenus()
+        {
+            List<string> pubMenus = new List<string>();
+            foreach (Menu m1 in this.HideMenus) pubMenus.Add(m1.MenuId);
+            foreach (Menu m1 in this.ProfileMenus) pubMenus.Add(m1.MenuId);
+            return pubMenus;
+        }
     }
-    public class AdminPubMenus : PubMenus
+    public class AdminSharedMenus : SharedMenus
     {
-        public AdminPubMenus() : base()
+        public AdminSharedMenus() : base()
         {
             this.ProfileMenus = new List<Menu>();
             this.HideMenus = new List<Menu>();
@@ -77,26 +115,19 @@ namespace Library.V1.Entity
         }
         public void InitProfile()
         {
-            this.ProfileMenus.Add(new Menu { MenuId = "P01", Title = "my.account", Detail = "my.account", Url = "/Admin/Profile/MyAccount" });
-            this.ProfileMenus.Add(new Menu { MenuId = "P02", Title = "reset.password", Detail = "reset.password", Url = "/Admin/Profile/ResetPassword" });
-            this.ProfileMenus.Add(new Menu { MenuId = "P03", Title = "my.message", Detail = "my.account", Url = "/Admin/Profile/MyMessage" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P01", Title = LanguageHelper.Words("my.account"),          Url = "/Admin/Profile/MyAccount" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P02", Title = LanguageHelper.Words("reset.password"),      Url = "/Admin/Profile/ResetPassword" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P03", Title = LanguageHelper.Words("my.message"),          Url = "/Admin/Profile/MyMessage" });
         }
         public void InitHide()
         {
-            this.HideMenus.Add(new Menu { MenuId = "Login", Title = "Login", Url = "/Admin/Home/Index" });
-        }
-        public List<string> GetPublicMenus()
-        {
-            List<string> pubMenus = new List<string>();
-            foreach (Menu m1 in this.HideMenus) pubMenus.Add(m1.MenuId);
-            foreach (Menu m1 in this.ProfileMenus) pubMenus.Add(m1.MenuId);
-            return pubMenus;
+            this.HideMenus.Add(new Menu { MenuId = "Login", Title = LanguageHelper.Words("Login"), Url = "/Admin/Home/Index" });
         }
     }
 
-    public class PubPubMenus : PubMenus
+    public class PubSharedMenus : SharedMenus
     {
-        public PubPubMenus() : base()
+        public PubSharedMenus() : base()
         {
             this.ProfileMenus = new List<Menu>();
             this.HideMenus = new List<Menu>();
@@ -105,20 +136,14 @@ namespace Library.V1.Entity
         }
         public void InitProfile()
         {
-            this.ProfileMenus.Add(new Menu { MenuId = "P01", Title = "my.account", Detail = "my.account", Url = "/Admin/Profile/MyAccount" });
-            this.ProfileMenus.Add(new Menu { MenuId = "P02", Title = "reset.password", Detail = "reset.password", Url = "/Admin/Profile/ResetPassword" });
-            this.ProfileMenus.Add(new Menu { MenuId = "P03", Title = "my.message", Detail = "my.account", Url = "/Admin/Profile/MyMessage" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P01", Title = LanguageHelper.Words("my.account"),      Url = "/Profile/MyAccount" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P02", Title = LanguageHelper.Words("reset.password"),  Url = "/Profile/ResetPassword" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P03", Title = LanguageHelper.Words("my.message"),      Url = "/Profile/MyMessage" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P04", Title = LanguageHelper.Words("logout"),          Url = "/Home/SignOut" });
         }
         public void InitHide()
         {
-            this.HideMenus.Add(new Menu { MenuId = "Login", Title = "Login", Url = "/Home/User/Login" });
-        }
-        public List<string> GetPublicMenus()
-        {
-            List<string> pubMenus = new List<string>();
-            foreach (Menu m1 in this.HideMenus) pubMenus.Add(m1.MenuId);
-            foreach (Menu m1 in this.ProfileMenus) pubMenus.Add(m1.MenuId);
-            return pubMenus;
+            this.HideMenus.Add(new Menu { MenuId = "SignIn", Title = LanguageHelper.Words("SignIn"),  Url = "/Home/SignIn" });
         }
     }
 

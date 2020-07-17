@@ -4945,7 +4945,7 @@ WLIU_NG.directive("image.main", function () {
                             '/>',
                         '</label>',
                         '<label wliu ng-if="cameraState()"><a wliu btn24 camera ng-click="initCamera()" title="{{Words(\'button.camera\')}}"></a></label>',
-                        '<label wliu ng-if="textState()"><a wliu btn24 comments ng-click="showMainComment()" title="{{Words(\'button.comments\')}}"></a></label>',
+                        //'<label wliu ng-if="textState()"><a wliu btn24 comments ng-click="showMainComment()" title="{{Words(\'button.comments\')}}"></a></label>',
                         '<label wliu ng-if="cancelState()"><a wliu btn24 restore ng-click="gallery.Cancel(gallery.CurrentGuid())" title="{{Words(\'button.cancel\')}}"></a></label>',
                     '</div>',
                     '<div style="float:right;">',

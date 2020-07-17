@@ -1,0 +1,201 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var gallery = new WLIU.Gallery();
+
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("myControl", function ($scope) {
+            viewData.LinkScope($scope);
+            gallery.LinkScope($scope);
+
+            $scope.saveCallback = function () {
+                let refKey = $scope.ViewData.database.tables.UserRegister.rows[0].key;
+                $scope.Gallery.SetKey(refKey);
+                $scope.Gallery.SaveImage($scope.Gallery.CurrentGuid(), 1);
+
+                $scope.ViewData.database.tables["UserRegister"].Empty();
+                $("div[wliu][flip]").flip("toggle");
+            }
+            $scope.cancelCallback = function () { }
+            $scope.loginSuccess = function () {
+                window.location.href = "/Profile/MyAccount";
+            }
+        });
+
+        viewData.Init("/api/Home/InitSignIn").then(data => {
+            data.database.tables.UserLogin.NewRowB();
+            data.database.tables.UserRegister.NewRowB();
+            data.Apply();
+        });
+        gallery.Init("/api/Image/InitGallery/PubUser?view=small&edit=large").then(d => {
+            gallery.NewRowB();
+        });
+
+        $(function () {
+            $("#loginUser").focus();
+        });
+    </script>
+    <style>
+    </style>
+}
+<div ng-app="myApp" ng-controller="myControl" class="container">
+    <div wliu flip style="height:640px;" flip-toggle="flipme">
+        <div frame>
+            <div front>
+                <div style="display:block;position:relative;height:120px; background:center center url(/resource/style/Images/shaolin-temple.jpg) no-repeat; background-size:cover;"></div>
+                <div style="display:inline-block;position:absolute;height:120px; width:120px; top:60px; left:50%; transform:translateX(-50%); background:center center url(/resource/style/Images/login-user.png) no-repeat; background-size:contain; background-color:white; border:1px solid white; border-radius:60px;"></div>
+
+                <div class="text-center" style="margin-top:80px;">
+                    <h3><i class="fa fa-lock"></i> <span style="text-transform:uppercase;">@Html.Words("button.login")</span></h3>
+                    <hr class="mt-2 mb-2">
+                </div>
+                <a flip-toggle="flipme" style="margin-left:32px; font-size:24px;">@Html.Words("not.a.member") <span style="color:#0275d8;text-decoration:underline;">@Html.Words("button.register")</span></a>
+                <div wliu table grow shrink style="margin-top:32px;">
+                    <div row>
+                        <div cell fixed style="width:10px;"></div>
+                        <div cell small>
+                            <form.label nowrap h2 right db="ViewData.database" tb="UserLogin" col="LoginUser"></form.label>
+                        </div>
+                        <div cell large>
+                            <form.textbox h2 db="ViewData.database" tb="UserLogin" col="LoginUser" id="loginUser" placeholder="@Html.Words("email.username")"></form.textbox>
+                        </div>
+                        <div cell style="width:40px;"></div>
+                    </div>
+                    <div row>
+                        <div cell fixed style="width:10px;"></div>
+                        <div cell small>
+                            <form.label nowrap h2 right db="ViewData.database" tb="UserLogin" col="Password"></form.label>
+                        </div>
+                        <div cell large>
+                            <form.password h2 db="ViewData.database" tb="UserLogin" col="Password" action="loginSuccess()"></form.password>
+                        </div>
+                        <div cell style="width:40px;"></div>
+                    </div>
+                    <div row center style="margin-top:20px;">
+                        <form.save h2 db="ViewData.database" tb="UserLogin" label="@Html.Words("button.login")" action="loginSuccess()" style="margin:0px 20px;"></form.save>
+                        <form.cancel h2 db="ViewData.database" tb="UserLogin" label="@Html.Words("button.cancel")" style="margin:0px 20px;"></form.cancel>
+                    </div>
+                    <div row style="margin-top:40px;">
+                        <a href="/Home/ResetPassword" style="margin-left:32px;font-size:24px;"><label>@Html.Words("forget.password")</label> <span style="color:#0275d8;text-decoration:underline;">@Html.Words("reset.password")</span></a>
+                    </div>
+                </div>
+            </div>
+            <div back>
+                <div class="text-center" style="margin-top:12px;">
+                    <h3><i class="fa fa-user"></i> <span style="text-transform:uppercase;">@Html.Words("button.register")</span></h3>
+                    <hr class="mt-2 mb-2">
+                </div>
+                <a flip-toggle="flipme" style="margin-left:32px; font-size:24px;">@Html.Words("back.to.login") <span style="color:#0275d8;text-decoration:underline;">@Html.Words("button.login")</span></a>
+                <div style="display:block; padding:20px 20px 0px 20px;">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <td valign="top" width="33%">
+                                <ul id="d1" wliu tab9 border color="mint">
+                                    <li>@Html.Words("login.information")</li>
+                                </ul>
+                                <div wliu tab9 body style="border-right:none;">
+                                    <div style="height:400px;">
+                                        <div wliu table grow shrink>
+                                            <div row style="margin-top:6px;">
+                                                <div cell>
+                                                    <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="UserName"></assm.textbox>
+                                                </div>
+                                            </div>
+                                            <div row style="margin-top:6px;">
+                                                <div cell>
+                                                    <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="Email"></assm.textbox>
+                                                </div>
+                                            </div>
+                                            <div row style="margin-top:6px;">
+                                                <div cell>
+                                                    <assm.password fixed border h2 db="ViewData.database" tb="UserRegister" col="Password"></assm.password>
+                                                </div>
+                                            </div>
+                                            <div row style="margin-top:6px;">
+                                                <div cell>
+                                                    <assm.confirm fixed border h2 db="ViewData.database" tb="UserRegister" col="Password"></assm.confirm>
+                                                </div>
+                                            </div>
+                                            <div row style="margin-top:6px;">
+                                                <div cell>
+                                                    <assm.select fixed border h2 db="ViewData.database" tb="UserRegister" col="BranchId"></assm.select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td valign="top" width="33%">
+                                <ul id="d1" wliu tab9 border color="mint">
+                                    <li>@Html.Words("my.account")</li>
+                                </ul>
+                                <div wliu tab9 body>
+                                    <div style="height:400px;">
+                                        <div wliu table grow shrink>
+                                            <div row style="margin-top:6px;">
+                                                <div cell>
+                                                    <assm.textbox fixed border h2 value1="Will" db="ViewData.database" tb="UserRegister" col="FirstName"></assm.textbox>
+                                                </div>
+                                            </div>
+                                            <div row style="margin-top:6px;">
+                                                <div cell>
+                                                    <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="LastName"></assm.textbox>
+                                                </div>
+                                            </div>
+                                            <div row style="margin-top:6px;">
+                                                <div cell>
+                                                    <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="Phone"></assm.textbox>
+                                                </div>
+                                            </div>
+                                            <div row style="margin-top:6px;">
+                                                <div cell>
+                                                    <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="Cell"></assm.textbox>
+                                                </div>
+                                            </div>
+                                            <div row style="margin-top:6px;">
+                                                <div cell>
+                                                    <assm.radio fixed border h2 db="ViewData.database" tb="UserRegister" col="Gender"></assm.radio>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td valign="top" width="33%">
+                                <ul id="d1" wliu tab9 border color="mint">
+                                    <li>@Html.Words("col.photo")</li>
+                                </ul>
+                                <div wliu tab9 body style="border-left:none;">
+                                    <div style="height:400px;">
+                                        <label wliu bold>@Html.Words("col.photo")</label>
+                                        <div style="display:block;">
+                                            <image.main gallery="Gallery" ww="160" hh="160" icons="upload,camera,text,delete"></image.main>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center" style="padding-top:12px;">
+                                <form.save h2 db="ViewData.database" tb="UserRegister" action="saveCallback()" label="@Html.Words("button.save")" style="margin:0px 20px;"></form.save>
+                                <form.cancel h2 db="ViewData.database" tb="UserRegister" action="cancelCallback()" label="@Html.Words("button.cancel")" style="margin:0px 20px;"></form.cancel>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <image.imgedit gallery="Gallery"></image.imgedit>
+    <image.camera gallery="Gallery"></image.camera>
+
+    <table.error></table.error>
+    <form.error></form.error>
+
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+</div>

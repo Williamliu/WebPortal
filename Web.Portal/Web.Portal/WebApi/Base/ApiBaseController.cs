@@ -10,13 +10,17 @@ using Web.Portal.Common;
 
 namespace Web.Portal.WebApi.Controllers
 {
-    public abstract class BaseController : ControllerBase
+    public abstract class ApiBaseController : ControllerBase
     {
         protected AppSetting AppConfig { get; set; }
         protected Database DB;
-        public BaseController(AppSetting appConfig)
+        public ApiBaseController(AppSetting appConfig)
         {
             this.AppConfig = appConfig;
+        }
+        public string Words(string keyword)
+        {
+            return LanguageHelper.Words(keyword);
         }
         #region Database
         protected abstract void InitDatabase(string menuId);
@@ -32,8 +36,8 @@ namespace Web.Portal.WebApi.Controllers
             LanguageHelper.InitWords(this.DB.DSQL);
 
 
-            //Step4: Get AdminUser for DB User.
-            //this.DB.User = this.HttpContext.GetPubUser(this.DB.DSQL, menuId);
+            //Step4: Get PubUser for DB User.
+            this.DB.User = this.HttpContext.GetPubUser(this.DB.DSQL, menuId);
 
 
             //Step5: Init Database Schema defined in Controller

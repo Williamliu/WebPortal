@@ -251,11 +251,11 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta firstName = new Meta { Name = "FirstName", DbName = "FirstName", Title = Words("col.fullname"), Type = EInput.String, MaxLength = 64, Order = "ASC" };
                         Meta lastName = new Meta { Name = "LastName", DbName = "LastName", Title = Words("col.lastname"), Type = EInput.String, MaxLength = 64, Order = "ASC" };
                         Meta email = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Type = EInput.Email, MaxLength = 256 };
-                        Meta url = new Meta { Name = "Url", DbName = "Url", Title = Words("col.url"), Order = "ASC", Type = EInput.String, MaxLength = 256 };
-                        Meta userAgent = new Meta { Name = "UserAgent", DbName = "UserAgent", Title = Words("col.user.agent"), Order = "ASC", Type = EInput.String, MaxLength = 256 };
-                        Meta ipAddr = new Meta { Name = "IPAddress", DbName = "IPAddress", Title = Words("col.ip.address"), Type = EInput.String, MaxLength=64 };
-                        Meta lang = new Meta { Name = "Lang", DbName = "Lang", Title = Words("language"), Type = EInput.String, MaxLength = 64 };
-                        Meta userLang = new Meta { Name = "UserLang", DbName = "UserLang", Title = Words("language"), Type = EInput.String, MaxLength = 64 };
+                        Meta url = new Meta { Name = "Url", DbName = "Url", Title = Words("col.url"), Type = EInput.String, MaxLength = 256, Order = "ASC" };
+                        Meta userAgent = new Meta { Name = "UserAgent", DbName = "UserAgent", Title = Words("col.user.agent"), Type = EInput.String, MaxLength = 256, Order = "ASC" };
+                        Meta ipAddr = new Meta { Name = "IPAddress", DbName = "IPAddress", Title = Words("col.ip.address"), Type = EInput.String, MaxLength=64, Order = "ASC" };
+                        Meta lang = new Meta { Name = "Lang", DbName = "Lang", Title = Words("language"), Type = EInput.String, MaxLength = 64, Order = "ASC" };
+                        Meta userLang = new Meta { Name = "UserLang", DbName = "UserLang", Title = Words("language"), Type = EInput.String, MaxLength = 64, Order = "ASC" };
                         Meta createdTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.createdtime"), Type = EInput.Read, Order = "DESC" };
                         table.AddMetas(id, menuName, firstName, lastName, email, url, userAgent, ipAddr, lang, userLang, createdTime);
 

@@ -19,7 +19,6 @@ namespace Web.Portal.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ImageController : ImageBaseController
     {
         protected Gallery Gallery { get; set; }

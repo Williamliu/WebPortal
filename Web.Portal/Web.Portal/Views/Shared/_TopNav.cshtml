@@ -1,6 +1,6 @@
 ﻿@{Menus PubMenu = Context.Items["PubMenus"] as Menus;}
     <ul first>
-        @foreach (Menu tmenu in PubMenu.TopMenu)
+        @foreach (Menu tmenu in PubMenu.MenuSet1)
         {
             if (tmenu.Nodes.Count > 0)
             {

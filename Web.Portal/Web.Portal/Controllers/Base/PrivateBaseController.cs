@@ -11,18 +11,17 @@ using Library.V1.SQL;
 
 namespace Web.Portal.Controllers
 {
-    public abstract class PubBaseController : Controller
+    public abstract class PrivateBaseController : Controller
     {
         #region Protected Fields
         protected AppSetting AppConfig { get; set; }
         protected Database DB;
         #endregion
 
-        public PubBaseController(AppSetting appConfig)
+        public PrivateBaseController(AppSetting appConfig)
         {
             this.AppConfig = appConfig;
         }
-
         #region Methods
         protected abstract void InitDatabase(string menuId);
         protected void Init(string menuId)
@@ -41,18 +40,25 @@ namespace Web.Portal.Controllers
 
             InitPubMenus(menuId);
 
+            if (this.DB.User.Id <= 0 || (
+                this.DB.User.PrivateMenuIDs.Contains(menuId) == false &&
+                this.DB.User.PublicMenuIDs.Contains(menuId) == false
+                )
+            ) Response.Redirect("/Home/SignIn", false);
+
             WriteWebLog(menuId);
             //Step5: Init Database Schema defined in Controller
             this.InitDatabase(menuId);
         }
         private void InitPubMenus(string menuId)
         {
-            string query0 = $"SELECT Id, ParentId, MenuId, Position, Indent, Url, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM Pub_Menu WHERE Position=1 AND Active=1 AND Deleted=0 AND ParentId=0 ORDER BY Sort DESC";
+
+            PubSharedMenus pubSharedMenus = new PubSharedMenus();
+            Menus pubMenu = new Menus(menuId, pubSharedMenus);
+
+            #region Get Public Menus:  put it to MenuSet1 
+            string query0 = $"SELECT Id, ParentId, MenuId, Position, Indent, Url, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM VW_Pub_User_Menu_Public WHERE ParentId=0 ORDER BY Sort DESC";
             GTable parent = this.DB.DSQL.ExecuteTable(query0, new Dictionary<string, object>());
-
-            PubPubMenus pubPubMenus = new PubPubMenus();
-            Menus pubMenu = new Menus(menuId, pubPubMenus);
-
             foreach (GRow srow in parent.Rows)
             {
                 Menu pmenu = new Menu();
@@ -69,7 +75,7 @@ namespace Web.Portal.Controllers
                 // Public Menu don't need view right
                 //if (this.DB.User.ViewMenus.Contains(pmenu.MenuId) == false) continue;
 
-                string query1 = $"SELECT Id, ParentId, MenuId, Url, Position, Indent, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM Pub_Menu WHERE Active=1 AND Deleted=0 AND ParentId={pmenu.Id} ORDER BY Sort DESC";
+                string query1 = $"SELECT Id, ParentId, MenuId, Url, Position, Indent, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM VW_Pub_User_Menu_Public WHERE ParentId={pmenu.Id} ORDER BY Sort DESC";
                 GTable child = this.DB.DSQL.ExecuteTable(query1, new Dictionary<string, object>());
                 foreach (GRow srow1 in child.Rows)
                 {
@@ -86,14 +92,14 @@ namespace Web.Portal.Controllers
                     cmenu.Detail = srow1.GetValue("Detail");
                     //Public Menu don't need view right
                     //if (this.DB.User.ViewMenus.Contains(cmenu.MenuId) == false) continue;
-                    if (cmenu.MenuId.ToLower() == pubMenu.MenuId.ToLower()) pubMenu.MenuTitle = cmenu.Title;
                     pmenu.Nodes.Add(cmenu);
                 }
-                if (pmenu.MenuId.ToLower() == pubMenu.MenuId.ToLower()) pubMenu.MenuTitle = pmenu.Title;
-                pubMenu.AddTop(pmenu);
+                pubMenu.AddSet1(pmenu);
             }
+            #endregion
 
-            query0 = $"SELECT Id, ParentId, MenuId, Url, Position, Indent, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM Pub_Menu WHERE Position=2 AND Active=1 AND Deleted=0 AND ParentId=0 ORDER BY Sort DESC";
+            #region Get Private Menus:  Put it to MenuSet2
+            query0 = $"SELECT Id, ParentId, MenuId, Url, Position, Indent, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM VW_Pub_PrivateMenu_FirstMenu ORDER BY Sort DESC";
             parent = this.DB.DSQL.ExecuteTable(query0, new Dictionary<string, object>());
             foreach (GRow srow in parent.Rows)
             {
@@ -109,9 +115,9 @@ namespace Web.Portal.Controllers
                 pmenu.Title = srow.GetValue("Title");
                 pmenu.Detail = srow.GetValue("Detail");
                 //Positon = 1 Menu,  used for My Account
-                if (this.DB.User.ViewMenus.Contains(pmenu.MenuId) == false) continue;
+                if (this.DB.User.PrivateMenuIDs.Contains(pmenu.MenuId) == false) continue;
 
-                string query1 = $"SELECT Id, ParentId, MenuId, Url, Position, Indent, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM Pub_Menu WHERE Active=1 AND Deleted=0 AND ParentId={pmenu.Id} ORDER BY Sort DESC";
+                string query1 = $"SELECT Id, ParentId, MenuId, Url, Position, Indent, MenuImage, Sort, {this.DB.DSQL.LangSmartColumn("Title")} AS Title, {this.DB.DSQL.LangSmartColumn("Detail")} AS Detail FROM VW_Pub_PrivateMenu_SecondMenu WHERE ParentId={pmenu.Id} ORDER BY Sort DESC";
                 GTable child = this.DB.DSQL.ExecuteTable(query1, new Dictionary<string, object>());
                 foreach (GRow srow1 in child.Rows)
                 {
@@ -127,22 +133,12 @@ namespace Web.Portal.Controllers
                     cmenu.Title = srow1.GetValue("Title");
                     cmenu.Detail = srow1.GetValue("Detail");
                     //Positon = 1 Menu,  used for My Account
-                    if (this.DB.User.ViewMenus.Contains(cmenu.MenuId) == false) continue;
-                    if (cmenu.MenuId.ToLower() == pubMenu.MenuId.ToLower()) pubMenu.MenuTitle = cmenu.Title;
+                    if (this.DB.User.PrivateMenuIDs.Contains(cmenu.MenuId) == false) continue;
                     pmenu.Nodes.Add(cmenu);
                 }
-                if (pmenu.MenuId.ToLower() == pubMenu.MenuId.ToLower()) pubMenu.MenuTitle = pmenu.Title;
-                pubMenu.AddBottom(pmenu);
+                pubMenu.AddSet2(pmenu);
             }
-
-            foreach (Menu pmenu in pubMenu.ProfileMenus)
-            {
-                if (pmenu.MenuId.ToLower() == pubMenu.MenuId.ToLower()) pubMenu.MenuTitle = LanguageHelper.Words(pmenu.Title);
-            }
-            foreach (Menu hmenu in pubMenu.HideMenus)
-            {
-                if (hmenu.MenuId.ToLower() == pubMenu.MenuId.ToLower()) pubMenu.MenuTitle = LanguageHelper.Words(hmenu.Title);
-            }
+            #endregion
 
             this.HttpContext.Items.Add("PubMenus", pubMenu);
         }
@@ -159,7 +155,7 @@ namespace Web.Portal.Controllers
             row.Add("MenuId",       "MenuId",       menuId);
             row.Add("Url",          "Url",          $"{this.HttpContext.Request.Path.ToString()}{this.HttpContext.Request.QueryString.ToString()}");
             row.Add("UserAgent",    "UserAgent",    this.HttpContext.Request.Headers["User-Agent"].ToString());
-            row.Add("PubUserId",    "PubUserId",    0);
+            row.Add("PubUserId",    "PubUserId",    this.DB.User.Id);
             row.Add("IPAddress",    "IPAddress",    this.HttpContext.Connection.RemoteIpAddress.ToString());
             row.Add("Lang",         "Lang",         this.DB.DSQL.Lang);
             row.Add("UserLang",     "UserLang",     this.HttpContext.Request.Headers["Accept-Language"].ToString());

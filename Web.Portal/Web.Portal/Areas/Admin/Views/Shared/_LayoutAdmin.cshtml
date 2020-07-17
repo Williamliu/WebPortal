@@ -1,6 +1,6 @@
 ﻿@{
-    string admJWTToken = ViewContext.HttpContext.Session.GetString("adminSite_jwtToken") ?? ViewContext.HttpContext.Request.Cookies["adminSite_jwtToken"] ?? "";
-    string admSession = ViewContext.HttpContext.Session.GetString("adminSite_Session") ?? ViewContext.HttpContext.Request.Cookies["adminSite_Session"] ?? "";
+    string admJWTToken = ViewContext.HttpContext.GetSession("adminSite_jwtToken");
+    string admSession = ViewContext.HttpContext.GetSession("adminSite_Session");
 }
 <!DOCTYPE html>
 <html>

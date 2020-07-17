@@ -110,10 +110,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/15/2020 00:22:34</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>07/15/2020 00:22:35</publishTime>
+      <publishTime>07/15/2020 23:06:52</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>07/15/2020 00:22:35</publishTime>
+      <publishTime>07/15/2020 23:06:52</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
       <publishTime>07/15/2020 00:22:34</publishTime>
@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>07/15/2020 12:22:17</publishTime>
+      <publishTime>07/15/2020 23:07:11</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>07/15/2020 12:22:15</publishTime>
+      <publishTime>07/15/2020 23:07:03</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>07/15/2020 12:12:01</publishTime>
+      <publishTime>07/15/2020 23:06:56</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>07/15/2020 12:12:02</publishTime>
+      <publishTime>07/15/2020 23:06:56</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>07/15/2020 12:12:01</publishTime>
+      <publishTime>07/15/2020 23:06:56</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
       <publishTime>07/15/2020 00:22:40</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>07/15/2020 12:22:09</publishTime>
+      <publishTime>07/15/2020 23:06:59</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>07/15/2020 12:22:09</publishTime>
+      <publishTime>07/15/2020 23:06:59</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/angular.min.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -320,7 +320,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.database.js">
-      <publishTime>07/14/2020 23:19:01</publishTime>
+      <publishTime>07/15/2020 22:54:28</publishTime>
     </File>
     <File Include="wwwroot/Resource/bootstrap/css/bootstrap-grid.min.css">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -458,7 +458,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.v1.widget.css">
-      <publishTime>07/05/2020 23:15:03</publishTime>
+      <publishTime>07/15/2020 19:34:43</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.v1.widget.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -2633,10 +2633,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.v1.com.js">
-      <publishTime>07/05/2020 23:15:03</publishTime>
+      <publishTime>07/15/2020 13:40:02</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.v1.database.js">
-      <publishTime>07/14/2020 16:36:39</publishTime>
+      <publishTime>07/15/2020 14:14:45</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.v1.image.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -2822,7 +2822,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/12/2020 17:44:34</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/wliu.v1.layout.css">
-      <publishTime>07/15/2020 00:10:51</publishTime>
+      <publishTime>07/15/2020 20:38:33</publishTime>
     </File>
     <File Include="zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll">
       <publishTime>09/12/2019 17:09:00</publishTime>

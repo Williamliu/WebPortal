@@ -8,6 +8,7 @@ using Library.V1.Entity;
 using Library.V1.SQL;
 using Microsoft.AspNetCore.Html;
 using System.Text;
+using System.Data.SqlClient;
 
 namespace Web.Portal.Common
 {
@@ -84,6 +85,8 @@ namespace Web.Portal.Common
         {
             if(string.IsNullOrWhiteSpace(value))
             {
+                byte[] valueByte = System.Text.ASCIIEncoding.ASCII.GetBytes(string.Empty);
+                httpContext.Session.Set(sessName, valueByte);
                 httpContext.Session.Remove(sessName);
                 // we can not delete request cookies which from user request
                 // we can delete response cookie,  but delete response cookies will effect for next request.
@@ -91,8 +94,8 @@ namespace Web.Portal.Common
             }
             else
             {
-                byte[] langByte = System.Text.ASCIIEncoding.ASCII.GetBytes(value);
-                httpContext.Session.Set(sessName, langByte);
+                byte[] valueByte = System.Text.ASCIIEncoding.ASCII.GetBytes(value);
+                httpContext.Session.Set(sessName, valueByte);
 
                 httpContext.Response.Cookies.Delete(sessName);
                 CookieOptions cookieOpt = new CookieOptions();
@@ -106,11 +109,20 @@ namespace Web.Portal.Common
             {
                 return httpContext.Session.GetString(sessName) ?? "";
             }
-            else if (string.IsNullOrWhiteSpace(httpContext.Request.Cookies["WebPortalLang"]??"") == false)
+            else if (string.IsNullOrWhiteSpace(httpContext.Request.Cookies[sessName] ??"") == false)
             {
-                return httpContext.Request.Cookies["WebPortalLang"] ?? "";
+                return httpContext.Request.Cookies[sessName] ?? "";
             }
             return string.Empty;
+        }
+        public static void DeleteSession(this HttpContext httpContext, string sessName)
+        {
+            httpContext.Response.Cookies.Delete(sessName);
+            httpContext.Response.Cookies.Delete(sessName);
+            httpContext.Session.SetString(sessName, "");
+            httpContext.Session.SetString(sessName, "");
+            httpContext.Session.Remove(sessName);
+            httpContext.Session.Remove(sessName);
         }
 
         public static string GetWebLang(this HttpContext httpContext)
@@ -120,30 +132,17 @@ namespace Web.Portal.Common
             {
                 queryLang = httpContext.Request.Query.ContainsKey("lang")?httpContext.Request.Query["lang"][0].GetString().ToLower():"";
                 // save post lang to cookie
-                if (!string.IsNullOrWhiteSpace(queryLang))
-                {
-                    byte[] langByte = System.Text.ASCIIEncoding.ASCII.GetBytes(queryLang);
-                    httpContext.Session.Set("WebPortalLang", langByte);
-                    httpContext.Response.Cookies.Delete("WebPortalLang");
-                    CookieOptions cookieOpt = new CookieOptions();
-                    cookieOpt.Expires = System.DateTime.Now.AddDays(365);
-                    httpContext.Response.Cookies.Append("WebPortalLang", queryLang, cookieOpt);
-                }
+                if (!string.IsNullOrWhiteSpace(queryLang)) httpContext.SaveSession("WebPortalLang", queryLang);
+                
             }
 
-            //Priority 2:  using session
+            //Priority 2: Get From Session & Cookie
             if (string.IsNullOrWhiteSpace(queryLang))
             {
-                queryLang = httpContext.Session.GetString("WebPortalLang") ?? "";
+                queryLang = httpContext.GetSession("WebPortalLang");
             }
 
-            // Priority 3: using Cookies
-            if (string.IsNullOrWhiteSpace(queryLang))
-            {
-                queryLang = httpContext.Request.Cookies["WebPortalLang"] ?? "";
-            }
-
-            // Priority 4: using Browser Settings
+            // Priority 3: using Browser Settings
             if (string.IsNullOrWhiteSpace(queryLang))
             {
                 string browserLang = httpContext.Request.Headers["Accept-Language"];
@@ -166,13 +165,8 @@ namespace Web.Portal.Common
         {
             WebUser adminUser = new WebUser();
             string guid = string.Empty;
-            // Request Header -> Session -> Cookie
-            if (string.IsNullOrWhiteSpace(httpContext.Request.Headers["SiteSession"].GetString()) == false) 
-                guid = httpContext.Request.Headers["SiteSession"].GetString();
-            else if (string.IsNullOrWhiteSpace(httpContext.Session.GetString("adminSite_Session")) == false) 
-                guid = httpContext.Session.GetString("adminSite_Session");
-            else if(string.IsNullOrWhiteSpace(httpContext.Request.Cookies["adminSite_Session"].GetString()) == false) 
-                guid = httpContext.Request.Cookies["adminSite_Session"].GetString();
+            guid = httpContext.Request.Headers["SiteSession"].GetString();
+            if (string.IsNullOrWhiteSpace(guid)) guid = httpContext.GetSession("adminSite_Session");
 
             if (string.IsNullOrWhiteSpace(guid) == false)
             {
@@ -216,13 +210,13 @@ namespace Web.Portal.Common
                 adminUser.Sites = rows.Select(p => p["SiteId"].GetInt() ?? 0).ToList<int>();
                 #endregion
 
-                #region ViewMenu and PubMenu
+                #region PrivateMenu and PublicMenu
                 query = "SELECT * FROM VW_Admin_User_Menu_View WHERE Id=@UserId";
                 rows = DSQL.Query(query, ps);
-                adminUser.ViewMenus.AddRange(rows.Select(p => p["Menu"].GetString()).ToList<string>());
+                adminUser.PrivateMenuIDs.AddRange(rows.Select(p => p["Menu"].GetString()).ToList<string>());
 
-                AdminPubMenus AdminPubMenu = new AdminPubMenus();
-                adminUser.PubMenus.AddRange(AdminPubMenu.GetPublicMenus());
+                AdminSharedMenus AdminPubMenu = new AdminSharedMenus();
+                adminUser.PublicMenuIDs.AddRange(AdminPubMenu.GetSharedMenus());
                 #endregion
 
                 #region Restrict Fields
@@ -253,17 +247,17 @@ namespace Web.Portal.Common
                 }
                 else
                 {
-                    if (adminUser.ViewMenus.Contains(menuId))
+                    if (adminUser.PrivateMenuIDs.Contains(menuId))
                     {
-                        // if ViewMenu, base on User Role
+                        // if Private Menu, base on User Role
                         adminUser.Rights.Clear();
                         query = "SELECT * FROM VW_Admin_User_Menu_Right WHERE UserId=@UserId AND MenuId=@MenuId";
                         rows = DSQL.Query(query, ps);
                         rows.ForEach(p => adminUser.Rights.Add(p["Action"].GetString(), true));
                     }
-                    if (adminUser.PubMenus.Contains(menuId))
+                    if (adminUser.PublicMenuIDs.Contains(menuId))
                     {
-                        // if pub menu, full right
+                        // if Public menu, full right
                         adminUser.Rights.Clear();
                         query = "SELECT Action FROM Admin_Right WHERE deleted=0";
                         ps.Clear();
@@ -275,9 +269,9 @@ namespace Web.Portal.Common
             }
             else
             {
-                AdminPubMenus AdminPubMenu = new AdminPubMenus();
-                adminUser.PubMenus.AddRange(AdminPubMenu.GetPublicMenus());
-                if (adminUser.PubMenus.Contains(menuId))
+                AdminSharedMenus AdminPubMenu = new AdminSharedMenus();
+                adminUser.PublicMenuIDs.AddRange(AdminPubMenu.GetSharedMenus());
+                if (adminUser.PublicMenuIDs.Contains(menuId))
                 {
                     //if pub menu,  full right
                     adminUser.Rights.Add("view", true);
@@ -297,18 +291,13 @@ namespace Web.Portal.Common
         {
             WebUser publicUser = new WebUser();
             string guid = string.Empty;
-            // Request Header -> Session -> Cookie
-            if (string.IsNullOrWhiteSpace(httpContext.Request.Headers["SiteSession"].GetString()) == false)
-                guid = httpContext.Request.Headers["SiteSession"].GetString();
-            else if (string.IsNullOrWhiteSpace(httpContext.Session.GetString("pubSite_Session")) == false)
-                guid = httpContext.Session.GetString("pubSite_Session");
-            else if (string.IsNullOrWhiteSpace(httpContext.Request.Cookies["pubSite_Session"].GetString()) == false)
-                guid = httpContext.Request.Cookies["pubSite_Session"].GetString();
+            guid = httpContext.Request.Headers["SiteSession"].GetString();
+            if (string.IsNullOrWhiteSpace(guid)) guid = httpContext.GetSession("pubSite_Session");
 
             if (string.IsNullOrWhiteSpace(guid) == false)
             {
                 #region Get User by Session
-                string query = "select top 1 * from VW_Admin_Session_User WHERE Session=@Session";
+                string query = "select top 1 * from VW_Pub_Session_User WHERE Session=@Session";
                 Dictionary<string, object> ps = new Dictionary<string, object>();
                 ps.Add("Session", guid);
                 List<Dictionary<string, string>> rows = DSQL.Query(query, ps);
@@ -321,103 +310,57 @@ namespace Web.Portal.Common
                     publicUser.Email = rows[0]["Email"].GetString();
                     publicUser.Phone = rows[0]["Phone"].GetString();
                     publicUser.Branch = rows[0]["BranchId"].GetInt() ?? 0;
-                    publicUser.IsAdmin = rows[0]["IsAdmin"].GetBool() ?? false;
+                    publicUser.IsAdmin = false;
                 }
-                #endregion
-
-                #region  Branches and Sites
-                query = "SELECT * FROM VW_Admin_User_Branch WHERE Id=@UserId";
-                ps.Clear();
-                ps.Add("UserId", publicUser.Id);
-                rows = DSQL.Query(query, ps);
-                publicUser.ActiveBranches = rows.Select(p => p["BranchId"].GetInt() ?? 0).ToList<int>();
-                if (publicUser.ActiveBranches.Contains(publicUser.Branch) == false)
-                    publicUser.ActiveBranches.Add(publicUser.Branch);
-
-                query = "SELECT * FROM VW_Admin_User_Branch_Full WHERE Id=@UserId";
-                rows = DSQL.Query(query, ps);
-                publicUser.Branches = rows.Select(p => p["BranchId"].GetInt() ?? 0).ToList<int>();
-
-                query = "SELECT * FROM VW_Admin_User_Site WHERE Id=@UserId";
-                rows = DSQL.Query(query, ps);
-                publicUser.ActiveSites = rows.Select(p => p["SiteId"].GetInt() ?? 0).ToList<int>();
-
-                query = "SELECT * FROM VW_Admin_User_Site_Full WHERE Id=@UserId";
-                rows = DSQL.Query(query, ps);
-                publicUser.Sites = rows.Select(p => p["SiteId"].GetInt() ?? 0).ToList<int>();
                 #endregion
 
                 #region ViewMenu and PubMenu
-                query = "SELECT * FROM VW_Admin_User_Menu_View WHERE Id=@UserId";
+                query = "SELECT MenuId FROM VW_Pub_User_Menu_Private WHERE UserId=@UserId";
+                ps.Add("UserId", publicUser.Id);
                 rows = DSQL.Query(query, ps);
-                publicUser.ViewMenus.AddRange(rows.Select(p => p["Menu"].GetString()).ToList<string>());
+                publicUser.PrivateMenuIDs.AddRange(rows.Select(p => p["MenuId"].GetString()).ToList<string>());
 
-                AdminPubMenus AdminPubMenu = new AdminPubMenus();
-                publicUser.PubMenus.AddRange(AdminPubMenu.GetPublicMenus());
+                AdminSharedMenus AdminPubMenu = new AdminSharedMenus();
+                publicUser.PublicMenuIDs.AddRange(AdminPubMenu.GetSharedMenus());
+
+                query = "SELECT MenuId FROM VW_Pub_User_Menu_Public";
+                rows = DSQL.Query(query, ps);
+                publicUser.PublicMenuIDs.AddRange(rows.Select(p => p["MenuId"].GetString()).ToList<string>());
                 #endregion
 
-                #region Restrict Fields
-                query = "SELECT * FROM VW_Admin_User_Menu_Field WHERE UserId=@UserId AND MenuId=@MenuId";
-                ps.Add("MenuId", menuId);
+                #region Pub User Full Rights
+                publicUser.Rights.Clear();
+                query = "SELECT Action FROM Admin_Right WHERE deleted=0";
+                ps.Clear();
                 rows = DSQL.Query(query, ps);
-                foreach (Dictionary<string, string> row in rows)
-                {
-                    string restrictField = row["Fields"].GetString() ?? "";
-                    string[] rfields = restrictField.Split(",");
-                    foreach (string tfield in rfields)
-                    {
-                        if (string.IsNullOrWhiteSpace(tfield.Trim()) == false && publicUser.Fields.Contains(tfield.Trim()) == false)
-                            publicUser.Fields.Add(tfield.Trim());
-                    }
-                }
+                rows.ForEach(p => publicUser.Rights.Add(p["Action"].GetString(), true));
                 #endregion
 
-                #region User Rights
-                if (publicUser.IsAdmin)
-                {
-                    publicUser.Rights.Clear();
-                    query = "SELECT Action FROM Admin_Right WHERE deleted=0";
-                    ps.Clear();
-                    rows = DSQL.Query(query, ps);
-                    rows.ForEach(p => publicUser.Rights.Add(p["Action"].GetString(), true));
-                }
-                else
-                {
-                    if (publicUser.ViewMenus.Contains(menuId))
-                    {
-                        publicUser.Rights.Clear();
-                        query = "SELECT * FROM VW_Admin_User_Menu_Right WHERE UserId=@UserId AND MenuId=@MenuId";
-                        rows = DSQL.Query(query, ps);
-                        rows.ForEach(p => publicUser.Rights.Add(p["Action"].GetString(), true));
-                    }
-                    if (publicUser.PubMenus.Contains(menuId))
-                    {
-                        publicUser.Rights.Clear();
-                        query = "SELECT Action FROM Admin_Right WHERE deleted=0";
-                        ps.Clear();
-                        rows = DSQL.Query(query, ps);
-                        rows.ForEach(p => publicUser.Rights.Add(p["Action"].GetString(), true));
-                    }
-                }
+                #region PubUser Image
+                query = $"SELECT Id FROM GGallery WHERE Deleted=0 AND Active=1 AND GalleryName='PubUser'";
+                int galleryId = DSQL.ExecuteScalar(query, new SqlParameter[0]);
+
+                query = "SELECT TOP 1 Id, Guid FROM GImage WHERE Deleted=0 AND Active=1 AND GalleryId=@GalleryId AND RefKey=@RefKey ORDER BY Main DESC, Sort DESC, CreatedTime DESC";
+                ps.Clear();
+                ps.Add("GalleryId", galleryId);
+                ps.Add("RefKey", publicUser.Id);
+                IList<Dictionary<string, string>> imageRows = DSQL.Query(query, ps);
+                if(imageRows.Count>0) publicUser.ImageUrl = $"/api/Image/GetImage/{imageRows[0]["Guid"].GetString()}";
                 #endregion
             }
             else
             {
-                AdminPubMenus AdminPubMenu = new AdminPubMenus();
-                publicUser.PubMenus.AddRange(AdminPubMenu.GetPublicMenus());
-                if (publicUser.PubMenus.Contains(menuId))
-                {
-                    publicUser.Rights.Add("view", true);
-                    publicUser.Rights.Add("detail", true);
-                    publicUser.Rights.Add("save", true);
-                    publicUser.Rights.Add("add", true);
-                    publicUser.Rights.Add("delete", true);
-                    publicUser.Rights.Add("print", true);
-                    publicUser.Rights.Add("output", true);
-                    publicUser.Rights.Add("email", true);
-                }
+                #region Pub User Full Rights
+                publicUser.Rights.Clear();
+                string query = "SELECT Action FROM Admin_Right WHERE deleted=0";
+                Dictionary<string, object> ps = new Dictionary<string, object>();
+                ps.Clear();
+                List<Dictionary<string, string>> rows = DSQL.Query(query, ps);
+                rows.ForEach(p => publicUser.Rights.Add(p["Action"].GetString(), true));
+                #endregion
             }
-
+            httpContext.Items.Add("PubUser", publicUser);
+            httpContext.Items.Add("IsPrivate", publicUser.Id > 0 && !string.IsNullOrWhiteSpace(guid));
             return publicUser;
         }
 
