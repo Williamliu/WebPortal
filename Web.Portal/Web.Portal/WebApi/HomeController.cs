@@ -34,14 +34,14 @@ namespace Web.Portal.WebApi.Controllers
             this.DB.FillAll();
             return Ok(this.DB);
         }
-        [HttpPost("Register")]
-        public IActionResult PostRegister(JSTable gtb)
+        [HttpPost("SaveRegister")]
+        public IActionResult SaveRegister(JSTable gtb)
         {
             this.Init("SignIn");
             return Ok(this.DB.SaveTable(gtb));
         }
-        [HttpPost("Login")]
-        public IActionResult PostLogin(JSTable gtb)
+        [HttpPost("SaveSignIn")]
+        public IActionResult SaveSignIn(JSTable gtb)
         {
             this.Init("SignIn");
             this.DB.ValidateTable(gtb);
@@ -113,18 +113,11 @@ namespace Web.Portal.WebApi.Controllers
             return Ok(table);
         }
 
-        [HttpPost("SignOut")]
-        public IActionResult PostSignOut()
-        {
-            this.HttpContext.DeleteSession("pubSite_jwtToken");
-            this.HttpContext.DeleteSession("pubSite_Session");
-            return Ok("Sign Out");
-        }
 
         private string CreateAuthToken(string email, string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("info@shaolinworld.org");
+            var key = Encoding.ASCII.GetBytes("infosecurity@shaolinworld.org");
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -150,7 +143,7 @@ namespace Web.Portal.WebApi.Controllers
                         Meta loginPassword = new Meta { Name = "Password", DbName = "Password", Title = Words("col.password"), Type = EInput.Password, Required = true, MinLength = 6, MaxLength = 32 };
                         Meta memo = new Meta { Name = "Memo", DbName = "Phone", Title = Words("col.phone"), Type = EInput.String };
                         UserLogin.AddMetas(loginEmail, loginPassword, memo);
-                        UserLogin.SaveUrl = "/api/Home/Login";
+                        UserLogin.SaveUrl = "/api/Home/SaveSignIn";
                         UserLogin.AddQueryKV("Id", -1).AddQueryKV("Deleted", false).AddQueryKV("Active", true)
                         .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
                         .AddInsertKV("Deleted", false).AddInsertKV("Active", true).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
@@ -178,7 +171,7 @@ namespace Web.Portal.WebApi.Controllers
                         .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
                         .AddInsertKV("Deleted", false).AddInsertKV("Active", true).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
 
-                        UserRegister.SaveUrl = "/api/Home/Register";
+                        UserRegister.SaveUrl = "/api/Home/SaveRegister";
 
                         CollectionTable c1 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail");
                         Collection BranchList = new Collection(ECollectionType.Table, c1);

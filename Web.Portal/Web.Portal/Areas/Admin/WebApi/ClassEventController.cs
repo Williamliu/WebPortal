@@ -413,7 +413,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         pubUser.SaveUrl = "/Admin/api/ClassEvent/SaveAllUser";
                         pubUser.AddQueryKV("Deleted", false).AddQueryKV("Active", true)
                                 .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
-                                .AddInsertKV("Deleted", false).AddInsertKV("Active", true).AddInsertKV("BranchId", this.DB.User.Branch).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds()); ;
+                                .AddInsertKV("Deleted", false).AddInsertKV("Active", true).AddInsertKV("BranchId", this.DB.User.Branch).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds()); 
 
                         Table classEnroll = new Table("ClassEnroll", "VW_Class_Enroll_Member", Words("class.enroll"));
                         // Meta Data

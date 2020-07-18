@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Library.V1.Common;
 using Microsoft.AspNetCore.Mvc;
+using Web.Portal.Common;
 
 namespace Web.Portal.Controllers
 {
@@ -16,16 +17,19 @@ namespace Web.Portal.Controllers
             return View();
         }
 
-        public IActionResult ResetPassword()
+        public IActionResult MyMessage()
         {
             this.Init("P02");
             return View();
         }
-        public IActionResult MyMessage()
+        public IActionResult SignOut()
         {
-            this.Init("P03");
-            return View();
+            Init("P03");
+            this.HttpContext.DeleteSession("pubSite_jwtToken");
+            this.HttpContext.DeleteSession("pubSite_Session");
+            return RedirectToAction("Index", "/Home");
         }
+
         protected override void InitDatabase(string menuId)
         {
         }

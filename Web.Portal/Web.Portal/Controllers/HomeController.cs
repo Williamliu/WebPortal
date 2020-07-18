@@ -27,13 +27,6 @@ namespace Web.Portal.Controllers
             Init("SignIn");
             return View();
         }
-        public IActionResult SignOut()
-        {
-            Init("SignOut");
-            this.HttpContext.DeleteSession("pubSite_jwtToken");
-            this.HttpContext.DeleteSession("pubSite_Session");
-            return RedirectToAction("Index", "/Home");
-        }
         protected override void InitDatabase(string menuId)
         {
         }
