@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>WebPortalMainDB</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{cb2ced77-b046-45a6-a00f-25c105caafd3}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>WebPortalMainDB</RootNamespace>
+    <AssemblyName>WebPortalMainDB</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="Connection" />
+    <Folder Include="Backup" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\GSite.sql" />
+    <Build Include="dbo\Tables\GTranslation.sql" />
+    <Build Include="dbo\Tables\Class_Detail.sql" />
+    <Build Include="dbo\Tables\Course.sql" />
+    <Build Include="dbo\Tables\Admin_Menu_Right.sql" />
+    <Build Include="dbo\Tables\Admin_Role.sql" />
+    <Build Include="dbo\Tables\Admin_Role_Field.sql" />
+    <Build Include="dbo\Tables\Pub_Menu.sql" />
+    <Build Include="dbo\Tables\Admin_Role_Right.sql" />
+    <Build Include="dbo\Tables\Pub_WebContent.sql" />
+    <Build Include="dbo\Tables\Admin_Session.sql" />
+    <Build Include="dbo\Tables\Class_Enroll.sql" />
+    <Build Include="dbo\Tables\Admin_User.sql" />
+    <Build Include="dbo\Tables\Class.sql" />
+    <Build Include="dbo\Tables\Admin_User_Branch.sql" />
+    <Build Include="dbo\Tables\Admin_User_Role.sql" />
+    <Build Include="dbo\Tables\Admin_User_Site.sql" />
+    <Build Include="dbo\Tables\GSetting.sql" />
+    <Build Include="dbo\Tables\Pub_Role.sql" />
+    <Build Include="dbo\Tables\Pub_Role_Menu.sql" />
+    <Build Include="dbo\Tables\Course_Agreement.sql" />
+    <Build Include="dbo\Tables\Pub_User_Role.sql" />
+    <Build Include="dbo\Tables\GCategory.sql" />
+    <Build Include="dbo\Tables\GCategoryItem.sql" />
+    <Build Include="dbo\Tables\GCountry.sql" />
+    <Build Include="dbo\Tables\Pub_WebAccessLog.sql" />
+    <Build Include="dbo\Tables\GGallery.sql" />
+    <Build Include="dbo\Tables\GImage.sql" />
+    <Build Include="dbo\Tables\Pub_User_Session.sql" />
+    <Build Include="dbo\Tables\GState.sql" />
+    <Build Include="dbo\Tables\Pub_User.sql" />
+    <Build Include="dbo\Tables\Pub_User_HearUs.sql" />
+    <Build Include="dbo\Tables\Pub_User_Id.sql" />
+    <Build Include="dbo\Tables\Pub_User_Language.sql" />
+    <Build Include="dbo\Tables\GBranch.sql" />
+    <Build Include="dbo\Tables\Pub_User_Symbol.sql" />
+    <Build Include="dbo\Tables\Admin_Menu.sql" />
+    <Build Include="dbo\Tables\Admin_Right.sql" />
+    <Build Include="dbo\Views\VW_Pub_Menu_List.sql" />
+    <Build Include="dbo\Views\VW_Pub_User_FirstMenu.sql" />
+    <Build Include="dbo\Views\VW_Pub_User_SecondMenu.sql" />
+    <Build Include="dbo\Views\VW_RPT_AccessLog.sql" />
+    <Build Include="dbo\Views\VW_Pub_Session_User.sql" />
+    <Build Include="dbo\Views\VW_Pub_User_Menu_Private.sql" />
+    <Build Include="dbo\Views\VW_Pub_User_Menu_Public.sql" />
+    <Build Include="dbo\Views\VW_Pub_PrivateMenu_FirstMenu.sql" />
+    <Build Include="dbo\Views\VW_Pub_PrivateMenu_SecondMenu.sql" />
+    <Build Include="dbo\Views\VW_Admin_Session_User.sql" />
+    <Build Include="dbo\Views\VW_Admin_User_Branch.sql" />
+    <Build Include="dbo\Views\VW_Admin_User_Branch_Full.sql" />
+    <Build Include="dbo\Views\VW_Admin_User_Menu_Field.sql" />
+    <Build Include="dbo\Views\VW_Admin_User_Menu_Right.sql" />
+    <Build Include="dbo\Views\VW_Admin_User_Menu_View.sql" />
+    <Build Include="dbo\Views\VW_Admin_User_Site.sql" />
+    <Build Include="dbo\Views\VW_Admin_User_Site_Full.sql" />
+    <Build Include="dbo\Views\VW_Class_Calendar.sql" />
+    <Build Include="dbo\Views\VW_Class_Enroll.sql" />
+    <Build Include="dbo\Views\VW_Class_Enroll_Member.sql" />
+    <Build Include="dbo\Functions\IsUnicode.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Backup\ShaoLinMainDB20200717.bak" />
+    <None Include="Connection\Sql2Local.scmp" />
+  </ItemGroup>
+</Project>
