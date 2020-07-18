@@ -45,6 +45,7 @@ namespace Library.V1.Entity
             this.Value1 = null;
             this.Value2 = null;
             this.Error = new Error();
+            this.SqlParam = string.Empty;
         }
 
         #region Public Fields
@@ -64,6 +65,8 @@ namespace Library.V1.Entity
                 return this.Error.HasError;
             }
         }
+        [JsonIgnore]
+        public string SqlParam { get; set; }
         #endregion
 
         #region Internal Use, not for client side json
@@ -280,6 +283,38 @@ namespace Library.V1.Entity
                     }
                 }
                 return wsearch;
+            }
+        }
+        [JsonIgnore]
+        public List<SqlParameter> SqlParams
+        {
+            get
+            {
+                List<SqlParameter> ps = new List<SqlParameter>();
+                switch(this.Compare)
+                {
+                    case ECompare.Like:
+                    case ECompare.NotLike:
+                    case ECompare.Equal:
+                    case ECompare.NotEqual:
+                    case ECompare.Gthan:
+                    case ECompare.Lthan:
+                        {
+                            ps.Add(new SqlParameter($"@{this.SqlParam}", this.GetValue1()));
+                        }
+                        break;
+                    case ECompare.Range:
+                        {
+                            ps.Add(new SqlParameter($"@{this.SqlParam}_start", this.GetValue1()));
+                            ps.Add(new SqlParameter($"@{this.SqlParam}_end", this.GetValue2()));
+                        }
+                        break;
+                    case ECompare.Include:
+                    case ECompare.Checkbox:
+                    case ECompare.In:
+                        break;
+                }
+                return ps;
             }
         }
         #endregion

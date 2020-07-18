@@ -1,0 +1,99 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+            $scope.reload = function () {
+                $scope.ViewData.database.tables.AccessLog2.filters.search_date = $scope.ViewData.database.tables.AccessLog.filters.search_date; 
+                $scope.ViewData.database.tables.AccessLog2.Reload().then(d => { $scope.$apply(); }).catch(e => { $scope.$apply(); });
+            }
+            $scope.total = function () {
+                var tt = 0;
+                for (let idx in $scope.ViewData.database.tables.AccessLog2.rows) {
+                    tt += $scope.ViewData.database.tables.AccessLog2.rows[idx].columns["ViewCount"].value;
+                }
+                return tt;
+            }
+        });
+        viewData.Init("/Admin/api/PubWeb/InitAccessStats");
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl" style="user-select:text;">
+    <ng-form>
+        <fieldset>
+            <legend>@Html.Words("search.by")</legend>
+            <filter.label db="ViewData.database" tb="AccessLog" col="search_ipaddr"></filter.label>
+            <filter.textbox db="ViewData.database" tb="AccessLog" col="search_ipaddr"></filter.textbox>
+            <filter.label db="ViewData.database" tb="AccessLog" col="search_date"></filter.label>
+            <filter.daterange db="ViewData.database" tb="AccessLog" col="search_date"></filter.daterange>
+            <wliu.search db="ViewData.database" tb="AccessLog" action="reload()">Search</wliu.search>
+        </fieldset>
+
+        <div wliu table shrink style="margin-top:12px;">
+            <div row>
+                <div cell style="background-color:#dddddd;">
+                    <wliu.navi db="ViewData.database" tb="AccessLog2"></wliu.navi>
+                </div>
+            </div>
+            <div row>
+                <div head fixed style="width:40px;"></div>
+                <div head medium><wliu.head db="ViewData.database" tb="AccessLog2" col="MenuName"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="AccessLog2" col="ViewCount"></wliu.head></div>
+            </div>
+            <div row ng-repeat="row in ViewData.database.tables.AccessLog2.rows">
+                <div cell center fixed style="width:40px;">
+                    <wliu.rowstatus db="ViewData.database" tb="AccessLog2" guid="{{row.guid}}"></wliu.rowstatus>
+                </div>
+                <div cell medium>
+                    <wliu.text db="ViewData.database" tb="AccessLog2" guid="{{row.guid}}" col="MenuName"></wliu.text>
+                </div>
+                <div cell medium>
+                    <wliu.text right db="ViewData.database" tb="AccessLog2" guid="{{row.guid}}" col="ViewCount"></wliu.text>
+                </div>
+            </div>
+            <div row>
+                <div cell fixed style="width:40px;"></div>
+                <div cell medium>@Html.Words("navi.total")</div>
+                <div cell medium align="right">{{total()}}</div>
+            </div>
+        </div>
+
+        <div wliu table shrink style="margin-top:12px;">
+            <div row>
+                <div cell style="background-color:#dddddd;">
+                    <wliu.navi db="ViewData.database" tb="AccessLog"></wliu.navi>
+                </div>
+            </div>
+            <div row>
+                <div head fixed style="width:40px;"></div>
+                <div head medium><wliu.head db="ViewData.database" tb="AccessLog" col="IPAddress"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="AccessLog" col="MenuName"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="AccessLog" col="ViewCount"></wliu.head></div>
+            </div>
+            <div row ng-repeat="row in ViewData.database.tables.AccessLog.rows">
+                <div cell center fixed style="width:40px;">
+                    <wliu.rowstatus db="ViewData.database" tb="AccessLog" guid="{{row.guid}}"></wliu.rowstatus>
+                </div>
+                <div cell medium>
+                    <wliu.text db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="IPAddress"></wliu.text>
+                </div>
+                <div cell medium>
+                    <wliu.text db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="MenuName"></wliu.text>
+                </div>
+                <div cell medium>
+                    <wliu.text right db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="ViewCount"></wliu.text>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+
+    <table.error></table.error>
+    <form.error></form.error>
+
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+</div>

@@ -1000,6 +1000,12 @@ span[wliu] {
     vertical-align:     middle;
 
 }
+span[wliu][text][right] {
+    text-align:         right;
+}
+span[wliu][text][center] {
+    text-align:         center;
+}
 
 div[wliu][border] {
     display:            block;

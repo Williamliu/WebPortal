@@ -324,6 +324,40 @@ namespace Library.V1.SQL
             }
             return dt;
         }
+        public GTable ExecuteSP(string query, params SqlParameter[] parameters)
+        {
+            DataTable dt = new DataTable();
+            GTable stable = new GTable();
+            try
+            {
+                this.Open();
+                if (this.Error.HasError == false)
+                {
+                    this.SqlCommand.CommandText = query;
+                    this.SqlCommand.Parameters.Clear();
+                    this.SqlCommand.Parameters.AddRange(parameters);
+                    this.SqlCommand.CommandType = CommandType.StoredProcedure;
+                    this.SqlAdpt.Fill(dt);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        GRow srow = new GRow();
+                        foreach (DataColumn dc in dt.Columns)
+                        {
+                            srow.AddCol(dc.ColumnName, dr[dc].ToString());
+                        }
+                        stable.AddRow(srow);
+                    }
+
+                }
+                if (this.IsDebug) this.Debug = $@"|Query:[{query}]\n\n";
+            }
+            catch (Exception err)
+            {
+                if (this.IsDebug) this.Debug = $@"|Query:[{query}]\n\n";
+                this.Error.Append(ErrorCode.SQLQuery, $@"SQL ExecuteSP Error: {err.Message}\n\nMessage: {err.StackTrace}");
+            }
+            return stable;
+        }
 
         public GTable ExecuteTable(string query, params SqlParameter[] parameters)
         {

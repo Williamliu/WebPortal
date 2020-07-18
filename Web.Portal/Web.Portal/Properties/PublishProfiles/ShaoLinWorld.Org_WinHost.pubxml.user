@@ -104,22 +104,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="Library.V1.Common.dll">
-      <publishTime>07/15/2020 00:22:34</publishTime>
+      <publishTime>07/18/2020 00:20:08</publishTime>
     </File>
     <File Include="Library.V1.Common.pdb">
-      <publishTime>07/15/2020 00:22:34</publishTime>
+      <publishTime>07/18/2020 00:20:08</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>07/17/2020 19:34:13</publishTime>
+      <publishTime>07/18/2020 00:20:11</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>07/17/2020 19:34:13</publishTime>
+      <publishTime>07/18/2020 00:20:11</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
-      <publishTime>07/15/2020 00:22:34</publishTime>
+      <publishTime>07/18/2020 00:20:09</publishTime>
     </File>
     <File Include="Library.V1.SQL.pdb">
-      <publishTime>07/15/2020 00:22:34</publishTime>
+      <publishTime>07/18/2020 00:20:09</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.JwtBearer.dll">
       <publishTime>05/21/2020 20:26:48</publishTime>
@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>07/17/2020 19:34:41</publishTime>
+      <publishTime>07/18/2020 09:46:30</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>07/17/2020 19:34:30</publishTime>
+      <publishTime>07/18/2020 09:46:26</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>07/17/2020 19:34:17</publishTime>
+      <publishTime>07/18/2020 09:46:21</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>07/17/2020 19:34:17</publishTime>
+      <publishTime>07/18/2020 09:46:21</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>07/17/2020 19:34:17</publishTime>
+      <publishTime>07/18/2020 09:46:20</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
-      <publishTime>07/15/2020 00:22:40</publishTime>
+      <publishTime>07/18/2020 00:20:16</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>07/17/2020 19:34:22</publishTime>
+      <publishTime>07/18/2020 09:46:26</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>07/17/2020 19:34:22</publishTime>
+      <publishTime>07/18/2020 09:46:26</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/angular.min.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -320,7 +320,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.database.js">
-      <publishTime>07/16/2020 23:38:13</publishTime>
+      <publishTime>07/17/2020 21:08:14</publishTime>
     </File>
     <File Include="wwwroot/Resource/bootstrap/css/bootstrap-grid.min.css">
       <publishTime>07/05/2020 23:15:03</publishTime>

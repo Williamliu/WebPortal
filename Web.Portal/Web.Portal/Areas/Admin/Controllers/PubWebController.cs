@@ -29,6 +29,11 @@ namespace Web.Portal.Areas.Admin.Controllers
             this.Init("M7080");
             return View();
         }
+        public IActionResult AccessStats()
+        {
+            this.Init("M7090");
+            return View();
+        }
         protected override void InitDatabase(string menuId)
         {
         }

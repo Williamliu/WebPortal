@@ -16,6 +16,11 @@ namespace Library.V1.Entity
         Added = 2,
         Deleted = 3
     }
+    public enum ESource
+    {
+        Table = 0,
+        StoreProcedure=1
+    }
     public class Table
     {
         #region Constructors
@@ -45,14 +50,16 @@ namespace Library.V1.Entity
             this.DSQL = new SqlHelper();
             this.FSQL = new SqlHelper();
             this.User = new WebUser();
+            this.Source = ESource.Table;
             this.Index = -1;
         }
-        public Table(string name, string dbName, string title = "", string desc = "") : this()
+        public Table(string name, string dbName, string title = "", string desc = "", ESource source=ESource.Table) : this()
         {
             this.Name = name;
             this.DbName = dbName;
             this.Title = title;
             this.Description = desc;
+            this.Source = source;
 
             List<string> restrictFields = new List<string>();
             foreach (string metaName in this.Metas.Keys)
@@ -105,6 +112,7 @@ namespace Library.V1.Entity
         private SqlHelper DSQL { get; set; }
         private SqlHelper FSQL { get; set; }
         private WebUser User { get; set; }
+        private ESource Source { get; set; }
         private int Index { get; set; }
         private Relation Relation { get; set; }
         private Dictionary<string, object> QueryKVs { get; set; }
@@ -132,7 +140,12 @@ namespace Library.V1.Entity
                     {
                         var jsName = this.Metas[metaName].Name;
                         var dbName = string.IsNullOrWhiteSpace(this.Metas[metaName].DbName) ? jsName : this.Metas[metaName].DbName;
-                        dbName = this.Metas[metaName].IsLang ? this.DSQL.LangSmartColumn(dbName) : dbName;
+                        
+                        if(this.Source==ESource.Table) 
+                            dbName = this.Metas[metaName].IsLang ? this.DSQL.LangSmartColumn(dbName) : dbName;
+                        if(this.Source==ESource.StoreProcedure) 
+                            dbName = this.Metas[metaName].IsLang ? this.DSQL.LangColumn(dbName) : dbName;
+
                         sqlRow.Add(dbName, jsName);
                     }
 
@@ -160,6 +173,19 @@ namespace Library.V1.Entity
                 //3. Relation: o2o, o2m
                 sw.Add(this.Relation.WhereSearchGet);
                 return sw;
+            }
+        }
+        private List<SqlParameter> SqlParams { 
+            get 
+            {
+                List<SqlParameter> ps = new List<SqlParameter>();
+                foreach (string fname in this.Filters.Keys)
+                {
+                    this.Filters[fname].Validate();
+                    this.Error.Append(this.Filters[fname].Error);
+                    ps.AddRange(this.Filters[fname].SqlParams);
+                }
+                return ps;
             }
         }
         private SQLRow SQLRowUpdate
@@ -312,7 +338,11 @@ namespace Library.V1.Entity
             Row nrow = new Row();
             foreach (var colName in this.Metas.Keys)
             {
-                if (this.Metas[colName].IsKey) nrow.Key = grow.GetValue(colName).GetInt()??-1;
+                string dbColName = colName;
+                if(this.Source==ESource.StoreProcedure) 
+                    dbColName = this.Metas[colName].IsLang ? this.DSQL.LangColumn(this.Metas[colName].DbName) : this.Metas[colName].DbName;
+ 
+                if (this.Metas[colName].IsKey) nrow.Key = grow.GetValue(dbColName).GetInt()??-1;
                 Column ncolumn = new Column(colName);
                 switch (this.Metas[colName].Type)
                 {
@@ -321,36 +351,36 @@ namespace Library.V1.Entity
                     case EInput.Object:
                     case EInput.String:
                     case EInput.Email:
-                        ncolumn.Value = grow.GetValue(colName);
+                        ncolumn.Value = grow.GetValue(dbColName);
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.Int:
-                        ncolumn.Value = grow.GetValue(colName).GetInt();
+                        ncolumn.Value = grow.GetValue(dbColName).GetInt();
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.Long:
-                        ncolumn.Value = grow.GetValue(colName).GetLong();
+                        ncolumn.Value = grow.GetValue(dbColName).GetLong();
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.Float:
-                        ncolumn.Value = grow.GetValue(colName).GetFloat();
+                        ncolumn.Value = grow.GetValue(dbColName).GetFloat();
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.Bool:
-                        ncolumn.Value = grow.GetValue(colName).GetBool();
+                        ncolumn.Value = grow.GetValue(dbColName).GetBool();
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.Date:
-                        ncolumn.Value = grow.GetValue(colName).GetDate();
+                        ncolumn.Value = grow.GetValue(dbColName).GetDate();
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.DateTime:
-                        ncolumn.Value = grow.GetValue(colName).GetDate();
-                        ncolumn.Value1 = grow.GetValue(colName).GetTime();
+                        ncolumn.Value = grow.GetValue(dbColName).GetDate();
+                        ncolumn.Value1 = grow.GetValue(dbColName).GetTime();
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.Time:
-                        ncolumn.Value = grow.GetValue(colName).GetTime(); 
+                        ncolumn.Value = grow.GetValue(dbColName).GetTime(); 
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.Password:  // never return password
@@ -363,7 +393,7 @@ namespace Library.V1.Entity
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.Read:           // only for get data but save data
-                        ncolumn.Value = grow.GetValue(colName);
+                        ncolumn.Value = grow.GetValue(dbColName);
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.ImageUrl:       // handle later
@@ -611,50 +641,71 @@ namespace Library.V1.Entity
             if (this.User.Rights.ContainsKey("view") == false) return this;
             if (this.User.Rights["view"] == false) return this;
 
+            GTable gtable = new GTable();
             SQLRow sqlRow = this.SQLRowGet;
-
             if(sqlRow.ColumnCount>0)
             {
-                SQLWhere sqlWhere = this.WhereGet;
-
-                if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Cols:[{sqlRow.ColumnGet}]", @"\n\n");
-                if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Where:[{sqlWhere.WhereGetFilter}]", @"\n\n");
-                if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|OrderBy:[{this.Navi.NaviOrderBy(this.Metas)}]", @"\n\n");
-
-                if (this.Error.HasError == false)
+                switch(this.Source)
                 {
-                    GTable gtable = new GTable();
-                    switch (this.Relation.RefType)
-                    {
-                        case ERef.None:
-                        case ERef.O2M:
-                            if (this.Navi.IsActive)
+                    case ESource.Table:
+                        {
+                            #region ESource.Table
+                            SQLWhere sqlWhere = this.WhereGet;
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Cols:[{sqlRow.ColumnGet}]", @"\n\n");
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Where:[{sqlWhere.WhereGetFilter}]", @"\n\n");
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|OrderBy:[{this.Navi.NaviOrderBy(this.Metas)}]", @"\n\n");
+
+                            if (this.Error.HasError == false)
                             {
-                                int rowCount = this.DSQL.GetRowCount(this.DbName, sqlWhere);
-                                this.Navi.Reset(rowCount);
-                                gtable = this.DSQL.GetTable(this.DbName, sqlRow, sqlWhere, this.Navi.NaviOrderBy(this.Metas), this.Navi.NaviPaging());
-                                if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Table:[{this.DSQL.Debug}]", @"\n\n");
+                                switch (this.Relation.RefType)
+                                {
+                                    case ERef.None:
+                                    case ERef.O2M:
+                                        if (this.Navi.IsActive)
+                                        {
+                                            int rowCount = this.DSQL.GetRowCount(this.DbName, sqlWhere);
+                                            this.Navi.Reset(rowCount);
+                                            gtable = this.DSQL.GetTable(this.DbName, sqlRow, sqlWhere, this.Navi.NaviOrderBy(this.Metas), this.Navi.NaviPaging());
+                                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Table:[{this.DSQL.Debug}]", @"\n\n");
+                                        }
+                                        else
+                                        {
+                                            int rowCount = this.DSQL.GetRowCount(this.DbName, sqlWhere);
+                                            this.Navi.Reset(rowCount);
+                                            gtable = this.DSQL.GetTable(this.DbName, sqlRow, sqlWhere, this.Navi.NaviOrderBy(this.Metas));
+                                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Table:[{this.DSQL.Debug}]", @"\n\n");
+                                        }
+                                        break;
+                                    case ERef.O2O:
+                                        {
+                                            int rowCount = this.DSQL.GetRowCount(this.DbName, sqlWhere);
+                                            this.Navi.Reset(rowCount);
+                                            gtable = this.DSQL.GetTable(this.DbName, sqlRow, sqlWhere, this.Navi.NaviOrderBy(this.Metas), "", 1);
+                                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Table:[{this.DSQL.Debug}]", @"\n\n");
+                                        }
+                                        break;
+                                }
+                                this.Error.Append(this.DSQL.Error);
+                                foreach (GRow grow in gtable.Rows) this.AddRow(grow, gtable.RowCount);
+                                if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
                             }
-                            else
-                            {
-                                int rowCount = this.DSQL.GetRowCount(this.DbName, sqlWhere);
-                                this.Navi.Reset(rowCount);
-                                gtable = this.DSQL.GetTable(this.DbName, sqlRow, sqlWhere, this.Navi.NaviOrderBy(this.Metas));
-                                if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Table:[{this.DSQL.Debug}]", @"\n\n");
+                            #endregion
+                        }
+                        break;
+                    case ESource.StoreProcedure:
+                        {
+                            if (this.DSQL.IsDebug) {
+                                string debugStr = string.Empty;
+                                this.SqlParams.ForEach(p => debugStr = debugStr.Concat($"{p.ParameterName}={p.Value}", ";"));
+                                this.Debug = this.Debug.Concat($"|SqlParams:[{debugStr}]", @"\n\n");
                             }
-                            break;
-                        case ERef.O2O:
-                            {
-                                int rowCount = this.DSQL.GetRowCount(this.DbName, sqlWhere);
-                                this.Navi.Reset(rowCount);
-                                gtable = this.DSQL.GetTable(this.DbName, sqlRow, sqlWhere, this.Navi.NaviOrderBy(this.Metas), "" ,1);
-                                if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Table:[{this.DSQL.Debug}]", @"\n\n");
-                            }
-                            break;
-                    }
-                    this.Error.Append(this.DSQL.Error);
-                    foreach (GRow grow in gtable.Rows) this.AddRow(grow, gtable.RowCount);
-                    if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
+                            gtable = this.DSQL.ExecuteSP(this.DbName, this.SqlParams.ToArray());
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|StoreProcedure:[{this.DSQL.Debug}]", @"\n\n");
+                            this.Error.Append(this.DSQL.Error);
+                            foreach (GRow grow in gtable.Rows) this.AddRow(grow, gtable.RowCount);
+                            if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
+                        }
+                        break;
                 }
             }
             return this;

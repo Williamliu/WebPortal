@@ -88,6 +88,24 @@ namespace Web.Portal.Areas.Admin.WebApi
             this.Init("M7080");
             return Ok(this.DB.ReloadTable(jsTable));
         }
+
+        [HttpGet("InitAccessStats")]
+        public IActionResult InitAccessStats()
+        {
+            this.Init("M7090");
+            this.DB.FillAll();
+            if (this.DB.Error.HasError)
+                return BadRequest(this.DB);
+            else
+                return Ok(this.DB);
+        }
+        [HttpPost("ReloadAccessStats")]
+        public IActionResult ReloadAccessStats(JSTable jsTable)
+        {
+            this.Init("M7090");
+            return Ok(this.DB.ReloadTable(jsTable));
+        }
+
         protected override void InitDatabase(string menuId)
         {
             switch (menuId)
@@ -279,6 +297,37 @@ namespace Web.Portal.Areas.Admin.WebApi
                         PubMenuList.AddFilter("MenuId", ECompare.NotEqual, "space");
 
                         this.DB.AddTable(table).AddCollection(PubMenuList);
+                    }
+                    break;
+                case "M7090":
+                    {
+                        Table table = new Table("AccessLog", "USP_RPT_AccessLog_IPAddress_MenuId", Words("access.log"), "", ESource.StoreProcedure);
+                        Meta menuName = new Meta { Name = "MenuName", DbName = "MenuName", Title = Words("menutype.public"), IsLang=true, Type = EInput.String };
+                        Meta ipAddr = new Meta { Name = "IPAddress", DbName = "IPAddress", Title = Words("col.ip.address"), Type = EInput.String};
+                        Meta count = new Meta { Name = "ViewCount", DbName = "ViewCount", Title = Words("col.view.count"), Type = EInput.Int };
+                        table.AddMetas(menuName, ipAddr, count);
+
+                        Filter f1 = new Filter() { Name = "search_ipaddr", SqlParam = "ip",  Title = Words("col.ip.address"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f2 = new Filter() { Name = "search_date", SqlParam = "rpt",   Title = Words("start.date"), Type = EFilter.Date, Compare = ECompare.Range, Value1 = DateTime.Now.AddDays(-30).YMD(), Value2 = DateTime.Now.YMD() };
+                        table.AddFilters(f1, f2);
+                        table.Navi.IsActive = false ;
+                        table.Navi.Order = "";
+                        table.Navi.By = "";
+                        table.GetUrl = "/Admin/api/PubWeb/ReloadAccessStats";
+
+
+                        Table table2 = new Table("AccessLog2", "USP_RPT_AccessLog_MenuId", Words("access.log"), "", ESource.StoreProcedure);
+                        Meta menuName2 = new Meta { Name = "MenuName", DbName = "MenuName", Title = Words("menutype.public"), IsLang = true, Type = EInput.String };
+                        Meta count2 = new Meta { Name = "ViewCount", DbName = "ViewCount", Title = Words("col.view.count"), Type = EInput.Int };
+                        table2.AddMetas(menuName2, count2);
+                        table2.AddFilters(f2);
+                        table2.Navi.IsActive = false;
+                        table2.Navi.Order = "";
+                        table2.Navi.By = "";
+                        table2.GetUrl = "/Admin/api/PubWeb/ReloadAccessStats";
+
+
+                        this.DB.AddTables(table, table2);
                     }
                     break;
             }
