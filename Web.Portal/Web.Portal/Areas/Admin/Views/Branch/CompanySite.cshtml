@@ -46,7 +46,7 @@
                 <div head large><wliu.head db="ViewData.database" tb="Site" col="DetailCN"></wliu.head></div>
                 <div head fixed style="width:120px;"><wliu.head db="ViewData.database" tb="Site" col="FoundDate"></wliu.head></div>
                 <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="Site" col="Sort"></wliu.head></div>
-                <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="Site" col="Status"></wliu.head></div>
+                <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="Site" col="Active"></wliu.head></div>
                 <div head fixed style="width:56px;">
                     <wliu.hicon db="ViewData.database" tb="Site" icons="add,save,cancel"></wliu.hicon>
                 </div>
@@ -73,8 +73,8 @@
                 <div cell center fixed style="width:60px;">
                     <wliu.textbox db="ViewData.database" tb="Site" guid="{{row.guid}}" col="Sort"></wliu.textbox>
                 </div>
-                <div cell center fixed style="width:60px;">
-                    <wliu.bool db="ViewData.database" tb="Site" guid="{{row.guid}}" col="Status"></wliu.bool>
+                <div cell center fixed style="width:100px;">
+                    <wliu.bool db="ViewData.database" tb="Site" guid="{{row.guid}}" col="Active"></wliu.bool>
                 </div>
                 <div cell fixed style="width:56px;">
                     <wliu.bicon db="ViewData.database" tb="Site" guid="{{row.guid}}" icons="save,cancel,detail,delete" actiondetail="detail()"></wliu.bicon>
@@ -106,7 +106,7 @@
                                 <td style="padding-top:12px;">
                                     <form.label db="ViewData.database" tb="Site" col="Sort"></form.label> :
                                     <form.textbox fixed style="width:40px;" db="ViewData.database" tb="Site" col="Sort"></form.textbox>
-                                    <form.bool db="ViewData.database" tb="Site" col="Status" label="@Html.Words("status.active")"></form.bool>
+                                    <form.bool db="ViewData.database" tb="Site" col="Active" label="@Html.Words("status.active")"></form.bool>
                                 </td>
                             </tr>
                         </table>

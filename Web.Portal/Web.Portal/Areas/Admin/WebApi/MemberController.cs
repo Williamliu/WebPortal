@@ -516,13 +516,15 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta loginTime = new Meta { Name = "LoginTime", DbName = "LoginTime", Title = Words("col.lastlogin"), Type = EInput.Int };
                         Meta loginTotal = new Meta { Name = "LoginTotal", DbName = "LoginTotal", Title = Words("col.logintotal"), Type = EInput.Int };
                         Meta createdTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.createdtime"), Type = EInput.Int };
+                        Meta userRole = new Meta { Name = "UserRole", DbName = "UserId", Title = Words("col.user.role"), Type = EInput.Checkbox };
+                        userRole.AddListRef("PubRoleList", "Pub_User_Role", "RoleId");
 
 
                         UserDetail.AddMetas(id, firstName, lastName, firstNameLegal, lastNameLegl, dharmaName, displayName, certName, aliasname, occupation, memo)
                         .AddMetas(gender, education, nationality, religion, motherLang, multiLang)
                         .AddMetas(medicalConcern, hearUsOther, symbolOther, multiLangOther, memberId, idNumber, email, phone, cell, branch, address, city, state, country, postal)
                         .AddMetas(birthYY, birthMM, birthDD, memberYY, memberMM, memberDD, dharmaYY, dharmaMM, dharmaDD, active)
-                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, userName, password, loginTime, loginTotal, createdTime);
+                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, userName, password, loginTime, loginTotal, createdTime, userRole);
 
                         UserDetail.AddQueryKV("Deleted", false).AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds());
 
@@ -568,7 +570,9 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Collection genderList = new Collection("GenderList");
                         Collection monthList = new Collection("MonthList");
                         Collection dayList = new Collection("DayList");
-                        this.DB.AddTables(pubUser, UserDetail, PubUserId).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, genderList, monthList, dayList);
+                        CollectionTable c10 = new CollectionTable("PubRoleList", "Pub_Role", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection PubRoleList = new Collection(ECollectionType.Table, c10);
+                        this.DB.AddTables(pubUser, UserDetail, PubUserId).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, genderList, monthList, dayList, PubRoleList);
                         #endregion
                     }
                     break;

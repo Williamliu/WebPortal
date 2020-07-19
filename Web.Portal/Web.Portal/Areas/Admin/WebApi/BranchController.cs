@@ -103,7 +103,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta detailEN = new Meta { Name = "DetailEN", DbName = "Detail_en", Title = Words("detail.en"), Order = "ASC", Type = EInput.String, MaxLength = 256 };
                         Meta detailCN = new Meta { Name = "DetailCN", DbName = "Detail_cn", Title = Words("detail.cn"), Order = "ASC", Type = EInput.String, MaxLength = 256 };
                         Meta foundDate = new Meta { Name = "FoundDate", DbName = "FoundDate", Title = Words("col.found.date"), Order = "ASC", Type = EInput.Date };
-                        Meta active = new Meta { Name = "Active", DbName = "Active", Title = Words("status.active"), Type = EInput.Bool };
+                        Meta active = new Meta { Name = "Active", DbName = "Active", Title = Words("status.active"), Description=Words("status.active.inactive"), Type = EInput.Bool };
                         Meta sort = new Meta { Name = "Sort", DbName = "Sort", Title = Words("col.sort"), Type = EInput.Int, Order = "DESC" };
 
                         Meta address = new Meta { Name = "Address", DbName = "Address", Title = Words("col.address"), Type = EInput.String, MaxLength = 256 };

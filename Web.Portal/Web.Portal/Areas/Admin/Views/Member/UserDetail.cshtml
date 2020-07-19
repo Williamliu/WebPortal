@@ -407,6 +407,11 @@
                                     <div wliu table grow shrink>
                                         <div row style="margin-top:6px;">
                                             <div cell>
+                                                <form.checkcom db="ViewData.database" tb="UserDetail" col="UserRole" icon="detail"></form.checkcom>
+                                            </div>
+                                        </div>
+                                        <div row style="margin-top:6px;">
+                                            <div cell>
                                                 <assm.textbox fixed border h2 db="ViewData.database" tb="UserDetail" col="Memo"></assm.textbox>
                                             </div>
                                         </div>
@@ -418,10 +423,6 @@
                                         <div row style="margin-top:6px;">
                                             <div cell>
                                                 <assm.ymd db="ViewData.database" tb="UserDetail" col="Dharma"></assm.ymd>
-                                            </div>
-                                        </div>
-                                        <div row style="margin-top:6px;">
-                                            <div cell>
                                             </div>
                                         </div>
                                     </div>
@@ -487,12 +488,12 @@
             </div>
         </div>
 
-        <div wliu block color="mint">
+        <div wliu block color="portland">
             <div block head toggle>
                 <div block subject>@Html.Words("question.information")</div>
             </div>
             <div block body>
-                <ul id="d30" wliu tab9 border color="mint">
+                <ul id="d30" wliu tab9 border color="portland">
                     <li>@Html.Words("question.information")</li>
                 </ul>
                 <div wliu tab9 body>

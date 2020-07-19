@@ -323,14 +323,14 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta filePath = new Meta { Name = "FilePath", DbName = "FilePath", Title = Words("col.filepath"), Order = "ASC", Type = EInput.String, MaxLength = 256 };
                         Meta isSaveDB = new Meta { Name = "IsSaveDB", DbName = "IsSaveDB", Title = Words("col.issavedb"), Order = "ASC", Type = EInput.Bool, Value = true };
                         Meta maxCount = new Meta { Name = "MaxCount", DbName = "MaxCount", Title = Words("col.maxcount"), Type = EInput.Int, Value = 8 };
-                        Meta large_w = new Meta { Name = "large_w", DbName = "large_w", Title = Words("col.large_w"), Required = true, Type = EInput.Int, Value = 1200, Min = 800, Max = 1200 };
-                        Meta large_h = new Meta { Name = "large_h", DbName = "large_h", Title = Words("col.large_h"), Required = true, Type = EInput.Int, Value = 1200, Min = 800, Max = 1200 };
+                        Meta large_w = new Meta { Name = "large_w", DbName = "large_w", Title = Words("col.large_w"), Required = true, Type = EInput.Int, Value = 1200, Min = 800, Max = 1600 };
+                        Meta large_h = new Meta { Name = "large_h", DbName = "large_h", Title = Words("col.large_h"), Required = true, Type = EInput.Int, Value = 1200, Min = 800, Max = 1600 };
                         Meta medium_w = new Meta { Name = "medium_w", DbName = "medium_w", Title = Words("col.medium_w"), Required = true, Type = EInput.Int, Value = 800, Min = 400, Max = 800 };
                         Meta medium_h = new Meta { Name = "medium_h", DbName = "medium_h", Title = Words("col.medium_h"), Required = true, Type = EInput.Int, Value = 800, Min = 400, Max = 800 };
                         Meta small_w = new Meta { Name = "small_w", DbName = "small_w", Title = Words("col.small_w"), Required = true, Type = EInput.Int, Value = 400, Min = 200, Max = 400 };
                         Meta small_h = new Meta { Name = "small_h", DbName = "small_h", Title = Words("col.small_h"), Required = true, Type = EInput.Int, Value = 400, Min = 200, Max = 400 };
-                        Meta tiny_w = new Meta { Name = "tiny_w", DbName = "tiny_w", Title = Words("col.tiny_w"), Required = true, Type = EInput.Int, Value = 160, Min = 100, Max = 200 };
-                        Meta tiny_h = new Meta { Name = "tiny_h", DbName = "tiny_h", Title = Words("col.tiny_h"), Required = true, Type = EInput.Int, Value = 160, Min = 100, Max = 200 };
+                        Meta tiny_w = new Meta { Name = "tiny_w", DbName = "tiny_w", Title = Words("col.tiny_w"), Required = true, Type = EInput.Int, Value = 160, Min = 100, Max = 240 };
+                        Meta tiny_h = new Meta { Name = "tiny_h", DbName = "tiny_h", Title = Words("col.tiny_h"), Required = true, Type = EInput.Int, Value = 160, Min = 100, Max = 240 };
                         Meta active = new Meta { Name = "Active", DbName = "Active", Title = Words("status.active"), Type = EInput.Bool };
                         table.AddMetas(id, galleryName, filePath, isSaveDB, maxCount, large_w, large_h, medium_w, medium_h, small_w, small_h, tiny_w, tiny_h, active);
 
