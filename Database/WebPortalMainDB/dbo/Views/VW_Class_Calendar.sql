@@ -1,11 +1,16 @@
 ﻿
 
+
+
 CREATE VIEW [dbo].[VW_Class_Calendar]
 AS
 SELECT       
 c.BranchId, 
 c.SiteId, 
 a.Id AS ClassId, 
+a.ClassName,
+a.Color,
+ROW_NUMBER() Over(partition by b.classId ORDER BY b.ClassDate, b.StartTime) as DateNo,
 a.Title_en AS Class_Title_en, 
 a.Title_cn AS Class_Title_cn, 
 a.Detail_en AS Class_Detail_en, 

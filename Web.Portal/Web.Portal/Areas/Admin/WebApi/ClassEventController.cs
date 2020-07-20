@@ -93,7 +93,10 @@ namespace Web.Portal.Areas.Admin.WebApi
                                         row.GetValue("DateTitle").GetString(), 
                                         "", 
                                         row.GetValue("DateStatus").GetBool() ?? false, 
-                                        row.GetValue("ClassStatus").GetInt() ?? 0
+                                        row.GetValue("ClassStatus").GetInt() ?? 0,
+                                        row.GetValue("Subject").GetString(),
+                                        row.GetValue("Color").GetString(),
+                                        row.GetValue("DateNo").GetInt()??0
                                     );
                     }
                 }
@@ -251,6 +254,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Table ClassEvt = new Table("ClassEvent", "Class", Words("class.event"));
                         Meta cid = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
                         Meta ccourseId = new Meta { Name = "CourseId", DbName = "CourseId", Title = Words("col.course"), Type = EInput.Int, Required = true };
+                        Meta className = new Meta { Name = "ClassName", DbName = "ClassName", Title = Words("col.class.name"), Required = true, Order = "ASC", Type = EInput.String, MaxLength = 32 };
                         Meta ctitleEN = new Meta { Name = "Title_en", DbName = "Title_en", Title = Words("title.en"), Required = true, Order = "ASC", Type = EInput.String, MaxLength = 64 };
                         Meta ctitleCN = new Meta { Name = "Title_cn", DbName = "Title_cn", Title = Words("title.cn"), Required = true, Order = "ASC", Type = EInput.String, MaxLength = 64 };
                         Meta cdetailEN = new Meta { Name = "Detail_en", DbName = "Detail_en", Title = Words("detail.en"), Type = EInput.String, MaxLength = 500 * 1024 };
@@ -263,13 +267,22 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta cendDate = new Meta { Name = "EndDate", DbName = "EndDate", Title = Words("end.date"), Order = "DESC", Type = EInput.Date };
                         Meta cstatus = new Meta { Name = "Status", DbName = "Status", Title = Words("col.status"), Order = "DESC", Type = EInput.Int, Value = 1 };
                         cstatus.AddListRef("StatusList");
+
+                        Meta cclassName = new Meta { Name = "ClassName", DbName = "ClassName", Title = Words("col.class.name"), Required = true, Order = "ASC", Type = EInput.String, MaxLength = 32 };
+                        Meta ccolor = new Meta { Name = "Color", DbName = "Color", Title = Words("col.color"), Order = "ASC", Type = EInput.String, MaxLength = 16 };
+
+                        Meta cnotesEN = new Meta { Name = "Notes_en", DbName = "Notes_en", Title = Words("col.notes.en"), Order = "ASC", Type = EInput.String, MaxLength = 1024 };
+                        Meta cnotesCN = new Meta { Name = "Notes_cn", DbName = "Notes_cn", Title = Words("col.notes.cn"), Order = "ASC", Type = EInput.String, MaxLength = 1024 };
+
                         Filter f6 = new Filter() { Name = "fitler_courseId", DbName = "CourseId", Title = "col.course", Type = EFilter.Int, Required = true, Compare = ECompare.Equal, Value1 = -1 };
                         ClassEvt.Navi.IsActive = true;
                         ClassEvt.Navi.Order = "DESC";
                         ClassEvt.Navi.By = "StartDate";
 
 
-                        ClassEvt.AddMetas(cid, ccourseId, ctitleCN, ctitleEN, cdetailCN, cdetailEN, cisFree, cfeeAmount, ccurrency, cstartDate, cendDate, cstatus);
+                        ClassEvt.AddMetas(cid, ccourseId, ctitleCN, ctitleEN, cdetailCN, cdetailEN, cisFree, cfeeAmount, ccurrency, cstartDate, cendDate, cstatus)
+                            .AddMetas(cclassName, ccolor, cnotesEN, cnotesCN);
+
                         ClassEvt.AddFilter(f6);
                         ClassEvt.AddQueryKV("Active", true).AddQueryKV("Deleted", false)
                                 .AddUpdateKV("Deleted", false).AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
@@ -319,7 +332,10 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta status = new Meta { Name = "DateStatus", DbName = "DateStatus", Title = Words("status.active"), Type = EInput.Bool };
                         Meta ccstatus = new Meta { Name = "ClassStatus", DbName = "ClassStatus", Title = Words("status.active"), Type = EInput.Int };
                         ccstatus.AddListRef("StatusList");
-                        ClassCalendar.AddMetas(dateId, classDate, startTime, endTime, title, status, ccstatus);
+                        Meta subject = new Meta { Name = "Subject", DbName = "ClassName", Title = Words("col.class.name"), Type = EInput.String };
+                        Meta color = new Meta { Name = "Color", DbName = "Color", Title = Words("col.color"), Type = EInput.String };
+                        Meta dateNo = new Meta { Name = "DateNo", DbName = "DateNo", Title = Words("col.date.number"), Type = EInput.Int };
+                        ClassCalendar.AddMetas(dateId, classDate, startTime, endTime, title, status, ccstatus, subject, color, dateNo);
 
                         CollectionTable c1 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection BranchList = new Collection(ECollectionType.Table, c1);
@@ -349,6 +365,8 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Type = EInput.Date };
                         Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Type = EInput.Time };
                         Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Type = EInput.Time };
+                        Meta csubject = new Meta { Name = "Subject", DbName = "ClassName", Title = Words("class.name"), Type = EInput.String };
+                        Meta ccolor = new Meta { Name = "Color", DbName = "Color", Title = Words("class.name"), Type = EInput.String };
                         Meta ctitle = new Meta { Name = "ClassTitle", DbName = "Class_Title", Title = Words("class.name"), IsLang = true, Type = EInput.String };
                         Meta cdetail = new Meta { Name = "ClassDetail", DbName = "Class_Detail", Title = Words("col.detail"), IsLang = true, Type = EInput.String };
                         Meta dtitle = new Meta { Name = "DateTitle", DbName = "Date_Title", Title = Words("date.event"), IsLang = true, Type = EInput.String };
@@ -358,7 +376,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta cstatus = new Meta { Name = "ClassStatus", DbName = "ClassStatus", Title = Words("col.status"), Type = EInput.Int };
                         Meta dstatus = new Meta { Name = "DateStatus", DbName = "DateStatus", Title = Words("col.status"), Description = Words("status.active.inactive"), Type = EInput.Bool };
                         cstatus.AddListRef("StatusList");
-                        dateEvent.AddMetas(ddateId, dclassDate, dstartTime, dendTime, ctitle, dtitle, ddetail, cdetail, dStartDate, dEndDate, cstatus, dstatus);
+                        dateEvent.AddMetas(ddateId, dclassDate, dstartTime, dendTime, csubject, ccolor, ctitle, dtitle, ddetail, cdetail, dStartDate, dEndDate, cstatus, dstatus);
 
                         dateEvent.Navi.IsActive = false;
                         dateEvent.AddRelation(new Relation(ERef.O2O, "DateId", 0));

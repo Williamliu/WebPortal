@@ -24,7 +24,7 @@ namespace Library.V1.Entity
         {
             this.Events.Add(evt);
         }
-        public void Add(int Id, DateTime dt, TimeSpan from, TimeSpan to, string title, string detail = "", bool status = false, int state = 0)
+        public void Add(int Id, DateTime dt, TimeSpan from, TimeSpan to, string title, string detail = "", bool status = false, int state = 0, string subject="", string color="", int dateNo=0)
         {
             Event evt = new Event
             {
@@ -38,7 +38,10 @@ namespace Library.V1.Entity
                 To = to,
                 YY = dt.Year.ToString(),
                 MM = (dt.Month - 1).ToString(),
-                DD = dt.Day.ToString()
+                DD = dt.Day.ToString(),
+                Subject = subject,
+                Color = color,
+                DateNo = dateNo
             };
             this.Add(evt);
         }
@@ -49,6 +52,7 @@ namespace Library.V1.Entity
         public Event() { }
         public int Id { get; set; }
         public DateTime Date { get; set; }
+        public int DateNo { get; set; }
         public string YY { get; set; }
         public string MM { get; set; }
         public string DD { get; set; }
@@ -58,5 +62,8 @@ namespace Library.V1.Entity
         public int State { get; set; }
         public string Title { get; set; }
         public string Detail { get; set; }
+        public string Subject { get; set; }
+        public string Color { get; set; }
+
     }
 }

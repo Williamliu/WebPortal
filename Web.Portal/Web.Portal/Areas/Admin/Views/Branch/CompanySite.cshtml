@@ -44,6 +44,7 @@
                 <div head large><wliu.head db="ViewData.database" tb="Site" col="DetailEN"></wliu.head></div>
                 <div head medium><wliu.head db="ViewData.database" tb="Site" col="TitleCN"></wliu.head></div>
                 <div head large><wliu.head db="ViewData.database" tb="Site" col="DetailCN"></wliu.head></div>
+                <div head medium><wliu.head db="ViewData.database" tb="Site" col="Country"></wliu.head></div>
                 <div head fixed style="width:120px;"><wliu.head db="ViewData.database" tb="Site" col="FoundDate"></wliu.head></div>
                 <div head fixed style="width:60px;"><wliu.head db="ViewData.database" tb="Site" col="Sort"></wliu.head></div>
                 <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="Site" col="Active"></wliu.head></div>
@@ -66,6 +67,9 @@
                 </div>
                 <div cell large>
                     <wliu.textbox db="ViewData.database" tb="Site" guid="{{row.guid}}" col="DetailCN"></wliu.textbox>
+                </div>
+                <div cell medium>
+                    <wliu.select db="ViewData.database" tb="Site" guid="{{row.guid}}" col="Country"></wliu.select>
                 </div>
                 <div cell fixed style="width:120px;">
                     <wliu.date db="ViewData.database" tb="Site" guid="{{row.guid}}" col="FoundDate"></wliu.date>

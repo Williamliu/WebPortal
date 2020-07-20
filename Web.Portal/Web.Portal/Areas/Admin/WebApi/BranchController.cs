@@ -110,7 +110,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta city = new Meta { Name = "City", DbName = "City", Title = Words("col.city"), Type = EInput.String, MaxLength = 64 };
                         Meta state = new Meta { Name = "State", DbName = "State", Title = Words("col.state"), Type = EInput.Int };
                         state.AddListRef("StateList");
-                        Meta country = new Meta { Name = "Country", DbName = "Country", Title = Words("col.country"), Type = EInput.Int };
+                        Meta country = new Meta { Name = "Country", DbName = "Country", Title = Words("col.country"), Required=true, Type = EInput.Int };
                         country.AddListRef("CountryList");
                         Meta postal = new Meta { Name = "Postal", DbName = "Postal", Title = Words("col.postal"), Type = EInput.String, MaxLength = 16 };
 
@@ -142,7 +142,7 @@ namespace Web.Portal.Areas.Admin.WebApi
 
                         CollectionTable c2 = new CollectionTable("CountryList", "GCountry", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection CountryList = new Collection(ECollectionType.Table, c2);
-                        CollectionTable c3 = new CollectionTable("StateList", "GState", true, "Id", "Title","Detail", "", "DESC","Sort");
+                        CollectionTable c3 = new CollectionTable("StateList", "GState", true, "Id", "Title","Detail", "CountryId", "DESC","Sort");
                         Collection StateList = new Collection(ECollectionType.Table, c3);
 
                         this.DB.AddTable(table).AddCollections(BranchList, StateList, CountryList);

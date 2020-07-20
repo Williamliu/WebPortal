@@ -3933,10 +3933,11 @@ WLIU_NG.directive("filter.select", function () {
             tb:     "@",
             col:    "@",
             reload: "@",
-            action: "&"
+            action: "&",
+            ww:     "@"
         },
         template: [
-            '<select wliu style="min-width:80px;" ',
+            '<select wliu style="min-width:{{ww}};" ',
                 'ng-attr="{\'input-invalid\': db.tables[tb].filters[col].error.HasError()}" ',
                 'ng-model="db.tables[tb].filters[col].value1" ',
                 'ng-change="db.tables[tb].FilterChange(col);ChangeKey()" ',
@@ -3948,6 +3949,7 @@ WLIU_NG.directive("filter.select", function () {
             '</select>'
         ].join(''),
         controller: function ($scope) {
+            $scope.ww = $scope.ww || "80px";
             $scope.reload = $scope.reload || 1;
             $scope.ChangeKey = function () {
                 if (parseInt($scope.reload)>0) {
@@ -3976,10 +3978,11 @@ WLIU_NG.directive("filter.fselect", function () {
             col:        "@",
             fcol:       "@",
             reload:     "@",
-            action:     "&"
+            action:     "&",
+            ww:         "@"
         },
         template: [
-            '<select wliu style="min-width:80px;" ',
+            '<select wliu style="min-width:{{ww}};" ',
                 'ng-attr="{\'input-invalid\': db.tables[tb].filters[col].error.HasError()}" ',
                 'ng-model="db.tables[tb].filters[col].value1" ',
                 'ng-change="db.tables[tb].FilterChange(col);ChangeKey()" ',
@@ -3991,6 +3994,7 @@ WLIU_NG.directive("filter.fselect", function () {
             '</select>'
         ].join(''),
         controller: function ($scope) {
+            $scope.ww = $scope.ww || "80px";
             $scope.reload = $scope.reload || 1;
             $scope.ChangeKey = function () {
                 if (parseInt($scope.reload) > 0) {

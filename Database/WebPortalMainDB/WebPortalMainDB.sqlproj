@@ -128,10 +128,11 @@
     <Build Include="dbo\Functions\IsUnicode.sql" />
     <Build Include="dbo\Stored Procedures\USP_RPT_AccessLog_MenuId.sql" />
     <Build Include="dbo\Stored Procedures\USP_RPT_AccessLog_IPAddress_MenuId.sql" />
+    <Build Include="dbo\Views\VW_ActiveClass_List.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connection\Sql2Local.scmp" />
-    <None Include="Backup\ShaoLinMainDB20200718.bak" />
     <None Include="Backup\ReadMe.txt" />
+    <None Include="Backup\ShaoLinMainDB20200719.bak" />
   </ItemGroup>
 </Project>

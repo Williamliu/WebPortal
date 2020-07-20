@@ -418,17 +418,20 @@ namespace Library.V1.Entity
                         break;
                     case EInput.ImageUrl:
                         {
+                            string[] imageRef = this.Metas[colName].Description.Split('|');
+                            string galleryName = imageRef[0]; // Description = "PubUser|Medium"
+                            string imageSize = string.IsNullOrWhiteSpace(imageRef[1]) ? "Small" : imageRef[1];
                             string query = $"SELECT Id FROM GGallery WHERE Deleted=0 AND Active=1 AND GalleryName=@GalleryName";
-                            int galleryId = this.DSQL.ExecuteScalar(query, new SqlParameter("@GalleryName", this.Metas[colName].DbName));
+                            int galleryId = this.DSQL.ExecuteScalar(query, new SqlParameter("@GalleryName", galleryName));
 
                             query = "SELECT TOP 1 Id, Guid FROM GImage WHERE Deleted=0 AND Active=1 AND GalleryId=@GalleryId AND RefKey=@RefKey ORDER BY Main DESC, Sort DESC, CreatedTime DESC";
                             Dictionary<string, object> ps = new Dictionary<string, object>();
                             ps.Add("GalleryId", galleryId);
-                            ps.Add("RefKey", nrow.Key);
+                            ps.Add("RefKey", nrow.GetValue(this.Metas[colName].DbName) ?? 0);
                             IList<Dictionary<string, string>> imageRows = this.FSQL.Query(query, ps);
                             Column imgCol = new Column(this.Metas[colName].Name, "");
                             if (imageRows.Count > 0)
-                                imgCol = new Column(this.Metas[colName].Name, $"/api/Image/GetImage/{imageRows[0]["Guid"].GetString()}", imageRows[0]["Id"].GetInt() ?? 0);
+                                imgCol = new Column(this.Metas[colName].Name, $"/api/Image/GetImage/{imageRows[0]["Guid"].GetString()}/{imageSize}", imageRows[0]["Id"].GetInt() ?? 0);
                             nrow.AddColumn(imgCol);
                         }
                         break;

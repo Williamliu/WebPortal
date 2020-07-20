@@ -1,193 +1,128 @@
-﻿<!-- Grid row -->
-<div class="row">
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database", "wliu_layout"]);
 
-    <!-- Grid column -->
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div wliu card>
-            <div wliu card head>
-                <img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg">
-            </div>
-            <div wliu card title>ShaoLin Qi Gong Eight Brocade</div>
-            <div wliu card body>
-                <p>Date: 2020-07-15 ~ 2020-07-25</p>
-                <p>Center: Vancouver ShaoLin Center of Canada</p>
-                <p>Location: 10300 Canada Way, Richmond, BC V5H 3M3</p>
-                <p>Phone: 778-888-9999 Email: <a href="mailto:enroll@shaolinworld.org">enroll@shaolinworld.org</a></p>
-            </div>
-            <div wliu card foot>
-                <a href="#" class="btn btn-primary">Enroll</a>
-                <a href="#" class="btn btn-primary">More</a>
-            </div>
-        </div>
-    </div>
-    <!-- Grid column -->
-    <!-- Grid column -->
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div wliu card>
-            <div wliu card head>
-                <img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg">
-            </div>
-            <div wliu card title>少林气功八段锦</div>
-            <div wliu card body>
-                <p>时间: 2020-07-15 ~ 2020-07-25</p>
-                <p>中心: 加拿大温哥华少林文化中心</p>
-                <p>地点: 10300 Canada Way, Richmond, BC V5H 3M3</p>
-                <p>电话: 778-888-9999 邮箱: <a href="mailto:enroll@shaolinworld.org">enroll@shaolinworld.org</a></p>
-            </div>
-            <div wliu card foot>
-                <a href="#" class="btn btn-primary">报名</a>
-                <a href="#" class="btn btn-primary">详情</a>
-            </div>
-        </div>
-    </div>
-    <!-- Grid column -->
-    <!-- Grid column -->
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div wliu card>
-            <div wliu card head>
-                <img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg">
-            </div>
-            <div wliu card title>ShaoLin Qi Gong Eight Barcade</div>
-            <div wliu card body>
-                <p>Date: 2020-07-15 ~ 2020-07-25</p>
-                <p>Center: Vancouver ShaoLin Center of Canada</p>
-                <p>Location: 10300 Canada Way, Richmond, BC V5H 3M3</p>
-                <p>Phone: 778-888-9999 Email: <a href="mailto:enroll@shaolinworld.org">enroll@shaolinworld.org</a></p>
-            </div>
-            <div wliu card foot>
-                <a href="#" class="btn btn-primary">Enroll</a>
-                <a href="#" class="btn btn-primary">More</a>
-            </div>
-        </div>
-    </div>
-    <!-- Grid column -->
-</div>
-<!-- Grid row --><!-- Grid row -->
-<div class="row">
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+            $scope.detail = function () {
+                let refKey = $scope.ViewData.database.tables.ClassList.CurrentKey();
+                $scope.ViewData.database.tables.ClassDetail.refKey = refKey;
+                $scope.ViewData.database.tables.ClassDetail.Reload().then(d => {
+                    $scope.$apply(); $("#detailInfo").diag("show");
+                }).catch(e => { $scope.$apply(); });
+                
+            };
+            $scope.closeDiag = function () {
+                $("#detailInfo").diag("hide");
+            }
+        });
+        viewData.Init("/api/ClassEvent/InitClassList");
+        $(function () {
+            $("#detailInfo").diag({maskclick:false});
+        });
+    </script>
+}
 
-    <!-- Grid column -->
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div wliu card>
-            <div wliu card head>
-                <img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg">
-            </div>
-            <div wliu card title>ShaoLin Qi Gong Eight Brocade</div>
-            <div wliu card body>
-                <p>Date: 2020-07-15 ~ 2020-07-25</p>
-                <p>Center: Vancouver ShaoLin Center of Canada</p>
-                <p>Location: 10300 Canada Way, Richmond, BC V5H 3M3</p>
-                <p>Phone: 778-888-9999 Email: <a href="mailto:enroll@shaolinworld.org">enroll@shaolinworld.org</a></p>
-            </div>
-            <div wliu card foot>
-                <a href="#" class="btn btn-primary">Enroll</a>
-                <a href="#" class="btn btn-primary">More</a>
-            </div>
-        </div>
-    </div>
-    <!-- Grid column -->
-    <!-- Grid column -->
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div wliu card>
-            <div wliu card head>
-                <img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg">
-            </div>
-            <div wliu card title>少林气功八段锦</div>
-            <div wliu card body>
-                <p>时间: 2020-07-15 ~ 2020-07-25</p>
-                <p>中心: 加拿大温哥华少林文化中心</p>
-                <p>地点: 10300 Canada Way, Richmond, BC V5H 3M3</p>
-                <p>电话: 778-888-9999 邮箱: <a href="mailto:enroll@shaolinworld.org">enroll@shaolinworld.org</a></p>
-            </div>
-            <div wliu card foot>
-                <a href="#" class="btn btn-primary">报名</a>
-                <a href="#" class="btn btn-primary">详情</a>
-            </div>
-        </div>
-    </div>
-    <!-- Grid column -->
-    <!-- Grid column -->
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div wliu card>
-            <div wliu card head>
-                <img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg">
-            </div>
-            <div wliu card title>ShaoLin Qi Gong Eight Barcade</div>
-            <div wliu card body>
-                <p>Date: 2020-07-15 ~ 2020-07-25</p>
-                <p>Center: Vancouver ShaoLin Center of Canada</p>
-                <p>Location: 10300 Canada Way, Richmond, BC V5H 3M3</p>
-                <p>Phone: 778-888-9999 Email: <a href="mailto:enroll@shaolinworld.org">enroll@shaolinworld.org</a></p>
-            </div>
-            <div wliu card foot>
-                <a href="#" class="btn btn-primary">Enroll</a>
-                <a href="#" class="btn btn-primary">More</a>
-            </div>
-        </div>
-    </div>
-    <!-- Grid column -->
-</div>
-<!-- Grid row --><!-- Grid row -->
-<div class="row">
+<div ng-app="myApp" ng-controller="mycontrl">
+    <ng-form>
+        <fieldset>
+            <legend>@Html.Words("search.by")</legend>
+            <filter.label db="ViewData.database" tb="ClassList" col="CountryFilter"></filter.label>
+            <filter.select db="ViewData.database" tb="ClassList" col="CountryFilter" ww="200px"></filter.select>
+            <filter.label db="ViewData.database" tb="ClassList" col="SiteFilter"></filter.label>
+            <filter.fselect db="ViewData.database" tb="ClassList" col="SiteFilter" ww="250px" fcol="CountryFilter"></filter.fselect>
+            <wliu.search db="ViewData.database" tb="ClassList"></wliu.search>
+        </fieldset>
 
-    <!-- Grid column -->
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div wliu card>
-            <div wliu card head>
-                <img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg">
+        <div wliu table grow shrink underline style="margin-top:12px;">
+            <div row>
+                <div cell style="background-color:#dddddd;">
+                    <wliu.navi db="ViewData.database" tb="ClassList"></wliu.navi>
+                </div>
             </div>
-            <div wliu card title>ShaoLin Qi Gong Eight Brocade</div>
-            <div wliu card body>
-                <p>Date: 2020-07-15 ~ 2020-07-25</p>
-                <p>Center: Vancouver ShaoLin Center of Canada</p>
-                <p>Location: 10300 Canada Way, Richmond, BC V5H 3M3</p>
-                <p>Phone: 778-888-9999 Email: <a href="mailto:enroll@shaolinworld.org">enroll@shaolinworld.org</a></p>
+        </div>
+        <span style="display:none;" ng-repeat-start="row in ViewData.database.tables.ClassList.rows"></span>
+        <!-- Grid row -->
+        <div wliu card frame>
+            <layout.card db="ViewData.database"
+                         tb="ClassList"
+                         guid="{{row.guid}}"
+                         imgsrc="Photo"
+                         subject="ClassTitle"
+                         start="StartDate"
+                         end="EndDate"
+                         site="SiteTitle"
+                         address="Address"
+                         phone="Phone"
+                         email="Email"
+                         actiondetail="detail()",
+                         icons="enroll,detail"
+            >
+            </layout.card>
+        </div>
+        <!-- Grid row -->
+        <span style="display:none;" ng-repeat-end></span>
+    </ng-form>
+
+    <div wliu diag maskable movable resizable id="detailInfo" style="width:720px;">
+        <div head>@Html.Words("detail.information")</div>
+        <div body style="padding-top:3px;">
+            <ul id="d1" wliu tab9 color="salmon">
+                <li>@Html.Words("class.information")</li>
+                <li>@Html.Words("class.schedule")</li>
+            </ul>
+            <div wliu tab9 body>
+                <div style="min-height:400px;">
+                    <layout.card1 db="ViewData.database"
+                                  tb="ClassList"
+                                  guid="{{ViewData.database.tables.ClassList.CurrentGuid()}}"
+                                  subject="ClassTitle"
+                                  start="StartDate"
+                                  end="EndDate" `
+                                  site="SiteTitle"
+                                  address="Address"
+                                  phone="Phone"
+                                  email="Email">
+                    </layout.card1>
+                </div>
+                <div style="min-height:400px;">
+                     <div wliu table grow shrink>
+                        <div row>
+                            <div cell style="background-color:#dddddd;">
+                                <wliu.navi db="ViewData.database" tb="ClassDetail"></wliu.navi>
+                            </div>
+                        </div>
+                        <div row>
+                            <div head fixed style="width:40px;"></div>
+                            <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
+                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
+                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
+                            <div head medium><wliu.head db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
+                        </div>
+                        <div row ng-repeat="row in ViewData.database.tables.ClassDetail.rows">
+                            <div cell center fixed style="width:40px;">
+                                <wliu.rowstatus db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}"></wliu.rowstatus>
+                            </div>
+                            <div cell fixed style="width:140px;">
+                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="ClassDate"></wliu.text>
+                            </div>
+                            <div cell fixed style="width:100px;">
+                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="StartTime"></wliu.text>
+                            </div>
+                            <div cell fixed style="width:100px;">
+                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="EndTime"></wliu.text>
+                            </div>
+                            <div cell medium>
+                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title"></wliu.text>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div wliu card foot>
-                <a href="#" class="btn btn-primary">Enroll</a>
-                <a href="#" class="btn btn-primary">More</a>
+            <div style="display:block; text-align:center;">
+                <a href="javascript:void(0)" ng-click="closeDiag()" class="btn btn-primary">@Html.Words("button.close")</a>
             </div>
         </div>
     </div>
-    <!-- Grid column -->
-    <!-- Grid column -->
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div wliu card>
-            <div wliu card head>
-                <img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg">
-            </div>
-            <div wliu card title>少林气功八段锦</div>
-            <div wliu card body>
-                <p>时间: 2020-07-15 ~ 2020-07-25</p>
-                <p>中心: 加拿大温哥华少林文化中心</p>
-                <p>地点: 10300 Canada Way, Richmond, BC V5H 3M3</p>
-                <p>电话: 778-888-9999 邮箱: <a href="mailto:enroll@shaolinworld.org">enroll@shaolinworld.org</a></p>
-            </div>
-            <div wliu card foot>
-                <a href="#" class="btn btn-primary">报名</a>
-                <a href="#" class="btn btn-primary">详情</a>
-            </div>
-        </div>
-    </div>
-    <!-- Grid column -->
-    <!-- Grid column -->
-    <div class="col-lg-4 col-md-6 col-sm-12">
-        <div wliu card>
-            <div wliu card head>
-                <img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg">
-            </div>
-            <div wliu card title>ShaoLin Qi Gong Eight Barcade</div>
-            <div wliu card body>
-                <p>Date: 2020-07-15 ~ 2020-07-25</p>
-                <p>Center: Vancouver ShaoLin Center of Canada</p>
-                <p>Location: 10300 Canada Way, Richmond, BC V5H 3M3</p>
-                <p>Phone: 778-888-9999 Email: <a href="mailto:enroll@shaolinworld.org">enroll@shaolinworld.org</a></p>
-            </div>
-            <div wliu card foot>
-                <a href="#" class="btn btn-primary">Enroll</a>
-                <a href="#" class="btn btn-primary">More</a>
-            </div>
-        </div>
-    </div>
-    <!-- Grid column -->
 </div>
-<!-- Grid row -->

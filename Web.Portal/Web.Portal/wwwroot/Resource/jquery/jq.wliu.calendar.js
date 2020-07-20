@@ -185,7 +185,7 @@
                 if (evtObj) {
                     let timestr = evtObj.from ? evtObj.from.hhmm() : "";
                     timestr += (timestr ? "~" : "") + evtObj.to.hhmm();
-                    let time = `<span style="color:blue;">${timestr}</span>`;
+                    let time = `${evtObj.dateNo>0?evtObj.dateNo:""}) <span>${timestr}</span>`;
 
                     let ctooltip = [
                         'tooltip-toggle="hover" ',
@@ -198,8 +198,14 @@
                     if (evtObj.status) {
                         dateStatus = evtObj.state;
                     }
+                    let subject = "";
+                    if (evtObj.subject !== "")
+                        subject = `<b>${evtObj.subject}</b><br>`;
 
-                    let dateItem_html = `<li class="date-item status-${dateStatus}" eid="${evtObj.id}" ${ctooltip}>${time} ${evtObj.title}</li>`;
+                    let style = "";
+                    if (evtObj.color !== "") style = `style="color:${evtObj.color};"`;  
+
+                    let dateItem_html = `<li class="date-item status-${dateStatus}" ${style} eid="${evtObj.id}" ${ctooltip}>${subject}${time} ${evtObj.title}</li>`;
                     $(`td.date>div.date-event[yy=${evtObj.yy}][mm=${evtObj.mm}][dd=${evtObj.dd}]`, this.element).append(dateItem_html);
                 }
             }
@@ -443,6 +449,9 @@ WLIU.Event = function (event) {
         this.state = event.state || 0;
         this.title = event.title || "";
         this.detail = event.detail || "";
+        this.subject = event.subject || "";
+        this.color = event.color || "";
+        this.dateNo = event.dateNo || 0;
     }
     else {
         this.id = 0;
@@ -456,6 +465,9 @@ WLIU.Event = function (event) {
         this.state = 0;
         this.title = "";
         this.detail = "";
+        this.subject = "";
+        this.color = "";
+        this.dateNo = 0;
     }
 };
 

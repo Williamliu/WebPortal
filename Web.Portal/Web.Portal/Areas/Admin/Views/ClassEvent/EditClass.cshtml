@@ -141,6 +141,7 @@
                                                     <div row>
                                                         <div head fixed style="width:40px;"></div>
                                                         <div head small center fixed style="width:80px;"><wliu.head db="ViewData.database" tb="ClassEvent" col="Active"></wliu.head></div>
+                                                        <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassEvent" col="ClassName"></wliu.head></div>
                                                         <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassEvent" col="StartDate"></wliu.head></div>
                                                         <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassEvent" col="EndDate"></wliu.head></div>
                                                         <div head small><wliu.head db="ViewData.database" tb="ClassEvent" col="Title_en"></wliu.head></div>
@@ -155,6 +156,9 @@
                                                         </div>
                                                         <div cell small center fixed style="width:80px;">
                                                             <wliu.select db="ViewData.database" tb="ClassEvent" guid="{{row.guid}}" col="Status"></wliu.select>
+                                                        </div>
+                                                        <div cell fixed style="width:140px;">
+                                                            <wliu.textbox db="ViewData.database" tb="ClassEvent" guid="{{row.guid}}" col="ClassName"></wliu.textbox>
                                                         </div>
                                                         <div cell fixed style="width:140px;">
                                                             <wliu.date db="ViewData.database" tb="ClassEvent" guid="{{row.guid}}" col="StartDate"></wliu.date>
@@ -258,16 +262,40 @@
                         <div row style="margin-top:12px;">
                             <div cell>
                                 <label wliu h2>@Html.Words("class.detail")</label>
-                                <table>
+                                <table cellpadding="0" cellspacing="0">
                                     <tr>
-                                        <td align="left" width="25%"><assm.bool fixed border h2 db="ViewData.database" tb="ClassEvent" col="IsFree"></assm.bool></td>
-                                        <td align="left" width="25%" style="padding-left:10px;"><assm.textbox fixed small border h2 db="ViewData.database" tb="ClassEvent" col="FeeAmount"></assm.textbox></td>
-                                        <td align="left" width="25%" style="padding-left:10px;"><assm.select fixed small border h2 db="ViewData.database" tb="ClassEvent" col="Currency"></assm.select></td>
-                                        <td align="left" width="25%" style="padding-left:10px;">
+                                        <td align="left" style="padding-left:10px;" valign="top" rowspan="3">
                                             <label wliu bold>@Html.Words("col.photo")</label>
                                             <div style="display:block;">
-                                                <image.main gallery="Gallery" ww="240" hh="120" icons="upload,camera,text,delete"></image.main>
+                                                <image.main gallery="Gallery" ww="240" hh="120" icons="upload,camera,cancel,text,delete"></image.main>
                                             </div>
+                                        </td>
+                                        <td align="left" style="padding-left:10px;" valign="top" rowspan="3">
+                                            <assm.textarea border h2 hh="160px" db="ViewData.database" tb="ClassEvent" col="Notes_en">
+                                        </td>
+                                        <td align="left" style="padding-left:10px;" valign="top" rowspan="3">
+                                            <assm.textarea border h2 hh="160px" db="ViewData.database" tb="ClassEvent" col="Notes_cn">
+                                        </td>
+                                        <td align="left" valign="top" style="padding-left:20px;">
+                                            <assm.textbox fixed small border h2 db="ViewData.database" tb="ClassEvent" col="FeeAmount">
+                                        </td>
+                                        <td align="left" valign="top" style="padding-left:20px;">
+                                            <assm.textbox fixed small border h2 db="ViewData.database" tb="ClassEvent" col="ClassName">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" valign="top" style="padding-left:20px;">
+                                            <assm.select fixed small border h2 db="ViewData.database" tb="ClassEvent" col="Currency">
+                                        </td>
+                                        <td align="left" valign="top" style="padding-left:20px;">
+                                            <assm.textbox fixed small border h2 db="ViewData.database" tb="ClassEvent" col="Color">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" valign="top" style="padding-left:20px;">
+                                            <assm.bool fixed border h2 db="ViewData.database" tb="ClassEvent" col="IsFree">
+                                        </td>
+                                        <td align="left" valign="top" style="padding-left:20px;">
                                         </td>
                                     </tr>
                                 </table>
