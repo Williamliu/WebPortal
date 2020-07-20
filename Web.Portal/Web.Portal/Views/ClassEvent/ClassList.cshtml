@@ -65,7 +65,7 @@
         <span style="display:none;" ng-repeat-end></span>
     </ng-form>
 
-    <div wliu diag maskable movable resizable id="detailInfo" style="width:720px;">
+    <div wliu diag maskable maskclick movable resizable id="detailInfo" style="width:720px;">
         <div head>@Html.Words("detail.information")</div>
         <div body style="padding-top:3px;">
             <ul id="d1" wliu tab9 color="salmon">
@@ -83,7 +83,8 @@
                                   site="SiteTitle"
                                   address="Address"
                                   phone="Phone"
-                                  email="Email">
+                                  email="Email"
+                                  notes="ClassNotes">
                     </layout.card1>
                 </div>
                 <div style="min-height:400px;">
@@ -98,7 +99,7 @@
                             <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
                             <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
                             <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
-                            <div head medium><wliu.head db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
+                            <div head medium><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
                         </div>
                         <div row ng-repeat="row in ViewData.database.tables.ClassDetail.rows">
                             <div cell center fixed style="width:40px;">
@@ -113,7 +114,7 @@
                             <div cell fixed style="width:100px;">
                                 <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="EndTime"></wliu.text>
                             </div>
-                            <div cell medium>
+                            <div cell medium nowrap>
                                 <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title"></wliu.text>
                             </div>
                         </div>

@@ -99,13 +99,14 @@ WLIU_NG.directive("layout.card1", function ($sce) {
             site: "@",
             address: "@",
             phone: "@",
-            email: "@"
+            email: "@",
+            notes: "@"
         },
         template: [
             '<div wliu card nohead>',
                 '<div wliu card title="{{db.tables[tb].GuidColumn(guid, subject).value}}">{{db.tables[tb].GuidColumn(guid, subject).value}}</div>',
                 '<div wliu card body>',
-                    '<p style="font-size:20px;color:orangered;" title="{{db.tables[tb].metas[start].description}}: {{db.tables[tb].GuidColumn(guid, start).value}} ~ {{db.tables[tb].GuidColumn(guid, end).value}}">',
+                    '<p style="font-size:24px;color:orangered;" title="{{db.tables[tb].metas[start].description}}: {{db.tables[tb].GuidColumn(guid, start).value}} ~ {{db.tables[tb].GuidColumn(guid, end).value}}">',
                         '{{db.tables[tb].metas[start].description}}: {{db.tables[tb].GuidColumn(guid, start).value}} ~ {{db.tables[tb].GuidColumn(guid, end).value}}',
                     '</p > ',
                     '<p title="{{db.tables[tb].metas[site].title}}: {{db.tables[tb].GuidColumn(guid, site).value}}">',
@@ -116,6 +117,9 @@ WLIU_NG.directive("layout.card1", function ($sce) {
                     '</p>',
                     '<p title="{{db.tables[tb].metas[phone].title}}: {{db.tables[tb].GuidColumn(guid, phone).value}} {{db.tables[tb].GuidColumn(guid, email).value}}">',
                         '{{db.tables[tb].metas[phone].title}}: {{db.tables[tb].GuidColumn(guid, phone).value}} <a href="{{db.tables[tb].GuidColumn(guid, email).value}}">{{db.tables[tb].GuidColumn(guid, email).value}}</a>',
+                    '</p>',
+                    '<p title="{{db.tables[tb].metas[notes].title}}: {{db.tables[tb].GuidColumn(guid, note).value}}">',
+                        '<span style="color:orangered;">{{db.tables[tb].metas[notes].title}}</span>: {{db.tables[tb].GuidColumn(guid, notes).value}}',
                     '</p>',
                 '</div>',
             '</div>'

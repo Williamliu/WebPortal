@@ -56,7 +56,7 @@ namespace Web.Portal.WebApi.Controllers
                         Meta address = new Meta { Name = "Address", DbName = "Address", Title = Words("col.address"), IsLang = true, Type = EInput.String };
                         Meta photo = new Meta { Name = "Photo", DbName = "Id", Title = Words("col.photo"), Description = "ClassEvent|Medium", Type = EInput.ImageUrl };
 
-                        classList.AddMetas(id, classTitle, siteTitle, startDate, endDate, email, phone, address, photo);
+                        classList.AddMetas(id, classTitle, siteTitle, classNotes, startDate, endDate, email, phone, address, photo);
                         classList.Navi.IsActive = true;
                         classList.Navi.Order = "ASC";
                         classList.Navi.By = "StartDate";
@@ -72,7 +72,7 @@ namespace Web.Portal.WebApi.Controllers
 
                         Table ClassDetail = new Table("ClassDetail", "Class_Detail", Words("class.detail"));
                         Meta did = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
-                        Meta dtitle = new Meta { Name = "Title", DbName = "Title", Title = Words("class.name"), Type = EInput.String, IsLang=true, MaxLength = 64 };
+                        Meta dtitle = new Meta { Name = "Title", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang=true, MaxLength = 64 };
                         Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Required = true, Order = "ASC", Type = EInput.Date };
                         Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Required = true, Type = EInput.Time };
                         Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Required = true, Type = EInput.Time };
@@ -82,7 +82,7 @@ namespace Web.Portal.WebApi.Controllers
                         ClassDetail.AddRelation(new Relation(ERef.O2M, "ClassId", -1));
                         ClassDetail.Navi.Order = "ASC";
                         ClassDetail.Navi.By = "ClassDate";
-                        ClassDetail.Navi.PageSize = 8;
+                        ClassDetail.Navi.PageSize = 10;
                         ClassDetail.GetUrl = "/api/ClassEvent/ReloadClassDetail";
                         ClassDetail.AddQueryKV("Deleted", false).AddQueryKV("Active", true);
 

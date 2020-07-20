@@ -958,13 +958,23 @@ div[wliu][card][frame] {
 }
 
 div[wliu][card][nohead] {
-    height:         200px;
+    min-height:     380px;
+    height:         initial;
     box-shadow:     none;
 }
 
 div[wliu][card][nohead] > div[wliu][card][title] {
     top:            0px;
+    font-size:      32px;
 }
 div[wliu][card][nohead] > div[wliu][card][body] {
-    top:            40px;
+    top:            64px;
+    overflow-y:     auto;
+}
+div[wliu][card][nohead] > div[wliu][card][body] p {
+    white-space:    initial;
+    overflow:       initial;
+    text-overflow:  initial;
+    height:         initial;
+    font-size:      20px;
 }

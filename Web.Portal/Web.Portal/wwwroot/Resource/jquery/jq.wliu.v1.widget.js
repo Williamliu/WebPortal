@@ -624,6 +624,7 @@ $.widget("wliu.diag", {
         var self = this;
         this.options.toggle = this.element.hasAttr("diag-toggle") ? this.element.attr("diag-toggle") : this.options.toggle;
         this.options.maskable = this.element.hasAttr("maskable") ? true : this.options.maskable;
+        this.options.maskclick = this.element.hasAttr("maskclick") ? true : this.options.maskclick;
         this.options.movable = this.element.hasAttr("movable") ? true : this.options.movable;
         this.options.resizable = this.element.hasAttr("resizable") ? true : this.options.resizable;
         this.options.zIndex = this.element.css("z-index") > 0 ? parseInt(this.element.css("z-index")) : this.options.zIndex;

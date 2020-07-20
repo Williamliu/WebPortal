@@ -2087,16 +2087,6 @@ div[wliu][calendar] > table td > div.date-event > li.date-item:hover {
     text-decoration:    underline;
 }
 /***Comm Assm Component***********/
-span[wliu][text] {
-    display: block;
-    box-sizing: border-box;
-    padding: 0px;
-    margin: 0px;
-    font-size: 16px;
-    line-height: 1.2;
-    margin-top: 6px;
-}
-
 div[comm][assm] {
     display:        inline-block;
     width:          100%;
@@ -2106,6 +2096,15 @@ div[comm][assm] {
     box-sizing:     border-box;
     padding:        0px;
     height:         auto;
+}
+div[comm][assm] > span[wliu][text] {  /* important */
+    display:     block;
+    box-sizing:  border-box;
+    padding:     0px;
+    margin:      0px;
+    font-size:   16px;
+    line-height: 1.2;
+    margin-top:  6px;
 }
 div[comm][assm][nolh] {
     line-height:    unset;

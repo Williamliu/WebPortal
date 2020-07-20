@@ -13,7 +13,7 @@ namespace Web.Portal.Controllers
         public ClassEventController(AppSetting appConfig) : base(appConfig) { }
         public IActionResult ClassList()
         {
-            this.Init("P1010");
+            this.Init("M15");
             return View();
         }
 

@@ -411,6 +411,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta pcity = new Meta { Name = "City", DbName = "City", Title = Words("col.city"), Type = EInput.Read, Order = "ASC" };
                         Meta pphoto = new Meta { Name = "Photo", DbName = "Id", Title = Words("col.photo"), Description = "PubUser|tiny|small", Type = EInput.ImageContent };
                         Meta pactive = new Meta { Name = "Active", DbName = "Active", Title = Words("col.status"), Description = Words("status.active.inactive"), Type = EInput.Bool, Order = "ASC" };
+                        Meta pcreatedTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.createdtime"), Type = EInput.Read, Order = "DESC" };
 
                         Filter f111 = new Filter() { Name = "search_name", DbName = "FirstName,LastName,FirstNameLegal,LastNameLegal,DharmaName,DisplayName,CertificateName,AliasName", Title = Words("col.fullname"), Type = EFilter.String, Compare = ECompare.Like };
                         Filter f112 = new Filter() { Name = "search_email", DbName = "Email", Title = Words("col.email"), Type = EFilter.String, Compare = ECompare.Like };
@@ -421,12 +422,11 @@ namespace Web.Portal.Areas.Admin.WebApi
 
                         pubUser.Navi.IsActive = true;
                         pubUser.Navi.InitFill = false;
-                        pubUser.Navi.PageSize = 3;
                         pubUser.Navi.Order = "DESC";
                         pubUser.Navi.By = "CreatedTime";
 
                         // Table Public User
-                        pubUser.AddMetas(pid, pfirstName, plastName, pfirstNameLegal, plastNameLegl, pdharmaName, pdisplayName, pcertName, paliasname, pgender, pactive)
+                        pubUser.AddMetas(pid, pfirstName, plastName, pfirstNameLegal, plastNameLegl, pdharmaName, pdisplayName, pcertName, paliasname, pgender, pactive, pcreatedTime)
                                    .AddMetas(pemail, pphone, pcell, pcity, pphoto);
 
                         pubUser.AddFilters(f111, f112, f113, f114, f115);

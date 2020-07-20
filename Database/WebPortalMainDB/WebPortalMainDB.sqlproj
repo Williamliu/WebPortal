@@ -133,6 +133,6 @@
   <ItemGroup>
     <None Include="Connection\Sql2Local.scmp" />
     <None Include="Backup\ReadMe.txt" />
-    <None Include="Backup\ShaoLinMainDB20200719.bak" />
+    <None Include="Backup\ShaoLinMainDB20200720.bak" />
   </ItemGroup>
 </Project>
