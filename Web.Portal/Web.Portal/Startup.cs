@@ -113,6 +113,9 @@ namespace Web.Portal
 
             //Response Status Code Catch 
             //app.UseStatusCodePagesWithRedirects("/Home/Index?code={0}");
+            //Important: don't use below code ,  it will cause multiple go through Home Controller and Index Page whatever page you request.
+            #region Important: don't use below code, it will always route to HomeController and Index Page, then go to the page you request.
+            /*
             app.UseStatusCodePages(async context =>
             {
                 context.HttpContext.Response.ContentType = "text/plain";
@@ -175,6 +178,8 @@ namespace Web.Portal
                     }
                 }
             });
+            */
+            #endregion
 
             app.UseEndpoints(endpoints =>
             {

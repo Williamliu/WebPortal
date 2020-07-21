@@ -27,7 +27,7 @@ namespace Web.Portal.Controllers
             Init("P03");
             this.HttpContext.DeleteSession("pubSite_jwtToken");
             this.HttpContext.DeleteSession("pubSite_Session");
-            return RedirectToAction("Index", "/Home");
+            return Redirect("/Home/Index");
         }
 
         protected override void InitDatabase(string menuId)
