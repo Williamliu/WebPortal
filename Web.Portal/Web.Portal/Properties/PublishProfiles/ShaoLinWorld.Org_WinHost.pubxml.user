@@ -110,10 +110,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/19/2020 17:58:47</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>07/19/2020 17:58:49</publishTime>
+      <publishTime>07/20/2020 20:44:50</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>07/19/2020 17:58:49</publishTime>
+      <publishTime>07/20/2020 20:44:50</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
       <publishTime>07/19/2020 17:58:48</publishTime>
@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>07/20/2020 14:25:19</publishTime>
+      <publishTime>07/20/2020 20:45:09</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>07/20/2020 14:25:15</publishTime>
+      <publishTime>07/20/2020 20:45:06</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>07/20/2020 14:25:04</publishTime>
+      <publishTime>07/20/2020 20:44:54</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>07/20/2020 14:25:04</publishTime>
+      <publishTime>07/20/2020 20:44:55</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>07/20/2020 14:25:04</publishTime>
+      <publishTime>07/20/2020 20:44:54</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
       <publishTime>07/18/2020 00:20:16</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>07/20/2020 14:25:10</publishTime>
+      <publishTime>07/20/2020 20:45:00</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>07/20/2020 14:25:10</publishTime>
+      <publishTime>07/20/2020 20:45:00</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/angular.min.js">
       <publishTime>07/05/2020 23:15:03</publishTime>

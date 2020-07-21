@@ -638,6 +638,9 @@ div[wliu][table] div[row] > div[cell] {
 div[wliu][table] div[row] > div[cell][center] {
     text-align:         center;
 }
+div[wliu][table] div[row] > div[cell][right] {
+    text-align:         right;
+}
 /*** table cell size: large, medium, fixed ***/
 div[wliu][table] div[row] > div[cell][large],
 div[wliu][table] div[row] > div[head][large] {

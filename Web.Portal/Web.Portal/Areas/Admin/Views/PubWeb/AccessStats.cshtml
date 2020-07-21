@@ -49,14 +49,14 @@
                 <div cell medium>
                     <wliu.text db="ViewData.database" tb="AccessLog2" guid="{{row.guid}}" col="MenuName"></wliu.text>
                 </div>
-                <div cell medium>
-                    <wliu.text right db="ViewData.database" tb="AccessLog2" guid="{{row.guid}}" col="ViewCount"></wliu.text>
+                <div cell medium right>
+                    <wliu.text fit db="ViewData.database" tb="AccessLog2" guid="{{row.guid}}" col="ViewCount"></wliu.text>
                 </div>
             </div>
             <div row>
                 <div cell fixed style="width:40px;"></div>
                 <div cell medium>@Html.Words("navi.total")</div>
-                <div cell medium align="right">{{total()}}</div>
+                <div cell medium right>{{total()}}</div>
             </div>
         </div>
 
@@ -82,8 +82,8 @@
                 <div cell medium>
                     <wliu.text db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="MenuName"></wliu.text>
                 </div>
-                <div cell medium>
-                    <wliu.text right db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="ViewCount"></wliu.text>
+                <div cell medium right>
+                    <wliu.text db="ViewData.database" tb="AccessLog" guid="{{row.guid}}" col="ViewCount"></wliu.text>
                 </div>
             </div>
         </div>
