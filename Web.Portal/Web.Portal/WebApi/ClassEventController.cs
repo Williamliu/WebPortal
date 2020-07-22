@@ -158,7 +158,7 @@ namespace Web.Portal.WebApi.Controllers
                     break;
                 case "M16":
                     {
-                        Table ClassCalendar = new Table("ClassCalendar", "VW_PubClass_Calendar", Words("class.event"));
+                        Table ClassCalendar = new Table("ClassCalendar", "VW_Class_PubCalendar", Words("class.event"));
                         Meta dateId = new Meta { Name = "ClassId", DbName = "ClassId", Title = "ID", IsKey = true };
                         Meta classDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("col.classdate"), Type = EInput.Date };
                         Meta startTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Type = EInput.Time };

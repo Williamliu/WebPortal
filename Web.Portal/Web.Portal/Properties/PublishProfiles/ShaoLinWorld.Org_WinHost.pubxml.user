@@ -14,7 +14,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="appsettings.json">
-      <publishTime>07/12/2020 23:15:32</publishTime>
+      <publishTime>07/21/2020 15:27:59</publishTime>
     </File>
     <File Include="cs/Microsoft.CodeAnalysis.CSharp.resources.dll">
       <publishTime>09/12/2019 17:08:58</publishTime>
@@ -110,10 +110,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/19/2020 17:58:47</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>07/20/2020 20:44:50</publishTime>
+      <publishTime>07/21/2020 22:24:10</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>07/20/2020 20:44:50</publishTime>
+      <publishTime>07/21/2020 22:24:10</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
       <publishTime>07/19/2020 17:58:48</publishTime>
@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>07/20/2020 22:29:43</publishTime>
+      <publishTime>07/21/2020 22:24:36</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>07/20/2020 22:29:41</publishTime>
+      <publishTime>07/21/2020 22:24:33</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>07/20/2020 22:29:39</publishTime>
+      <publishTime>07/21/2020 22:24:15</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>07/20/2020 22:29:39</publishTime>
+      <publishTime>07/21/2020 22:24:17</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>07/20/2020 22:29:39</publishTime>
+      <publishTime>07/21/2020 22:24:15</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
       <publishTime>07/18/2020 00:20:16</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>07/20/2020 22:29:41</publishTime>
+      <publishTime>07/21/2020 22:24:25</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>07/20/2020 22:29:41</publishTime>
+      <publishTime>07/21/2020 22:24:25</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/angular.min.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -320,10 +320,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/19/2020 22:08:34</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.database.js">
-      <publishTime>07/19/2020 17:10:51</publishTime>
+      <publishTime>07/21/2020 10:36:05</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.layout.js">
-      <publishTime>07/20/2020 13:11:35</publishTime>
+      <publishTime>07/21/2020 21:46:25</publishTime>
     </File>
     <File Include="wwwroot/Resource/bootstrap/css/bootstrap-grid.min.css">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -449,13 +449,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.calendar.js">
-      <publishTime>07/19/2020 12:50:34</publishTime>
+      <publishTime>07/21/2020 11:01:48</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.com.css">
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.com.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
+    </File>
+    <File Include="wwwroot/Resource/jquery/jq.wliu.v1.calendar.js">
+      <publishTime>07/21/2020 21:57:33</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.v1.com.js">
       <publishTime>07/05/2020 23:15:03</publishTime>

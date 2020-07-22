@@ -129,6 +129,7 @@
     <Build Include="dbo\Stored Procedures\USP_RPT_AccessLog_MenuId.sql" />
     <Build Include="dbo\Stored Procedures\USP_RPT_AccessLog_IPAddress_MenuId.sql" />
     <Build Include="dbo\Views\VW_ActiveClass_List.sql" />
+    <Build Include="dbo\Views\VW_Class_PubCalendar.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connection\Sql2Local.scmp" />
