@@ -1220,6 +1220,26 @@ WLIU_NG.directive("wliu.navi", function () {
         }
     };
 });
+WLIU_NG.directive("wliu.total", function () {
+    return {
+        restrict: "E",
+        replace: true,
+        transclude: true,
+        scope: {
+            db: "=",
+            tb: "@"
+        },
+        template: [
+            '<div>',
+                '<span style="vertical-align:middle;">{{Words("navi.total")}}: </span>',
+                '<span style="font-size:1.2em; vertical-align:middle; font-weight:600;">{{db.tables[tb].navi.rowTotal}}</span>',
+            '</div>'
+        ].join(''),
+        controller: function ($scope, $window) {
+            $scope.Words = $window.Words;
+        }
+    };
+});
 
 WLIU_NG.directive("wliu.intdate", function () {
     return {

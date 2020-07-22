@@ -390,12 +390,12 @@ WLIU.Calendar.prototype = {
     Get: function () {
         this.events = [];
         if (this.url !== "" && this.isActive) {
-            var self        = this;
-            var ncal        = {};
-            ncal.isActive   = this.isActive;
-            ncal.start      = this.start;
-            ncal.end        = this.end;
-            ncal.data       = this.data;
+            var self = this;
+            var ncal = {};
+            ncal.isActive = this.isActive;
+            ncal.start = this.start;
+            ncal.end = this.end;
+            ncal.data = this.data;
             console.log(ncal);
             let defer = $.Deferred();
             AJAX.Post(self.url, ncal).then(data => {
@@ -435,7 +435,7 @@ WLIU.Calendar.prototype = {
             }).diag("show");
         }
     }
-}
+};
 WLIU.Event = function (event) {
     if ($.isPlainObject(event)) {
         this.id = event.id || 0;

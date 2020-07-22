@@ -16,7 +16,11 @@ namespace Web.Portal.Controllers
             this.Init("M15");
             return View();
         }
-
+        public IActionResult ClassCalendar()
+        {
+            this.Init("M16");
+            return View();
+        }
         protected override void InitDatabase(string menuId)
         {
         }

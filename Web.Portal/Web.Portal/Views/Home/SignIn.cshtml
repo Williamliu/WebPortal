@@ -17,7 +17,9 @@
                 $scope.ViewData.database.tables["UserRegister"].Empty();
                 $("div[wliu][flip]").flip("toggle");
             }
-            $scope.cancelCallback = function () { }
+            $scope.cancelCallback = function () {
+                $("div[wliu][flip]").flip("toggle");
+            }
             $scope.loginSuccess = function () {
                 window.location.href = "/Profile/MyAccount";
             }
@@ -73,7 +75,7 @@
                         <form.cancel h2 db="ViewData.database" tb="UserLogin" label="@Html.Words("button.cancel")" style="margin:0px 20px;"></form.cancel>
                     </div>
                     <div row style="margin-top:40px;">
-                        <a href="/Home/ResetPassword" style="margin-left:32px;font-size:24px;"><label>@Html.Words("forget.password")</label> <span style="color:#0275d8;text-decoration:underline;">@Html.Words("reset.password")</span></a>
+                        <a href="#" style="margin-left:32px;font-size:24px;"><label>@Html.Words("forget.password")</label> <span style="color:#0275d8;text-decoration:underline;">@Html.Words("reset.password")</span></a>
                     </div>
                 </div>
             </div>

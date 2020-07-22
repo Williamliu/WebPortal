@@ -60,9 +60,9 @@ namespace Library.V1.Entity
         public TimeSpan To { get; set; }
         public bool Status { get; set; }
         public int State { get; set; }
+        public string Subject { get; set; }
         public string Title { get; set; }
         public string Detail { get; set; }
-        public string Subject { get; set; }
         public string Color { get; set; }
 
     }

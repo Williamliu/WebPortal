@@ -1,0 +1,155 @@
+﻿@{
+    Layout = "_LayoutPublic_Calendar";
+}
+
+@section scripts {
+    <script src="~/resource/jquery/jq.wliu.v1.calendar.js"></script>
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database", "wliu_layout"]);
+
+        app.controller("myControl", function ($scope) {
+            viewData.LinkScope($scope);
+
+            $scope.reloadCalendar = function () {
+                $("div[wliu][calendar]").calendar({
+                    data: {
+                        CountryId: viewData.database.tables.ClassCalendar.filters["CountryFilter"].value1,
+                        SiteId: viewData.database.tables.ClassCalendar.filters["SiteFilter"].value1
+                    }
+                });
+            };
+
+            $scope.clickEnroll = function (guid) {
+                let classId = $scope.ViewData.database.tables.ClassList.refKey;
+            }
+
+            $scope.closeDiag = function () {
+                $("#detailInfo").diag("hide");
+            }
+        });
+
+        $(function () {
+            let today = new Date();
+            let dt = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+            let et = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+            $("div[wliu][calendar]").calendar({
+                lang: "en", start: dt, end: et,
+                url: "/api/ClassEvent/LoadCalendar",
+                data: { CountryId: -1, SiteId: -1 },
+                dateclick: function (evt, date, isActive) {
+                },
+                eventclick: function (evt, eid) {
+                    viewData.database.tables.ClassList.Clear();
+                    viewData.database.tables.ClassList.refKey = eid;
+                    viewData.database.tables.ClassList.firstPage().then(d => {
+                        $("#detailInfo").diag("show");
+                        viewData.Apply();
+                    });
+
+                    viewData.database.tables.ClassDetail.Clear();
+                    viewData.database.tables.ClassDetail.refKey = eid;
+                    viewData.database.tables.ClassDetail.firstPage().then(d => {
+                        $("#detailInfo").diag("show");
+                        viewData.Apply();
+                    });
+                },
+                change: function (evt, start, end, isActive) {
+                }
+            });
+        })
+        viewData.Init("/api/ClassEvent/InitClassCalendar").then(d => {
+            $("div[wliu][calendar]").calendar({
+                data: {
+                    CountryId: d.database.tables.ClassCalendar.filters["CountryFilter"].value1,
+                    SiteId: d.database.tables.ClassCalendar.filters["SiteFilter"].value1
+                }
+            });
+        });
+    </script>
+}
+<div ng-app="myApp" ng-controller="myControl">
+    <div class="container-fluid">
+        <ng-form>
+            <fieldset>
+                <legend>@Html.Words("search.by")</legend>
+                <filter.label db="ViewData.database" tb="ClassCalendar" col="CountryFilter"></filter.label>
+                <filter.select db="ViewData.database" tb="ClassCalendar" col="CountryFilter" ww="200px" reload="0" action="reloadCalendar()"></filter.select>
+                <filter.label db="ViewData.database" tb="ClassCalendar" col="SiteFilter"></filter.label>
+                <filter.fselect db="ViewData.database" tb="ClassCalendar" col="SiteFilter" ww="250px" fcol="CountryFilter" reload="0" action="reloadCalendar()"></filter.fselect>
+                <wliu.search db="ViewData.database" tb="ClassCalendar" action="reloadCalendar()"></wliu.search>
+            </fieldset>
+            <div wliu calendar style="margin-top:12px;"></div>
+        </ng-form>
+    </div>
+
+    <div wliu diag maskable maskclick movable resizable id="detailInfo" style="width:720px;">
+        <div head>@Html.Words("detail.information")</div>
+        <div body style="padding-top:3px;">
+            <ul id="d1" wliu tab9 color="salmon">
+                <li>@Html.Words("class.information")</li>
+                <li>@Html.Words("class.schedule")</li>
+            </ul>
+            <div wliu tab9 body>
+                <div style="min-height:400px;">
+                    <layout.card1 db="ViewData.database"
+                                  tb="ClassList"
+                                  guid="{{ViewData.database.tables.ClassList.CurrentGuid()}}"
+                                  subject="ClassTitle"
+                                  start="StartDate"
+                                  end="EndDate" `
+                                  site="SiteTitle"
+                                  address="Address"
+                                  phone="Phone"
+                                  email="Email"
+                                  notes="ClassNotes">
+                    </layout.card1>
+                </div>
+                <div style="min-height:400px;">
+                    <div wliu table grow shrink underline>
+                        <div row>
+                            <div head fixed style="width:40px;"></div>
+                            <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
+                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
+                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
+                            <div head medium><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
+                        </div>
+                        <div scroll-bar style="height:300px;">
+                            <div row ng-repeat="row in ViewData.database.tables.ClassDetail.rows">
+                                <div cell center fixed style="width:40px;">
+                                    <wliu.rowstatus db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}"></wliu.rowstatus>
+                                </div>
+                                <div cell fixed style="width:140px;">
+                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="ClassDate"></wliu.text>
+                                </div>
+                                <div cell fixed style="width:100px;">
+                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="StartTime"></wliu.text>
+                                </div>
+                                <div cell fixed style="width:100px;">
+                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="EndTime"></wliu.text>
+                                </div>
+                                <div cell medium nowrap>
+                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title"></wliu.text>
+                                </div>
+                            </div>
+                        </div>
+                        <div row>
+                            <wliu.total db="ViewData.database" tb="ClassDetail"></wliu.total>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display:block; text-align:center;">
+                <a href="javascript:void(0)" ng-click="clickEnroll()" class="btn btn-primary" style="margin:0px 6px;">@Html.Words("button.enroll")</a>
+                <a href="javascript:void(0)" ng-click="closeDiag()" class="btn btn-primary" style="margin:0px 6px;">@Html.Words("button.close")</a>
+            </div>
+        </div>
+    </div>
+
+    <table.error></table.error>
+    <form.error></form.error>
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+</div>

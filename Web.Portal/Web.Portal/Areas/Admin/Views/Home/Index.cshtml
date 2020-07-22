@@ -9,7 +9,9 @@
                 $scope.ViewData.database.tables["UserRegister"].Empty();
                 $("div[wliu][flip]").flip("toggle");
             }
-            $scope.cancelCallback = function () { }
+            $scope.cancelCallback = function () {
+                $("div[wliu][flip]").flip("toggle");
+            }
             $scope.loginSuccess = function () {
                 window.location.href = "/Admin/Profile/MyAccount";
             }
