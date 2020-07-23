@@ -1,4 +1,8 @@
-﻿@section scripts {
+﻿@{
+    WebUser PubUser = Context.Items["PubUser"] as WebUser;
+}
+
+@section scripts {
     <script>
         var viewData = new WLIU.ViewData();
         var gallery = new WLIU.Gallery();
@@ -21,7 +25,10 @@
                 $("div[wliu][flip]").flip("toggle");
             }
             $scope.loginSuccess = function () {
-                window.location.href = "/Profile/MyAccount";
+                if(UrlParams("url")!="")
+                    window.location.href = UrlParams("url");
+                else
+                    window.location.href = "/Profile/MyAccount";
             }
         });
 

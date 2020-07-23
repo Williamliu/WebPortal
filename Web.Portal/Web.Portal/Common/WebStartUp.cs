@@ -360,7 +360,6 @@ namespace Web.Portal.Common
                 #endregion
             }
             httpContext.Items.Add("PubUser", publicUser);
-            httpContext.Items.Add("IsPrivate", publicUser.Id > 0 && !string.IsNullOrWhiteSpace(guid));
             return publicUser;
         }
 

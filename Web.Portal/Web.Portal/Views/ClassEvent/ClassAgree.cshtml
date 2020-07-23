@@ -1,0 +1,51 @@
+﻿@{
+    WebUser PubUser = Context.Items["PubUser"] as WebUser;
+}
+@model Table
+@section scripts {
+    <script>
+        function goNext() {
+            if ($("#ihaveread").is(":checked") && $("#iagree").is(":checked")) {
+                if (@PubUser.Id > 0)
+                    window.location.href = "/ClassEvent/ClassPayment/" + @ViewBag.ClassId;
+                else
+                    window.location.href = "/Home/SignIn?url=/ClassEvent/ClassPayment/" + @ViewBag.ClassId;
+            } else {
+                $("#wliuDiagFormError").diag({ content: "Please read the agreement.<br>Please contact us if you have any concern." }).diag("show");
+            }
+
+        }
+    </script>
+}
+
+<center>
+    <h2>@(Model.Rows[0]?.Columns["AgreeTitle"]?.Value ?? "")</h2>
+</center>
+<br />
+@Html.Raw(Model.Rows[0]?.Columns["Agreement"]?.Value ?? "")
+
+<br />
+<div style="display:block; text-align:center;">
+    <span wliu><input wliu type="checkbox" id="ihaveread" /><label wliu checkbox for="ihaveread">@Html.Words("i.have.read")</label></span>
+    <span wliu><input wliu type="checkbox" id="iagree" /><label wliu checkbox for="iagree">@Html.Words("i.agree")</label></span>
+</div>
+<br />
+<div style="display:block; text-align:center;">
+    <a href="javascript:goNext()" class="btn btn-primary">@Html.Words("button.next")</a>
+</div>
+
+<div id="wliuDiagFormError" wliu diag maskable movable diag-toggle="wliuDiagFormError">
+    <div head>
+        <a info></a>
+    </div>
+    <div body style="min-height:60px;">
+
+    </div>
+    <center><a wliu button blue diag-toggle="wliuDiagFormError">@Html.Words("button.close")</a></center>
+</div>
+
+
+<br />
+<br />
+<br />
+<br />

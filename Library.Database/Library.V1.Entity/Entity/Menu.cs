@@ -143,6 +143,8 @@ namespace Library.V1.Entity
         public void InitHide()
         {
             this.HideMenus.Add(new Menu { MenuId = "SignIn", Title = LanguageHelper.Words("SignIn"),  Url = "/Home/SignIn" });
+            this.HideMenus.Add(new Menu { MenuId = "ClassAgree", Title = LanguageHelper.Words("class.agreement"), Url = "/ClassEvent/ClassAgree/{id}" });
+            this.HideMenus.Add(new Menu { MenuId = "ClassPayment", Title = LanguageHelper.Words("class.ClassPayment"), Url = "/ClassEvent/ClassPayment/{id}" });
         }
     }
 

@@ -131,6 +131,60 @@ WLIU_NG.directive("layout.card1", function ($sce) {
     };
 });
 
+WLIU_NG.directive("layout.card2", function ($sce) {
+    return {
+        restrict: "E",
+        replace: true,
+        transclude: true,
+        scope: {
+            db: "=",
+            tb: "@",
+            guid: "@",
+            imgsrc: "@",
+            subject: "@",
+            number: "@",
+            start: "@",
+            end: "@",
+            site: "@",
+            address: "@",
+            phone: "@",
+            email: "@",
+            notes: "@",
+            actionenroll: "&",
+            actiondetail: "&",
+            actionclose: "&",
+            icons: "@"
+        },
+        template: [
+            '<div wliu card noshadow>',
+                '<div wliu card head>',
+                    '<img src="{{db.tables[tb].GuidColumn(guid, imgsrc).value?db.tables[tb].GuidColumn(guid, imgsrc).value:\'/Resource/style/Images/ShaolinBackground/baduanjing.jpg\'}}">',
+                '</div>',
+                '<div wliu card title="{{db.tables[tb].GuidColumn(guid, subject).value}} {{db.tables[tb].GuidColumn(guid, number).value}}">{{db.tables[tb].GuidColumn(guid, subject).value}} {{db.tables[tb].GuidColumn(guid, number).value}}</div>',
+                '<div wliu card body>',
+                    '<p style="font-size:20px;color:orangered;" title="{{db.tables[tb].metas[start].description}}: {{db.tables[tb].GuidColumn(guid, start).value}} ~ {{db.tables[tb].GuidColumn(guid, end).value}}">',
+                    '{{db.tables[tb].metas[start].description}}: {{db.tables[tb].GuidColumn(guid, start).value}} ~ {{db.tables[tb].GuidColumn(guid, end).value}}',
+                    '</p > ',
+                    '<p title="{{db.tables[tb].metas[site].title}}: {{db.tables[tb].GuidColumn(guid, site).value}}">',
+                    '{{db.tables[tb].metas[site].title}}: {{db.tables[tb].GuidColumn(guid, site).value}}',
+                    '</p>',
+                    '<p title="{{db.tables[tb].metas[address].title}}: {{db.tables[tb].GuidColumn(guid, address).value}}">',
+                    '{{db.tables[tb].metas[address].title}}: {{db.tables[tb].GuidColumn(guid, address).value}}',
+                    '</p>',
+                    '<p title="{{db.tables[tb].metas[phone].title}}: {{db.tables[tb].GuidColumn(guid, phone).value}} {{db.tables[tb].GuidColumn(guid, email).value}}">',
+                    '{{db.tables[tb].metas[phone].title}}: {{db.tables[tb].GuidColumn(guid, phone).value}} <a href="{{db.tables[tb].GuidColumn(guid, email).value}}">{{db.tables[tb].GuidColumn(guid, email).value}}</a>',
+                    '</p>',
+                    '<p ng-if="db.tables[tb].GuidColumn(guid, notes).value" title="{{db.tables[tb].metas[notes].title}}: {{db.tables[tb].GuidColumn(guid, note).value}}">',
+                    '<span style="color:orangered;">{{db.tables[tb].metas[notes].title}}</span>: {{db.tables[tb].GuidColumn(guid, notes).value}}',
+                    '</p>',
+                '</div>',
+            '</div>'
+        ].join(''),
+        controller: function ($scope, $window) {
+            $scope.Words = $window.Words;
+        }
+    };
+});
 
 
 WLIU_NG.directive("layout.cardimg", function ($sce) {

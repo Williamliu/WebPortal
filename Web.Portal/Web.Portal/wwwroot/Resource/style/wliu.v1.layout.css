@@ -978,3 +978,33 @@ div[wliu][card][nohead] > div[wliu][card][body] p {
     height:         initial;
     font-size:      20px;
 }
+
+div[wliu][card][noshadow] {
+    min-height: 420px;
+    height:     initial;
+    box-shadow: none;
+}
+div[wliu][card][noshadow] > div[wliu][card][head] {
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    height: 200px;
+    box-shadow: initial;
+    margin: 0px;
+    padding: 0px;
+}
+div[wliu][card][noshadow] > div[wliu][card][head] > img {
+    display:    inline-block;
+    width:      initial;
+    height:     100%;
+    object-fit: contain;
+}
+div[wliu][card][noshadow] > div[wliu][card][title] {
+    top:    200px;
+}
+
+div[wliu][card][noshadow] > div[wliu][card][body] {
+    top:   240px;
+}

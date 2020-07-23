@@ -99,6 +99,15 @@ namespace Web.Portal.WebApi.Controllers
             return Ok(this.DB.ReloadTable(jsTable));
         }
 
+        [HttpGet("InitClassPayment/{id}")]
+        public IActionResult InitClassPayment(int Id)
+        {
+            this.Init("ClassPayment");
+            this.DB.Tables["ClassList"].RefKey = Id;
+            this.DB.Tables["ClassDetail"].RefKey = Id;
+            this.DB.FillAll();
+            return Ok(this.DB);
+        }
         protected override void InitDatabase(string menuId)
         {
             switch (menuId)
@@ -198,8 +207,12 @@ namespace Web.Portal.WebApi.Controllers
                         Meta phone = new Meta { Name = "Phone", DbName = "Phone", Title = Words("col.contact"), IsLang = true, Type = EInput.String };
                         Meta address = new Meta { Name = "Address", DbName = "Address", Title = Words("col.address"), IsLang = true, Type = EInput.String };
                         Meta photo = new Meta { Name = "Photo", DbName = "Id", Title = Words("col.photo"), Description = "ClassEvent|Medium", Type = EInput.ImageUrl };
+                        Meta isFree = new Meta { Name = "IsFree", DbName = "IsFree", Title = Words("col.isfree"), Type = EInput.Bool };
+                        Meta feeAmount = new Meta { Name = "FeeAmount", DbName = "FeeAmount", Title = Words("col.feeamount"), Type = EInput.Float };
+                        Meta currency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String };
 
-                        classList.AddMetas(id, className, classTitle, siteTitle, classNotes, startDate, endDate, email, phone, address, photo);
+                        classList.AddMetas(id, className, classTitle, siteTitle, classNotes, startDate, endDate, email, phone, address, photo)
+                                    .AddMetas(isFree, feeAmount, currency);
                         classList.Navi.IsActive = false;
                         classList.AddRelation(new Relation(ERef.O2O, "Id", -1));
                         classList.GetUrl = "/api/ClassEvent/ReloadClassList1";
@@ -228,6 +241,44 @@ namespace Web.Portal.WebApi.Controllers
 
 
                         this.DB.AddCollections(CountryList, SiteList).AddTables(ClassCalendar, classList, ClassDetail);
+                    }
+                    break;
+                case "ClassPayment":
+                    {
+                        Table classList = new Table("ClassList", "VW_ActiveClass_List", Words("class.list"));
+                        Meta id = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true };
+                        Meta className = new Meta { Name = "ClassName", DbName = "ClassName", Title = Words("col.class.name"), Type = EInput.String };
+                        Meta classTitle = new Meta { Name = "ClassTitle", DbName = "ClassTitle", Title = Words("class.title"), IsLang = true, Type = EInput.String };
+                        Meta classNotes = new Meta { Name = "ClassNotes", DbName = "ClassNotes", Title = Words("col.notes"), IsLang = true, Type = EInput.String };
+                        Meta siteTitle = new Meta { Name = "SiteTitle", DbName = "SiteTitle", Title = Words("col.center"), IsLang = true, Type = EInput.String };
+                        Meta startDate = new Meta { Name = "StartDate", DbName = "StartDate", Title = Words("start.date"), Description = Words("col.date"), Type = EInput.Date };
+                        Meta endDate = new Meta { Name = "EndDate", DbName = "EndDate", Title = Words("end.date"), Type = EInput.Date };
+                        Meta email = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), IsLang = true, Type = EInput.String };
+                        Meta phone = new Meta { Name = "Phone", DbName = "Phone", Title = Words("col.contact"), IsLang = true, Type = EInput.String };
+                        Meta address = new Meta { Name = "Address", DbName = "Address", Title = Words("col.address"), IsLang = true, Type = EInput.String };
+                        Meta photo = new Meta { Name = "Photo", DbName = "Id", Title = Words("col.photo"), Description = "ClassEvent|Medium", Type = EInput.ImageUrl };
+
+                        classList.AddMetas(id, className, classTitle, siteTitle, classNotes, startDate, endDate, email, phone, address, photo);
+                        classList.Navi.IsActive = false;
+                        classList.AddRelation(new Relation(ERef.O2O, "Id", -1));
+
+
+                        Table ClassDetail = new Table("ClassDetail", "Class_Detail", Words("class.detail"));
+                        Meta did = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
+                        Meta dtitle = new Meta { Name = "Title", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang = true, MaxLength = 64 };
+                        Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Required = true, Order = "ASC", Type = EInput.Date };
+                        Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Required = true, Type = EInput.Time };
+                        Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Required = true, Type = EInput.Time };
+
+                        ClassDetail.AddMetas(did, dtitle, dclassDate, dstartTime, dendTime);
+                        ClassDetail.Navi.IsActive = false;
+                        ClassDetail.AddRelation(new Relation(ERef.O2M, "ClassId", -1));
+                        ClassDetail.Navi.Order = "ASC";
+                        ClassDetail.Navi.By = "ClassDate";
+                        ClassDetail.AddQueryKV("Deleted", false).AddQueryKV("Active", true);
+
+                        this.DB.AddTables(classList, ClassDetail);
+
                     }
                     break;
             }

@@ -1,0 +1,116 @@
+﻿
+@section scripts {
+    <script src="https://www.paypal.com/sdk/js?client-id=AWlRBR75SpX0gnewFUFC-v9PQmM6fmuDpKjfSK0X_3ILNz9Pfi4Il7EmEHchQLHcFC-ghUtfEHDxA0oQ&currency=@ViewBag.Currency"></script>
+    <script>
+
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database", "wliu_layout"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+        });
+        viewData.Init("/api/ClassEvent/InitClassPayment/@ViewBag.ClassId").then(d => {
+            let amount = d.database.tables.ClassList.CurrentValue("FeeAmount");
+            let currency = d.database.tables.ClassList.CurrentValue("Currency");
+        });
+
+        $(function () {
+            // Add your client ID and secret
+            var PAYPAL_CLIENT = 'AWlRBR75SpX0gnewFUFC-v9PQmM6fmuDpKjfSK0X_3ILNz9Pfi4Il7EmEHchQLHcFC-ghUtfEHDxA0oQ';
+            var PAYPAL_SECRET = 'EM7h37mMoW5BLFy-sl9uf3FHu88Kl_tJ3QqtraFVV9ODcgX6GNqTH02uJJlwdaJJdW6j8Ud8n07vAyRD';
+            // Point your server to the PayPal API
+            var PAYPAL_ORDER_API = 'https://api.paypal.com/v2/checkout/orders/';
+
+            paypal.Buttons({
+                    onCancel: function (data) {
+                        console.log('Cancel');
+                        console.log(data);
+                    },
+                    createOrder: function (data, actions) {
+                        // This function sets up the details of the transaction, including the amount and line item details.
+                        return actions.order.create({
+                            intent: 'CAPTURE',
+                            purchase_units: [{
+                                amount: {
+                                    value: "@ViewBag.Amount",
+                                    currency_code: "@ViewBag.Currency"
+                                }
+                            }],
+                        });
+                    },
+                    onApprove: function (data, actions) {
+                        // This function captures the funds from the transaction.
+                        return actions.order.capture().then(function (details) {
+                            // This function shows a transaction success message to your buyer.
+                            console.log(details);
+                            alert('Transaction completed by ' + details.payer.name.given_name);
+                        });
+                    }
+                }).render('#paypal-button-container');
+        });
+
+
+
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl">
+    <ng-form>
+        <table cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td width="80%" valign="top">
+                    <layout.card2 db="ViewData.database"
+                                  tb="ClassList"
+                                  guid="{{ViewData.database.tables.ClassList.rowGuid}}"
+                                  imgsrc="Photo"
+                                  subject="ClassTitle"
+                                  number="ClassName"
+                                  start="StartDate"
+                                  end="EndDate"
+                                  site="SiteTitle"
+                                  address="Address"
+                                  phone="Phone"
+                                  notes="ClassNotes" 
+                                  email="Email">
+                    </layout.card2>
+                    <span wliu text h2>@Html.Words("class.schedule")</span>
+                    <div wliu table grow shrink underline>
+                        <div row>
+                            <div head fixed style="width:40px;"></div>
+                            <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
+                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
+                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
+                            <div head medium><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
+                        </div>
+                        <div row ng-repeat="row in ViewData.database.tables.ClassDetail.rows">
+                            <div cell center fixed style="width:40px;">
+                                <wliu.rowstatus db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}"></wliu.rowstatus>
+                            </div>
+                            <div cell fixed style="width:140px;">
+                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="ClassDate"></wliu.text>
+                            </div>
+                            <div cell fixed style="width:100px;">
+                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="StartTime"></wliu.text>
+                            </div>
+                            <div cell fixed style="width:100px;">
+                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="EndTime"></wliu.text>
+                            </div>
+                            <div cell medium nowrap>
+                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title"></wliu.text>
+                            </div>
+                        </div>
+                        <div row>
+                            <wliu.total db="ViewData.database" tb="ClassDetail"></wliu.total>
+                        </div>
+                    </div>
+
+                </td>
+                <td valign="top" align="center" style="padding-left:20px;">
+                    <div style="display:block; width:320px;">
+                        <div id="paypal-button-container"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </ng-form>
+</div>
+

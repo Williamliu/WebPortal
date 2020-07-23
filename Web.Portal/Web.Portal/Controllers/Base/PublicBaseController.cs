@@ -22,6 +22,11 @@ namespace Web.Portal.Controllers
         {
             this.AppConfig = appConfig;
         }
+
+        protected string Words(string keyword)
+        {
+            return LanguageHelper.Words(keyword);
+        }
         #region Methods
         protected abstract void InitDatabase(string menuId);
         protected void Init(string menuId)

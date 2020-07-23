@@ -1,4 +1,8 @@
-﻿@section scripts {
+﻿@{
+    WebUser PubUser = Context.Items["PubUser"] as WebUser;
+}
+
+@section scripts {
     <script>
         var viewData = new WLIU.ViewData();
         var app = angular.module("myApp", ["wliu_database", "wliu_layout"]);
@@ -11,11 +15,15 @@
                 $scope.ViewData.database.tables.ClassDetail.Reload().then(d => {
                     $scope.$apply(); $("#detailInfo").diag("show");
                 }).catch(e => { $scope.$apply(); });
-                
+
+            };
+            $scope.enroll = function () {
+                let refKey = $scope.ViewData.database.tables.ClassList.CurrentKey();
+                window.location.href = `/ClassEvent/ClassAgree/${refKey}`;
             };
             $scope.closeDiag = function () {
                 $("#detailInfo").diag("hide");
-            }
+            };
         });
         viewData.Init("/api/ClassEvent/InitClassList");
     </script>
@@ -31,7 +39,6 @@
             <filter.fselect db="ViewData.database" tb="ClassList" col="SiteFilter" ww="250px" fcol="CountryFilter"></filter.fselect>
             <wliu.search db="ViewData.database" tb="ClassList"></wliu.search>
         </fieldset>
-
         <div wliu table grow shrink underline style="margin-top:12px;">
             <div row>
                 <div cell style="background-color:#dddddd;">
@@ -54,9 +61,9 @@
                          address="Address"
                          phone="Phone"
                          email="Email"
-                         actiondetail="detail()",
-                         icons="enroll,detail"
-            >
+                         actiondetail="detail()"
+                         actionenroll="enroll()" 
+                         icons="enroll,detail">
             </layout.card>
         </div>
         <!-- Grid row -->
@@ -76,6 +83,7 @@
                                   tb="ClassList"
                                   guid="{{ViewData.database.tables.ClassList.CurrentGuid()}}"
                                   subject="ClassTitle"
+                                  number="ClassName"
                                   start="StartDate"
                                   end="EndDate" `
                                   site="SiteTitle"
@@ -114,7 +122,7 @@
                             </div>
                         </div>
                         <div row>
-                            <wliu.total db="ViewData.database" tb="ClassDetail" ></wliu.total>
+                            <wliu.total db="ViewData.database" tb="ClassDetail"></wliu.total>
                         </div>
                     </div>
                 </div>

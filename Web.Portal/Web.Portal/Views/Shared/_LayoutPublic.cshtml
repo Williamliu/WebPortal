@@ -1,5 +1,5 @@
 ﻿@{ 
-    bool IsPrivate = Context.Items["IsPrivate"].GetBool() ?? false;
+    WebUser PubUser = Context.Items["PubUser"] as WebUser;
 }
 
 <!DOCTYPE html>
@@ -92,7 +92,7 @@
                         <td style="padding-left:5px; padding-right:5px;">|</td>
                         <td>
                             @{ 
-                                if (IsPrivate)
+                                if (PubUser.Id>0)
                                 {
                                     <a wliu btn-drop href="/Profile/MyAccount">@Html.Words("my.account")</a>
                                 } else {

@@ -56,6 +56,11 @@ function CreateToken(length) {
     return b.join("");
 }
 
+function UrlParams(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
 /* string fucntion */
 String.prototype.nl2br = function () {
     var str = this.toString();
