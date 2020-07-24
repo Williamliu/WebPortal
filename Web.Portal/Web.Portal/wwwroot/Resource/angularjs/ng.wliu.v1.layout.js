@@ -150,10 +150,9 @@ WLIU_NG.directive("layout.card2", function ($sce) {
             phone: "@",
             email: "@",
             notes: "@",
-            actionenroll: "&",
-            actiondetail: "&",
-            actionclose: "&",
-            icons: "@"
+            isfree: "@",
+            amount: "@",
+            currency:"@"
         },
         template: [
             '<div wliu card noshadow>',
@@ -174,8 +173,14 @@ WLIU_NG.directive("layout.card2", function ($sce) {
                     '<p title="{{db.tables[tb].metas[phone].title}}: {{db.tables[tb].GuidColumn(guid, phone).value}} {{db.tables[tb].GuidColumn(guid, email).value}}">',
                     '{{db.tables[tb].metas[phone].title}}: {{db.tables[tb].GuidColumn(guid, phone).value}} <a href="{{db.tables[tb].GuidColumn(guid, email).value}}">{{db.tables[tb].GuidColumn(guid, email).value}}</a>',
                     '</p>',
-                    '<p ng-if="db.tables[tb].GuidColumn(guid, notes).value" title="{{db.tables[tb].metas[notes].title}}: {{db.tables[tb].GuidColumn(guid, note).value}}">',
+                    '<p ng-if="db.tables[tb].GuidColumn(guid, notes).value" title="{{db.tables[tb].metas[notes].title}}: {{db.tables[tb].GuidColumn(guid, notes).value}}">',
                     '<span style="color:orangered;">{{db.tables[tb].metas[notes].title}}</span>: {{db.tables[tb].GuidColumn(guid, notes).value}}',
+                    '</p>',
+                    '<p ng-if="db.tables[tb].GuidColumn(guid, isfree).value" title="{{Words(\'col.feeamount\')}}: {{Words(\'col.free\')}}">',
+                        '<span style="color:black;font-size:24px;">{{Words(\'col.feeamount\')}}: {{Words(\'col.free\')}}</span>',
+                    '</p>',
+                    '<p ng-if="!db.tables[tb].GuidColumn(guid, isfree).value" title="{{Words(\'col.feeamount\')}}: ${{db.tables[tb].GuidColumn(guid, amount).value}} {{db.tables[tb].GuidColumn(guid, currency).value}}">',
+                        '<span style="color:black;font-size:24px;">{{Words(\'col.feeamount\')}}: ${{db.tables[tb].GuidColumn(guid, amount).value}} {{db.tables[tb].GuidColumn(guid, currency).value}}</span>',
                     '</p>',
                 '</div>',
             '</div>'

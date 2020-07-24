@@ -103,11 +103,24 @@ namespace Web.Portal.WebApi.Controllers
         public IActionResult InitClassPayment(int Id)
         {
             this.Init("ClassPayment");
-            this.DB.Tables["ClassList"].RefKey = Id;
+            this.DB.Tables["ClassList"].Filters["ClassId"].Value1 = Id;
             this.DB.Tables["ClassDetail"].RefKey = Id;
             this.DB.FillAll();
             return Ok(this.DB);
         }
+        [HttpPost("SaveClassEnroll")]
+        public IActionResult SaveClassEnroll(JSTable jsTable)
+        {
+            this.Init("ClassPayment");
+            return Ok(this.DB.SaveTable(jsTable));
+        }
+        [HttpPost("SaveClassUserPayment")]
+        public IActionResult SaveClassUserPayment(JSTable jsTable)
+        {
+            this.Init("ClassPayment");
+            return Ok(this.DB.SaveTable(jsTable));
+        }
+
         protected override void InitDatabase(string menuId)
         {
             switch (menuId)
@@ -245,7 +258,7 @@ namespace Web.Portal.WebApi.Controllers
                     break;
                 case "ClassPayment":
                     {
-                        Table classList = new Table("ClassList", "VW_ActiveClass_List", Words("class.list"));
+                        Table classList = new Table("ClassList", "USP_Class_UserPayment", Words("class.list"), "", ESource.StoreProcedure);
                         Meta id = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true };
                         Meta className = new Meta { Name = "ClassName", DbName = "ClassName", Title = Words("col.class.name"), Type = EInput.String };
                         Meta classTitle = new Meta { Name = "ClassTitle", DbName = "ClassTitle", Title = Words("class.title"), IsLang = true, Type = EInput.String };
@@ -257,11 +270,17 @@ namespace Web.Portal.WebApi.Controllers
                         Meta phone = new Meta { Name = "Phone", DbName = "Phone", Title = Words("col.contact"), IsLang = true, Type = EInput.String };
                         Meta address = new Meta { Name = "Address", DbName = "Address", Title = Words("col.address"), IsLang = true, Type = EInput.String };
                         Meta photo = new Meta { Name = "Photo", DbName = "Id", Title = Words("col.photo"), Description = "ClassEvent|Medium", Type = EInput.ImageUrl };
+                        Meta isfree = new Meta { Name = "IsFree", DbName = "IsFree", Title = Words("col.isfree"), Type = EInput.Bool };
+                        Meta amount = new Meta { Name = "FeeAmount", DbName = "FeeAmount", Title = Words("col.feeamount"), Type = EInput.Float };
+                        Meta oweamount = new Meta { Name = "OweAmount", DbName = "OweAmount", Title = Words("col.owe.amount"), Type = EInput.Float };
+                        Meta currency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String };
 
-                        classList.AddMetas(id, className, classTitle, siteTitle, classNotes, startDate, endDate, email, phone, address, photo);
-                        classList.Navi.IsActive = false;
-                        classList.AddRelation(new Relation(ERef.O2O, "Id", -1));
+                        Filter f1 = new Filter() { Name = "ClassId", SqlParam = "ClassId", Title = Words("col.class.id"), Type = EFilter.Int, Compare = ECompare.Equal };
+                        Filter f2 = new Filter() { Name = "UserId", SqlParam = "UserId", Title = Words("col.userid"), Type = EFilter.Int, Compare = ECompare.Equal, Value1 = this.DB.User.Id};
 
+                        classList.AddMetas(id, className, classTitle, siteTitle, classNotes, startDate, endDate, email, phone, address, photo)
+                                 .AddMetas(isfree, amount, oweamount, currency);
+                        classList.AddFilters(f1, f2);
 
                         Table ClassDetail = new Table("ClassDetail", "Class_Detail", Words("class.detail"));
                         Meta did = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
@@ -277,7 +296,55 @@ namespace Web.Portal.WebApi.Controllers
                         ClassDetail.Navi.By = "ClassDate";
                         ClassDetail.AddQueryKV("Deleted", false).AddQueryKV("Active", true);
 
-                        this.DB.AddTables(classList, ClassDetail);
+
+                        Table classEnroll = new Table("ClassEnroll", "Class_Enroll", Words("class.enroll"));
+                        // Meta Data
+                        Meta eid = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true, Type = EInput.Read };
+                        Meta eclassId = new Meta { Name = "ClassId", DbName = "ClassId", Title = Words("col.classid") };
+                        Meta ememberId = new Meta { Name = "UserId", DbName = "UserId", Title = Words("col.userid") };
+
+                        Meta egroup = new Meta { Name = "Grp", DbName = "Grp", Title = Words("col.grp"), Type = EInput.String, MaxLength = 16, Order = "ASC" };
+                        Meta eisPaid = new Meta { Name = "IsPaid", DbName = "IsPaid", Title = Words("col.ispaid"), Description = Words("col.ispaid.yesno"), Type = EInput.Bool, Order = "DESC" };
+                        Meta epaidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paiddate"), Type = EInput.Read, Sync = true, Order = "ASC" };
+                        Meta epaidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paidinfo"), Type = EInput.Float, MaxLength = 18 };
+                        Meta epaidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paidinvoice"), Type = EInput.String, MaxLength = 32, Order = "ASC" };
+                        classEnroll.AddMetas(eid, eclassId, ememberId, egroup, eisPaid, epaidDate, epaidAmount, epaidInvoice);
+                        // Navi 
+                        classEnroll.Navi.IsActive = false;
+                        classEnroll.AddRelation(new Relation(ERef.O2O, "UserId", this.DB.User.Id));
+                        classEnroll.SaveUrl = "/api/ClassEvent/SaveClassEnroll";
+
+                        classEnroll.AddInsertKV("Deleted", false)
+                                   .AddInsertKV("Active", true)
+                                   .AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
+
+
+
+                        Table Payment = new Table("Payment", "Class_UserPayment", Words("class.user.payment"));
+                        // Meta Data
+                        Meta pid = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true, Type = EInput.Read };
+                        Meta pclassId = new Meta { Name = "ClassId", DbName = "ClassId", Title = Words("col.classid"), Required=true, Type=EInput.Int };
+                        Meta puserId = new Meta { Name = "UserId", DbName = "UserId", Title = Words("col.userid"), Required = true, Type = EInput.Int };
+
+                        Meta ppayer = new Meta { Name = "Payer", DbName = "Payer", Title = Words("col.payer"), Type = EInput.String, MaxLength = 128 };
+                        Meta ppaydate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EInput.Long };
+                        Meta ppaidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paid.amount"), Type = EInput.Float, MaxLength = 18 };
+                        Meta ppaidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paid,invoice"), Type = EInput.String, MaxLength = 64 };
+                        Meta ppaidMethod = new Meta { Name = "PaidMethod", DbName = "PaidMethod", Title = Words("col.paid.method"), Type = EInput.String, MaxLength = 64 };
+                        Meta ppaidStatus = new Meta { Name = "PaidStatus", DbName = "PaidStatus", Title = Words("col.paid.status"), Type = EInput.String, MaxLength = 64 };
+                        Meta pisSuccess = new Meta { Name = "IsSuccess", DbName = "IsSuccess", Title = Words("col.paid.is.success"), Type = EInput.Bool };
+                        Meta ptrackNumber = new Meta { Name = "TrackNumber", DbName = "TrackNumber", Title = Words("col.track.number"), Type = EInput.String, MaxLength = 256 };
+                        Meta ptrackMessage = new Meta { Name = "TrackMessage", DbName = "TrackMessage", Title = Words("col.track.message"), Type = EInput.String };
+                        Payment.AddMetas(pid, pclassId, puserId, ppayer, ppaydate, ppaidAmount, ppaidInvoice, ppaidMethod, ppaidStatus, pisSuccess, ptrackNumber, ptrackMessage);
+                        // Navi 
+                        Payment.Navi.IsActive = false;
+                        Payment.AddRelation(new Relation(ERef.O2O, "UserId", -1));
+                        Payment.SaveUrl = "/api/ClassEvent/SaveClassUserPayment";
+
+                        Payment.AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
+
+
+                        this.DB.AddTables(classList, ClassDetail, classEnroll, Payment);
 
                     }
                     break;

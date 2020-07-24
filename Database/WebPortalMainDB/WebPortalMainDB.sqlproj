@@ -130,10 +130,14 @@
     <Build Include="dbo\Stored Procedures\USP_RPT_AccessLog_IPAddress_MenuId.sql" />
     <Build Include="dbo\Views\VW_ActiveClass_List.sql" />
     <Build Include="dbo\Views\VW_Class_PubCalendar.sql" />
+    <Build Include="dbo\Tables\Class_UserPayment.sql" />
+    <Build Include="dbo\Views\VW_Class_Agreement.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Class_UserPayment.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connection\Sql2Local.scmp" />
     <None Include="Backup\ReadMe.txt" />
-    <None Include="Backup\MainDB_2020-07-21.bak" />
+    <None Include="Backup\MainDB_2020-07-23.bak" />
+    <None Include="Connection\Local2Product.scmp" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
-﻿CREATE VIEW [dbo].[VW_ActiveClass_List]
+﻿
+CREATE VIEW [dbo].[VW_ActiveClass_List]
 AS
 SELECT 
 	  Class.Id,
@@ -30,12 +31,16 @@ SELECT
 			GState.Detail_cn, IIF(ISNULL(GState.Detail_cn, '')='','',', '), 
 			GCountry.Detail_cn, IIF(ISNULL(GCountry.Detail_cn,'')='','',', '),
 			GSite.Postal
-			) AS Address_cn
+			) AS Address_cn,
+	  ISNULL(Class.IsFree, 0) AS IsFree,
+	  ISNULL(Class.FeeAmount,0) AS FeeAmount,
+	  ISNULL(GCategoryItem.Detail_en, '') AS Currency
   FROM Class
   INNER JOIN Course ON Course.Id = Class.CourseId AND Course.Deleted=0 AND Course.Active=1
   INNER JOIN GSite ON GSite.Id = Course.SiteId AND GSite.Deleted=0 AND GSite.Active=1
   LEFT JOIN GState ON GState.Id = GSite.State
   LEFT JOIN GCountry ON GCountry.Id = GState.CountryId
+  LEFT JOIN GCategoryItem ON GCategoryItem.Id = Class.Currency
   WHERE 
 	Class.Deleted=0 AND 
 	Class.Active=1 AND

@@ -297,6 +297,9 @@ Date.prototype.ymd = function () {
 Date.prototype.ymdString = function () {
     return this.getFullYear() + "-" +  (parseInt(this.getMonth()) + 1) + "-" + this.getDate();
 };
+Date.prototype.ymdhis = function () {
+    return this.format("Y-m-d H:i:s");
+};
 
 Date.replaceChars = {
     shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

@@ -7,15 +7,17 @@
     [IsPaid]      BIT          NULL,
     [PaidDate]    BIGINT       NULL,
     [PaidAmount]  MONEY        NULL,
-    [PaidMethod]  INT          NULL,
-    [PaidInvoice] VARCHAR (32) NULL,
-    [PaidCard]    VARCHAR (32) NULL,
+    [PaidMethod]  VARCHAR (64) NULL,
+    [PaidInvoice] VARCHAR (64) NULL,
+    [PaidCard]    VARCHAR (64) NULL,
     [Active]      BIT          NULL,
     [Deleted]     BIT          NULL,
     [CreatedTime] BIGINT       NULL,
     [LastUpdated] BIGINT       NULL,
     CONSTRAINT [PK_Class_Enroll] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
 
 
 GO

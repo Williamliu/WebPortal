@@ -134,6 +134,15 @@ namespace Library.V1.Common
         {
             try
             {
+                if (val.GetType().ToString() == "System.Boolean")
+                {
+                    bool ok = (bool)val;
+                    if (ok) 
+                        return 1;
+                    else
+                        return 0;
+                }
+
                 float nv = default;
                 if (float.TryParse(val.GetString(), out nv))
                     return (int)nv;

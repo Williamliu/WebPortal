@@ -970,6 +970,7 @@ div[wliu][card][nohead] > div[wliu][card][title] {
 div[wliu][card][nohead] > div[wliu][card][body] {
     top:            64px;
     overflow-y:     auto;
+    bottom:         0px;
 }
 div[wliu][card][nohead] > div[wliu][card][body] p {
     white-space:    initial;
@@ -980,7 +981,7 @@ div[wliu][card][nohead] > div[wliu][card][body] p {
 }
 
 div[wliu][card][noshadow] {
-    min-height: 420px;
+    min-height: 450px;
     height:     initial;
     box-shadow: none;
 }
@@ -1006,5 +1007,7 @@ div[wliu][card][noshadow] > div[wliu][card][title] {
 }
 
 div[wliu][card][noshadow] > div[wliu][card][body] {
-    top:   240px;
+    top:            240px;
+    bottom:         0px;
+
 }

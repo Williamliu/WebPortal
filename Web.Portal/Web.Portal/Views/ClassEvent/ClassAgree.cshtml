@@ -7,11 +7,11 @@
         function goNext() {
             if ($("#ihaveread").is(":checked") && $("#iagree").is(":checked")) {
                 if (@PubUser.Id > 0)
-                    window.location.href = "/ClassEvent/ClassPayment/" + @ViewBag.ClassId;
+                    window.location.href = "/ClassEvent/ClassPayment/@(PubUser.Items["ClassId"].GetInt()??0)";
                 else
-                    window.location.href = "/Home/SignIn?url=/ClassEvent/ClassPayment/" + @ViewBag.ClassId;
+                    window.location.href = "/Home/SignIn?url=/ClassEvent/ClassPayment/@(PubUser.Items["ClassId"].GetInt()??0)";
             } else {
-                $("#wliuDiagFormError").diag({ content: "Please read the agreement.<br>Please contact us if you have any concern." }).diag("show");
+                $("#wliuDiagFormError").diag({ content: "@Html.Words("i.agree.uncheck")" }).diag("show");
             }
 
         }

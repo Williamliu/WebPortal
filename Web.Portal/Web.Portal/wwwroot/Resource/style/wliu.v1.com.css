@@ -34,6 +34,19 @@ p {
 {
     padding:                0px 6px;
 }
+/* Message font-color*/
+div.wliu-info > p.message-body {
+    font-size:              24px;
+    color:                  blue;
+}
+div.wliu-warn > p.message-body {
+    font-size:              24px;
+    color:                  orangered;
+}
+div.wliu-success > p.message-body {
+    font-size:              24px;
+    color:                  green;
+}
 
 /* label */
 label {

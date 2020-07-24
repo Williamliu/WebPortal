@@ -17,6 +17,7 @@ namespace Library.V1.Entity
             this.PrivateMenuIDs = new List<string>();
             this.PublicMenuIDs = new List<string>();
             this.Rights = new Dictionary<string, bool>();
+            this.Items = new Dictionary<string, object>();
         }
         [JsonIgnore]
         public int Id { get; set; }
@@ -50,6 +51,17 @@ namespace Library.V1.Entity
         public List<string> PrivateMenuIDs { get; set; }
         [JsonIgnore]
         public List<string> PublicMenuIDs { get; set; }
+        [JsonIgnore]
+        public IDictionary<string, object> Items { get; set; }
+        public void AddItem(string key, object value)
+        {
+            if (this.Items.ContainsKey(key))
+                this.Items[key] = value;
+            else
+                this.Items.Add(key, value);
+        }
+
         public Dictionary<string, bool> Rights { get; set; }
+
     }
 }
