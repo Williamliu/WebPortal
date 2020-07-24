@@ -34,7 +34,9 @@
             let dt = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
             let et = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
             $("div[wliu][calendar]").calendar({
-                lang: "en", start: dt, end: et,
+                lang: "@Context.Items["Lang"].GetString()",
+                start: dt,
+                end: et,
                 url: "/api/ClassEvent/LoadCalendar",
                 data: { CountryId: -1, SiteId: -1 },
                 dateclick: function (evt, date, isActive) {
