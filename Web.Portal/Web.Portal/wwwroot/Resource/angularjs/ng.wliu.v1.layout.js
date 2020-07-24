@@ -152,6 +152,7 @@ WLIU_NG.directive("layout.card2", function ($sce) {
             notes: "@",
             isfree: "@",
             amount: "@",
+            payment: "@",
             currency:"@"
         },
         template: [
@@ -179,8 +180,13 @@ WLIU_NG.directive("layout.card2", function ($sce) {
                     '<p ng-if="db.tables[tb].GuidColumn(guid, isfree).value" title="{{Words(\'col.feeamount\')}}: {{Words(\'col.free\')}}">',
                         '<span style="color:black;font-size:24px;">{{Words(\'col.feeamount\')}}: {{Words(\'col.free\')}}</span>',
                     '</p>',
-                    '<p ng-if="!db.tables[tb].GuidColumn(guid, isfree).value" title="{{Words(\'col.feeamount\')}}: ${{db.tables[tb].GuidColumn(guid, amount).value}} {{db.tables[tb].GuidColumn(guid, currency).value}}">',
-                        '<span style="color:black;font-size:24px;">{{Words(\'col.feeamount\')}}: ${{db.tables[tb].GuidColumn(guid, amount).value}} {{db.tables[tb].GuidColumn(guid, currency).value}}</span>',
+                    '<p ng-if="!db.tables[tb].GuidColumn(guid, isfree).value" ',
+                        'title="{{Words(\'col.feeamount\')}}: ${{db.tables[tb].GuidColumn(guid, amount).value}} {{db.tables[tb].GuidColumn(guid, currency).value}}">',
+                        '<span style="color:black;font-size:24px;">{{Words(\'col.feeamount\')}}: </span>',
+                        '<span style="font-size:24px;" ng-class="{\'break-through\': db.tables[tb].GuidColumn(guid, amount).value!=db.tables[tb].GuidColumn(guid, payment).value && db.tables[tb].GuidColumn(guid, payment).value>0}">${{db.tables[tb].GuidColumn(guid, amount).value}} {{db.tables[tb].GuidColumn(guid, currency).value}}</span>',
+                    '</p>',
+                    '<p ng-if="!db.tables[tb].GuidColumn(guid, isfree).value && db.tables[tb].GuidColumn(guid, amount).value!=db.tables[tb].GuidColumn(guid, payment).value && db.tables[tb].GuidColumn(guid, payment).value>0" title="{{Words(\'col.payment.amount\')}}: ${{db.tables[tb].GuidColumn(guid, payment).value}} {{db.tables[tb].GuidColumn(guid, currency).value}}">',
+                        '<span style="color:black;font-size:24px;">{{Words(\'col.payment.amount\')}}: ${{db.tables[tb].GuidColumn(guid, payment).value}} {{db.tables[tb].GuidColumn(guid, currency).value}}</span>',
                     '</p>',
                 '</div>',
             '</div>'

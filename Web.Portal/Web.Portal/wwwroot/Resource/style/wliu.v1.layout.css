@@ -981,7 +981,7 @@ div[wliu][card][nohead] > div[wliu][card][body] p {
 }
 
 div[wliu][card][noshadow] {
-    min-height: 450px;
+    min-height: 480px;
     height:     initial;
     box-shadow: none;
 }

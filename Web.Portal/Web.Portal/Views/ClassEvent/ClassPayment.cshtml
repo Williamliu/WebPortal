@@ -108,11 +108,11 @@
                             viewData.database.tables.Payment.CurrentColumn("Payer").value =  details.payer.name.given_name + " " + details.payer.name.surname;
                             viewData.database.tables.Payment.CurrentColumn("PaidDate").value =  new Date(details.purchase_units[0].payments.captures[0].create_time).ticks();
                             viewData.database.tables.Payment.CurrentColumn("PaidAmount").value = details.purchase_units[0].payments.captures[0].amount.value;
-                            viewData.database.tables.Payment.CurrentColumn("PaidInvoice").value = details.id;
+                            viewData.database.tables.Payment.CurrentColumn("PaidInvoice").value = details.purchase_units[0].payments.captures[0].id;
                             viewData.database.tables.Payment.CurrentColumn("PaidMethod").value =  "Paypal";
                             viewData.database.tables.Payment.CurrentColumn("IsSuccess").value =  true;
                             viewData.database.tables.Payment.CurrentColumn("PaidStatus").value =  details.purchase_units[0].payments.captures[0].status;
-                            viewData.database.tables.Payment.CurrentColumn("TrackNumber").value = details.purchase_units[0].payments.captures[0].id;
+                            viewData.database.tables.Payment.CurrentColumn("TrackNumber").value = details.id;
                             viewData.database.tables.Payment.CurrentColumn("TrackMessage").value = JSON.stringify(details);
 
 
@@ -155,6 +155,7 @@
                                   email="Email"
                                   isfree="IsFree"
                                   amount="FeeAmount"
+                                  payment="OweAmount"
                                   currency="Currency">
                     </layout.card2>
                 </td>

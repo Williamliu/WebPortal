@@ -1002,6 +1002,12 @@ div[spin] {
     left:           50%;
     transform:      translate(-50%, -50%);
 }
+
+span.break-through {
+    color:          red;
+    text-decoration:line-through;
+}
+
 span[normal] {
     display:        inline-block;
     padding:        0px;
