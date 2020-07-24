@@ -324,6 +324,21 @@ namespace Library.V1.SQL
             }
             return dt;
         }
+
+        public Dictionary<string, string> QuerySingle(string query, IDictionary<string, object> parameters)
+        {
+            Dictionary<string, string> row = new Dictionary<string, string>();
+            DataTable dt = this.ExecuteDataTable(query, parameters);
+            if(dt.Rows.Count>0)
+            {
+                foreach(DataColumn dc in dt.Columns)
+                {
+                     row.Add(dc.ColumnName,  dt.Rows[0][dc].ToString());
+                }
+            }
+            return row;
+        }
+
         public GTable ExecuteSP(string query, params SqlParameter[] parameters)
         {
             DataTable dt = new DataTable();

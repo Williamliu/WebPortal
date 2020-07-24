@@ -212,17 +212,17 @@ namespace Web.Portal.Areas.Admin.WebApi
                                 .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
                                 .AddInsertKV("Deleted", false).AddInsertKV("Active", true).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
 
-                        CollectionTable c1 = new CollectionTable("EducationList", "Education",true, "Id", "Title", "Detail");
+                        CollectionTable c1 = new CollectionTable("EducationList", "Education",true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection EducationList = new Collection(ECollectionType.Category, c1);
-                        CollectionTable c2 = new CollectionTable("LanguageList", "Language", true, "Id", "Title", "Detail");
+                        CollectionTable c2 = new CollectionTable("LanguageList", "Language", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection LanguageList = new Collection(ECollectionType.Category, c2);
-                        CollectionTable c3 = new CollectionTable("ReligionList", "Religion", true, "Id", "Title", "Detail");
+                        CollectionTable c3 = new CollectionTable("ReligionList", "Religion", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection ReligionList = new Collection(ECollectionType.Category, c3);
-                        CollectionTable c4 = new CollectionTable("HearUsList", "HearUs", true, "Id", "Title", "Detail");
+                        CollectionTable c4 = new CollectionTable("HearUsList", "HearUs", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection HearUsList = new Collection(ECollectionType.Category, c4);
-                        CollectionTable c5 = new CollectionTable("SymbolList", "Symbol", true, "Id", "Title", "Detail");
+                        CollectionTable c5 = new CollectionTable("SymbolList", "Symbol", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection SymbolList = new Collection(ECollectionType.Category, c5);
-                        CollectionTable c6 = new CollectionTable("IdTypeList", "IdType", true, "Id", "Title", "Detail");
+                        CollectionTable c6 = new CollectionTable("IdTypeList", "IdType", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection IdTypeList = new Collection(ECollectionType.Category, c6);
                         CollectionTable c7 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection BranchList = new Collection(ECollectionType.Table, c7);
@@ -361,17 +361,17 @@ namespace Web.Portal.Areas.Admin.WebApi
                         PubUserId.AddQueryKV("Deleted", false).AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds()).AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds()).AddInsertKV("Deleted", false).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
 
 
-                        CollectionTable c1 = new CollectionTable("EducationList", "Education", true, "Id", "Title", "Detail");
+                        CollectionTable c1 = new CollectionTable("EducationList", "Education", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection EducationList = new Collection(ECollectionType.Category, c1);
-                        CollectionTable c2 = new CollectionTable("LanguageList", "Language", true, "Id", "Title", "Detail");
+                        CollectionTable c2 = new CollectionTable("LanguageList", "Language", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection LanguageList = new Collection(ECollectionType.Category, c2);
-                        CollectionTable c3 = new CollectionTable("ReligionList", "Religion", true, "Id", "Title", "Detail");
+                        CollectionTable c3 = new CollectionTable("ReligionList", "Religion", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection ReligionList = new Collection(ECollectionType.Category, c3);
-                        CollectionTable c4 = new CollectionTable("HearUsList", "HearUs", true, "Id", "Title", "Detail");
+                        CollectionTable c4 = new CollectionTable("HearUsList", "HearUs", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection HearUsList = new Collection(ECollectionType.Category, c4);
-                        CollectionTable c5 = new CollectionTable("SymbolList", "Symbol", true, "Id", "Title", "Detail");
+                        CollectionTable c5 = new CollectionTable("SymbolList", "Symbol", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection SymbolList = new Collection(ECollectionType.Category, c5);
-                        CollectionTable c6 = new CollectionTable("IdTypeList", "IdType", true, "Id", "Title", "Detail");
+                        CollectionTable c6 = new CollectionTable("IdTypeList", "IdType", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection IdTypeList = new Collection(ECollectionType.Category, c6);
                         CollectionTable c7 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection BranchList = new Collection(ECollectionType.Table, c7);
@@ -549,17 +549,17 @@ namespace Web.Portal.Areas.Admin.WebApi
 
                         #endregion
                         #region Collection
-                        CollectionTable c1 = new CollectionTable("EducationList", "Education", true, "Id", "Title", "Detail");
+                        CollectionTable c1 = new CollectionTable("EducationList", "Education", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection EducationList = new Collection(ECollectionType.Category, c1);
-                        CollectionTable c2 = new CollectionTable("LanguageList", "Language", true, "Id", "Title", "Detail");
+                        CollectionTable c2 = new CollectionTable("LanguageList", "Language", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection LanguageList = new Collection(ECollectionType.Category, c2);
-                        CollectionTable c3 = new CollectionTable("ReligionList", "Religion", true, "Id", "Title", "Detail");
+                        CollectionTable c3 = new CollectionTable("ReligionList", "Religion", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection ReligionList = new Collection(ECollectionType.Category, c3);
-                        CollectionTable c4 = new CollectionTable("HearUsList", "HearUs", true, "Id", "Title", "Detail");
+                        CollectionTable c4 = new CollectionTable("HearUsList", "HearUs", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection HearUsList = new Collection(ECollectionType.Category, c4);
-                        CollectionTable c5 = new CollectionTable("SymbolList", "Symbol", true, "Id", "Title", "Detail");
+                        CollectionTable c5 = new CollectionTable("SymbolList", "Symbol", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection SymbolList = new Collection(ECollectionType.Category, c5);
-                        CollectionTable c6 = new CollectionTable("IdTypeList", "IdType", true, "Id", "Title", "Detail");
+                        CollectionTable c6 = new CollectionTable("IdTypeList", "IdType", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection IdTypeList = new Collection(ECollectionType.Category, c6);
                         CollectionTable c7 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection BranchList = new Collection(ECollectionType.Table, c7);

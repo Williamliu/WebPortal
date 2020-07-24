@@ -1,4 +1,4 @@
-﻿@model Table  
+﻿@model Table
 @{
     WebUser PubUser = Context.Items["PubUser"] as WebUser;
 }
@@ -108,6 +108,7 @@
                             viewData.database.tables.Payment.CurrentColumn("Payer").value =  details.payer.name.given_name + " " + details.payer.name.surname;
                             viewData.database.tables.Payment.CurrentColumn("PaidDate").value =  new Date(details.purchase_units[0].payments.captures[0].create_time).ticks();
                             viewData.database.tables.Payment.CurrentColumn("PaidAmount").value = details.purchase_units[0].payments.captures[0].amount.value;
+                            viewData.database.tables.Payment.CurrentColumn("Currency").value = details.purchase_units[0].payments.captures[0].amount.currency_code;
                             viewData.database.tables.Payment.CurrentColumn("PaidInvoice").value = details.purchase_units[0].payments.captures[0].id;
                             viewData.database.tables.Payment.CurrentColumn("PaidMethod").value =  "Paypal";
                             viewData.database.tables.Payment.CurrentColumn("IsSuccess").value =  true;
@@ -126,7 +127,7 @@
                     }
                 }).render('#paypal-button-container');
                 //----------------------------------------------------------------------------------------------------
-               
+
             }
 
         });
@@ -216,4 +217,3 @@
         </table>
     </ng-form>
 </div>
-

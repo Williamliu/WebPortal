@@ -112,12 +112,83 @@ namespace Web.Portal.WebApi.Controllers
         public IActionResult SaveClassEnroll(JSTable jsTable)
         {
             this.Init("ClassPayment");
+
+            if(jsTable.Rows.Count>0)
+            {
+                try
+                {
+                    int ClassId = jsTable.Rows[0].GetValue("ClassId").GetInt() ?? 0;
+                    int UserId = jsTable.RefKey;
+                    Dictionary<string, string> row = this.DB.DSQL.QuerySingle("SELECT FirstName, LastName, Email FROM Pub_User WHERE Id=@UserId", new Dictionary<string, object> { { "UserId", UserId } });
+                    string fname = row.GetValue("FirstName");
+                    string lname = row.GetValue("LastName");
+                    string email = row.GetValue("Email");
+
+                    row = this.DB.DSQL.QuerySingle($"SELECT {this.DB.DSQL.LangSmartColumn("ClassTitle")} AS Title, {this.DB.DSQL.LangSmartColumn("Email")} as Email, {this.DB.DSQL.LangSmartColumn("SiteTitle")} as SiteTitle FROM VW_ActiveClass_List WHERE Id=@ClassId", new Dictionary<string, object> { { "ClassId", ClassId } });
+                    string classname = row.GetValue("Title");
+                    string sitename = row.GetValue("SiteTitle");
+                    string siteemail = row.GetValue("Email");
+
+                    MMEmail myemail = new MMEmail("mail.shaolinworld.org", "info@shaolinworld.org", "SL2020$");
+                    myemail.Port = 26;
+                    myemail.enableSSL = false;
+                    myemail.addFrom("info@shaolinworld.org", "ShaoLin");
+                    myemail.addTo(email, $"{fname} {lname}");
+                    if(string.IsNullOrWhiteSpace(siteemail) ==false) myemail.addBCC(siteemail, "SysAdmin");
+                    myemail.Subject = Words("email.enroll.success.subject");// "New Student Enrolled";
+                    myemail.Content = string.Format(Words("email.enroll.success.content"), fname, lname, classname); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
+                    myemail.Content += sitename;
+                    myemail.SendAsync();
+                }
+                catch { }
+            }
+
             return Ok(this.DB.SaveTable(jsTable));
         }
         [HttpPost("SaveClassUserPayment")]
         public IActionResult SaveClassUserPayment(JSTable jsTable)
         {
             this.Init("ClassPayment");
+
+            if (jsTable.Rows.Count > 0)
+            {
+                try
+                {
+                    int ClassId = jsTable.Rows[0].GetValue("ClassId").GetInt() ?? 0;
+                    int UserId = jsTable.Rows[0].GetValue("UserId").GetInt() ?? 0;
+                    string payer = jsTable.Rows[0].GetValue("Payer").GetString();
+                    string paiddate = new DateTime(jsTable.Rows[0].GetValue("PaidDate").GetLong()??0).YMDHMS();
+                    string paidinvoice = jsTable.Rows[0].GetValue("PaidInvoice").GetString();
+                    string paidamount = jsTable.Rows[0].GetValue("PaidAmount").GetString();
+                    string paidcurrency = jsTable.Rows[0].GetValue("Currency").GetString();
+
+
+                    Dictionary<string, string> row = this.DB.DSQL.QuerySingle("SELECT FirstName, LastName, Email FROM Pub_User WHERE Id=@UserId", new Dictionary<string, object> { { "UserId", UserId } });
+                    string fname = row.GetValue("FirstName");
+                    string lname = row.GetValue("LastName");
+                    string email = row.GetValue("Email");
+
+                    row = this.DB.DSQL.QuerySingle($"SELECT {this.DB.DSQL.LangSmartColumn("ClassTitle")} AS Title, {this.DB.DSQL.LangSmartColumn("Email")} as Email, {this.DB.DSQL.LangSmartColumn("SiteTitle")} as SiteTitle FROM VW_ActiveClass_List WHERE Id=@ClassId", new Dictionary<string, object> { { "ClassId", ClassId } });
+                    string classname = row.GetValue("Title");
+                    string sitename = row.GetValue("SiteTitle");
+                    string siteemail = row.GetValue("Email");
+
+                    MMEmail myemail = new MMEmail("mail.shaolinworld.org", "info@shaolinworld.org", "SL2020$");
+                    myemail.Port = 26;
+                    myemail.enableSSL = false;
+                    myemail.addFrom("info@shaolinworld.org", "ShaoLin");
+                    myemail.addTo(email, $"{fname} {lname}");
+                    if (string.IsNullOrWhiteSpace(siteemail) == false) myemail.addBCC(siteemail, "SysAdmin");
+                    myemail.Subject = Words("email.enroll.success.subject"); 
+                    myemail.Content = string.Format(Words("email.enroll.success.content"), fname, lname, classname); 
+                    myemail.Content += string.Format(Words("email.enroll.payment.content"), payer, paiddate, paidinvoice, paidamount, paidcurrency); 
+                    myemail.Content += sitename;
+
+                    myemail.SendAsync();
+                }
+                catch { }
+            }
+
             return Ok(this.DB.SaveTable(jsTable));
         }
 
@@ -330,12 +401,13 @@ namespace Web.Portal.WebApi.Controllers
                         Meta ppaydate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EInput.Long };
                         Meta ppaidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paid.amount"), Type = EInput.Float, MaxLength = 18 };
                         Meta ppaidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paid,invoice"), Type = EInput.String, MaxLength = 64 };
+                        Meta paidcurrency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.paid,currency"), Type = EInput.String, MaxLength = 64 };
                         Meta ppaidMethod = new Meta { Name = "PaidMethod", DbName = "PaidMethod", Title = Words("col.paid.method"), Type = EInput.String, MaxLength = 64 };
                         Meta ppaidStatus = new Meta { Name = "PaidStatus", DbName = "PaidStatus", Title = Words("col.paid.status"), Type = EInput.String, MaxLength = 64 };
                         Meta pisSuccess = new Meta { Name = "IsSuccess", DbName = "IsSuccess", Title = Words("col.paid.is.success"), Type = EInput.Bool };
                         Meta ptrackNumber = new Meta { Name = "TrackNumber", DbName = "TrackNumber", Title = Words("col.track.number"), Type = EInput.String, MaxLength = 256 };
                         Meta ptrackMessage = new Meta { Name = "TrackMessage", DbName = "TrackMessage", Title = Words("col.track.message"), Type = EInput.String };
-                        Payment.AddMetas(pid, pclassId, puserId, ppayer, ppaydate, ppaidAmount, ppaidInvoice, ppaidMethod, ppaidStatus, pisSuccess, ptrackNumber, ptrackMessage);
+                        Payment.AddMetas(pid, pclassId, puserId, ppayer, ppaydate, ppaidAmount, paidcurrency, ppaidInvoice, ppaidMethod, ppaidStatus, pisSuccess, ptrackNumber, ptrackMessage);
                         // Navi 
                         Payment.Navi.IsActive = false;
                         Payment.AddRelation(new Relation(ERef.O2O, "UserId", -1));

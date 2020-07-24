@@ -28,5 +28,12 @@ namespace Library.V1.Common
             }
             return dict;
         }
+        public static string GetValue(this Dictionary<string, string> dict, string key)
+        {
+            if (dict.ContainsKey(key))
+                return dict[key];
+            else
+                return string.Empty;
+        }
     }
 }
