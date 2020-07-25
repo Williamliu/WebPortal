@@ -50,7 +50,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                     ps.Add("LoginUser", userValue);
                     ps.Add("Password", passValue);
 
-                    if (this.DB.DSQL.IsExisted(query, ps))
+                    if (this.DB.DSQL.IsExist(query, ps))
                     {
                         string jwtToken = CreateAuthToken(userValue, "admin");
                         HttpContext.SaveSession("adminSite_jwtToken", jwtToken);
@@ -79,7 +79,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                     else
                     {
                         query = "SELECT COUNT(Id) as CNT FROM Admin_User WHERE Deleted=0 AND (UserName=@LoginUser OR Email=@LoginUser)";
-                        if (this.DB.DSQL.IsExisted(query, ps))
+                        if (this.DB.DSQL.IsExist(query, ps))
                         {
                             query = "UPDATE Admin_User SET LoginCount = LoginCount + 1, Active = IIF(LoginCount>=4, 0, 1), LoginTime = @LoginTime WHERE Active=1 AND Deleted=0 AND (UserName=@LoginUser OR Email=@LoginUser)";
                             ps.Add("LoginTime", DateTime.Now.UTCSeconds());

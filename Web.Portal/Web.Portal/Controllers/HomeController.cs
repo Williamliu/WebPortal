@@ -27,8 +27,15 @@ namespace Web.Portal.Controllers
             Init("SignIn");
             return View();
         }
+        public IActionResult ResetPassword(string Id)
+        {
+            Init("ResetPassword");
+            ViewBag.Guid = Id;
+            return View();
+        }
         protected override void InitDatabase(string menuId)
         {
+
         }
     }
 }

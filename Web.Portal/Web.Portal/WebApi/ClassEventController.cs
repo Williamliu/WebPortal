@@ -20,33 +20,33 @@ namespace Web.Portal.WebApi.Controllers
         [HttpGet("InitClassList")]
         public IActionResult InitPubUser()
         {
-            this.Init("M15");
+            this.Init("M20");
             this.DB.FillAll();
             return Ok(this.DB);
         }
         [HttpPost("ReloadClassList")]
         public IActionResult ReloadClassList(JSTable gtb)
         {
-            this.Init("M15");
+            this.Init("M20");
             return Ok(this.DB.ReloadTable(gtb));
         }
         [HttpPost("ReloadClassDetail")]
         public IActionResult ReloadClassDetail(JSTable jsTable)
         {
-            this.Init("M15");
+            this.Init("M20");
             return Ok(this.DB.ReloadTable(jsTable));
         }
         [HttpGet("InitClassCalendar")]
         public IActionResult InitCalendarClass()
         {
-            this.Init("M16");
+            this.Init("M30");
             this.DB.FillAll();
             return Ok(this.DB);
         }
         [HttpPost("LoadCalendar")]
         public IActionResult LoadCalendar(Calendar calendar)
         {
-            this.Init("M16");
+            this.Init("M30");
             if (calendar.IsActive)
             {
                 int countryId = calendar.Data["CountryId"].GetInt() ?? -1;
@@ -83,19 +83,19 @@ namespace Web.Portal.WebApi.Controllers
         [HttpPost("ReloadClassCalendar")]
         public IActionResult ReloadClassCalendar(JSTable jsTable)
         {
-            this.Init("M16");
+            this.Init("M30");
             return Ok(this.DB.ReloadTable(jsTable));
         }
         [HttpPost("ReloadClassList1")]
         public IActionResult ReloadClassList1(JSTable gtb)
         {
-            this.Init("M16");
+            this.Init("M30");
             return Ok(this.DB.ReloadTable(gtb));
         }
         [HttpPost("ReloadClassDetail1")]
         public IActionResult ReloadClassDetail1(JSTable jsTable)
         {
-            this.Init("M16");
+            this.Init("M30");
             return Ok(this.DB.ReloadTable(jsTable));
         }
 
@@ -196,7 +196,7 @@ namespace Web.Portal.WebApi.Controllers
         {
             switch (menuId)
             {
-                case "M15":
+                case "M20":
                     {
                         Table classList = new Table("ClassList", "VW_ActiveClass_List", Words("class.list"));
                         Meta id = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true };
@@ -249,7 +249,7 @@ namespace Web.Portal.WebApi.Controllers
                         this.DB.AddTables(classList, ClassDetail).AddCollections(CountryList, SiteList);
                     }
                     break;
-                case "M16":
+                case "M30":
                     {
                         Table ClassCalendar = new Table("ClassCalendar", "VW_Class_PubCalendar", Words("class.event"));
                         Meta dateId = new Meta { Name = "ClassId", DbName = "ClassId", Title = "ID", IsKey = true };

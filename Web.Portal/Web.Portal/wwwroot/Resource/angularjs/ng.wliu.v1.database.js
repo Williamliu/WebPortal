@@ -1358,7 +1358,7 @@ WLIU_NG.directive("table.error", function () {
             '</div>',
             '<div body style="min-height:60px;">',
             '</div>',
-            '<center><a wliu button blue diag-toggle="wliuDiagTableError">CLOSE</a></center>',
+            '<center><a wliu button blue diag-toggle="wliuDiagTableError">{{Words(\'button.close\')}}</a></center>',
             '</div>'
         ].join(''),
         controller: function ($scope, $window) {
@@ -1384,7 +1384,7 @@ WLIU_NG.directive("form.error", function () {
             '</div>',
             '<div body style="min-height:60px;">',
             '</div>',
-            '<center><a wliu button blue diag-toggle="wliuDiagFormError">CLOSE</a></center>',
+            '<center><a wliu button blue diag-toggle="wliuDiagFormError">{{Words(\'button.close\')}}</a></center>',
             '</div>'
         ].join(''),
         controller: function ($scope, $window) {

@@ -590,6 +590,7 @@ div[wliu][table] > div[scroll-bar] {
     border-bottom:      1px solid #cccccc;
     padding-bottom:     16px;
     box-sizing:         content-box;
+    width:              100%;
 }
 
 

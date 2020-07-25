@@ -35,5 +35,12 @@ namespace Library.V1.Common
             else
                 return string.Empty;
         }
+        public static string GetValue(this Dictionary<string, object> dict, string key)
+        {
+            if (dict.ContainsKey(key))
+                return dict[key].GetString();
+            else
+                return string.Empty;
+        }
     }
 }

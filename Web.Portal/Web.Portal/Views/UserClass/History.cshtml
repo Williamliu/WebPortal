@@ -1,0 +1,123 @@
+﻿@{
+    WebUser PubUser = Context.Items["PubUser"] as WebUser;
+}
+
+@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database", "wliu_layout"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+            $scope.detail = function () {
+                let refKey = $scope.ViewData.database.tables.ClassList.CurrentKey();
+                $scope.ViewData.database.tables.ClassDetail.refKey = refKey;
+                $scope.ViewData.database.tables.ClassDetail.Reload().then(d => {
+                    $scope.$apply(); $("#detailInfo").diag("show");
+                }).catch(e => { $scope.$apply(); });
+
+            };
+            $scope.closeDiag = function () {
+                $("#detailInfo").diag("hide");
+            };
+        });
+        viewData.Init("/api/UserClass/InitHistory");
+    </script>
+}
+
+<div ng-app="myApp" ng-controller="mycontrl">
+    <ng-form>
+        <div wliu table grow shrink underline style="margin-top:12px;">
+            <div row>
+                <div cell style="background-color:#dddddd;">
+                    <wliu.navi db="ViewData.database" tb="ClassList"></wliu.navi>
+                </div>
+            </div>
+        </div>
+        <span style="display:none;" ng-repeat-start="row in ViewData.database.tables.ClassList.rows"></span>
+        <!-- Grid row -->
+        <div wliu card frame>
+            <layout.card db="ViewData.database"
+                         tb="ClassList"
+                         guid="{{row.guid}}"
+                         imgsrc="Photo"
+                         subject="ClassTitle"
+                         number="ClassName"
+                         start="StartDate"
+                         end="EndDate"
+                         site="SiteTitle"
+                         address="Address"
+                         phone="Phone"
+                         email="Email"
+                         actiondetail="detail()"
+                         actionenroll="enroll()"
+                         icons="detail">
+            </layout.card>
+        </div>
+        <!-- Grid row -->
+        <span style="display:none;" ng-repeat-end></span>
+    </ng-form>
+
+    <div wliu diag maskable maskclick movable resizable id="detailInfo" style="width:720px;">
+        <div head>@Html.Words("detail.information")</div>
+        <div body style="padding-top:3px;">
+            <ul id="d1" wliu tab9 color="salmon">
+                <li>@Html.Words("class.information")</li>
+                <li>@Html.Words("class.schedule")</li>
+            </ul>
+            <div wliu tab9 body>
+                <div style="min-height:400px;">
+                    <layout.card1 db="ViewData.database"
+                                  tb="ClassList"
+                                  guid="{{ViewData.database.tables.ClassList.CurrentGuid()}}"
+                                  subject="ClassTitle"
+                                  number="ClassName"
+                                  start="StartDate"
+                                  end="EndDate" `
+                                  site="SiteTitle"
+                                  address="Address"
+                                  phone="Phone"
+                                  email="Email"
+                                  notes="ClassNotes">
+                    </layout.card1>
+                </div>
+                <div style="min-height:400px;">
+                    <div wliu table grow shrink underline>
+                        <div row>
+                            <div head fixed style="width:40px;"></div>
+                            <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
+                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
+                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
+                            <div head medium><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
+                        </div>
+                        <div scroll-bar style="height:300px;">
+                            <div row ng-repeat="row in ViewData.database.tables.ClassDetail.rows">
+                                <div cell center fixed style="width:40px;">
+                                    <wliu.rowstatus db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}"></wliu.rowstatus>
+                                </div>
+                                <div cell fixed style="width:140px;">
+                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="ClassDate"></wliu.text>
+                                </div>
+                                <div cell fixed style="width:100px;">
+                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="StartTime"></wliu.text>
+                                </div>
+                                <div cell fixed style="width:100px;">
+                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="EndTime"></wliu.text>
+                                </div>
+                                <div cell medium nowrap>
+                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title"></wliu.text>
+                                </div>
+                            </div>
+                        </div>
+                        <div row>
+                            <wliu.total db="ViewData.database" tb="ClassDetail"></wliu.total>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display:block; text-align:center;">
+                <a href="javascript:void(0)" ng-click="closeDiag()" class="btn btn-primary">@Html.Words("button.close")</a>
+            </div>
+        </div>
+    </div>
+</div>

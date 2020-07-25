@@ -16,19 +16,19 @@
             if (@Model.Rows.Count> 0) {
                 if ( @(Model.Rows[0].GetValue("IsFree").GetInt()??0) == 1 || @(Model.Rows[0].GetValue("OweAmount").GetFloat()??0) <= 0) {
                     if ( @(Model.Rows[0].GetValue("IsEnroll").GetInt()??0)== 1) {
-                        console.log("Here , enroll already");
+                        //console.log("Here , enroll already");
                         $("#message>p.message-body").html(
                             Words("welcome.shaolin") + " @PubUser.FirstName" + " @PubUser.LastName" + ', ' + Words("you.are.enrolled"));
                         $("#message").removeClass("wliu-info wliu-warn wliu-success").addClass("wliu-info").show();
                     } else {
-                        console.log("Here , enroll okey");
+                        //console.log("Here , enroll okey");
                         d.database.tables.ClassEnroll.NewRowB();
                         d.database.tables.ClassEnroll.refKey = @PubUser.Id;
                         d.database.tables.ClassEnroll.CurrentColumn("ClassId").value = @(PubUser.Items["ClassId"].GetInt()??0);
-                        console.log(viewData.database.tables.ClassEnroll);
+                        //console.log(viewData.database.tables.ClassEnroll);
                         d.database.tables.ClassEnroll.SaveAll().then(d => {
-                        $("#message>p.message-body").html(Words("welcome.shaolin") + " @PubUser.FirstName" + " @PubUser.LastName" + ', ' + Words("you.enroll.success"));
-                        $("#message").removeClass("wliu-info wliu-warn wliu-success").addClass("wliu-info").show();
+                            $("#message>p.message-body").html(Words("welcome.shaolin") + " @PubUser.FirstName" + " @PubUser.LastName" + ', ' + Words("you.enroll.success"));
+                            $("#message").removeClass("wliu-info wliu-warn wliu-success").addClass("wliu-info").show();
                             $scope.$apply();
                         }).catch(e => { $scope.$apply(); });
                     }
@@ -51,11 +51,11 @@
         $(function () {
             if ( (@(Model.Rows[0].GetValue("IsFree").GetInt()??0) == 1 || @(Model.Rows[0].GetValue("OweAmount").GetFloat()??0) <= 0) == false )
             {
-                console.log("Class Id:" +  @(PubUser.Items["ClassId"].GetInt()??0) );
-                console.log("User Id:" +  @PubUser.Id );
-                console.log("Is Free:" +  @(Model.Rows[0].GetValue("IsFree").GetInt()??0) );
-                console.log("Owe Amount:" + @Model.Rows[0].GetValue("OweAmount").GetFloat());
-                console.log("Currency:@Model.Rows[0].GetValue("Currency")");
+                //console.log("Class Id:" +  @(PubUser.Items["ClassId"].GetInt()??0) );
+                //console.log("User Id:" +  @PubUser.Id );
+                //console.log("Is Free:" +  @(Model.Rows[0].GetValue("IsFree").GetInt()??0) );
+                //console.log("Owe Amount:" + @Model.Rows[0].GetValue("OweAmount").GetFloat());
+                //console.log("Currency:@Model.Rows[0].GetValue("Currency")");
 
                 let oweAmount = @(Model.Rows[0].GetValue("OweAmount").GetFloat()??0);
                 let currency = "@Model.Rows[0].GetValue("Currency")";
@@ -68,8 +68,8 @@
 
                 paypal.Buttons({
                     onCancel: function (data) {
-                        console.log("Payment Cancel");
-                        console.log(data);
+                        //console.log("Payment Cancel");
+                        //console.log(data);
                         $("#payment_message>p.message-body").html(Words("payment.canceled"));
                         $("#payment_message").removeClass("wliu-info wliu-warn wliu-success").addClass("wliu-warn").show();
                         $("#payment_message>a.btn").hide();
@@ -91,8 +91,8 @@
                         // This function captures the funds from the transaction.
                         return actions.order.capture().then(function (details) {
                             // This function shows a transaction success message to your buyer.
-                            console.log("Payment Success");
-                            console.log(details);
+                            //console.log("Payment Success");
+                            //console.log(details);
                             $('#paypal-button-container').hide();
                             $("#payment_message>p.message-body").html("");
                             $("#payment-message").hide();
@@ -100,7 +100,7 @@
                             $("#payment_message").removeClass("wliu-info wliu-warn wliu-success").addClass("wliu-success").show();
                             $("#payment_message>a.btn").show();
 
-                            console.log(JSON.stringify(details));
+                            //console.log(JSON.stringify(details));
                             viewData.database.tables.Payment.NewRowB();
                             viewData.database.tables.Payment.refKey = @PubUser.Id;
                             viewData.database.tables.Payment.CurrentColumn("ClassId").value = @(PubUser.Items["ClassId"].GetInt()??0);
@@ -118,7 +118,7 @@
 
 
                             viewData.database.tables.Payment.SaveAll().then(d => {
-                                $("#message>p.message-body").html(Words("welcome.shaolin") + @PubUser.FirstName + ' ' + @PubUser.LastName + ', ' + Words("you.are.enrolled"));
+                                $("#message>p.message-body").html(Words("welcome.shaolin") + "@PubUser.FirstName" + " " + "@PubUser.LastName" + ", " + Words("you.are.enrolled"));
                                 $("#message").removeClass("wliu-info wliu-warn").addClass("wliu-info").show();
                                     $scope.$apply();
                             }).catch(e => { $scope.$apply(); });

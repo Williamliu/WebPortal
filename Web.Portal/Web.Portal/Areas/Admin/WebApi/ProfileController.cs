@@ -62,7 +62,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                     IDictionary<string, object> ps = new Dictionary<string, object>();
                     ps.Add("AdminId", this.DB.User.Id);
                     ps.Add("Password", oldValue);
-                    if (this.DB.DSQL.IsExisted(query, ps))
+                    if (this.DB.DSQL.IsExist(query, ps))
                     {
                         query = "UPDATE Admin_User SET Password=@NewPass WHERE Active=1 AND Deleted=0 AND Id=@AdminId AND Password=@Password";
                         ps.Add("NewPass", newValue);

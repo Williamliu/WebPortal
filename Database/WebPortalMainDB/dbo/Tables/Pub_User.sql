@@ -55,9 +55,12 @@
     [CreatedTime]       BIGINT           CONSTRAINT [DF_Pub_User_CreatedTime] DEFAULT ((0)) NULL,
     [LastUpdated]       BIGINT           CONSTRAINT [DF_Pub_User_LastUpdate] DEFAULT ((0)) NULL,
     [guid]              UNIQUEIDENTIFIER CONSTRAINT [DF_Pub_User_guid] DEFAULT (newid()) NULL,
+    [Expiry]            BIGINT           NULL,
     CONSTRAINT [PK_Pub_User] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [IX_Pub_User] UNIQUE NONCLUSTERED ([MemberId] ASC)
 );
+
+
 
 
 GO

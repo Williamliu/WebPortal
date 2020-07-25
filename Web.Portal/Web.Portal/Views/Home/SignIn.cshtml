@@ -25,21 +25,39 @@
                 $("div[wliu][flip]").flip("toggle");
             }
             $scope.loginSuccess = function () {
-                if(UrlParams("url")!="")
-                    window.location.href = UrlParams("url");
-                else
+                if (window.location.search) 
+                    if (UrlParams("url") != "")
+                        window.location.href = UrlParams("url");
+                    else
+                        window.location.href = "/Profile/MyAccount";
+                 else 
                     window.location.href = "/Profile/MyAccount";
+            }
+            $scope.resetPass = function () {
+                $scope.ViewData.database.tables.UserPassword.SaveAll().then(d => {
+                    if (d.error.HasError() == false) {
+                        d.Empty();
+                        $("#detailInfo").diag("hide");
+                        $("#emailsent").diag({content: Words("reset.password.email.sent")}).diag("show");
+                    }
+                    $scope.$apply();
+                }).catch(e => { $scope.$apply(); });
             }
         });
 
         viewData.Init("/api/Home/InitSignIn").then(data => {
             data.database.tables.UserLogin.NewRowB();
             data.database.tables.UserRegister.NewRowB();
+            data.database.tables.UserPassword.NewRowB();
             data.Apply();
         });
         gallery.Init("/api/Image/InitGallery/PubUser?view=small&edit=large").then(d => {
             gallery.NewRowB();
         });
+
+        function showDiag() {
+            $("#detailInfo").diag("show");
+        }
     </script>
     <style>
     </style>
@@ -82,7 +100,7 @@
                         <form.cancel h2 db="ViewData.database" tb="UserLogin" label="@Html.Words("button.cancel")" style="margin:0px 20px;"></form.cancel>
                     </div>
                     <div row style="margin-top:40px;">
-                        <a href="#" style="margin-left:32px;font-size:24px;"><label>@Html.Words("forget.password")</label> <span style="color:#0275d8;text-decoration:underline;">@Html.Words("reset.password")</span></a>
+                        <a href="javascript:showDiag()" style="margin-left:32px;font-size:24px;"><label>@Html.Words("forget.password")</label> <span style="color:#0275d8;text-decoration:underline;">@Html.Words("reset.password")</span></a>
                     </div>
                 </div>
             </div>
@@ -190,6 +208,30 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+
+
+    <div wliu diag maskable maskclick movable resizable id="detailInfo" style="width:480px;" diag-toggle="detailInfoclose">
+        <div head>@Html.Words("reset.password")</div>
+        <div body style="padding-top:3px;">
+            <label wliu>@Html.Words("please.input.email.reset.password")</label>
+            <br />
+            <assm.textbox fixed border h2 db="ViewData.database" tb="UserPassword" col="Email"></assm.textbox>
+            <br />
+            <br />
+            <div style="display:block; text-align:center;">
+                <a href="javascript:void(0)" ng-click="resetPass()" class="btn btn-primary" style="margin:0px 6px;">@Html.Words("button.submit")</a>
+                <a href="javascript:void(0)" diag-toggle="detailInfoclose" class="btn btn-primary" style="margin:0px 6px;">@Html.Words("button.close")</a>
+            </div>
+        </div>
+    </div>
+    <div wliu diag maskable maskclick movable resizable id="emailsent" style="width:320px;" diag-toggle="emailsentclose">
+        <div head>@Html.Words("reset.password")</div>
+        <div body style="padding-top:3px;">
+        </div>
+        <div style="display:block; text-align:center;">
+            <a href="javascript:void(0)"  diag-toggle="emailsentclose" class="btn btn-primary" style="margin:0px 6px;">@Html.Words("button.close")</a>
         </div>
     </div>
 

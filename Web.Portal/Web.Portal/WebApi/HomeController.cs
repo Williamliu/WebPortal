@@ -24,7 +24,7 @@ namespace Web.Portal.WebApi.Controllers
         [HttpGet("Index")]
         public IActionResult Index()
         {
-            Init("Home");
+            Init("M10");
             return Ok();
         }
         [HttpGet("InitSignIn")]
@@ -40,6 +40,48 @@ namespace Web.Portal.WebApi.Controllers
             this.Init("SignIn");
             return Ok(this.DB.SaveTable(gtb));
         }
+        [HttpPost("RequestResetPassword")]
+        public IActionResult RequestResetPassword(JSTable gtb)
+        {
+            this.Init("SignIn");
+            this.DB.ValidateTable(gtb);
+            Table table = this.DB.Tables[gtb.Name];
+            if (table.IndexFirst())
+            {
+                Row row = table.IndexFetch();
+                if (row.HasError == false)
+                {
+                    string email = row.GetValue("Email").GetString();
+                    string query = "SELECT Id, guid, FirstName, LastName FROM Pub_User WHERE Deleted=0 AND Active=1 AND Email=@Email";
+                    if(this.DB.DSQL.IsExist(query, new Dictionary<string, object> { {"Email", email } }))
+                    {
+                        Dictionary<string, string> record = this.DB.DSQL.QuerySingle(query, new Dictionary<string, object> { { "Email", email } });
+                        string passGuid = record.GetValue("guid");
+                        string fname = record.GetValue("FirstName");
+                        string lname = record.GetValue("LastName");
+
+                        long expiry = DateTime.Now.AddHours(2).UTCSeconds();
+                        this.DB.DSQL.ExecuteQuery("Update Pub_User Set Expiry=@Exp WHERE Email=@Email", new Dictionary<string, object> { {"Exp" , expiry},{"Email",email} });
+                        string url = $"{this.HttpContext.Request.Scheme}://{this.HttpContext.Request.Host.Host}/Home/ResetPassword/{passGuid}";
+
+                        MMEmail myemail = new MMEmail("mail.shaolinworld.org", "info@shaolinworld.org", "SL2020$");
+                        myemail.Port = 26;
+                        myemail.enableSSL = false;
+                        myemail.addFrom("info@shaolinworld.org", "ShaoLin");
+                        myemail.addTo(email, $"{fname} {lname}");
+                        myemail.Subject = Words("reset.password.request");// "New Student Enrolled";
+                        myemail.Content = string.Format(Words("reset.password.email.content"), fname, lname, url); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
+                        myemail.SendAsync();
+                    }
+                    else
+                    {
+                        table.Error.Append(ErrorCode.NotFound, Words("user.email.not.exist"));
+                    }
+                }
+            }
+            return Ok(table);
+        }
+        
         [HttpPost("SaveSignIn")]
         public IActionResult SaveSignIn(JSTable gtb)
         {
@@ -59,7 +101,7 @@ namespace Web.Portal.WebApi.Controllers
                     ps.Add("LoginUser", userValue);
                     ps.Add("Password", passValue);
 
-                    if (this.DB.DSQL.IsExisted(query, ps))
+                    if (this.DB.DSQL.IsExist(query, ps))
                     {
                         string jwtToken = CreateAuthToken(userValue, "PubWeb");
                         HttpContext.SaveSession("pubSite_jwtToken", jwtToken);
@@ -87,7 +129,7 @@ namespace Web.Portal.WebApi.Controllers
                     else
                     {
                         query = "SELECT COUNT(Id) as CNT FROM Pub_User WHERE Deleted=0 AND (UserName=@LoginUser OR Email=@LoginUser)";
-                        if (this.DB.DSQL.IsExisted(query, ps))
+                        if (this.DB.DSQL.IsExist(query, ps))
                         {
                             query = "UPDATE Pub_User SET LoginCount = LoginCount + 1, Active = IIF(LoginCount>=4, 0, 1), LoginTime = @LoginTime WHERE Active=1 AND Deleted=0 AND (UserName=@LoginUser OR Email=@LoginUser)";
                             ps.Add("LoginTime", DateTime.Now.UTCSeconds());
@@ -111,6 +153,51 @@ namespace Web.Portal.WebApi.Controllers
                 }
             }
             return Ok(table);
+        }
+
+
+        [HttpGet("InitResetPassword/{Id?}")]
+        public IActionResult InitResetPassword(string Id)
+        {
+            Init("ResetPassword");
+            bool found = false;
+            Guid guid = Guid.Empty;
+            if(Guid.TryParse(Id, out guid))
+            {
+                string query = "SELECT Id FROM Pub_User WHERE Deleted=0 AND Active=1 AND guid=@Guid AND Expiry>=@Now";
+                if (this.DB.DSQL.IsExist(query, new Dictionary<string, object> { { "Guid", guid }, { "Now", DateTime.Now.UTCSeconds() } }))
+                {
+                    found = true;
+                    Dictionary<string, string> record = this.DB.DSQL.QuerySingle(query, new Dictionary<string, object> { { "Guid", guid }, { "Now", DateTime.Now.UTCSeconds() } });
+                    int UserId = record.GetValue("Id").GetInt() ?? 0;
+                    this.DB.Tables["UserPassword"].RefKey = UserId;
+                    this.DB.Tables["UserPassword"].Filters["filterGuid"].Value1 = guid.ToString();
+                }
+                else
+                {
+                    found = false;
+                }
+            }
+            else
+            {
+                found = false;
+            }
+
+
+            if (found)
+            {
+                this.DB.FillAll();
+                this.DB.Tables["UserPassword"].Other.Add("token", guid.ToString());
+            }
+            else this.DB.Tables["UserPassword"].Error.Append(ErrorCode.NotFound, Words("reset.password.link.invalid"));
+            return Ok(this.DB);
+        }
+        [HttpPost("SaveResetPassword")]
+        public IActionResult SaveResetPassword(JSTable gtb)
+        {
+            this.Init("ResetPassword");
+            this.DB.Tables["UserPassword"].Filters["filterGuid"].Value1 = gtb.Other.GetValue("token");
+            return Ok(this.DB.SaveTable(gtb));
         }
 
 
@@ -173,10 +260,36 @@ namespace Web.Portal.WebApi.Controllers
 
                         UserRegister.SaveUrl = "/api/Home/SaveRegister";
 
+
+                        Table Password = new Table("UserPassword", "Pub_User", Words("pub.user"));
+                        Meta passId = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), Type= EInput.Int, IsKey = true };
+                        Meta passEmail = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Type = EInput.Email, Required = true, MaxLength = 256 };
+                        Password.AddMetas(passId, passEmail);
+                        Password.Navi.IsActive = false;
+                        Password.SaveUrl = "/api/Home/RequestResetPassword";
+                        Password.AddQueryKV("Id", -1);
+
                         CollectionTable c1 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail");
                         Collection BranchList = new Collection(ECollectionType.Table, c1);
                         Collection genderList = new Collection("GenderList");
-                        this.DB.AddTables(UserLogin, UserRegister).AddCollections(BranchList, genderList);
+                        this.DB.AddTables(UserLogin, UserRegister, Password).AddCollections(BranchList, genderList);
+                    }
+                    break;
+                case "ResetPassword":
+                    {
+                        Table UserPass = new Table("UserPassword", "Pub_User", Words("pub.user"));
+                        Meta id = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), Required=true, Type=EInput.Int, IsKey = true };
+                        Meta newPass = new Meta { Name = "Password", DbName = "Password", Title = Words("col.newpass"), Description = Words("confirm.password"), Required = true, Type = EInput.Passpair, MinLength = 6, MaxLength = 12 };
+                        UserPass.AddMetas(id, newPass);
+                        UserPass.SaveUrl = "/api/Home/SaveResetPassword";
+                        UserPass.AddRelation(new Relation(ERef.O2O, "Id", -1));
+                        UserPass.AddQueryKV("Deleted", false).AddQueryKV("Active", true)
+                            .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds()).AddUpdateKV("Expiry", DateTime.Now.AddHours(-2).UTCSeconds());
+
+                        Filter f1 = new Filter { Name="filterGuid", DbName="guid", Type=EFilter.Hidden, Compare=ECompare.Equal, Value1=Guid.Empty.ToString() };
+                        UserPass.AddFilter(f1);
+
+                        this.DB.AddTable(UserPass);
                     }
                     break;
             }

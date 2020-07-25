@@ -15,12 +15,12 @@ namespace Web.Portal.Controllers
         public ClassEventController(AppSetting appConfig) : base(appConfig) { }
         public IActionResult ClassList()
         {
-            this.Init("M15");
+            this.Init("M20");
             return View();
         }
         public IActionResult ClassCalendar()
         {
-            this.Init("M16");
+            this.Init("M30");
             return View();
         }
         public IActionResult ClassPayment(int? Id)

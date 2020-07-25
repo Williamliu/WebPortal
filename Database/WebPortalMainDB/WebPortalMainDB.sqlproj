@@ -133,11 +133,13 @@
     <Build Include="dbo\Tables\Class_UserPayment.sql" />
     <Build Include="dbo\Views\VW_Class_Agreement.sql" />
     <Build Include="dbo\Stored Procedures\USP_Class_UserPayment.sql" />
+    <Build Include="dbo\Views\VW_UserClass_Upcoming.sql" />
+    <Build Include="dbo\Views\VW_UserClass_History.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connection\Sql2Local.scmp" />
     <None Include="Backup\ReadMe.txt" />
-    <None Include="Backup\MainDB_2020-07-23.bak" />
     <None Include="Connection\Local2Product.scmp" />
+    <None Include="Backup\MainDB_2020-07-25.bak" />
   </ItemGroup>
 </Project>

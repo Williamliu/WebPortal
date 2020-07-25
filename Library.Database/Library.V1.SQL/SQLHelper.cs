@@ -258,15 +258,30 @@ namespace Library.V1.SQL
             }
             return this.ExecuteScalar(query, ps.ToArray());
         }
-        public bool IsExisted(string query, IDictionary<string, object> parameters)
+        public bool IsExist(string query, IDictionary<string, object> parameters)
         {
             int cnt = this.ExecuteScalar(query, parameters);
             return cnt > 0 ? true : false;
         }
-        public bool IsExisted(string query, params SqlParameter[] parameters)
+        public bool IsExist(string query, params SqlParameter[] parameters)
         {
             int cnt = this.ExecuteScalar(query, parameters);
             return cnt > 0 ? true : false;
+        }
+        public bool IsExist(string tableName, SQLWhere whereFilter)
+        {
+            int result = -1;
+            string query = $"SELECT COUNT(1) AS CNT FROM {tableName} WHERE {whereFilter.WhereGetFilter}";
+            try
+            {
+                result = this.ExecuteScalar(query, whereFilter.GetParameters());
+            }
+            catch (Exception err)
+            {
+                if (this.IsDebug) this.Debug = $@"|Query:[{query}]\n\n";
+                this.Error.Append(ErrorCode.SQLQuery, $@"SQL UpdateTable Error: {err.Message}\n\nMessage: {err.StackTrace}");
+            }
+            return result > 0 ? true : false;
         }
         public DataTable ExecuteDataTable(string query, params SqlParameter[] parameters)
         {
@@ -471,21 +486,6 @@ namespace Library.V1.SQL
                 this.Error.Append(ErrorCode.SQLQuery, $@"SQL ExecuteTable Error: {err.Message}\n\nMessage: {err.StackTrace}");
             }
             return rows;
-        }
-        public bool IsExist(string tableName, SQLWhere whereFilter)
-        {
-            int result = -1;
-            string query = $"SELECT COUNT(1) AS CNT FROM {tableName} WHERE {whereFilter.WhereGetFilter}";
-            try
-            {
-                result = this.ExecuteScalar(query, whereFilter.GetParameters());
-            }
-            catch (Exception err)
-            {
-                if (this.IsDebug) this.Debug = $@"|Query:[{query}]\n\n";
-                this.Error.Append(ErrorCode.SQLQuery, $@"SQL UpdateTable Error: {err.Message}\n\nMessage: {err.StackTrace}");
-            }
-            return result>0?true:false;
         }
 
         public int GetRowCount(string tableName, SQLWhere whereFilter)
