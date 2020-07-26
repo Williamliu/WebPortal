@@ -135,11 +135,13 @@
     <Build Include="dbo\Stored Procedures\USP_Class_UserPayment.sql" />
     <Build Include="dbo\Views\VW_UserClass_Upcoming.sql" />
     <Build Include="dbo\Views\VW_UserClass_History.sql" />
+    <Build Include="dbo\Functions\ToTicks.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connection\Sql2Local.scmp" />
     <None Include="Backup\ReadMe.txt" />
     <None Include="Connection\Local2Product.scmp" />
-    <None Include="Backup\MainDB_2020-07-25.bak" />
+    <None Include="Backup\Local_SLDB_20200726.bak" />
+    <None Include="Backup\WinHost_SLDB_20200726.bak" />
   </ItemGroup>
 </Project>

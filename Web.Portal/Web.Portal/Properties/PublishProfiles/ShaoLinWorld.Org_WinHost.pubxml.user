@@ -14,7 +14,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="appsettings.json">
-      <publishTime>07/21/2020 15:27:59</publishTime>
+      <publishTime>07/26/2020 12:02:48</publishTime>
     </File>
     <File Include="cs/Microsoft.CodeAnalysis.CSharp.resources.dll">
       <publishTime>09/12/2019 17:08:58</publishTime>
@@ -110,10 +110,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/24/2020 21:53:39</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>07/24/2020 21:53:43</publishTime>
+      <publishTime>07/26/2020 12:03:05</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>07/24/2020 21:53:43</publishTime>
+      <publishTime>07/26/2020 12:03:05</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
       <publishTime>07/24/2020 21:53:41</publishTime>
@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>07/25/2020 22:39:01</publishTime>
+      <publishTime>07/26/2020 12:03:25</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>07/25/2020 22:38:59</publishTime>
+      <publishTime>07/26/2020 12:03:21</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>07/25/2020 22:38:49</publishTime>
+      <publishTime>07/26/2020 12:03:10</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>07/25/2020 22:38:50</publishTime>
+      <publishTime>07/26/2020 12:03:10</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>07/25/2020 22:38:49</publishTime>
+      <publishTime>07/26/2020 12:03:10</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
       <publishTime>07/18/2020 00:20:16</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>07/25/2020 22:38:53</publishTime>
+      <publishTime>07/26/2020 12:03:21</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>07/25/2020 22:38:53</publishTime>
+      <publishTime>07/26/2020 12:03:21</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/angular.min.js">
       <publishTime>07/05/2020 23:15:03</publishTime>

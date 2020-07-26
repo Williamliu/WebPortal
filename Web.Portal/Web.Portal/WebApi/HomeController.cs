@@ -67,10 +67,13 @@ namespace Web.Portal.WebApi.Controllers
                         MMEmail myemail = new MMEmail("mail.shaolinworld.org", "info@shaolinworld.org", "SL2020$");
                         myemail.Port = 26;
                         myemail.enableSSL = false;
-                        myemail.addFrom("info@shaolinworld.org", "ShaoLin");
-                        myemail.addTo(email, $"{fname} {lname}");
+                        myemail.addFrom("info@shaolinworld.org");
+                        myemail.addTo(email);
+                        myemail.addReply("info@shaolinworld.org");
                         myemail.Subject = Words("reset.password.request");// "New Student Enrolled";
-                        myemail.Content = string.Format(Words("reset.password.email.content"), fname, lname, url); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
+                        myemail.Content = "<html><body>";
+                        myemail.Content += string.Format(Words("reset.password.email.content"), fname, lname, url); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
+                        myemail.Content += "</body></html>";
                         myemail.SendAsync();
                     }
                     else

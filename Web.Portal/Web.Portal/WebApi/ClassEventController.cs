@@ -132,12 +132,15 @@ namespace Web.Portal.WebApi.Controllers
                     MMEmail myemail = new MMEmail("mail.shaolinworld.org", "info@shaolinworld.org", "SL2020$");
                     myemail.Port = 26;
                     myemail.enableSSL = false;
-                    myemail.addFrom("info@shaolinworld.org", "ShaoLin");
-                    myemail.addTo(email, $"{fname} {lname}");
-                    if(string.IsNullOrWhiteSpace(siteemail) ==false) myemail.addBCC(siteemail, "SysAdmin");
+                    myemail.addFrom("info@shaolinworld.org");
+                    myemail.addTo(email);
+                    myemail.addReply("info@shaolinworld.org");
+                    if (string.IsNullOrWhiteSpace(siteemail) ==false) myemail.addBCC(siteemail, "SysAdmin");
                     myemail.Subject = Words("email.enroll.success.subject");// "New Student Enrolled";
-                    myemail.Content = string.Format(Words("email.enroll.success.content"), fname, lname, classname); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
+                    myemail.Content = "<html><body>";
+                    myemail.Content += string.Format(Words("email.enroll.success.content"), fname, lname, classname); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
                     myemail.Content += sitename;
+                    myemail.Content += "</body></html>";
                     myemail.SendAsync();
                 }
                 catch { }
@@ -176,14 +179,16 @@ namespace Web.Portal.WebApi.Controllers
                     MMEmail myemail = new MMEmail("mail.shaolinworld.org", "info@shaolinworld.org", "SL2020$");
                     myemail.Port = 26;
                     myemail.enableSSL = false;
-                    myemail.addFrom("info@shaolinworld.org", "ShaoLin");
-                    myemail.addTo(email, $"{fname} {lname}");
+                    myemail.addFrom("info@shaolinworld.org");
+                    myemail.addTo(email);
+                    myemail.addReply("info@shaolinworld.org");
                     if (string.IsNullOrWhiteSpace(siteemail) == false) myemail.addBCC(siteemail, "SysAdmin");
-                    myemail.Subject = Words("email.enroll.success.subject"); 
-                    myemail.Content = string.Format(Words("email.enroll.success.content"), fname, lname, classname); 
+                    myemail.Subject = Words("email.enroll.success.subject");
+                    myemail.Content = "<html><body>";
+                    myemail.Content += string.Format(Words("email.enroll.success.content"), fname, lname, classname); 
                     myemail.Content += string.Format(Words("email.enroll.payment.content"), payer, paiddate, paidinvoice, paidamount, paidcurrency); 
                     myemail.Content += sitename;
-
+                    myemail.Content += "</body></html>";
                     myemail.SendAsync();
                 }
                 catch { }

@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[Class_UserPayment] (
+﻿CREATE TABLE [dbo].[Class_UserPayment] (
     [Id]           INT           IDENTITY (1, 1) NOT NULL,
     [ClassId]      INT           NULL,
     [UserId]       INT           NULL,
@@ -16,6 +16,8 @@ CREATE TABLE [dbo].[Class_UserPayment] (
     [CreatedTime]  BIGINT        NULL,
     CONSTRAINT [PK_Class_Payment] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
 
 
 
@@ -43,7 +45,8 @@ BEGIN
 			PaidMethod = Inserted.PaidMethod, 
 			PaidInvoice = Inserted.PaidInvoice, 
 			PaidCard = Inserted.PaidCard,
-			IsPaid = 1
+			IsPaid = 1,
+			LastUpdated = dbo.ToTicks(GETDATE())
 		FROM Class_Enroll
 		INNER JOIN Inserted 
 							On Inserted.ClassId = Class_Enroll.ClassId AND Inserted.UserId=Class_Enroll.UserId 
@@ -72,8 +75,8 @@ BEGIN
 						On Inserted.ClassId = Class_Enroll.ClassId AND Inserted.UserId=Class_Enroll.UserId 
 						AND Class_Enroll.Deleted=0 AND Class_Enroll.Active=1
 	)
-	INSERT Class_Enroll(ClassId, UserId, IsPaid, PaidDate, PaidAmount, PaidMethod, PaidInvoice, PaidCard, Deleted, Active)
-	SELECT ClassId, UserId, IsSuccess, PaidDate, PaidAmount, PaidMethod, PaidInvoice, PaidCard, 0, 1
+	INSERT Class_Enroll(ClassId, UserId, IsPaid, PaidDate, PaidAmount, PaidMethod, PaidInvoice, PaidCard, Deleted, Active, CreatedTime)
+	SELECT ClassId, UserId, IsSuccess, PaidDate, PaidAmount, PaidMethod, PaidInvoice, PaidCard, 0, 1, dbo.ToTicks(GETDATE())
 	FROM Inserted 
 
 END

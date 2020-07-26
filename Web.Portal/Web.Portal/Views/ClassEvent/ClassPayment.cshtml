@@ -141,24 +141,49 @@
         <table cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td width="50%" valign="top">
-                    <layout.card2 db="ViewData.database"
-                                  tb="ClassList"
-                                  guid="{{ViewData.database.tables.ClassList.rowGuid}}"
-                                  imgsrc="Photo"
-                                  subject="ClassTitle"
-                                  number="ClassName"
-                                  start="StartDate"
-                                  end="EndDate"
-                                  site="SiteTitle"
-                                  address="Address"
-                                  phone="Phone"
-                                  notes="ClassNotes"
-                                  email="Email"
-                                  isfree="IsFree"
-                                  amount="FeeAmount"
-                                  payment="OweAmount"
-                                  currency="Currency">
-                    </layout.card2>
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <td>
+                                <layout.card2 db="ViewData.database"
+                                              tb="ClassList"
+                                              guid="{{ViewData.database.tables.ClassList.rowGuid}}"
+                                              imgsrc="Photo"
+                                              subject="ClassTitle"
+                                              number="ClassName"
+                                              start="StartDate"
+                                              end="EndDate"
+                                              site="SiteTitle"
+                                              address="Address"
+                                              phone="Phone"
+                                              notes="ClassNotes"
+                                              email="Email"
+                                              isfree="IsFree"
+                                              amount="FeeAmount"
+                                              payment="OweAmount"
+                                              currency="Currency">
+                                </layout.card2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="message" style="display:none;">
+                                    <p class="message-body"></p>
+                                    <a href="javascript:goBack()" class="btn btn-info">@Html.Words("button.back.classlist")</a>
+                                </div>
+                                <div id="payment_message" style="display:none;">
+                                    <p class="message-body"></p>
+                                    <a href="javascript:goBack()" style="display:none;" class="btn btn-info">@Html.Words("button.back.classlist")</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display:block; width:320px;">
+                                    <div id="paypal-button-container"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
                 <td width="50%" valign="top" style="padding-left:20px;">
                     <label wliu text h2>@Html.Words("class.schedule")</label>
@@ -192,27 +217,6 @@
                         </div>
                     </div>
                 </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <div id="message" style="display:none;">
-                        <p class="message-body"></p>
-                        <a href="javascript:goBack()" class="btn btn-info">@Html.Words("button.back.classlist")</a>
-                    </div>
-                    <div id="payment_message" style="display:none;">
-                        <p class="message-body"></p>
-                        <a href="javascript:goBack()" style="display:none;" class="btn btn-info">@Html.Words("button.back.classlist")</a>
-                    </div>
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <div style="display:block; width:320px;">
-                        <div id="paypal-button-container"></div>
-                    </div>
-                </td>
-                <td></td>
             </tr>
         </table>
     </ng-form>

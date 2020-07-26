@@ -196,6 +196,10 @@ namespace Library.V1.Entity
                 this.mailMessage.Bcc.Add(new MailAddress(email_address, display_name, UnicodeEncoding.UTF8));
             }
         }
+        public void addReply(string email_address, string display_name = "")
+        {
+            this.mailMessage.ReplyToList.Add(email_address);
+        }
         public void clearBCC()
         {
             this.mailMessage.Bcc.Clear();
