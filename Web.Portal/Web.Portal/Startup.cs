@@ -38,8 +38,9 @@ namespace Web.Portal
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => false;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
             });
+            
 
             // Jwt Bearer Tokken Authorization
             var key = Encoding.ASCII.GetBytes("infosecurity@shaolinworld.org");
@@ -101,7 +102,7 @@ namespace Web.Portal
                 // Force to use Https:  look at topic https://aka.ms/aspnetcore-hsts
                 app.UseHsts();
             }
-            //app.UseCors("EnableCORS");
+            app.UseCors("EnableCORS");
             app.UseHttpsRedirection();  // new 
             app.UseStaticFiles();
             app.UseRouting();           // new

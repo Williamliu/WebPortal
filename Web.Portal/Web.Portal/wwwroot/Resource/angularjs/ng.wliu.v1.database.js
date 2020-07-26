@@ -2742,14 +2742,21 @@ WLIU_NG.directive("form.ckeditor", function () {
             $scope.hh = $scope.hh || 500;
             $scope.guid = "";
             $scope.modelChange = function () {
-                if ($scope.db.tables) if ($scope.db.tables[$scope.tb]) if ($scope.db.tables[$scope.tb].navi)
+                if ($scope.db.tables) if ($scope.db.tables[$scope.tb]) 
                     if ($scope.db.tables[$scope.tb].CurrentRow()) {
+                        $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value1 = false;  // trigger change event 
+                        //console.log("Model Change:always false = " + $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value1);
                         if ($scope.db.tables[$scope.tb].CurrentGuid() !== $scope.guid) {
                             if (CKEDITOR.instances[`${$scope.tb}_${$scope.col}_ckeditor`])
-                                if ($scope.db.tables[$scope.tb].CurrentColumn($scope.col).value)
+                                //console.log("ckeditor is ready");
+                                if ($scope.db.tables[$scope.tb].CurrentColumn($scope.col).value) {
                                     CKEDITOR.instances[`${$scope.tb}_${$scope.col}_ckeditor`].setData($scope.db.tables[$scope.tb].CurrentColumn($scope.col).value);
-                                else
+                                    //console.log("Model Change Set Data : " + $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value1);
+                                } else {
                                     CKEDITOR.instances[`${$scope.tb}_${$scope.col}_ckeditor`].setData("");
+                                    //console.log("Model Change Set Data : empty");
+                                }
+
                             $scope.guid = $scope.db.tables[$scope.tb].CurrentGuid();
                         }
                     }
@@ -2757,9 +2764,27 @@ WLIU_NG.directive("form.ckeditor", function () {
                     {
                         CKEDITOR.instances[`${$scope.tb}_${$scope.col}_ckeditor`].setData("");
                         $scope.guid = "";
+                        //console.log("Model Change row not exist");
                     }
             };
             $scope.$watch("db.tables[tb].CurrentColumn(col).value", $scope.modelChange);
+
+
+            $scope.ckEditorChange = function () {
+                if ($scope.db.tables[$scope.tb].CurrentColumn($scope.col)) {
+                    //console.log("change event: " + $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value1);
+                    if ($scope.db.tables[$scope.tb].CurrentColumn($scope.col).value1) {  // trigger change event
+                        if ($scope.db.tables[$scope.tb].CurrentGuid() === $scope.guid) {
+                            $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value = CKEDITOR.instances[`${$scope.tb}_${$scope.col}_ckeditor`].getData();
+                            $scope.db.tables[$scope.tb].SetChange($scope.db.tables[$scope.tb].CurrentGuid(), $scope.col);
+                            if (!$scope.$root.$$phase) $scope.$apply();
+                            //console.log("change event curguid=guid: model=getData(): " + $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value1);
+                        }
+                    }
+                    $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value1 = true;
+                    //console.log("end change event: " + $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value1);
+                }
+            };
         },
         link: function (sc, el, attr) {
             $(function () {
@@ -2767,25 +2792,8 @@ WLIU_NG.directive("form.ckeditor", function () {
                     height: sc.hh
                 });
                 htmlObj_cn.on("change", function (evt) {
+                    sc.ckEditorChange();
                 });
-                htmlObj_cn.on("key", function (evt) {
-                    //if (!sc.$root.$$phase) {
-                        if (sc.db.tables[sc.tb].CurrentColumn(sc.col)) {
-                            if (sc.db.tables[sc.tb].CurrentColumn(sc.col).value !== CKEDITOR.instances[`${sc.tb}_${sc.col}_ckeditor`].getData()) {
-                                sc.db.tables[sc.tb].CurrentColumn(sc.col).value = CKEDITOR.instances[`${sc.tb}_${sc.col}_ckeditor`].getData();
-                                if (sc.db.tables[sc.tb].CurrentColumn(sc.col).value !== sc.db.tables[sc.tb].CurrentColumn(sc.col).current) {
-                                    sc.db.tables[sc.tb].SetChange(sc.db.tables[sc.tb].CurrentGuid(), sc.col);
-                                } else {
-                                    sc.db.tables[sc.tb].CurrentColumn(sc.col).state = 0;
-                                    sc.db.tables[sc.tb].ChangeState();
-                                }
-                                sc.$apply();
-
-                            }
-                        }
-                    //}
-                });
-
             });
         }
     };
@@ -2821,14 +2829,17 @@ WLIU_NG.directive("form.ckinline", function () {
             $scope.hh = $scope.hh || 500;
             $scope.guid = "";
             $scope.modelChange = function () {
-                if ($scope.db.tables) if ($scope.db.tables[$scope.tb]) if ($scope.db.tables[$scope.tb].navi)
+                if ($scope.db.tables) if ($scope.db.tables[$scope.tb])
                     if ($scope.db.tables[$scope.tb].CurrentRow()) {
+                        $scope.db.tables[$scope.tb].CurrentColumn($scope.col).value1 = false;  // trigger change event 
                         if ($scope.db.tables[$scope.tb].CurrentGuid() !== $scope.guid) {
                             if (CKEDITOR.instances[`${$scope.tb}_${$scope.col}_ckeditor`])
-                                if ($scope.db.tables[$scope.tb].CurrentColumn($scope.col).value)
+                                if ($scope.db.tables[$scope.tb].CurrentColumn($scope.col).value) {
                                     CKEDITOR.instances[`${$scope.tb}_${$scope.col}_ckeditor`].setData($scope.db.tables[$scope.tb].CurrentColumn($scope.col).value);
-                                else
+                                } else {
                                     CKEDITOR.instances[`${$scope.tb}_${$scope.col}_ckeditor`].setData("");
+                                }
+
                             $scope.guid = $scope.db.tables[$scope.tb].CurrentGuid();
                         }
                     }
@@ -2846,31 +2857,18 @@ WLIU_NG.directive("form.ckinline", function () {
                 htmlObj_cn = CKEDITOR.inline(`${sc.tb}_${sc.col}_ckeditor`, {
                     height: sc.hh
                 });
-                /*
-                htmlObj_cn = CKEDITOR.replace(`${sc.tb}_${sc.col}_ckeditor`, {
-                    height: sc.hh
-                });
-                */
                 htmlObj_cn.on("change", function (evt) {
-                });
-                htmlObj_cn.on("key", function (evt) {
-                    //if (!sc.$root.$$phase) {
                     if (sc.db.tables[sc.tb].CurrentColumn(sc.col)) {
-                        if (sc.db.tables[sc.tb].CurrentColumn(sc.col).value !== CKEDITOR.instances[`${sc.tb}_${sc.col}_ckeditor`].getData()) {
-                            sc.db.tables[sc.tb].CurrentColumn(sc.col).value = CKEDITOR.instances[`${sc.tb}_${sc.col}_ckeditor`].getData();
-                            if (sc.db.tables[sc.tb].CurrentColumn(sc.col).value !== sc.db.tables[sc.tb].CurrentColumn(sc.col).current) {
+                        if (sc.db.tables[sc.tb].CurrentColumn(sc.col).value1) {  // trigger change event
+                            if (sc.db.tables[sc.tb].CurrentGuid() === sc.guid) {
+                                sc.db.tables[sc.tb].CurrentColumn(sc.col).value = CKEDITOR.instances[`${sc.tb}_${sc.col}_ckeditor`].getData();
                                 sc.db.tables[sc.tb].SetChange(sc.db.tables[sc.tb].CurrentGuid(), sc.col);
-                            } else {
-                                sc.db.tables[sc.tb].CurrentColumn(sc.col).state = 0;
-                                sc.db.tables[sc.tb].ChangeState();
+                                if (!sc.$root.$$phase) sc.$apply();
                             }
-                            sc.$apply();
-
                         }
+                        sc.db.tables[sc.tb].CurrentColumn(sc.col).value1 = true;
                     }
-                    //}
                 });
-
             });
         }
     };

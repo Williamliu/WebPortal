@@ -449,6 +449,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta egender = new Meta { Name = "Gender", DbName = "Gender", Title = Words("col.gender"), Type = EInput.Read, Order = "ASC" };
                         egender.AddListRef("GenderList");
 
+                        Meta eactive = new Meta { Name = "Active", DbName = "Active", Title = Words("col.status"), Description = Words("status.active.inactive"), Type = EInput.Bool };
                         Meta eemail = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Type = EInput.Read, Order = "ASC" };
                         Meta ephone = new Meta { Name = "Phone", DbName = "Phone", Title = Words("col.phone"), Type = EInput.Read, MaxLength = 32, Order = "ASC" };
                         Meta ecell = new Meta { Name = "Cell", DbName = "Cell", Title = Words("col.cell"), Type = EInput.Read, Order = "ASC" };
@@ -506,7 +507,7 @@ namespace Web.Portal.Areas.Admin.WebApi
 
                         // Table Class Enroll
                         classEnroll.AddMetas(eid, eclassId, ememberId, efirstName, elastName, efirstNameLegal, elastNameLegl, ecreatedTime)
-                                   .AddMetas(edharmaName, edisplayName, ecertName, ealiasname, egender, eemail, ephone, ecell, ecity, ephoto)
+                                   .AddMetas(edharmaName, edisplayName, ecertName, ealiasname, egender, eactive, eemail, ephone, ecell, ecity, ephoto)
                                    .AddMetas(egroup, eisPaid, epaidDate, epaidAmount, epaidInvoice, ememberType);
 
                         classEnroll.AddFilters(f10, f11, f12, f13, f14, f15, f16, f17);

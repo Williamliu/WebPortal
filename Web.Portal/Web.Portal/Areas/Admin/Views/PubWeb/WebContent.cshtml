@@ -17,7 +17,9 @@
             };
 
         });
-        viewData.Init("/Admin/api/PubWeb/InitWebContent");
+        viewData.Init("/Admin/api/PubWeb/InitWebContent").then(d => {
+              d.database.tables.WebContent.CKEditor = ["Detail_en", "Detail_cn"];
+        });
     </script>
 }
 <div ng-app="myApp" ng-controller="mycontrl">

@@ -46,7 +46,8 @@
                             Phone: $scope.ViewData.database.tables.PubUser.CurrentValue("Phone"),
                             Cell: $scope.ViewData.database.tables.PubUser.CurrentValue("Cell"),
                             City: $scope.ViewData.database.tables.PubUser.CurrentValue("City"),
-                            Photo: $scope.ViewData.database.tables.PubUser.CurrentValue("Photo")
+                            Photo: $scope.ViewData.database.tables.PubUser.CurrentValue("Photo"),
+                            Active: true
                         }
                     );
                     $scope.ViewData.database.tables.ClassEnroll.other.InClass = $scope.ViewData.database.tables.ClassEnroll.other.InClass || [];
@@ -309,6 +310,7 @@
                         <div head small><wliu.head db="ViewData.database" tb="ClassEnroll" col="Phone"></wliu.head></div>
                         <div head medium><wliu.head db="ViewData.database" tb="ClassEnroll" col="IsPaid"></wliu.head></div>
                         <div head medium><wliu.head db="ViewData.database" tb="ClassEnroll" col="PaidAmount"></wliu.head></div>
+                        <div head center fixed style="width:80px;"><wliu.head db="ViewData.database" tb="ClassEnroll" col="Active"></wliu.head></div>
                         <div head small><wliu.head db="ViewData.database" tb="ClassEnroll" col="CreatedTime"></wliu.head></div>
                         <div head fixed style="width:56px;"><wliu.hicon db="ViewData.database" tb="ClassEnroll" icons="save,cancel"></wliu.hicon></div>
                     </div>
@@ -353,6 +355,9 @@
                                     <td style="width:120px;"><wliu.textbox fit db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="PaidInvoice"></wliu.textbox></td>
                                 </tr>
                             </table>
+                        </div>
+                        <div cell center fixed style="width:80px;">
+                            <wliu.bool db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="Active"></wliu.bool>
                         </div>
                         <div cell small>
                             <wliu.intdate format="yyyy-MM-dd" db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="CreatedTime"></wliu.intdate>
@@ -424,7 +429,7 @@
                         <tr>
                             <td width="25%"><assm.radio fixed border db="ViewData.database" tb="Member" col="Gender"></td>
                             <td width="35%"><assm.ymd db="ViewData.database" tb="Member" col="Birth"></assm.ymd></td>
-                            <td width="15%"><assm.bool fixed db="ViewData.database" tb="Member" col="Status" label="@Html.Words("status.active")"></assm.bool></td>
+                            <td width="15%"><assm.bool fixed db="ViewData.database" tb="Member" col="Active" label="@Html.Words("status.active")"></assm.bool></td>
                             <td width="25%"><assm.label fixed db="ViewData.database" tb="Member" col="MemberId"></assm.label></td>
                         </tr>
                         <tr>

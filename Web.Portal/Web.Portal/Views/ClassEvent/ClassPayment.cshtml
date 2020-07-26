@@ -118,8 +118,8 @@
 
 
                             viewData.database.tables.Payment.SaveAll().then(d => {
-                                $("#message>p.message-body").html(Words("welcome.shaolin") + "@PubUser.FirstName" + " " + "@PubUser.LastName" + ", " + Words("you.are.enrolled"));
-                                $("#message").removeClass("wliu-info wliu-warn").addClass("wliu-info").show();
+                                    //$("#message>p.message-body").html(Words("welcome.shaolin") + "@PubUser.FirstName" + " " + "@PubUser.LastName" + ", " + Words("you.are.enrolled"));
+                                    //$("#message").removeClass("wliu-info wliu-warn").addClass("wliu-info").show();
                                     $scope.$apply();
                             }).catch(e => { $scope.$apply(); });
 

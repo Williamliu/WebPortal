@@ -15,7 +15,9 @@
                 $("#agreeList").show();
             }
         });
-        viewData.Init("/Admin/api/Course/InitAgreement");
+        viewData.Init("/Admin/api/Course/InitAgreement").then(d => {
+              d.database.tables.CourseAgreement.CKEditor = ["Agreement"];
+        });
     </script>
 }
 <div ng-app="myApp" ng-controller="mycontrl">

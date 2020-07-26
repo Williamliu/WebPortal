@@ -241,6 +241,7 @@ WLIU.Table = function (table) {
         this.AddOFilters(table.filters);
         this.AddORows(table.rows);
         this.CKEditor = [];
+        this.ckGuid = "";
         this.other = table.other || {};
     }
     else {
@@ -261,6 +262,7 @@ WLIU.Table = function (table) {
         this.filters = {};
         this.rows = [];
         this.CKEditor = [];
+        this.ckGuid = "";
         this.other = {};
     }
 };
@@ -558,6 +560,8 @@ WLIU.Table.prototype = {
     },
     CKEditorReset: function () {
         for (let i = 0; i < this.CKEditor.length; i++) {
+            this.CurrentColumn(this.CKEditor[i]).value1 = false; // don't trigger change event of ckeditor
+
             let content = "";
             if (this.CurrentColumn(this.CKEditor[i]))
                 content = this.CurrentColumn(this.CKEditor[i]).value;
@@ -572,13 +576,18 @@ WLIU.Table.prototype = {
     },
     CKEditorCancel: function () {
         for (let i = 0; i < this.CKEditor.length; i++) {
+            this.CurrentColumn(this.CKEditor[i]).value1 = false; // don't trigger change event of ckeditor
+
             let content = "";
+
             if (this.CurrentColumn(this.CKEditor[i]))
                 content = this.CurrentColumn(this.CKEditor[i]).current;
+
             if (content)
                 CKEDITOR.instances[`${this.name}_${this.CKEditor[i]}_ckeditor`].setData(content);
             else
                 CKEDITOR.instances[`${this.name}_${this.CKEditor[i]}_ckeditor`].setData("");
+
         }
     },
     //Order 
