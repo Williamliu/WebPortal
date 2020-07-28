@@ -118,10 +118,7 @@ namespace Web.Portal.Common
         public static void DeleteSession(this HttpContext httpContext, string sessName)
         {
             httpContext.Response.Cookies.Delete(sessName);
-            httpContext.Response.Cookies.Delete(sessName);
             httpContext.Session.SetString(sessName, "");
-            httpContext.Session.SetString(sessName, "");
-            httpContext.Session.Remove(sessName);
             httpContext.Session.Remove(sessName);
         }
 
