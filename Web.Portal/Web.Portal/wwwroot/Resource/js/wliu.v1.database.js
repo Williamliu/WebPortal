@@ -1692,7 +1692,7 @@ var AJAX = {
     Call: function (url, method, data, callback) {
         let defer = $.Deferred();
         $.ajax({
-            dataType: 'json',
+            //dataType: 'json',
             data: JSON.stringify(data),
             /*
             xhr: function () {
@@ -1726,7 +1726,7 @@ var AJAX = {
                     $('input:hidden[name="__RequestVerificationToken"]').val());
             },
             */
-            //contentType: "application/x-www-form-urlencoded",
+            //contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             contentType: "application/json; charset=utf-8",
             error: function (xhr, tStatus, errorTh) {
                 let resp = {};
