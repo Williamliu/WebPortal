@@ -273,7 +273,7 @@ Date.prototype.timezone = function () {
 };
 
 Date.prototype.ticks = function () {
-    return Date.UTC(this.getFullYear(), this.getMonth(), this.getDate(), this.getHours(), this.getMinutes(), this.getSeconds()) / 1000
+    return Date.UTC(this.getFullYear(), this.getMonth(), this.getDate(), this.getHours(), this.getMinutes(), this.getSeconds()) / 1000;
 };
 
 Date.prototype.format = function (format) {

@@ -160,7 +160,8 @@ namespace Web.Portal.WebApi.Controllers
                     int ClassId = jsTable.Rows[0].GetValue("ClassId").GetInt() ?? 0;
                     int UserId = jsTable.Rows[0].GetValue("UserId").GetInt() ?? 0;
                     string payer = jsTable.Rows[0].GetValue("Payer").GetString();
-                    string paiddate = new DateTime(jsTable.Rows[0].GetValue("PaidDate").GetLong()??0).YMDHMS();
+                    
+                    string paiddate = (jsTable.Rows[0].GetValue("PaidDate").GetLong() ?? 0).IntDate().YMDHMS();
                     string paidinvoice = jsTable.Rows[0].GetValue("PaidInvoice").GetString();
                     string paidamount = jsTable.Rows[0].GetValue("PaidAmount").GetString();
                     string paidcurrency = jsTable.Rows[0].GetValue("Currency").GetString();

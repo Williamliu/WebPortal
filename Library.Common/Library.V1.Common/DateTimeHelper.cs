@@ -10,9 +10,10 @@ namespace Library.V1.Common
         {
             return (long)(dt.ToUniversalTime() - new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
         }
-        public static DateTime IntDate(this System.DateTime dt, long ticks)
+        public static DateTime IntDate(this long ticks)
         {
-            return new DateTime(ticks);
+            DateTime utcDT = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return utcDT.AddSeconds(ticks);
         }
 
         public static string YMDHM(this System.DateTime dt)
