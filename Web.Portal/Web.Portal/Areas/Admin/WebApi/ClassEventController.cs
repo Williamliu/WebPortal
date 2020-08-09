@@ -196,6 +196,23 @@ namespace Web.Portal.Areas.Admin.WebApi
             return Ok(this.DB.SaveTable(jsTable));
         }
 
+
+        [HttpGet("InitClassPayment")]
+        public IActionResult InitClassPayment()
+        {
+            this.Init("M2060");
+            this.DB.FillAll();
+            return Ok(this.DB);
+        }
+        
+        [HttpPost("ReloadClassPayment")]
+        public IActionResult ReloadClassPayment(JSTable jsTable)
+        {
+            this.Init("M2060");
+            return Ok(this.DB.ReloadTable(jsTable));
+        }
+
+
         protected override void InitDatabase(string menuId)
         {
             switch (menuId)
@@ -460,7 +477,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta egroup = new Meta { Name = "Grp", DbName = "Grp", Title = Words("col.grp"), Type = EInput.String, MaxLength = 16, Order = "ASC" };
                         Meta eisPaid = new Meta { Name = "IsPaid", DbName = "IsPaid", Title = Words("col.ispaid"), Description = Words("col.ispaid.yesno"), Type = EInput.Bool, Order = "DESC" };
                         Meta epaidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paiddate"), Type = EInput.Read, Sync = true, Order = "ASC" };
-                        Meta epaidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paidinfo"), Type = EInput.Float, MaxLength = 18 };
+                        Meta epaidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paidinfo"), Type = EInput.Float, MaxLength = 18, Sum=ESUM.Sum };
                         Meta epaidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paidinvoice"), Type = EInput.String, MaxLength = 32, Order = "ASC" };
                         Meta ememberType = new Meta { Name = "MemberType", DbName = "MemberType", Title = Words("col.membertype"), Type = EInput.Int };
                         ememberType.AddListRef("MemberTypeList");
@@ -665,6 +682,59 @@ namespace Web.Portal.Areas.Admin.WebApi
                                 .AddCollections(ClassList, MemberTypeList)
                                 .AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, PubRoleList)
                                 .AddCollections(GenderList, MonthList, DayList);
+                    }
+                    break;
+                case "M2060":
+                    {
+                        Table table = new Table("ClassPayment", "VW_Class_Payment", Words("class.payment"));
+                        Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
+                        Meta classTitle = new Meta { Name = "ClassTitle", DbName = "ClassTitle", Title = Words("class.class"), Order = "ASC", Type = EInput.String, IsLang=true };
+                        Meta startDate = new Meta { Name = "StartDate", DbName = "StartDate", Title = Words("col.start.date"), Type = EInput.Date };
+                        Meta endDate = new Meta { Name = "EndDate", DbName = "EndDate", Title = Words("col.start.date"), Type = EInput.Date };
+                        Meta className = new Meta { Name = "ClassName", DbName = "ClassName", Title = Words("col.class.name"), Order = "ASC", Type = EInput.String };
+                        Meta fullName = new Meta { Name = "FullName", DbName = "FullName", Title = Words("col.fullname"), Order = "ASC", Type = EInput.String };
+                        Meta email = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Order = "ASC", Type = EInput.String };
+                        Meta payer = new Meta { Name = "Payer", DbName = "Payer", Title = Words("col.payer"), Order = "ASC", Type = EInput.String };
+                        Meta paidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paid.invoice"), Order = "ASC", Type = EInput.String };
+                        Meta paidStatus = new Meta { Name = "PaidStatus", DbName = "PaidStatus", Title = Words("col.paid.status"), Order = "ASC", Type = EInput.String };
+                        Meta trackNumber = new Meta { Name = "TrackNumber", DbName = "TrackNumber", Title = Words("col.track.number"), Order = "ASC", Type = EInput.String };
+                        Meta paidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paid.amount"), Type = EInput.Float, Order = "DESC", Sum=ESUM.Sum };
+                        Meta currency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String, Order = "ASC" };
+                        Meta paidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EInput.Int, Order = "DESC" };
+                        table.AddMetas(id, classTitle, startDate, endDate,className, fullName, email, payer, paidInvoice, paidStatus, trackNumber, paidAmount, currency, paidDate);
+
+                        Filter f1 = new Filter() { Name = "fitler_branch", DbName = "BranchId", Title = "col.branch", Type = EFilter.Hidden, Required = true, Compare = ECompare.In, Value1 = this.DB.User.ActiveBranches };
+                        Filter f2 = new Filter() { Name = "fitler_site", DbName = "SiteId", Title = "col.site", Type = EFilter.Hidden, Required = true, Compare = ECompare.In, Value1 = this.DB.User.ActiveSites };
+
+                        Filter f3 = new Filter() { Name = "search_branch", DbName = "BranchId", Title = Words("col.branch"), Type = EFilter.Int, Compare = ECompare.Equal };
+                        f3.AddListRef("BranchList");
+                        Filter f4 = new Filter() { Name = "search_site", DbName = "SiteId", Title = Words("col.site"), Type = EFilter.Int, Compare = ECompare.Equal };
+                        f4.AddListRef("SiteList");
+
+                        Filter f5 = new Filter() { Name = "search_name", DbName = "FullName,Payer", Title = Words("col.fullname"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f6 = new Filter() { Name = "search_email", DbName = "Email", Title = Words("col.email"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f7 = new Filter() { Name = "search_invoice", DbName = "PaidInvoice", Title = Words("col.paid.invoice"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f8 = new Filter() { Name = "search_date", DbName = "PaidDate", Title = Words("start.date"), Type = EFilter.IntDate, Compare = ECompare.Range, Value1 = DateTime.Now.AddDays(-30).YMD(), Value2 = DateTime.Now.YMD() };
+
+                        table.AddFilters(f1, f2, f3, f4, f5, f6, f7, f8);
+
+
+                        table.Navi.IsActive = true;
+                        table.Navi.Order = "DESC";
+                        table.Navi.By = "PaidDate";
+                        table.GetUrl = "/Admin/api/ClassEvent/ReloadClassPayment";
+
+
+
+                        CollectionTable c1 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection BranchList = new Collection(ECollectionType.Table, c1);
+                        BranchList.AddFilter("Id", ECompare.In, this.DB.User.ActiveBranches);
+
+                        CollectionTable c2 = new CollectionTable("SiteList", "GSite", true, "Id", "Title", "Detail", "BranchId", "DESC", "Sort");
+                        Collection SiteList = new Collection(ECollectionType.Table, c2);
+                        SiteList.AddFilter("Id", ECompare.In, this.DB.User.ActiveSites);
+
+                        this.DB.AddTable(table).AddCollections(BranchList, SiteList);
                     }
                     break;
             }

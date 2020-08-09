@@ -61,83 +61,76 @@
 }
 <div ng-app="myApp" ng-controller="mycontrl">
     <ng-form>
-            <div id="user_list">
-                <div wliu block>
-            <div block head toggle>
-                <div block subject>@Html.Words("class.all.student")</div>
-            </div>
-            <div block body>
-                <fieldset>
-                    <legend>@Html.Words("search.by")</legend>
-                    <filter.label db="ViewData.database" tb="PubUser" col="search_name"></filter.label>
-                    <filter.textbox db="ViewData.database" tb="PubUser" col="search_name"></filter.textbox>
-                    <filter.label db="ViewData.database" tb="PubUser" col="search_email"></filter.label>
-                    <filter.textbox db="ViewData.database" tb="PubUser" col="search_email"></filter.textbox>
-                    <filter.label db="ViewData.database" tb="PubUser" col="search_phone"></filter.label>
-                    <filter.textbox db="ViewData.database" tb="PubUser" col="search_phone"></filter.textbox>
-                    <filter.label db="ViewData.database" tb="PubUser" col="search_idno"></filter.label>
-                    <filter.textbox db="ViewData.database" tb="PubUser" col="search_idno" action="scanCallback()"></filter.textbox>
-                    <wliu.search db="ViewData.database" tb="PubUser">Search</wliu.search>
-                </fieldset>
-                <div wliu table grow shrink underline style="margin-top:12px;">
-                    <div row>
-                        <div cell style="background-color:#dddddd;">
-                            <wliu.navi db="ViewData.database" tb="PubUser"></wliu.navi>
-                        </div>
+        <div id="user_list">
+            <fieldset>
+                <legend>@Html.Words("search.by")</legend>
+                <filter.label db="ViewData.database" tb="PubUser" col="search_name"></filter.label>
+                <filter.textbox db="ViewData.database" tb="PubUser" col="search_name"></filter.textbox>
+                <filter.label db="ViewData.database" tb="PubUser" col="search_email"></filter.label>
+                <filter.textbox db="ViewData.database" tb="PubUser" col="search_email"></filter.textbox>
+                <filter.label db="ViewData.database" tb="PubUser" col="search_phone"></filter.label>
+                <filter.textbox db="ViewData.database" tb="PubUser" col="search_phone"></filter.textbox>
+                <filter.label db="ViewData.database" tb="PubUser" col="search_idno"></filter.label>
+                <filter.textbox db="ViewData.database" tb="PubUser" col="search_idno" action="scanCallback()"></filter.textbox>
+                <wliu.search db="ViewData.database" tb="PubUser">Search</wliu.search>
+            </fieldset>
+            <div wliu table grow shrink underline style="margin-top:12px;">
+                <div row>
+                    <div cell style="background-color:#dddddd;">
+                        <wliu.navi db="ViewData.database" tb="PubUser"></wliu.navi>
                     </div>
-                    <div row>
-                        <div head fixed style="width:40px;"></div>
-                        <div head fixed style="width:72px;"><wliu.head db="ViewData.database" tb="PubUser" col="Photo"></wliu.head></div>
-                        <div head medium><wliu.head db="ViewData.database" tb="PubUser" col="FirstName"></wliu.head></div>
-                        <div head medium><wliu.head db="ViewData.database" tb="PubUser" col="FirstNameLegal"></wliu.head></div>
-                        <div head medium><wliu.head db="ViewData.database" tb="PubUser" col="DisplayName"></wliu.head></div>
-                        <div head fixed center style="width:60px;"><wliu.head db="ViewData.database" tb="PubUser" col="Gender"></wliu.head></div>
-                        <div head large><wliu.head db="ViewData.database" tb="PubUser" col="Email"></wliu.head></div>
-                        <div head small><wliu.head db="ViewData.database" tb="PubUser" col="Phone"></wliu.head></div>
-                        <div head center fixed style="width:60px;"><wliu.head db="ViewData.database" tb="PubUser" col="Active"></wliu.head></div>
-                        <div head small><wliu.head db="ViewData.database" tb="PubUser" col="CreatedTime"></wliu.head></div>
-                        <div head fixed style="width:56px;">
-                        </div>
+                </div>
+                <div row>
+                    <div head fixed style="width:40px;"></div>
+                    <div head fixed style="width:72px;"><wliu.head db="ViewData.database" tb="PubUser" col="Photo"></wliu.head></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="PubUser" col="FirstName"></wliu.head></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="PubUser" col="FirstNameLegal"></wliu.head></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="PubUser" col="DisplayName"></wliu.head></div>
+                    <div head fixed center style="width:60px;"><wliu.head db="ViewData.database" tb="PubUser" col="Gender"></wliu.head></div>
+                    <div head large><wliu.head db="ViewData.database" tb="PubUser" col="Email"></wliu.head></div>
+                    <div head small><wliu.head db="ViewData.database" tb="PubUser" col="Phone"></wliu.head></div>
+                    <div head center fixed style="width:60px;"><wliu.head db="ViewData.database" tb="PubUser" col="Active"></wliu.head></div>
+                    <div head small><wliu.head db="ViewData.database" tb="PubUser" col="CreatedTime"></wliu.head></div>
+                    <div head fixed style="width:56px;">
                     </div>
-                    <div row ng-repeat="row in ViewData.database.tables.PubUser.rows">
-                        <div cell center fixed style="width:40px;">
-                            <wliu.rowstatus db="ViewData.database" tb="PubUser" guid="{{row.guid}}"></wliu.rowstatus>
-                        </div>
-                        <div cell fixed style="width:72px;">
-                            <wliu.imgcontent db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="Photo" rowkey="Id" hh="72px" view="tiny" edit="medium"></wliu.imgcontent>
-                        </div>
-                        <div cell medium>
-                            <wliu.template db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="{FirstName} {LastName}<br>{DisplayName}"></wliu.template>
-                        </div>
-                        <div cell medium>
-                            <wliu.template db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="{FirstNameLegal} {LastNameLegal}<br>{CertificateName}"></wliu.template>
-                        </div>
-                        <div cell medium>
-                            <wliu.template db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="{AliasName}<br>{DharmaName}"></wliu.template>
-                        </div>
-                        <div cell fixed center style="width:60px;">
-                            <wliu.stext db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="Gender"></wliu.stext>
-                        </div>
-                        <div cell large>
-                            <wliu.template db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="{Email}<br>{UserName}"></wliu.template>
-                        </div>
-                        <div cell small>
-                            <wliu.template db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="{Phone}<br>{Cell}"></wliu.template>
-                        </div>
-                        <div cell center fixed style="width:60px;">
-                            <wliu.booltext db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="Active" yes="@Html.Words("status.active")" no="@Html.Words("status.inactive")"></wliu.booltext>
-                        </div>
-                        <div cell small>
-                            <wliu.intdate db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="CreatedTime"></wliu.intdate>
-                        </div>
-                        <div cell fixed style="width:56px;">
-                            <wliu.bicon db="ViewData.database" tb="PubUser" guid="{{row.guid}}" icons="detail" actiondetail="pubDetail()"></wliu.bicon>
-                        </div>
+                </div>
+                <div row ng-repeat="row in ViewData.database.tables.PubUser.rows">
+                    <div cell center fixed style="width:40px;">
+                        <wliu.rowstatus db="ViewData.database" tb="PubUser" guid="{{row.guid}}"></wliu.rowstatus>
+                    </div>
+                    <div cell fixed style="width:72px;">
+                        <wliu.imgcontent db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="Photo" rowkey="Id" hh="72px" view="tiny" edit="medium"></wliu.imgcontent>
+                    </div>
+                    <div cell medium>
+                        <wliu.template db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="{FirstName} {LastName}<br>{DisplayName}"></wliu.template>
+                    </div>
+                    <div cell medium>
+                        <wliu.template db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="{FirstNameLegal} {LastNameLegal}<br>{CertificateName}"></wliu.template>
+                    </div>
+                    <div cell medium>
+                        <wliu.template db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="{AliasName}<br>{DharmaName}"></wliu.template>
+                    </div>
+                    <div cell fixed center style="width:60px;">
+                        <wliu.stext db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="Gender"></wliu.stext>
+                    </div>
+                    <div cell large>
+                        <wliu.template db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="{Email}<br>{UserName}"></wliu.template>
+                    </div>
+                    <div cell small>
+                        <wliu.template db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="{Phone}<br>{Cell}"></wliu.template>
+                    </div>
+                    <div cell center fixed style="width:60px;">
+                        <wliu.booltext db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="Active" yes="@Html.Words("status.active")" no="@Html.Words("status.inactive")"></wliu.booltext>
+                    </div>
+                    <div cell small>
+                        <wliu.intdate db="ViewData.database" tb="PubUser" guid="{{row.guid}}" col="CreatedTime"></wliu.intdate>
+                    </div>
+                    <div cell fixed style="width:56px;">
+                        <wliu.bicon db="ViewData.database" tb="PubUser" guid="{{row.guid}}" icons="detail" actiondetail="pubDetail()"></wliu.bicon>
                     </div>
                 </div>
             </div>
         </div>
-            </div>
 
         <!------------------------- User Detail ----------------------------->
         <div id="user_detail" style="display:none;margin-top:12px;">

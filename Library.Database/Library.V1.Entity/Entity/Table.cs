@@ -153,6 +153,24 @@ namespace Library.V1.Entity
                 return sqlRow;
             }
         }
+        private SQLRow SumRowGet
+        {
+            get
+            {
+                SQLRow sqlRow = new SQLRow();
+                foreach (string metaName in this.Metas.Keys)
+                {
+                    if (this.Metas[metaName].Sum != ESUM.None)
+                    {
+                        var jsName = this.Metas[metaName].Name;
+                        var dbName = this.Metas[metaName].ColNameSum();
+                        sqlRow.Add(dbName, jsName);
+                    }
+
+                }
+                return sqlRow;
+            }
+        }
         private SQLWhere WhereGet
         {
             get
@@ -472,6 +490,26 @@ namespace Library.V1.Entity
             return this;
 
         }
+        public Table AddRowSum(GRow grow)
+        {
+            foreach (var colName in this.Metas.Keys)
+            {
+                switch(this.Metas[colName].Sum)
+                {
+                    case ESUM.None:
+                        break;
+                    case ESUM.Count:
+                    case ESUM.UniCount:
+                        this.Navi.Sum.Add(colName, grow.GetValue(colName).GetInt() ?? 0);
+                        break;
+                    case ESUM.Sum:
+                    case ESUM.Avg:
+                        this.Navi.Sum.Add(colName, grow.GetValue(colName).GetFloat() ?? 0);
+                        break;
+                }
+            }
+            return this;
+        }
         #endregion
 
         #region Table Row Operation
@@ -664,6 +702,14 @@ namespace Library.V1.Entity
                                 {
                                     case ERef.None:
                                     case ERef.O2M:
+                                        SQLRow sumRow = this.SumRowGet;
+                                        if(sumRow.ColumnCount>0)
+                                        {
+                                            GTable sumTable = this.DSQL.GetTable(this.DbName, sumRow, sqlWhere);
+                                            if (sumTable.RowCount > 0) this.AddRowSum(sumTable.Rows[0]);
+                                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|SumTable:[{this.DSQL.Debug}]", @"\n\n");
+                                        }
+
                                         if (this.Navi.IsActive)
                                         {
                                             int rowCount = this.DSQL.GetRowCount(this.DbName, sqlWhere);

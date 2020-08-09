@@ -19,6 +19,7 @@ namespace Library.V1.Entity
         Long,
         Float,
         Date,
+        IntDate,
         DateTime,
         Time,
         Checkbox
@@ -350,6 +351,9 @@ namespace Library.V1.Entity
                 case EFilter.Date:
                     val = this.Value1.GetDateTime();
                     break;
+                case EFilter.IntDate:
+                    val = this.Value1.GetDateTime().HasValue? this.Value1.GetDateTime().Value.UTCSeconds():0;
+                    break;
                 case EFilter.Checkbox:
                     val = this.Value1.GetCheckbox();
                     break;
@@ -385,6 +389,9 @@ namespace Library.V1.Entity
                     break;
                 case EFilter.Date:
                     val = this.Value2.GetDateTime()?.AddTicks(TimeSpan.FromSeconds(24 * 3600 - 1).Ticks);
+                    break;
+                case EFilter.IntDate:
+                    val = this.Value2.GetDateTime().HasValue ? this.Value2.GetDateTime().Value.UTCSeconds() + 24*3600 -1 : 0;
                     break;
                 case EFilter.Checkbox:
                     val = this.Value2.GetCheckbox();

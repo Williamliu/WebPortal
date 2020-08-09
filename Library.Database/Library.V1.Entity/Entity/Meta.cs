@@ -9,6 +9,14 @@ using System.Text.Json;
 
 namespace Library.V1.Entity
 {
+    public enum ESUM
+    {
+        None,
+        Sum,
+        Count,
+        UniCount,
+        Avg
+    }
     public enum EInput
     {
         Hidden,
@@ -34,7 +42,6 @@ namespace Library.V1.Entity
         Custom,         // only for meta custom  get and save code logic
 
         Checkbox        // for both
-
     }
     public class Meta
     {
@@ -43,6 +50,7 @@ namespace Library.V1.Entity
             this.Name = string.Empty;
             this.DbName = string.Empty;
             this.Type = EInput.String;
+            this.Sum = ESUM.None;
             this.Title = string.Empty;
             this.Description = string.Empty;
             this.Order = string.Empty;
@@ -50,6 +58,7 @@ namespace Library.V1.Entity
             this.Required = false;
             this.Unique = false;
             this.Value = null;
+           
         }
 
         #region Public Fields
@@ -119,6 +128,9 @@ namespace Library.V1.Entity
                 return IsAllow;
             }
         }
+        [JsonIgnore]
+        public ESUM Sum{ get; set; }
+
         #endregion
 
         #region Methods
@@ -156,6 +168,28 @@ namespace Library.V1.Entity
                 }
             }
 
+        }
+        public string ColNameSum()
+        {
+            string colString = string.Empty;
+            switch(this.Sum)
+            {
+                case ESUM.None:
+                    break;
+                case ESUM.Avg:
+                    colString = $"AVG({this.DbName})";
+                    break;
+                case ESUM.Count:
+                    colString = $"Count({this.DbName})";
+                    break;
+                case ESUM.UniCount:
+                    colString = $"Count(Distinct {this.DbName})";
+                    break;
+                case ESUM.Sum:
+                    colString = $"SUM({this.DbName})";
+                    break;
+            }
+            return colString;
         }
         #endregion
 

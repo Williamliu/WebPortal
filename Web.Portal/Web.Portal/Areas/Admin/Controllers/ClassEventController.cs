@@ -25,6 +25,11 @@ namespace Web.Portal.Areas.Admin.Controllers
             this.Init("M2030");
             return View();
         }
+        public IActionResult ClassPayment()
+        {
+            this.Init("M2060");
+            return View();
+        }
         protected override void InitDatabase(string menuId)
         {
 

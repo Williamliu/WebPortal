@@ -17,6 +17,7 @@ namespace Library.V1.Entity
             this.By = "";
             this.InitFill = true;
             this.IsLoading = false;
+            this.Sum = new Dictionary<string, object>();
         }
         public int PageNo { get; set; }
         public int PageSize { get; set; }
@@ -26,6 +27,7 @@ namespace Library.V1.Entity
         public string Order { get; set; }
         public string By { get; set; }
         public bool IsActive { get; set; }
+        public IDictionary<string, object> Sum { get; set; }
         [JsonIgnore]
         public bool InitFill { get; set; }
         #region Navi Methods

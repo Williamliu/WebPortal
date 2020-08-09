@@ -41,7 +41,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="dotnet-aspnet-codegenerator-design.dll">
-      <publishTime>05/12/2020 19:55:52</publishTime>
+      <publishTime>08/03/2020 18:30:10</publishTime>
     </File>
     <File Include="es/Microsoft.CodeAnalysis.CSharp.resources.dll">
       <publishTime>09/12/2019 17:09:00</publishTime>
@@ -104,22 +104,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="Library.V1.Common.dll">
-      <publishTime>07/24/2020 21:53:39</publishTime>
+      <publishTime>08/08/2020 23:51:29</publishTime>
     </File>
     <File Include="Library.V1.Common.pdb">
-      <publishTime>07/24/2020 21:53:39</publishTime>
+      <publishTime>08/08/2020 23:51:29</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>07/26/2020 12:03:05</publishTime>
+      <publishTime>08/08/2020 23:51:34</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>07/26/2020 12:03:05</publishTime>
+      <publishTime>08/08/2020 23:51:34</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
-      <publishTime>07/24/2020 21:53:41</publishTime>
+      <publishTime>08/08/2020 23:51:32</publishTime>
     </File>
     <File Include="Library.V1.SQL.pdb">
-      <publishTime>07/24/2020 21:53:41</publishTime>
+      <publishTime>08/08/2020 23:51:32</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.JwtBearer.dll">
       <publishTime>05/21/2020 20:26:48</publishTime>
@@ -164,25 +164,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/24/2019 19:56:06</publishTime>
     </File>
     <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll">
-      <publishTime>05/12/2020 19:55:36</publishTime>
+      <publishTime>08/03/2020 18:29:50</publishTime>
     </File>
     <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Core.dll">
-      <publishTime>05/12/2020 19:55:42</publishTime>
+      <publishTime>08/03/2020 18:30:02</publishTime>
     </File>
     <File Include="Microsoft.VisualStudio.Web.CodeGeneration.dll">
-      <publishTime>05/12/2020 19:55:46</publishTime>
+      <publishTime>08/03/2020 18:30:04</publishTime>
     </File>
     <File Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll">
-      <publishTime>05/12/2020 19:55:44</publishTime>
+      <publishTime>08/03/2020 18:30:02</publishTime>
     </File>
     <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll">
-      <publishTime>05/12/2020 19:55:40</publishTime>
+      <publishTime>08/03/2020 18:29:58</publishTime>
     </File>
     <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll">
-      <publishTime>05/12/2020 19:55:38</publishTime>
+      <publishTime>08/03/2020 18:29:56</publishTime>
     </File>
     <File Include="Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll">
-      <publishTime>05/12/2020 19:55:48</publishTime>
+      <publishTime>08/03/2020 18:30:06</publishTime>
     </File>
     <File Include="Newtonsoft.Json.Bson.dll">
       <publishTime>11/27/2018 23:10:18</publishTime>
@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>07/27/2020 01:02:24</publishTime>
+      <publishTime>08/08/2020 23:52:56</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>07/27/2020 01:02:07</publishTime>
+      <publishTime>08/08/2020 23:51:42</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>07/27/2020 01:01:49</publishTime>
+      <publishTime>08/08/2020 23:51:38</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>07/27/2020 01:01:50</publishTime>
+      <publishTime>08/08/2020 23:51:38</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>07/27/2020 01:01:49</publishTime>
+      <publishTime>08/08/2020 23:51:38</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
-      <publishTime>07/18/2020 00:20:16</publishTime>
+      <publishTime>08/08/2020 23:51:42</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>07/27/2020 01:01:57</publishTime>
+      <publishTime>08/08/2020 23:51:41</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>07/27/2020 01:01:57</publishTime>
+      <publishTime>08/08/2020 23:51:41</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/angular.min.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -320,7 +320,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/19/2020 22:08:34</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.database.js">
-      <publishTime>07/25/2020 21:39:04</publishTime>
+      <publishTime>07/27/2020 19:01:23</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.layout.js">
       <publishTime>07/23/2020 22:09:36</publishTime>
@@ -2639,10 +2639,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.v1.com.js">
-      <publishTime>07/23/2020 18:12:25</publishTime>
+      <publishTime>07/31/2020 22:22:57</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.v1.database.js">
-      <publishTime>07/27/2020 00:35:15</publishTime>
+      <publishTime>07/27/2020 17:08:41</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.v1.image.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
