@@ -89,6 +89,20 @@
                 }
             });
 
+
+            // fixed firefox bug:  cookie remember select
+            if ($("input[name='donate_opt']:checked").val() == "other") {
+                $("#text_opt").hide();
+                $("#span_opt").show();
+                $("#dAmount").val($("#donate_amount").html());
+            } else {
+                $("#span_opt").hide();
+                $("#text_opt").show();
+                $("#dAmount").val($("input[name='donate_opt']:checked").val());
+                $("#donate_amount").html($("input[name='donate_opt']:checked").val());
+            }
+            
+
         });
 
         function changeAmount( amt ) {
