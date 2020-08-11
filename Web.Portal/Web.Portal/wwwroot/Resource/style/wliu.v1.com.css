@@ -632,8 +632,15 @@ div[wliu][table] div[row] > div[head] {
     flex-grow:          0; /* default no grow */
     flex-shrink:        0;
 }
+div[wliu][table] div[row] > div[head][sum] {
+    border-top:         1px solid #cccccc;
+    border-bottom:      none;
+}
 div[wliu][table] div[row] > div[head][center] {
     text-align:         center;
+}
+div[wliu][table] div[row] > div[head][right] {
+    text-align:         right;
 }
 
 div[wliu][table] div[row] > div[cell] {
@@ -1024,6 +1031,9 @@ span[wliu] {
     margin:             2px 0px;
     padding:            0px 2px; 
     vertical-align:     middle;
+}
+span[wliu][text] {
+    user-select:        text;
 }
 span[wliu][text][right] {
     text-align:         right;

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Library.V1.Common;
 using Library.V1.Entity;
+using Library.V1.SQL;
 using Microsoft.AspNetCore.Mvc;
 using Web.Portal.Common;
 
@@ -23,6 +24,16 @@ namespace Web.Portal.Controllers
             this.Init("M30");
             return View();
         }
+        public IActionResult Donate()
+        {
+            this.Init("M50");
+            this.GetWebContent("M50");
+            string query = $"SELECT Id as Value, {this.DB.DSQL.LangSmartColumn("Title")} AS Title FROM GSite WHERE Deleted=0 AND Active=1 ORDER BY Sort DESC";
+            GTable siteList = this.DB.DSQL.ExecuteTable(query, new Dictionary<string, object>());
+            this.DB.User.AddItem("SiteList", siteList);
+            return View();
+        }
+
         public IActionResult ClassPayment(int? Id)
         {
             this.Init("ClassPayment");

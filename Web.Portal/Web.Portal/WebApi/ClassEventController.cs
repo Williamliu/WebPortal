@@ -198,6 +198,44 @@ namespace Web.Portal.WebApi.Controllers
             return Ok(this.DB.SaveTable(jsTable));
         }
 
+
+        [HttpPost("SaveDonate")]
+        public IActionResult SaveDonate(Dictionary<string, object> data)
+        {
+            this.Init("M50");
+            data.Add("CreatedTime", DateTime.Now.UTCSeconds());
+            string query = "INSERT INTO Donation(UserId, SiteId, FirstName, LastName, Email, Notes, Payer, PaidDate, PaidAmount, Currency, PaidMethod, PaidInvoice, PaidStatus, IsSuccess, TrackNumber, TrackMessage, CreatedTime) ";
+            query += "Values(@UserId, @SiteId, @FirstName, @LastName, @Email, @Notes, @Payer, @PaidDate, @PaidAmount, @Currency, @PaidMethod, @PaidInvoice, @PaidStatus, @IsSuccess, @TrackNumber, @TrackMessage, @CreatedTime)";
+            this.DB.DSQL.ExecuteQuery(query, data);
+
+
+            if( string.IsNullOrWhiteSpace(data.GetValue("Email"))==false && ValidateHelper.IsMatch("Email", data.GetValue("Email")) )
+            {
+                MMEmail myemail = new MMEmail("mail.shaolinworld.org", "info@shaolinworld.org", "SL2020$");
+                myemail.Port = 26;
+                myemail.enableSSL = false;
+                myemail.addFrom("info@shaolinworld.org");
+                myemail.addTo(data.GetValue("Email"));
+                myemail.addReply("info@shaolinworld.org");
+                myemail.addBCC("info@shaolinworld.org");
+                myemail.Subject = Words("donate.success");// "New Student Enrolled";
+                myemail.Content = "<html><body>";
+                myemail.Content += string.Format(Words("email.donate.success.content"), data.GetValue("FirstName"), data.GetValue("LastName")); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
+                myemail.Content += string.Format(Words("email.enroll.payment.content"), data.GetValue("Payer"), data.GetValue("PaidDate"), data.GetValue("PaidInvoice"), data.GetValue("PaidAmount"), data.GetValue("Currency"));
+                myemail.Content += "</body></html>";
+                myemail.SendAsync();
+            }
+
+
+
+            if (this.DB.DSQL.Error.HasError)
+            {
+                return Conflict("Save Fail");
+            }
+            else
+                return Ok("Save Ok");
+        }
+
         protected override void InitDatabase(string menuId)
         {
             switch (menuId)

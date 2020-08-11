@@ -43,6 +43,7 @@ namespace Library.V1.Entity
             this.InsertKVs = new Dictionary<string, object>();
             this.DeleteKVs = new Dictionary<string, object>();
             this.GetUrl = string.Empty;
+            this.ExportUrl = string.Empty;
             this.SaveUrl = string.Empty;
             this.ValidateUrl = string.Empty;
             this.Rows = new List<Row>();
@@ -93,6 +94,7 @@ namespace Library.V1.Entity
         }
         public Guid RowGuid { get; set; }
         public string GetUrl { get; set; }
+        public string ExportUrl { get; set; }
         public string SaveUrl { get; set; }
         public string ValidateUrl { get; set; }
         public string Debug { get; set; }
@@ -144,6 +146,30 @@ namespace Library.V1.Entity
                         if(this.Source==ESource.Table) 
                             dbName = this.Metas[metaName].IsLang ? this.DSQL.LangSmartColumn(dbName) : dbName;
                         if(this.Source==ESource.StoreProcedure) 
+                            dbName = this.Metas[metaName].IsLang ? this.DSQL.LangColumn(dbName) : dbName;
+
+                        sqlRow.Add(dbName, jsName);
+                    }
+
+                }
+                return sqlRow;
+            }
+        }
+        private SQLRow SQLRowExport
+        {
+            get
+            {
+                SQLRow sqlRow = new SQLRow();
+                foreach (string metaName in this.Metas.Keys)
+                {
+                    if (this.Metas[metaName].AllowExport)
+                    {
+                        var jsName = this.Metas[metaName].Name;
+                        var dbName = string.IsNullOrWhiteSpace(this.Metas[metaName].DbName) ? jsName : this.Metas[metaName].DbName;
+
+                        if (this.Source == ESource.Table)
+                            dbName = this.Metas[metaName].IsLang ? this.DSQL.LangSmartColumn(dbName) : dbName;
+                        if (this.Source == ESource.StoreProcedure)
                             dbName = this.Metas[metaName].IsLang ? this.DSQL.LangColumn(dbName) : dbName;
 
                         sqlRow.Add(dbName, jsName);
@@ -392,6 +418,10 @@ namespace Library.V1.Entity
                         ncolumn.Value = grow.GetValue(dbColName).GetDate();
                         nrow.AddColumn(ncolumn);
                         break;
+                    case EInput.IntDate:
+                        ncolumn.Value = (grow.GetValue(dbColName).GetLong()??0).IntDate().YMD();
+                        nrow.AddColumn(ncolumn);
+                        break;
                     case EInput.DateTime:
                         ncolumn.Value = grow.GetValue(dbColName).GetDate();
                         ncolumn.Value1 = grow.GetValue(dbColName).GetTime();
@@ -483,6 +513,86 @@ namespace Library.V1.Entity
                                 imgCol = new Column(this.Metas[colName].Name, imageRows[0]["ImageContent"].GetString(), $"/api/Image/GetImage/{imageRows[0]["Guid"].GetString()}");
                             nrow.AddColumn(imgCol);
                         }
+                        break;
+                }
+            }
+            this.AddRow(nrow);
+            return this;
+
+        }
+        public Table AddRowExport(GRow grow)
+        {
+            Row nrow = new Row();
+            foreach (var colName in this.Metas.Keys)
+            {
+                string dbColName = colName;
+                if (this.Source == ESource.StoreProcedure)
+                    dbColName = this.Metas[colName].IsLang ? this.DSQL.LangColumn(this.Metas[colName].DbName) : this.Metas[colName].DbName;
+
+                if (this.Metas[colName].IsKey) nrow.Key = grow.GetValue(dbColName).GetInt() ?? -1;
+                Column ncolumn = new Column(colName);
+                switch (this.Metas[colName].Type)
+                {
+                    case EInput.Hidden:
+                        break;
+                    case EInput.Object:
+                    case EInput.String:
+                    case EInput.Email:
+                        ncolumn.Value = grow.GetValue(dbColName);
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Int:
+                        ncolumn.Value = grow.GetValue(dbColName).GetInt();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Long:
+                        ncolumn.Value = grow.GetValue(dbColName).GetLong();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Float:
+                        ncolumn.Value = grow.GetValue(dbColName).GetFloat();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Bool:
+                        ncolumn.Value = grow.GetValue(dbColName).GetBool();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Date:
+                        ncolumn.Value = grow.GetValue(dbColName).GetDate();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.IntDate:
+                        ncolumn.Value = (grow.GetValue(dbColName).GetLong() ?? 0).IntDate().YMD();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.DateTime:
+                        ncolumn.Value = grow.GetValue(dbColName).GetDate();
+                        ncolumn.Value1 = grow.GetValue(dbColName).GetTime();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Time:
+                        ncolumn.Value = grow.GetValue(dbColName).GetTime();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Password:  // never return password
+                        ncolumn.Value = "";
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Passpair:
+                        ncolumn.Value = "";  // never return password
+                        ncolumn.Value1 = "";
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Read:           // only for get data but save data
+                        ncolumn.Value = grow.GetValue(dbColName);
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.ImageUrl:       // handle later
+                    case EInput.ImageContent:   // handle later
+                    case EInput.FileUrl:        // handle later
+                    case EInput.FileContent:   // handle later
+                    case EInput.Custom:         // handle later
+                    case EInput.Checkbox:       // handle later
                         break;
                 }
             }
@@ -676,6 +786,122 @@ namespace Library.V1.Entity
             return this;
 
         }
+        public string OutputData(JSTable jsTable)
+        {
+            StringBuilder sb = new StringBuilder();
+            this.SyncJSTable(jsTable);
+            this.ExportData();
+            if (this.Rows.Count > 0)
+            {
+                sb.Append("<table cellpadding='2' cellspacing='2' border='1'>");
+                sb.Append("<tr>");
+                foreach (var colName in this.Metas.Keys)
+                {
+                    if(this.Metas[colName].AllowExport)
+                    {
+                        sb.Append($"<td align='center' valign='middle' style='background-color:#bbddff;min-width:240px;'>{this.Metas[colName].Title}</td>");
+
+                    }
+                }
+                sb.Append("</tr>");
+
+                foreach(Row row in this.Rows)
+                {
+                    sb.Append("<tr>");
+                    foreach (var colName in this.Metas.Keys)
+                    {
+                        if (this.Metas[colName].AllowExport)
+                        {
+                            sb.Append($"<td valign='top' style='min-width:240px;'>{row.GetValue(colName)}</td>");
+                        }
+                    }
+                    sb.Append("</tr>");
+                }
+
+                sb.Append("</table>");
+            }
+            else
+            {
+                sb.Append($"<table><tr><td>{LanguageHelper.Words("not.found")}</td></tr></table>");
+            }
+            return sb.ToString();
+        }
+        public Table ExportData()
+        {
+            if (this.User.Rights.ContainsKey("output") == false) return this;
+            if (this.User.Rights["output"] == false) return this;
+
+            GTable gtable = new GTable();
+            SQLRow sqlRow = this.SQLRowExport;
+            if (sqlRow.ColumnCount > 0)
+            {
+                switch (this.Source)
+                {
+                    case ESource.Table:
+                        {
+                            #region ESource.Table
+                            SQLWhere sqlWhere = this.WhereGet;
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Cols:[{sqlRow.ColumnGet}]", @"\n\n");
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Where:[{sqlWhere.WhereGetFilter}]", @"\n\n");
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|OrderBy:[{this.Navi.NaviOrderBy(this.Metas)}]", @"\n\n");
+
+                            if (this.Error.HasError == false)
+                            {
+                                switch (this.Relation.RefType)
+                                {
+                                    case ERef.None:
+                                    case ERef.O2M:
+                                        {
+                                            SQLRow sumRow = this.SumRowGet;
+                                            if (sumRow.ColumnCount > 0)
+                                            {
+                                                GTable sumTable = this.DSQL.GetTable(this.DbName, sumRow, sqlWhere);
+                                                if (sumTable.RowCount > 0) this.AddRowSum(sumTable.Rows[0]);
+                                                if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|SumTable:[{this.DSQL.Debug}]", @"\n\n");
+                                            }
+
+                                            int rowCount = this.DSQL.GetRowCount(this.DbName, sqlWhere);
+                                            this.Navi.Reset(rowCount);
+                                            gtable = this.DSQL.GetTable(this.DbName, sqlRow, sqlWhere, this.Navi.NaviOrderBy(this.Metas));
+                                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Table:[{this.DSQL.Debug}]", @"\n\n");
+                                        }
+                                        break;
+                                    case ERef.O2O:
+                                        {
+                                            int rowCount = this.DSQL.GetRowCount(this.DbName, sqlWhere);
+                                            this.Navi.Reset(rowCount);
+                                            gtable = this.DSQL.GetTable(this.DbName, sqlRow, sqlWhere, this.Navi.NaviOrderBy(this.Metas), "", 1);
+                                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Table:[{this.DSQL.Debug}]", @"\n\n");
+                                        }
+                                        break;
+                                }
+                                this.Error.Append(this.DSQL.Error);
+                                foreach (GRow grow in gtable.Rows) this.AddRowExport(grow);
+                                if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
+                            }
+                            #endregion
+                        }
+                        break;
+                    case ESource.StoreProcedure:
+                        {
+                            if (this.DSQL.IsDebug)
+                            {
+                                string debugStr = string.Empty;
+                                this.SqlParams.ForEach(p => debugStr = debugStr.Concat($"{p.ParameterName}={p.Value}", ";"));
+                                this.Debug = this.Debug.Concat($"|SqlParams:[{debugStr}]", @"\n\n");
+                            }
+                            gtable = this.DSQL.ExecuteSP(this.DbName, this.SqlParams.ToArray());
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|StoreProcedure:[{this.DSQL.Debug}]", @"\n\n");
+                            this.Error.Append(this.DSQL.Error);
+                            foreach (GRow grow in gtable.Rows) this.AddRowExport(grow);
+                            if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
+                        }
+                        break;
+                }
+            }
+            return this;
+        }
+
         public Table FillData()
         {
             if (this.Navi.InitFill == false) return this;

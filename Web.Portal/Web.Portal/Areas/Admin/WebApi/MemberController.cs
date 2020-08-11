@@ -101,6 +101,26 @@ namespace Web.Portal.Areas.Admin.WebApi
             return Ok(this.DB.ValidateTable(gtb));
         }
 
+        [HttpGet("InitDonate")]
+        public IActionResult InitDonate()
+        {
+            this.Init("M3090");
+            this.DB.FillAll();
+            return Ok(this.DB);
+        }
+
+        [HttpPost("ReloadDonate")]
+        public IActionResult ReloadDonate(JSTable jsTable)
+        {
+            this.Init("M3090");
+            return Ok(this.DB.ReloadTable(jsTable));
+        }
+        [HttpPost("ExportDonate")]
+        public IActionResult ExportDonate(JSTable jsTable)
+        {
+            this.Init("M3090");
+            return Ok(this.DB.OutputTable(jsTable));
+        }
 
         protected override void InitDatabase(string menuId)
         {
@@ -574,6 +594,60 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Collection PubRoleList = new Collection(ECollectionType.Table, c10);
                         this.DB.AddTables(pubUser, UserDetail, PubUserId).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, genderList, monthList, dayList, PubRoleList);
                         #endregion
+                    }
+                    break;
+                case "M3090":
+                    {
+                        Table table = new Table("DonatePayment", "VW_Payment_Donation", Words("class.payment"));
+                        Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
+                        Meta siteName = new Meta { Name = "SiteName", DbName = "SiteName", Title = Words("col.branch"), Order = "ASC", Type = EInput.String, IsLang = true, Export = true };
+                        Meta userName = new Meta { Name = "UserName", DbName = "UserName", Title = Words("col.username"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta fullName = new Meta { Name = "FullName", DbName = "FullName", Title = Words("col.fullname"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta email = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta payer = new Meta { Name = "Payer", DbName = "Payer", Title = Words("col.payer"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta paidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paid.invoice"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta paidStatus = new Meta { Name = "PaidStatus", DbName = "PaidStatus", Title = Words("col.paid.status"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta trackNumber = new Meta { Name = "TrackNumber", DbName = "TrackNumber", Title = Words("col.track.number"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta paidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paid.amount"), Type = EInput.Float, Order = "DESC", Sum = ESUM.Sum, Export = true };
+                        Meta currency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String, Order = "ASC", Export = true };
+                        Meta paidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EInput.IntDate, Order = "DESC", Export = true };
+                        Meta notes = new Meta { Name = "Notes", DbName = "Notes", Title = Words("memo.information"), Type = EInput.String, Order="DESC", Export = true };
+                        table.AddMetas(id, siteName, userName, fullName, email, payer, paidDate, paidAmount, currency, paidInvoice, paidStatus, trackNumber, notes);
+
+                        this.DB.User.ActiveBranches.Add(0);
+                        this.DB.User.ActiveSites.Add(0);
+                        Filter f1 = new Filter() { Name = "fitler_branch", DbName = "BranchId", Title = "col.branch", Type = EFilter.Hidden, Required = true, Compare = ECompare.In, Value1 = this.DB.User.ActiveBranches };
+                        Filter f2 = new Filter() { Name = "fitler_site", DbName = "SiteId", Title = "col.site", Type = EFilter.Hidden, Required = true, Compare = ECompare.In, Value1 = this.DB.User.ActiveSites };
+
+                        Filter f3 = new Filter() { Name = "search_branch", DbName = "BranchId", Title = Words("col.branch"), Type = EFilter.Int, Compare = ECompare.Equal };
+                        f3.AddListRef("BranchList");
+                        Filter f4 = new Filter() { Name = "search_site", DbName = "SiteId", Title = Words("col.site"), Type = EFilter.Int, Compare = ECompare.Equal };
+                        f4.AddListRef("SiteList");
+
+                        Filter f5 = new Filter() { Name = "search_name", DbName = "UserName,FullName,Payer", Title = Words("col.fullname"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f6 = new Filter() { Name = "search_email", DbName = "Email", Title = Words("col.email"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f7 = new Filter() { Name = "search_invoice", DbName = "PaidInvoice", Title = Words("col.paid.invoice"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f8 = new Filter() { Name = "search_date", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EFilter.IntDate, Compare = ECompare.Range, Value1 = DateTime.Now.FirstDayOfMonth().YMD(), Value2 = DateTime.Now.YMD() };
+                        table.AddFilters(f1, f2, f3, f4, f5, f6, f7, f8);
+
+
+                        table.Navi.IsActive = true;
+                        table.Navi.Order = "DESC";
+                        table.Navi.By = "PaidDate";
+                        table.GetUrl = "/Admin/api/Member/ReloadDonate";
+                        table.ExportUrl = "/Admin/api/Member/ExportDonate";
+
+
+
+                        CollectionTable c1 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection BranchList = new Collection(ECollectionType.Table, c1);
+                        BranchList.AddFilter("Id", ECompare.In, this.DB.User.ActiveBranches);
+
+                        CollectionTable c2 = new CollectionTable("SiteList", "GSite", true, "Id", "Title", "Detail", "BranchId", "DESC", "Sort");
+                        Collection SiteList = new Collection(ECollectionType.Table, c2);
+                        SiteList.AddFilter("Id", ECompare.In, this.DB.User.ActiveSites);
+
+                        this.DB.AddTable(table).AddCollections(BranchList, SiteList);
                     }
                     break;
             }

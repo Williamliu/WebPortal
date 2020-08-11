@@ -39,6 +39,7 @@ WLIU.Database = function (database) {
     if ($.isPlainObject(database)) {
         this.method = database.method || "get";
         this.getUrl = database.getUrl;
+        this.exportUrl = database.exportUrl;
         this.saveUrl = database.saveUrl;
         this.user = database.user || {};
         this.user.rights = this.user.rights || {};
@@ -51,6 +52,7 @@ WLIU.Database = function (database) {
     else {
         this.method = "get";
         this.getUrl = "";
+        this.exportUrl = "";
         this.saveUrl = "";
         this.user = {};
         this.user.rights = {};
@@ -232,6 +234,7 @@ WLIU.Table = function (table) {
         this.state = table.state || 0;
         this.rowGuid = table.rowGuid || "";
         this.getUrl = table.getUrl || "";
+        this.exportUrl = table.exportUrl || "";
         this.scanUrl = table.scanUrl || "";
         this.saveUrl = table.saveUrl || "";
         this.validateUrl = table.validateUrl || "";
@@ -253,6 +256,7 @@ WLIU.Table = function (table) {
         this.state = 0;
         this.rowGuid = "";
         this.getUrl = "";
+        this.exportUrl = "";
         this.scanUrl = "";
         this.saveUrl = "";
         this.validateUrl = "";
@@ -753,6 +757,25 @@ WLIU.Table.prototype = {
         });
         return defer.promise();
     },
+    Export: function (url, pageNo) {
+        this.exportUrl = url || this.exportUrl;
+        //prepare post table
+        this.method = "get";
+        let ntable = new WLIU.JSTable(this);
+        let defer = $.Deferred();
+        var self = this;
+        self.TableAjax(self.exportUrl, ntable).then(data => {
+            exportFile = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(data));
+            exportFile.document.execCommand("saveAs", true, self.name + ".xls");
+            //console.log(exportFile);
+            //exportFile = window.open('data:application/vnd.ms-excel;base64,' + btoa(data));
+            //exportFile = window.open('data:application/octet-stream;filename=' + self.name + ".xls" + ',' + encodeURIComponent(data));
+            defer.resolve(self);
+        }).catch(data => {
+            defer.reject(self);
+        });
+        return defer.promise();
+    },
     Scan: function (url) {
         return this.Reload(url, 1);
     },
@@ -1241,6 +1264,7 @@ WLIU.Navi = function (navi) {
         this.order = navi.order || "ASC";
         this.by = navi.by || "";
         this.isActive = navi.isActive || false;
+        this.sum = Clone(navi.sum) || {};
     }
     else {
         this.pageNo = 0;
@@ -1251,6 +1275,7 @@ WLIU.Navi = function (navi) {
         this.order = "ASC";
         this.by = "";
         this.isActive = false;
+        this.sum = {};
     }
 };
 WLIU.Meta = function (meta) {
@@ -1626,6 +1651,7 @@ WLIU.JSTable.prototype = {
             this.navi.order = table.navi.order;
             this.navi.by = table.navi.by;
             this.navi.isActive = table.navi.isActive;
+            this.navi.sum = Clone(table.navi.sum);
         }
     }
 };

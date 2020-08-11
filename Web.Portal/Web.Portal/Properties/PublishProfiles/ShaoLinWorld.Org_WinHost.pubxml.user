@@ -104,22 +104,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="Library.V1.Common.dll">
-      <publishTime>08/08/2020 23:51:29</publishTime>
+      <publishTime>08/10/2020 23:50:49</publishTime>
     </File>
     <File Include="Library.V1.Common.pdb">
-      <publishTime>08/08/2020 23:51:29</publishTime>
+      <publishTime>08/10/2020 23:50:50</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>08/08/2020 23:51:34</publishTime>
+      <publishTime>08/10/2020 23:50:52</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>08/08/2020 23:51:34</publishTime>
+      <publishTime>08/10/2020 23:50:52</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
-      <publishTime>08/08/2020 23:51:32</publishTime>
+      <publishTime>08/10/2020 23:50:51</publishTime>
     </File>
     <File Include="Library.V1.SQL.pdb">
-      <publishTime>08/08/2020 23:51:32</publishTime>
+      <publishTime>08/10/2020 23:50:51</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.JwtBearer.dll">
       <publishTime>05/21/2020 20:26:48</publishTime>
@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>08/08/2020 23:52:56</publishTime>
+      <publishTime>08/11/2020 13:21:13</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>08/08/2020 23:51:42</publishTime>
+      <publishTime>08/11/2020 13:21:03</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>08/08/2020 23:51:38</publishTime>
+      <publishTime>08/11/2020 13:20:48</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>08/08/2020 23:51:38</publishTime>
+      <publishTime>08/11/2020 13:20:48</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>08/08/2020 23:51:38</publishTime>
+      <publishTime>08/11/2020 13:20:48</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
       <publishTime>08/08/2020 23:51:42</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>08/08/2020 23:51:41</publishTime>
+      <publishTime>08/11/2020 13:20:52</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>08/08/2020 23:51:41</publishTime>
+      <publishTime>08/11/2020 13:20:52</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/angular.min.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -320,7 +320,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/19/2020 22:08:34</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.database.js">
-      <publishTime>07/27/2020 19:01:23</publishTime>
+      <publishTime>08/09/2020 16:17:05</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.layout.js">
       <publishTime>07/23/2020 22:09:36</publishTime>
@@ -2642,7 +2642,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/31/2020 22:22:57</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.v1.database.js">
-      <publishTime>07/27/2020 17:08:41</publishTime>
+      <publishTime>08/09/2020 16:04:56</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.v1.image.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -2828,7 +2828,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/wliu.v1.com.css">
-      <publishTime>07/24/2020 23:46:45</publishTime>
+      <publishTime>08/09/2020 10:57:34</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/wliu.v1.layout.css">
       <publishTime>07/23/2020 22:12:18</publishTime>

@@ -34,6 +34,39 @@ WLIU_NG.directive("wliu.label", function () {
         }
     };
 });
+WLIU_NG.directive("wliu.title", function () {
+    return {
+        restrict: "E",
+        replace: true,
+        transclude: true,
+        scope: {
+            text: "@"
+        },
+        template: [
+            '<label wliu title="{{text}}">',
+                '{{text}}',
+            '</label>'
+        ].join(''),
+        controller: function ($scope) {
+        }
+    };
+});
+WLIU_NG.directive("wliu.sum", function () {
+    return {
+        restrict: "E",
+        replace: true,
+        transclude: true,
+        scope: {
+            db: "=",
+            tb: "@",
+            col: "@"
+        },
+        template: '<span wliu text>{{db.tables[tb].navi.sum[col]}}</span>',
+        controller: function ($scope) {
+        }
+    };
+});
+
 WLIU_NG.directive("wliu.head", function () {
     return {
         restrict: "E",
@@ -502,6 +535,43 @@ WLIU_NG.directive("wliu.search", function () {
         }
     };
 });
+WLIU_NG.directive("wliu.export", function () {
+    return {
+        restrict: "E",
+        replace: true,
+        transclude: true,
+        scope: {
+            db: "=",
+            tb: "@",
+            label: "@",
+            action: "&"
+        },
+        template: [
+            '<a wliu button green ',
+                'ng-click="exportAction()" ',
+                'ng-show="exportState()" ',
+            '>{{(label?label:Words("button.output"))}}</a>'
+        ].join(''),
+        controller: function ($scope, $window) {
+            $scope.Words = $window.Words;
+
+            $scope.exportAction = function () {
+                if ($scope.db.tables[$scope.tb]) {
+                    $scope.db.tables[$scope.tb].Export();
+                    if ($scope.action) if ($.isFunction($scope.action)) $scope.action();
+                }
+            };
+
+            $scope.exportState = function () {
+                let flag = true;
+                if ($scope.db.user && $scope.db.user.rights && !$scope.db.user.rights.output) flag = false;
+                return flag;
+            };
+
+        }
+    };
+});
+
 // only for filter type EInput.Image
 WLIU_NG.directive("wliu.scan", function () {
     return {

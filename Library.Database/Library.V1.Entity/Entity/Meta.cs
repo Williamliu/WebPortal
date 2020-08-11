@@ -28,6 +28,7 @@ namespace Library.V1.Entity
         Float,
         Bool,
         Date,
+        IntDate,
         DateTime,
         Time,
         Password,
@@ -57,6 +58,7 @@ namespace Library.V1.Entity
             this.Sync = false;
             this.Required = false;
             this.Unique = false;
+            this.Export = false;
             this.Value = null;
            
         }
@@ -95,6 +97,29 @@ namespace Library.V1.Entity
         public int Max { get; set; }
         [JsonIgnore]
         public bool Unique { get; set; }
+        [JsonIgnore]
+        public bool Export { get; set; }
+        [JsonIgnore]
+        public bool AllowExport
+        {
+            get
+            {
+                bool IsAllow = true;
+                if (this.Export) 
+                    IsAllow = true;
+                else
+                    IsAllow = false;
+
+                if (this.Type == EInput.Hidden) IsAllow = false;
+                if (this.Type == EInput.ImageUrl) IsAllow = false;
+                if (this.Type == EInput.ImageContent) IsAllow = false;
+                if (this.Type == EInput.FileUrl) IsAllow = false;
+                if (this.Type == EInput.FileContent) IsAllow = false;
+                if (this.Type == EInput.Custom) IsAllow = false;
+                if (this.Type == EInput.Checkbox) IsAllow = false;
+                return IsAllow;
+            }
+        }
         [JsonIgnore]
         public bool AllowGet
         {
@@ -338,6 +363,9 @@ namespace Library.V1.Entity
                     {
                         rowObj.SetValue(this.Name, rowObj.GetValue(this.Name).GetDate());
                     }
+                    break;
+
+                case EInput.IntDate:
                     break;
 
                 case EInput.DateTime:

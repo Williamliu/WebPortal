@@ -14,6 +14,7 @@ namespace Library.V1.Entity
         {
             this.Method = "get";
             this.GetUrl = string.Empty;
+            this.ExportUrl = string.Empty;
             this.SaveUrl = string.Empty;
 
             this.Tables = new Dictionary<string, Table>();
@@ -42,6 +43,7 @@ namespace Library.V1.Entity
         #region Public Fields
         public string Method { get; set; }
         public string GetUrl { get; set; }
+        public string ExportUrl { get; set; }
         public string SaveUrl { get; set; }
         public bool IsDebug { get; set; }
         [JsonIgnore]
@@ -115,6 +117,14 @@ namespace Library.V1.Entity
                 return this.Tables[jsTable.Name].ReloadData(jsTable);
             else
                 return new Table();
+        }
+        public string OutputTable(JSTable jsTable)
+        {
+            if (this.Tables.ContainsKey(jsTable.Name))
+                return this.Tables[jsTable.Name].OutputData(jsTable);
+            else
+                return string.Empty;
+
         }
         #endregion
 

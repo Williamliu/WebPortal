@@ -22,13 +22,16 @@
                 <filter.select db="ViewData.database" tb="ClassPayment" col="search_branch"></filter.select>
                 <filter.label db="ViewData.database" tb="ClassPayment" col="search_site"></filter.label>
                 <filter.fselect db="ViewData.database" tb="ClassPayment" col="search_site" fcol="search_branch"></filter.fselect>
+                <filter.label db="ViewData.database" tb="ClassPayment" col="search_class"></filter.label>
+                <filter.textbox db="ViewData.database" tb="ClassPayment" col="search_class"></filter.textbox>
                 <filter.label db="ViewData.database" tb="ClassPayment" col="search_name"></filter.label>
                 <filter.textbox db="ViewData.database" tb="ClassPayment" col="search_name"></filter.textbox>
                 <filter.label db="ViewData.database" tb="ClassPayment" col="search_email"></filter.label>
                 <filter.textbox db="ViewData.database" tb="ClassPayment" col="search_email"></filter.textbox>
                 <filter.label db="ViewData.database" tb="ClassPayment" col="search_invoice"></filter.label>
                 <filter.textbox db="ViewData.database" tb="ClassPayment" col="search_invoice"></filter.textbox>
-                <wliu.search db="ViewData.database" tb="ClassPayment">Search</wliu.search>
+                <wliu.search db="ViewData.database" tb="ClassPayment"></wliu.search>
+                <wliu.export db="ViewData.database" tb="ClassPayment"></wliu.export>
             </fieldset>
             <div wliu table grow shrink style="margin-top:12px;">
                 <div row>
@@ -38,14 +41,14 @@
                 </div>
                 <div row>
                     <div head fixed style="width:40px;"></div>
+                    <div head large><wliu.head db="ViewData.database" tb="ClassPayment" col="SiteName"></wliu.head></div>
                     <div head small><wliu.head db="ViewData.database" tb="ClassPayment" col="ClassName"></wliu.head></div>
                     <div head large><wliu.head db="ViewData.database" tb="ClassPayment" col="ClassTitle"></wliu.head></div>
-                    <div head medium><wliu.head db="ViewData.database" tb="ClassPayment" col="FullName"></wliu.head></div>
-                    <div head medium><wliu.head db="ViewData.database" tb="ClassPayment" col="Email"></wliu.head></div>
-                    <div head center fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassPayment" col="PaidAmount"></wliu.head></div>
+                    <div head large><wliu.head db="ViewData.database" tb="ClassPayment" col="FullName"></wliu.head></div>
+                    <div head center fixed style="width:120px;"><wliu.head db="ViewData.database" tb="ClassPayment" col="PaidAmount"></wliu.head></div>
                     <div head center fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassPayment" col="Currency"></wliu.head></div>
                     <div head medium><wliu.head db="ViewData.database" tb="ClassPayment" col="Payer"></wliu.head></div>
-                    <div head medium><wliu.head db="ViewData.database" tb="ClassPayment" col="PaidDate"></wliu.head></div>
+                    <div head center fix style="width:120px;"><wliu.head db="ViewData.database" tb="ClassPayment" col="PaidDate"></wliu.head></div>
                     <div head medium><wliu.head db="ViewData.database" tb="ClassPayment" col="PaidInvoice"></wliu.head></div>
                     <div head small><wliu.head db="ViewData.database" tb="ClassPayment" col="PaidStatus"></wliu.head></div>
                 </div>
@@ -53,19 +56,19 @@
                     <div cell center fixed style="width:40px;">
                         <wliu.rowstatus db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}"></wliu.rowstatus>
                     </div>
+                    <div cell large>
+                        <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="SiteName"></wliu.text>
+                    </div>
                     <div cell small>
                         <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="ClassName"></wliu.text>
                     </div>
                     <div cell large>
                         <wliu.template db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="{ClassTitle}<br>{StartDate}~{EndDate}"></wliu.template>
                     </div>
-                    <div cell medium>
-                        <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="FullName"></wliu.text>
+                    <div cell large>
+                        <wliu.template db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="{FullName}<br>{Email}"></wliu.template>
                     </div>
-                    <div cell medium>
-                        <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="Email"></wliu.text>
-                    </div>
-                    <div cell right fixed style="width:100px;">
+                    <div cell right fixed style="width:120px;">
                         <wliu.text fit db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="PaidAmount"></wliu.text>
                     </div>
                     <div cell center fixed style="width:100px;">
@@ -74,8 +77,8 @@
                     <div cell medium>
                         <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="Payer"></wliu.text>
                     </div>
-                    <div cell medium>
-                        <wliu.intdate db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="PaidDate"></wliu.intdate>
+                    <div cell center fix style="width:120px;">
+                        <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="PaidDate"></wliu.text>
                     </div>
                     <div cell medium>
                         <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="PaidInvoice"></wliu.text>
@@ -84,6 +87,20 @@
                         <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="PaidStatus"></wliu.text>
                     </div>
                 </div>
+                <div row>
+                    <div head sum fixed style="width:40px;"></div>
+                    <div head sum large></div>
+                    <div head sum small></div>
+                    <div head sum large></div>
+                    <div head sum large right><wliu.title text="@Html.Words("navi.total")"></wliu.title></div>
+                    <div head sum center right fixed style="width:120px;"><wliu.sum db="ViewData.database" tb="ClassPayment" col="PaidAmount"></wliu.sum></div>
+                    <div head sum center fixed style="width:100px;"></div>
+                    <div head sum medium></div>
+                    <div head sum center fix style="width:120px;"></div>
+                    <div head sum medium></div>
+                    <div head sum small></div>
+                </div>
+
             </div>
         </ng-form>
     </div>

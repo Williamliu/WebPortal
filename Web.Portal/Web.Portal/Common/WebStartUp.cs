@@ -77,6 +77,20 @@ namespace Web.Portal.Common
                 return htmlHelper.Raw(string.Empty);
         }
 
+        #region HTML Component
+        public static HtmlString WLSelect<t>(this Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<t> htmlHelper, string name, GTable table, string style="", int selectValue=0)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"<select wliu id={name} name={name} {style}>");
+            sb.Append($"<option value='0'{(selectValue==0?" selected":"")}></option>");
+            foreach (GRow row in table.Rows)
+            {
+                sb.Append($"<option value='{row.GetValue("Value").GetInt() ?? 0}'{(selectValue ==(row.GetValue("Value").GetInt()??0)?" selected" : "")}>{row.GetValue("Title")}</option>");
+            }
+            sb.Append($"</select>");
+            return new HtmlString(sb.ToString());
+        }
+        #endregion
     }
 
     public static class WebStartUp

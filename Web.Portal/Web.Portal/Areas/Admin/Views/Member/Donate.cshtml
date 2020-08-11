@@ -1,0 +1,113 @@
+﻿@section scripts {
+    <script src="~/resource/js/ckeditor_full/ckeditor.js" type="text/javascript"></script>
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+        });
+        viewData.Init("/Admin/api/Member/InitDonate");
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl">
+    <div class="container-fluid" id="course_List">
+        <ng-form>
+            <fieldset>
+                <legend>@Html.Words("search.by")</legend>
+                <filter.label db="ViewData.database" tb="DonatePayment" col="search_date"></filter.label>
+                <filter.daterange db="ViewData.database" tb="DonatePayment" col="search_date"></filter.daterange>
+                <br />
+                <filter.label db="ViewData.database" tb="DonatePayment" col="search_branch"></filter.label>
+                <filter.select db="ViewData.database" tb="DonatePayment" col="search_branch"></filter.select>
+                <filter.label db="ViewData.database" tb="DonatePayment" col="search_site"></filter.label>
+                <filter.fselect db="ViewData.database" tb="DonatePayment" col="search_site" fcol="search_branch"></filter.fselect>
+                <filter.label db="ViewData.database" tb="DonatePayment" col="search_name"></filter.label>
+                <filter.textbox db="ViewData.database" tb="DonatePayment" col="search_name"></filter.textbox>
+                <filter.label db="ViewData.database" tb="DonatePayment" col="search_email"></filter.label>
+                <filter.textbox db="ViewData.database" tb="DonatePayment" col="search_email"></filter.textbox>
+                <filter.label db="ViewData.database" tb="DonatePayment" col="search_invoice"></filter.label>
+                <filter.textbox db="ViewData.database" tb="DonatePayment" col="search_invoice"></filter.textbox>
+                <wliu.search db="ViewData.database" tb="DonatePayment"></wliu.search>
+                <wliu.export db="ViewData.database" tb="DonatePayment"></wliu.export>
+            </fieldset>
+            <div wliu table grow shrink style="margin-top:12px;">
+                <div row>
+                    <div cell style="background-color:#dddddd;">
+                        <wliu.navi db="ViewData.database" tb="DonatePayment"></wliu.navi>
+                    </div>
+                </div>
+                <div row>
+                    <div head fixed style="width:40px;"></div>
+                    <div head large><wliu.head db="ViewData.database" tb="DonatePayment" col="SiteName"></wliu.head></div>
+                    <div head small><wliu.head db="ViewData.database" tb="DonatePayment" col="UserName"></wliu.head></div>
+                    <div head large><wliu.head db="ViewData.database" tb="DonatePayment" col="FullName"></wliu.head></div>
+                    <div head center fixed style="width:120px;"><wliu.head db="ViewData.database" tb="DonatePayment" col="PaidAmount"></wliu.head></div>
+                    <div head center fixed style="width:100px;"><wliu.head db="ViewData.database" tb="DonatePayment" col="Currency"></wliu.head></div>
+                    <div head small><wliu.head db="ViewData.database" tb="DonatePayment" col="Payer"></wliu.head></div>
+                    <div head center fix style="width:120px;"><wliu.head db="ViewData.database" tb="DonatePayment" col="PaidDate"></wliu.head></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="DonatePayment" col="PaidInvoice"></wliu.head></div>
+                    <div head large><wliu.head db="ViewData.database" tb="DonatePayment" col="Notes"></wliu.head></div>
+                    <div head small><wliu.head db="ViewData.database" tb="DonatePayment" col="PaidStatus"></wliu.head></div>
+                </div>
+                <div row ng-repeat="row in ViewData.database.tables.DonatePayment.rows">
+                    <div cell center fixed style="width:40px;">
+                        <wliu.rowstatus db="ViewData.database" tb="DonatePayment" guid="{{row.guid}}"></wliu.rowstatus>
+                    </div>
+                    <div cell large>
+                        <wliu.text db="ViewData.database" tb="DonatePayment" guid="{{row.guid}}" col="SiteName"></wliu.text>
+                    </div>
+                    <div cell small>
+                        <wliu.text db="ViewData.database" tb="DonatePayment" guid="{{row.guid}}" col="UserName"></wliu.text>
+                    </div>
+                    <div cell large>
+                        <wliu.template db="ViewData.database" tb="DonatePayment" guid="{{row.guid}}" col="{FullName}<br>{Email}"></wliu.template>
+                    </div>
+                    <div cell right fixed style="width:120px;">
+                        <wliu.text fit db="ViewData.database" tb="DonatePayment" guid="{{row.guid}}" col="PaidAmount"></wliu.text>
+                    </div>
+                    <div cell center fixed style="width:100px;">
+                        <wliu.text db="ViewData.database" tb="DonatePayment" guid="{{row.guid}}" col="Currency"></wliu.text>
+                    </div>
+                    <div cell small>
+                        <wliu.text db="ViewData.database" tb="DonatePayment" guid="{{row.guid}}" col="Payer"></wliu.text>
+                    </div>
+                    <div cell center fix style="width:120px;">
+                        <wliu.text db="ViewData.database" tb="DonatePayment" guid="{{row.guid}}" col="PaidDate"></wliu.text>
+                    </div>
+                    <div cell medium>
+                        <wliu.text db="ViewData.database" tb="DonatePayment" guid="{{row.guid}}" col="PaidInvoice"></wliu.text>
+                    </div>
+                    <div cell large>
+                        <wliu.text db="ViewData.database" tb="DonatePayment" guid="{{row.guid}}" col="Notes"></wliu.text>
+                    </div>
+                    <div cell small>
+                        <wliu.text db="ViewData.database" tb="DonatePayment" guid="{{row.guid}}" col="PaidStatus"></wliu.text>
+                    </div>
+                </div>
+                <div row>
+                    <div head sum fixed style="width:40px;"></div>
+                    <div head sum large></div>
+                    <div head sum small></div>
+                    <div head sum large right><wliu.title text="@Html.Words("navi.total")"></wliu.title></div>
+                    <div head sum center right fixed style="width:120px;"><wliu.sum db="ViewData.database" tb="DonatePayment" col="PaidAmount"></wliu.sum></div>
+                    <div head sum center fixed style="width:100px;"></div>
+                    <div head sum small></div>
+                    <div head sum center fix style="width:120px;"></div>
+                    <div head sum medium></div>
+                    <div head sum large></div>
+                    <div head sum small></div>
+                </div>
+
+            </div>
+        </ng-form>
+    </div>
+
+    <table.error></table.error>
+    <form.error></form.error>
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+
+</div>

@@ -10,6 +10,15 @@ namespace Library.V1.Common
         {
             return (long)(dt.ToUniversalTime() - new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
         }
+        public static DateTime FirstDayOfMonth(this System.DateTime dt)
+        {
+            return new DateTime(dt.Year, dt.Month, 1);
+        }
+        public static DateTime LastDayOfMonth(this System.DateTime dt)
+        {
+            return new DateTime(dt.Year, dt.Month+1, 1).AddDays(-1);
+        }
+
         public static DateTime IntDate(this long ticks)
         {
             DateTime utcDT = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);

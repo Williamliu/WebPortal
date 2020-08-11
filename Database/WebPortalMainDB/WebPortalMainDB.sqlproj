@@ -136,12 +136,15 @@
     <Build Include="dbo\Views\VW_UserClass_Upcoming.sql" />
     <Build Include="dbo\Views\VW_UserClass_History.sql" />
     <Build Include="dbo\Functions\ToTicks.sql" />
+    <Build Include="dbo\Tables\Donation.sql" />
+    <Build Include="dbo\Views\VW_Payment_Donation.sql" />
+    <Build Include="dbo\Views\VW_Payment_Class.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connection\Sql2Local.scmp" />
     <None Include="Backup\ReadMe.txt" />
     <None Include="Connection\Local2Product.scmp" />
-    <None Include="Backup\Local_SLDB_20200726.bak" />
-    <None Include="Backup\WinHost_SLDB_20200726.bak" />
+    <None Include="Backup\ShaoLinLocalDB_20200811.bak" />
+    <None Include="Backup\ShaoLinDB_WinHost_20200811.bak" />
   </ItemGroup>
 </Project>

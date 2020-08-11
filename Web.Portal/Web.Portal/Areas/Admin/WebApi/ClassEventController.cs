@@ -6,6 +6,8 @@ using Library.V1.Common;
 using Library.V1.Entity;
 using Library.V1.SQL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using System.IO;
 
 namespace Web.Portal.Areas.Admin.WebApi
 {
@@ -126,6 +128,12 @@ namespace Web.Portal.Areas.Admin.WebApi
             jsTable.Other.Add("InClass", Users.ToArray());
             return Ok(this.DB.ReloadTable(jsTable));
         }
+        [HttpPost("ExportClassEnroll")]
+        public IActionResult ExportClassEnroll(JSTable jsTable)
+        {
+            this.Init("M2030");
+            return Ok(this.DB.OutputTable(jsTable));
+        }
 
         [HttpPost("ReloadPubUser")]
         public IActionResult ReloadPubUser(JSTable jsTable)
@@ -211,7 +219,12 @@ namespace Web.Portal.Areas.Admin.WebApi
             this.Init("M2060");
             return Ok(this.DB.ReloadTable(jsTable));
         }
-
+        [HttpPost("ExportClassPayment")]
+        public IActionResult ExportClassPayment(JSTable jsTable)
+        {
+            this.Init("M2060");
+            return Ok(this.DB.OutputTable(jsTable));
+        }
 
         protected override void InitDatabase(string menuId)
         {
@@ -455,30 +468,30 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta eid = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true, Type = EInput.Read };
                         Meta eclassId = new Meta { Name = "ClassId", DbName = "ClassId", Title = Words("col.classid") };
                         Meta ememberId = new Meta { Name = "UserId", DbName = "UserId", Title = Words("col.userid") };
-                        Meta efirstName = new Meta { Name = "FirstName", DbName = "FirstName", Title = Words("col.fullname"), Type = EInput.Read, Order = "ASC" };
-                        Meta elastName = new Meta { Name = "LastName", DbName = "LastName", Title = Words("col.lastname"), Type = EInput.Read, Order = "ASC" };
-                        Meta efirstNameLegal = new Meta { Name = "FirstNameLegal", DbName = "FirstNameLegal", Title = Words("col.fullname.legal"), Type = EInput.Read, Order = "ASC" };
-                        Meta elastNameLegl = new Meta { Name = "LastNameLegal", DbName = "LastNameLegal", Title = Words("col.lastname.legal"), Type = EInput.Read, Order = "ASC" };
+                        Meta efirstName = new Meta { Name = "FirstName", DbName = "FirstName", Title = Words("col.fullname"), Type = EInput.Read, Order = "ASC", Export=true };
+                        Meta elastName = new Meta { Name = "LastName", DbName = "LastName", Title = Words("col.lastname"), Type = EInput.Read, Order = "ASC", Export = true };
+                        Meta efirstNameLegal = new Meta { Name = "FirstNameLegal", DbName = "FirstNameLegal", Title = Words("col.fullname.legal"), Type = EInput.Read, Order = "ASC", Export = true };
+                        Meta elastNameLegl = new Meta { Name = "LastNameLegal", DbName = "LastNameLegal", Title = Words("col.lastname.legal"), Type = EInput.Read, Order = "ASC", Export = true };
                         Meta edharmaName = new Meta { Name = "DharmaName", DbName = "DharmaName", Title = Words("col.dharmaname"), Type = EInput.Read, Order = "ASC" };
-                        Meta edisplayName = new Meta { Name = "DisplayName", DbName = "DisplayName", Title = Words("col.nameinfo"), Sync = true, Type = EInput.Read, Order = "ASC" };
+                        Meta edisplayName = new Meta { Name = "DisplayName", DbName = "DisplayName", Title = Words("col.nameinfo"), Sync = true, Type = EInput.Read, Order = "ASC", Export = true };
                         Meta ecertName = new Meta { Name = "CertificateName", DbName = "CertificateName", Title = Words("col.certificatename"), Sync = true, Type = EInput.Read, Order = "ASC" };
-                        Meta ealiasname = new Meta { Name = "AliasName", DbName = "AliasName", Title = Words("col.aliasname"), Type = EInput.Read, Order = "ASC" };
+                        Meta ealiasname = new Meta { Name = "AliasName", DbName = "AliasName", Title = Words("col.aliasname"), Type = EInput.Read, Order = "ASC", Export = true };
                         Meta egender = new Meta { Name = "Gender", DbName = "Gender", Title = Words("col.gender"), Type = EInput.Read, Order = "ASC" };
                         egender.AddListRef("GenderList");
 
                         Meta eactive = new Meta { Name = "Active", DbName = "Active", Title = Words("col.status"), Description = Words("status.active.inactive"), Type = EInput.Bool };
-                        Meta eemail = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Type = EInput.Read, Order = "ASC" };
-                        Meta ephone = new Meta { Name = "Phone", DbName = "Phone", Title = Words("col.phone"), Type = EInput.Read, MaxLength = 32, Order = "ASC" };
-                        Meta ecell = new Meta { Name = "Cell", DbName = "Cell", Title = Words("col.cell"), Type = EInput.Read, Order = "ASC" };
-                        Meta ecity = new Meta { Name = "City", DbName = "City", Title = Words("col.city"), Type = EInput.Read, Order = "ASC" };
-                        Meta ecreatedTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.enrolldate"), Type = EInput.Read, Sync = true, Order = "DESC" };
+                        Meta eemail = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Type = EInput.Read, Order = "ASC", Export = true };
+                        Meta ephone = new Meta { Name = "Phone", DbName = "Phone", Title = Words("col.phone"), Type = EInput.Read, MaxLength = 32, Order = "ASC", Export = true };
+                        Meta ecell = new Meta { Name = "Cell", DbName = "Cell", Title = Words("col.cell"), Type = EInput.Read, Order = "ASC", Export = true };
+                        Meta ecity = new Meta { Name = "City", DbName = "City", Title = Words("col.city"), Type = EInput.Read, Order = "ASC", Export = true };
+                        Meta ecreatedTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.enrolldate"), Type = EInput.IntDate, Sync = true, Order = "DESC", Export = true };
 
                         Meta ephoto = new Meta { Name = "Photo", DbName = "UserId", Title = Words("col.photo"), Description = "PubUser|tiny|small", Type = EInput.ImageContent };
                         Meta egroup = new Meta { Name = "Grp", DbName = "Grp", Title = Words("col.grp"), Type = EInput.String, MaxLength = 16, Order = "ASC" };
-                        Meta eisPaid = new Meta { Name = "IsPaid", DbName = "IsPaid", Title = Words("col.ispaid"), Description = Words("col.ispaid.yesno"), Type = EInput.Bool, Order = "DESC" };
-                        Meta epaidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paiddate"), Type = EInput.Read, Sync = true, Order = "ASC" };
-                        Meta epaidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paidinfo"), Type = EInput.Float, MaxLength = 18, Sum=ESUM.Sum };
-                        Meta epaidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paidinvoice"), Type = EInput.String, MaxLength = 32, Order = "ASC" };
+                        Meta eisPaid = new Meta { Name = "IsPaid", DbName = "IsPaid", Title = Words("col.ispaid"), Description = Words("col.ispaid.yesno"), Type = EInput.Bool, Order = "DESC", Export = true };
+                        Meta epaidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paiddate"), Type = EInput.IntDate, Sync = true, Order = "ASC", Export = true };
+                        Meta epaidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paidinfo"), Type = EInput.Float, MaxLength = 18, Sum=ESUM.Sum, Export = true };
+                        Meta epaidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paidinvoice"), Type = EInput.String, MaxLength = 32, Order = "ASC", Export = true };
                         Meta ememberType = new Meta { Name = "MemberType", DbName = "MemberType", Title = Words("col.membertype"), Type = EInput.Int };
                         ememberType.AddListRef("MemberTypeList");
 
@@ -513,6 +526,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         classEnroll.Navi.By = "CreatedTime";
                         classEnroll.GetUrl = "/Admin/api/ClassEvent/ReloadClassEnroll";
                         classEnroll.SaveUrl = "/Admin/api/ClassEvent/SaveClassEnroll";
+                        classEnroll.ExportUrl = "/Admin/api/ClassEvent/ExportClassEnroll";
 
                         classEnroll.AddQueryKV("Deleted", false)
                                     .AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds())
@@ -686,22 +700,23 @@ namespace Web.Portal.Areas.Admin.WebApi
                     break;
                 case "M2060":
                     {
-                        Table table = new Table("ClassPayment", "VW_Class_Payment", Words("class.payment"));
+                        Table table = new Table("ClassPayment", "VW_Payment_Class", Words("class.payment"));
                         Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
-                        Meta classTitle = new Meta { Name = "ClassTitle", DbName = "ClassTitle", Title = Words("class.class"), Order = "ASC", Type = EInput.String, IsLang=true };
-                        Meta startDate = new Meta { Name = "StartDate", DbName = "StartDate", Title = Words("col.start.date"), Type = EInput.Date };
-                        Meta endDate = new Meta { Name = "EndDate", DbName = "EndDate", Title = Words("col.start.date"), Type = EInput.Date };
-                        Meta className = new Meta { Name = "ClassName", DbName = "ClassName", Title = Words("col.class.name"), Order = "ASC", Type = EInput.String };
-                        Meta fullName = new Meta { Name = "FullName", DbName = "FullName", Title = Words("col.fullname"), Order = "ASC", Type = EInput.String };
-                        Meta email = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Order = "ASC", Type = EInput.String };
-                        Meta payer = new Meta { Name = "Payer", DbName = "Payer", Title = Words("col.payer"), Order = "ASC", Type = EInput.String };
-                        Meta paidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paid.invoice"), Order = "ASC", Type = EInput.String };
-                        Meta paidStatus = new Meta { Name = "PaidStatus", DbName = "PaidStatus", Title = Words("col.paid.status"), Order = "ASC", Type = EInput.String };
-                        Meta trackNumber = new Meta { Name = "TrackNumber", DbName = "TrackNumber", Title = Words("col.track.number"), Order = "ASC", Type = EInput.String };
-                        Meta paidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paid.amount"), Type = EInput.Float, Order = "DESC", Sum=ESUM.Sum };
-                        Meta currency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String, Order = "ASC" };
-                        Meta paidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EInput.Int, Order = "DESC" };
-                        table.AddMetas(id, classTitle, startDate, endDate,className, fullName, email, payer, paidInvoice, paidStatus, trackNumber, paidAmount, currency, paidDate);
+                        Meta siteName = new Meta { Name = "SiteName", DbName = "SiteName", Title = Words("col.branch"), Order = "ASC", Type = EInput.String, IsLang = true, Export = true };
+                        Meta className = new Meta { Name = "ClassName", DbName = "ClassName", Title = Words("col.class.name"), Order = "ASC", Type = EInput.String, Export=true };
+                        Meta classTitle = new Meta { Name = "ClassTitle", DbName = "ClassTitle", Title = Words("class.class"), Order = "ASC", Type = EInput.String, IsLang=true, Export = true };
+                        Meta startDate = new Meta { Name = "StartDate", DbName = "StartDate", Title = Words("start.date"), Type = EInput.Date, Export = true };
+                        Meta endDate = new Meta { Name = "EndDate", DbName = "EndDate", Title = Words("end.date"), Type = EInput.Date, Export = true };
+                        Meta fullName = new Meta { Name = "FullName", DbName = "FullName", Title = Words("col.fullname"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta email = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta payer = new Meta { Name = "Payer", DbName = "Payer", Title = Words("col.payer"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta paidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paid.invoice"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta paidStatus = new Meta { Name = "PaidStatus", DbName = "PaidStatus", Title = Words("col.paid.status"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta trackNumber = new Meta { Name = "TrackNumber", DbName = "TrackNumber", Title = Words("col.track.number"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta paidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paid.amount"), Type = EInput.Float, Order = "DESC", Sum=ESUM.Sum, Export = true };
+                        Meta currency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String, Order = "ASC", Export = true };
+                        Meta paidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EInput.IntDate, Order = "DESC", Export = true };
+                        table.AddMetas(id, siteName, className, classTitle, startDate, endDate, fullName, email, payer, paidDate, paidAmount, currency, paidInvoice, paidStatus, trackNumber);
 
                         Filter f1 = new Filter() { Name = "fitler_branch", DbName = "BranchId", Title = "col.branch", Type = EFilter.Hidden, Required = true, Compare = ECompare.In, Value1 = this.DB.User.ActiveBranches };
                         Filter f2 = new Filter() { Name = "fitler_site", DbName = "SiteId", Title = "col.site", Type = EFilter.Hidden, Required = true, Compare = ECompare.In, Value1 = this.DB.User.ActiveSites };
@@ -714,15 +729,17 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Filter f5 = new Filter() { Name = "search_name", DbName = "FullName,Payer", Title = Words("col.fullname"), Type = EFilter.String, Compare = ECompare.Like };
                         Filter f6 = new Filter() { Name = "search_email", DbName = "Email", Title = Words("col.email"), Type = EFilter.String, Compare = ECompare.Like };
                         Filter f7 = new Filter() { Name = "search_invoice", DbName = "PaidInvoice", Title = Words("col.paid.invoice"), Type = EFilter.String, Compare = ECompare.Like };
-                        Filter f8 = new Filter() { Name = "search_date", DbName = "PaidDate", Title = Words("start.date"), Type = EFilter.IntDate, Compare = ECompare.Range, Value1 = DateTime.Now.AddDays(-30).YMD(), Value2 = DateTime.Now.YMD() };
+                        Filter f8 = new Filter() { Name = "search_date", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EFilter.IntDate, Compare = ECompare.Range, Value1 = DateTime.Now.FirstDayOfMonth().YMD(), Value2 = DateTime.Now.YMD() };
+                        Filter f9 = new Filter() { Name = "search_class", DbName = "ClassName", Title = Words("col.class.name"), Type = EFilter.String, Compare = ECompare.Like };
 
-                        table.AddFilters(f1, f2, f3, f4, f5, f6, f7, f8);
+                        table.AddFilters(f1, f2, f3, f4, f5, f6, f7, f8, f9);
 
 
                         table.Navi.IsActive = true;
                         table.Navi.Order = "DESC";
                         table.Navi.By = "PaidDate";
                         table.GetUrl = "/Admin/api/ClassEvent/ReloadClassPayment";
+                        table.ExportUrl = "/Admin/api/ClassEvent/ExportClassPayment";
 
 
 

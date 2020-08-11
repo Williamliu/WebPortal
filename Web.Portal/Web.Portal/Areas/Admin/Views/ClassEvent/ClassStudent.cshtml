@@ -291,7 +291,8 @@
                     <filter.textbox db="ViewData.database" tb="ClassEnroll" col="search_grp"></filter.textbox>
                     <filter.label db="ViewData.database" tb="ClassEnroll" col="search_type"></filter.label>
                     <filter.select db="ViewData.database" tb="ClassEnroll" col="search_type"></filter.select>
-                    <wliu.search db="ViewData.database" tb="ClassEnroll">Search</wliu.search>
+                    <wliu.search db="ViewData.database" tb="ClassEnroll"></wliu.search>
+                    <wliu.export db="ViewData.database" tb="ClassEnroll"></wliu.export>
                 </fieldset>
                 <div wliu table grow shrink underline style="margin-top:12px;">
                     <div row>
@@ -342,7 +343,7 @@
                         </div>
                         <div cell medium>
                             <wliu.bool db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="IsPaid"></wliu.bool><br />
-                            <wliu.intdate db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="PaidDate"></wliu.intdate>
+                            <wliu.text db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="PaidDate"></wliu.text>
                         </div>
                         <div cell medium>
                             <table>
@@ -360,7 +361,7 @@
                             <wliu.bool db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="Active"></wliu.bool>
                         </div>
                         <div cell small>
-                            <wliu.intdate format="yyyy-MM-dd" db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="CreatedTime"></wliu.intdate>
+                            <wliu.text format="yyyy-MM-dd" db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="CreatedTime"></wliu.text>
                         </div>
                         <div cell fixed style="width:56px;">
                             <wliu.bicon db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" icons="detail,save,cancel,delete" actiondetail="detail()"></wliu.bicon>

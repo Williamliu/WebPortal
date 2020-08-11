@@ -65,8 +65,8 @@ namespace Library.V1.Entity
         private static void SyncTranslation(SqlHelper dsql)
         {
             SqlHelper DSQL = dsql;
-            WordBook.Clear();
             List<Dictionary<string, string>> rows = DSQL.Query("SELECT Keyword, Word_en, Word_cn FROM GTranslation WHERE Deleted=0 AND Active=1", new Dictionary<string, object>());
+            WordBook.Clear();
             WordBook.Add("en", new Dictionary<string, string>());
             WordBook.Add("cn", new Dictionary<string, string>());
             foreach (var row in rows)

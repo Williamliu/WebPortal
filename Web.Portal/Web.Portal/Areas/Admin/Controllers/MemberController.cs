@@ -22,6 +22,11 @@ namespace Web.Portal.Areas.Admin.Controllers
             this.Init("M3030");
             return View();
         }
+        public IActionResult Donate()
+        {
+            this.Init("M3090");
+            return View();
+        }
         protected override void InitDatabase(string menuId)
         {
         }
