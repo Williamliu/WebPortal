@@ -356,8 +356,11 @@ namespace Web.Portal.Areas.Admin.WebApi
                         f4.AddListRef("MemberId", "Pub_User_Id", "UserId|IdNumber");
                         Filter f5 = new Filter() { Name = "search_scan", DbName = "MemberId", Title = Words("qr.code"), Type = EFilter.Scan, Compare = ECompare.Equal };
                         //Filter f6 = new Filter() { Name = "fitler_branch", DbName = "BranchId", Title = "col.branch", Type = EFilter.Hidden, Required = true, Compare = ECompare.In, Value1 = this.DB.User.ActiveBranches };
+                        Filter f6 = new Filter() { Name = "search_branch", DbName = "BranchId", Title = Words("col.branch"), Type = EFilter.Int, Compare = ECompare.Equal };
+                        f6.AddListRef("BranchList");
 
-                        Member.AddFilters(f1, f2, f3, f4, f5);
+
+                        Member.AddFilters(f1, f2, f3, f4, f5, f6);
                         Member.Navi.IsActive = true;
                         Member.Navi.Order = "DESC";
                         Member.Navi.By = "CreatedTime";

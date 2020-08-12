@@ -114,6 +114,8 @@
     <ng-form>
         <fieldset>
             <legend>@Html.Words("search.by")</legend>
+            <filter.label db="ViewData.database" tb="Member" col="search_branch"></filter.label>
+            <filter.select db="ViewData.database" tb="Member" col="search_branch"></filter.select>
             <filter.label db="ViewData.database" tb="Member" col="search_name"></filter.label>
             <filter.textbox db="ViewData.database" tb="Member" col="search_name"></filter.textbox>
             <filter.label db="ViewData.database" tb="Member" col="search_email"></filter.label>
@@ -123,8 +125,8 @@
             <filter.label db="ViewData.database" tb="Member" col="search_idno"></filter.label>
             <filter.textbox db="ViewData.database" tb="Member" col="search_idno" action="scanCallback()"></filter.textbox>
             <!--
-            <filter.qrscan db="ViewData.database" tb="Member" col="search_scan" gallery="Gallery" action="scanCallback()"></filter.qrscan>
-            -->
+    <filter.qrscan db="ViewData.database" tb="Member" col="search_scan" gallery="Gallery" action="scanCallback()"></filter.qrscan>
+    -->
             <wliu.search db="ViewData.database" tb="Member">Search</wliu.search>
         </fieldset>
         <div wliu table grow shrink underline style="margin-top:12px;">
