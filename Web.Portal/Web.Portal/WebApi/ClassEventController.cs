@@ -204,8 +204,8 @@ namespace Web.Portal.WebApi.Controllers
         {
             this.Init("M50");
             data.Add("CreatedTime", DateTime.Now.UTCSeconds());
-            string query = "INSERT INTO Donation(UserId, SiteId, FirstName, LastName, Email, Notes, Payer, PaidDate, PaidAmount, Currency, PaidMethod, PaidInvoice, PaidStatus, IsSuccess, TrackNumber, TrackMessage, CreatedTime) ";
-            query += "Values(@UserId, @SiteId, @FirstName, @LastName, @Email, @Notes, @Payer, @PaidDate, @PaidAmount, @Currency, @PaidMethod, @PaidInvoice, @PaidStatus, @IsSuccess, @TrackNumber, @TrackMessage, @CreatedTime)";
+            string query = "INSERT INTO Donation(UserId, SiteId, FullName, Email, Notes, Payer, PaidDate, PaidAmount, Currency, PaidMethod, PaidInvoice, PaidStatus, IsSuccess, TrackNumber, TrackMessage, CreatedTime) ";
+            query += "Values(@UserId, @SiteId, @FullName, @Email, @Notes, @Payer, @PaidDate, @PaidAmount, @Currency, @PaidMethod, @PaidInvoice, @PaidStatus, @IsSuccess, @TrackNumber, @TrackMessage, @CreatedTime)";
             this.DB.DSQL.ExecuteQuery(query, data);
 
 
@@ -222,7 +222,7 @@ namespace Web.Portal.WebApi.Controllers
                 myemail.addBCC("info@shaolinworld.org");
                 myemail.Subject = Words("donate.success");// "New Student Enrolled";
                 myemail.Content = "<html><body>";
-                myemail.Content += string.Format(Words("email.donate.success.content"), data.GetValue("FirstName"), data.GetValue("LastName")); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
+                myemail.Content += string.Format(Words("email.donate.success.content"), data.GetValue("FullName")); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
                 myemail.Content += string.Format(Words("email.enroll.payment.content"), data.GetValue("Payer"), paidDate, data.GetValue("PaidInvoice"), data.GetValue("PaidAmount"), data.GetValue("Currency"));
                 myemail.Content += "</body></html>";
                 myemail.SendAsync();
