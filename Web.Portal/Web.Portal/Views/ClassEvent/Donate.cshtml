@@ -155,7 +155,7 @@
                                 <label wliu text>@Html.Words("col.branch")</label>
                             </td>
                             <td style="padding-left:10px; padding-top:12px;" valign="top">
-                                @Html.WLSelect("SiteId", siteList, "", (PubUser.Id == 0 ? 1 : PubUser.Id))
+                                @Html.WLSelect("SiteId", siteList, "fit", (PubUser.Id == 0 ? 1 : PubUser.Id))
                             </td>
                         </tr>
                         <tr>
@@ -171,7 +171,7 @@
                                 <label wliu text>@Html.Words("col.option")</label>
                             </td>
                             <td style="padding-left:10px; padding-top:12px;" valign="top">
-                                <ul style="list-style-type:none;">
+                                <ul style="list-style-type:none;padding:0px;margin:0px;">
                                     <li><input id="opt_1" name="donate_opt" type="radio" wliu value="10" /><label wliu radio for="opt_1"> $ 10</label></li>
                                     <li><input id="opt_2" name="donate_opt" type="radio" wliu value="20" /><label wliu radio for="opt_2"> $ 20</label></li>
                                     <li><input id="opt_3" name="donate_opt" type="radio" wliu value="50" /><label wliu radio for="opt_3"> $ 50</label></li>
