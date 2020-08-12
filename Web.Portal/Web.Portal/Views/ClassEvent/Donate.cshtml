@@ -131,27 +131,27 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width="12%" valign="top" style="padding-top:12px;white-space:nowrap;">
+                            <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
                                 <label wliu text>@Html.Words("col.fullname")</label>
                             </td>
-                            <td style="padding-left:10px; padding-top:12px;" valign="top">
-                                <input wliu fit id="FullName" type="text" value="@(PubUser.FirstName + ' ' + PubUser.LastName)" />
+                            <td style="padding-left:10px; padding-top:12px;" valign="middle">
+                                <input wliu fit style="padding:3px;" id="FullName" type="text" value="@(PubUser.FirstName + ' ' + PubUser.LastName)" />
                             </td>
                         </tr>
                         <tr>
-                            <td width="12%" valign="top" style="padding-top:12px;white-space:nowrap;">
+                            <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
                                 <label wliu text>@Html.Words("col.email")</label>
                             </td>
-                            <td style="padding-left:10px; padding-top:12px;" valign="top">
-                                <input wliu fit id="Email" type="text" value="@PubUser.Email" />
+                            <td style="padding-left:10px; padding-top:12px;" valign="middle">
+                                <input wliu fit style="padding:3px;" id="Email" type="text" value="@PubUser.Email" />
                             </td>
                         </tr>
                         <tr>
-                            <td width="12%" valign="top" style="padding-top:12px;white-space:nowrap;">
+                            <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
                                 <label wliu text>@Html.Words("col.branch")</label>
                             </td>
-                            <td style="padding-left:10px; padding-top:12px;" valign="top">
-                                @Html.WLSelect("SiteId", siteList, "fit", (PubUser.Id == 0 ? 1 : PubUser.Id))
+                            <td style="padding-left:10px; padding-top:12px;" valign="middle">
+                                @Html.WLSelect("SiteId", siteList, "fit style='height:34px;'", (PubUser.Id == 0 ? 1 : PubUser.Id))
                             </td>
                         </tr>
                         <tr>
@@ -159,7 +159,7 @@
                                 <label wliu text>@Html.Words("memo.information")</label>
                             </td>
                             <td style="padding-left:10px; padding-top:12px;" valign="top">
-                                <textarea wliu fit id="Notes" style="width:100%;height:60px;"></textarea>
+                                <textarea wliu fit style="padding:3px;" id="Notes" style="width:100%;height:60px;"></textarea>
                             </td>
                         </tr>
                         <tr>
@@ -177,10 +177,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width="12%" valign="top" style="padding-top:12px;white-space:nowrap;">
+                            <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
                                 <label wliu text h2>@Html.Words("col.paid.amount")</label>
                             </td>
-                            <td style="padding-left:10px; padding-top:12px;" valign="top">
+                            <td style="padding-left:10px; padding-top:12px;" valign="middle">
                                 <span id="text_opt"><label wliu text h2>$</label><label id="donate_amount" wliu text h2>0.00</label> <label wliu text h2>CAD</label></span>
                                 <span id="span_opt" style="display:none;"><label wliu text h2>$</label> <input wliu fit h3 id="dAmount" style="width:80px; font-size:18px; font-weight:bold; text-align:right;" onchange="changeAmount(this.value)" type="text" value="" /> <label wliu text h2>CAD</label></span>
                                 <input type="hidden" id="UserId" value="@PubUser.Id" />
