@@ -211,6 +211,8 @@ namespace Web.Portal.WebApi.Controllers
 
             if( string.IsNullOrWhiteSpace(data.GetValue("Email"))==false && ValidateHelper.IsMatch("Email", data.GetValue("Email")) )
             {
+                string paidDate = (data.GetValue("PaidDate").GetLong() ?? 0).IntDate().YMDHMS();
+
                 MMEmail myemail = new MMEmail("mail.shaolinworld.org", "info@shaolinworld.org", "SL2020$");
                 myemail.Port = 26;
                 myemail.enableSSL = false;
@@ -221,7 +223,7 @@ namespace Web.Portal.WebApi.Controllers
                 myemail.Subject = Words("donate.success");// "New Student Enrolled";
                 myemail.Content = "<html><body>";
                 myemail.Content += string.Format(Words("email.donate.success.content"), data.GetValue("FirstName"), data.GetValue("LastName")); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
-                myemail.Content += string.Format(Words("email.enroll.payment.content"), data.GetValue("Payer"), data.GetValue("PaidDate"), data.GetValue("PaidInvoice"), data.GetValue("PaidAmount"), data.GetValue("Currency"));
+                myemail.Content += string.Format(Words("email.enroll.payment.content"), data.GetValue("Payer"), paidDate, data.GetValue("PaidInvoice"), data.GetValue("PaidAmount"), data.GetValue("Currency"));
                 myemail.Content += "</body></html>";
                 myemail.SendAsync();
             }
