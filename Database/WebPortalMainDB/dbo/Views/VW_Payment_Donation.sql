@@ -8,7 +8,7 @@ SELECT a.Id
 	  ,s.Title_cn as SiteName_cn
 	  ,ISNULL(a.UserId,0) as UserId
 	  ,p.UserName
-	  ,Concat(ISNULL(a.FirstName, p.FirstName)  , ' ', ISNULL(a.LastName, p.LastName)) as FullName
+	  ,IIF(a.FullName IS NULL OR a.FullName='', Concat(p.FirstName, ' ', p.LastName), a.FullName) as FullName
 	  ,ISNULL(a.Email, p.Email) as Email
       ,Notes
       ,Payer
