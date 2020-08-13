@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>08/12/2020 12:57:53</publishTime>
+      <publishTime>08/12/2020 15:49:54</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>08/12/2020 12:57:51</publishTime>
+      <publishTime>08/12/2020 15:49:51</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>08/12/2020 12:55:49</publishTime>
+      <publishTime>08/12/2020 15:49:48</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>08/12/2020 12:55:49</publishTime>
+      <publishTime>08/12/2020 15:49:49</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>08/12/2020 12:55:49</publishTime>
+      <publishTime>08/12/2020 15:49:48</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
       <publishTime>08/08/2020 23:51:42</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>08/12/2020 12:55:54</publishTime>
+      <publishTime>08/12/2020 15:49:50</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>08/12/2020 12:55:54</publishTime>
+      <publishTime>08/12/2020 15:49:50</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/angular.min.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
