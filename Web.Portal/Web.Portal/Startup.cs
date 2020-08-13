@@ -39,6 +39,8 @@ namespace Web.Portal
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
+                options.Secure = CookieSecurePolicy.SameAsRequest;
+                options.HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always;
             });
             
 
@@ -71,6 +73,8 @@ namespace Web.Portal
                 // Set a short timeout for easy testing.
                 options.IdleTimeout = TimeSpan.FromSeconds(8*3600);
                 options.Cookie.HttpOnly = true;
+                options.Cookie.SameSite = SameSiteMode.Unspecified;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
                 // Make the session cookie essential
                 options.Cookie.IsEssential = true;
             });

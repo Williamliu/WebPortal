@@ -114,6 +114,10 @@ namespace Web.Portal.Common
                 httpContext.Response.Cookies.Delete(sessName);
                 CookieOptions cookieOpt = new CookieOptions();
                 cookieOpt.Expires = System.DateTime.Now.AddDays(8);
+                cookieOpt.SameSite = SameSiteMode.Unspecified;
+                cookieOpt.IsEssential = true;
+                cookieOpt.HttpOnly = true;
+                cookieOpt.Secure = true;
                 httpContext.Response.Cookies.Append(sessName, value, cookieOpt);
             }
         }
