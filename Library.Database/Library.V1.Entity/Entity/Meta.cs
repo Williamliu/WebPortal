@@ -42,7 +42,9 @@ namespace Library.V1.Entity
         Read,           // only for meta get data but save data
         Custom,         // only for meta custom  get and save code logic
 
-        Checkbox        // for both
+        Checkbox,
+        RadioText,      // need table add collectins  to support this feature
+        CheckboxText    // need table add collectins  to support this feature
     }
     public class Meta
     {
@@ -110,6 +112,8 @@ namespace Library.V1.Entity
                 else
                     IsAllow = false;
 
+                if (this.IsKey) IsAllow = true;
+
                 if (this.Type == EInput.Hidden) IsAllow = false;
                 if (this.Type == EInput.ImageUrl) IsAllow = false;
                 if (this.Type == EInput.ImageContent) IsAllow = false;
@@ -117,6 +121,7 @@ namespace Library.V1.Entity
                 if (this.Type == EInput.FileContent) IsAllow = false;
                 if (this.Type == EInput.Custom) IsAllow = false;
                 if (this.Type == EInput.Checkbox) IsAllow = false;
+                if (this.Type == EInput.CheckboxText) IsAllow = false;
                 return IsAllow;
             }
         }
@@ -133,6 +138,7 @@ namespace Library.V1.Entity
                 if (this.Type == EInput.FileContent) IsAllow = false;
                 if (this.Type == EInput.Custom) IsAllow = false;
                 if (this.Type == EInput.Checkbox) IsAllow = false;
+                if (this.Type == EInput.CheckboxText) IsAllow = false;
                 return IsAllow;
             }
         }
@@ -150,6 +156,8 @@ namespace Library.V1.Entity
                 if (this.Type == EInput.FileContent) IsAllow = false;
                 if (this.Type == EInput.Custom) IsAllow = false;
                 if (this.Type == EInput.Checkbox) IsAllow = false;
+                if (this.Type == EInput.RadioText) IsAllow = false;
+                if (this.Type == EInput.CheckboxText) IsAllow = false;
                 return IsAllow;
             }
         }

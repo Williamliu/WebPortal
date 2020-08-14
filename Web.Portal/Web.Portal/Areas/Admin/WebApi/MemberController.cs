@@ -333,12 +333,12 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta dharmaDD = new Meta { Name = "DharmaDD", DbName = "DharmaDD", Title = Words("col.dharmadate"), Type = EInput.Int, MaxLength = 2 };
                         dharmaDD.AddListRef("DayList");
 
-                        Meta emerRelation = new Meta { Name = "EmergencyRelation", DbName = "EmergencyRelation", Title = Words("col.emergency.relation"), Type = EInput.String, MaxLength = 32 };
-                        Meta emerPerson = new Meta { Name = "EmergencyPerson", DbName = "EmergencyPerson", Title = Words("col.emergency.person"), Type = EInput.String, MaxLength = 128 };
-                        Meta emerPhone = new Meta { Name = "EmergencyPhone", DbName = "EmergencyPhone", Title = Words("col.emergency.phone"), Type = EInput.String, MaxLength = 32 };
-                        Meta emerCell = new Meta { Name = "EmergencyCell", DbName = "EmergencyCell", Title = Words("col.emergency.cell"), Type = EInput.String, MaxLength = 32 };
+                        Meta emerRelation = new Meta { Name = "EmergencyRelation", DbName = "EmergencyRelation", Title = Words("col.emergency.relation"), Type = EInput.String, MaxLength = 32, Export = true };
+                        Meta emerPerson = new Meta { Name = "EmergencyPerson", DbName = "EmergencyPerson", Title = Words("col.emergency.person"), Type = EInput.String, MaxLength = 128, Export = true };
+                        Meta emerPhone = new Meta { Name = "EmergencyPhone", DbName = "EmergencyPhone", Title = Words("col.emergency.phone"), Type = EInput.String, MaxLength = 32, Export = true };
+                        Meta emerCell = new Meta { Name = "EmergencyCell", DbName = "EmergencyCell", Title = Words("col.emergency.cell"), Type = EInput.String, MaxLength = 32, Export = true };
 
-                        Meta branch = new Meta { Name = "BranchId", DbName = "BranchId", Title = Words("col.branch"), Type = EInput.Int, Required = true, Value = this.DB.User.Branch };
+                        Meta branch = new Meta { Name = "BranchId", DbName = "BranchId", Title = Words("col.branch"), Type = EInput.Int, Required = true, Value = this.DB.User.Branch, Export = true };
                         branch.AddListRef("BranchList");
                         Meta gender = new Meta { Name = "Gender", DbName = "Gender", Title = Words("col.gender"), Type = EInput.Int, Export = true };
                         gender.AddListRef("GenderList");
@@ -351,12 +351,12 @@ namespace Web.Portal.Areas.Admin.WebApi
 
                         Meta motherLang = new Meta { Name = "MotherLang", DbName = "MotherLang", Title = Words("col.motherlang"), Type = EInput.Int, Export = true };
                         motherLang.AddListRef("LanguageList");
-                        Meta multiLang = new Meta { Name = "MultiLang", DbName = "UserId", Title = Words("col.multilang"), Type = EInput.Checkbox, Value = new { } };
+                        Meta multiLang = new Meta { Name = "MultiLang", DbName = "UserId", Title = Words("col.multilang"), Type = EInput.Checkbox, Value = new { }, Export = true };
                         multiLang.AddListRef("LanguageList", "Pub_User_Language", "LanguageId");
 
-                        Meta hearUs = new Meta { Name = "HearUs", DbName = "UserId", Title = Words("col.hearus"), Type = EInput.Checkbox, Value = new { } };
+                        Meta hearUs = new Meta { Name = "HearUs", DbName = "UserId", Title = Words("col.hearus"), Type = EInput.Checkbox, Value = new { }, Export = true };
                         hearUs.AddListRef("HearUsList", "Pub_User_HearUs", "HearUsId");
-                        Meta symbol = new Meta { Name = "Symbol", DbName = "UserId", Title = Words("col.symbol"), Type = EInput.Checkbox, Value = new { } };
+                        Meta symbol = new Meta { Name = "Symbol", DbName = "UserId", Title = Words("col.symbol"), Type = EInput.Checkbox, Value = new { }, Export = true };
                         symbol.AddListRef("SymbolList", "Pub_User_Symbol", "SymbolId");
 
 
@@ -370,10 +370,10 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta country = new Meta { Name = "Country", DbName = "Country", Title = Words("col.country"), Type = EInput.Int, Value = 1, Export = true };
                         country.AddListRef("CountryList");
                         Meta postal = new Meta { Name = "Postal", DbName = "Postal", Title = Words("col.postal"), Type = EInput.String, MaxLength = 16, Export = true };
-                        Meta userRole = new Meta { Name = "UserRole", DbName = "UserId", Title = Words("col.user.role"), Type = EInput.Checkbox };
+                        Meta userRole = new Meta { Name = "UserRole", DbName = "UserId", Title = Words("col.user.role"), Type = EInput.Checkbox, Value = new { }, Export = true };
                         userRole.AddListRef("PubRoleList", "Pub_User_Role", "RoleId");
 
-                        Meta userType = new Meta { Name = "UserType", DbName = "UserId", Title = Words("col.user.type"), Type = EInput.Checkbox };
+                        Meta userType = new Meta { Name = "UserType", DbName = "UserId", Title = Words("col.user.type"), Type = EInput.Checkbox, Value = new { }, Export = true };
                         userType.AddListRef("UserTypeList", "Pub_User_UserType", "UserTypeId");
 
                         Member.AddMetas(id, memberId, firstName, lastName, firstNameLegal, lastNameLegl, dharmaName, displayName, certName, aliasname, occupation, memo)

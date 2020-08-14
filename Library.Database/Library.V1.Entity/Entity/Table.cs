@@ -43,6 +43,7 @@ namespace Library.V1.Entity
             this.UpdateKVs = new Dictionary<string, object>();
             this.InsertKVs = new Dictionary<string, object>();
             this.DeleteKVs = new Dictionary<string, object>();
+            this.Collections = new Dictionary<string, Collection>();
             this.GetUrl = string.Empty;
             this.ExportUrl = string.Empty;
             this.SaveUrl = string.Empty;
@@ -122,6 +123,8 @@ namespace Library.V1.Entity
         private Dictionary<string, object> UpdateKVs { get; set; }
         private Dictionary<string, object> InsertKVs { get; set; }
         private Dictionary<string, object> DeleteKVs { get; set; }
+        
+        private Dictionary<string, Collection> Collections { get; set; }
         private Meta KeyMeta
         {
             get
@@ -521,7 +524,7 @@ namespace Library.V1.Entity
             return this;
 
         }
-        public Table AddRowExport(GRow grow, Dictionary<string, Collection> collections)
+        public Table AddRowExport(GRow grow)
         {
             Row nrow = new Row();
             foreach (var colName in this.Metas.Keys)
@@ -531,6 +534,9 @@ namespace Library.V1.Entity
                     dbColName = this.Metas[colName].IsLang ? this.DSQL.LangColumn(this.Metas[colName].DbName) : this.Metas[colName].DbName;
 
                 if (this.Metas[colName].IsKey) nrow.Key = grow.GetValue(dbColName).GetInt() ?? -1;
+                
+                if (this.Metas[colName].Export == false) continue;
+
                 Column ncolumn = new Column(colName);
                 switch (this.Metas[colName].Type)
                 {
@@ -548,10 +554,10 @@ namespace Library.V1.Entity
                         {
                             if (string.IsNullOrWhiteSpace(this.Metas[colName].ListRef.Collection) == false)
                             {
-                                if (collections.ContainsKey(this.Metas[colName].ListRef.Collection))
+                                if (this.Collections.ContainsKey(this.Metas[colName].ListRef.Collection))
                                 {
-                                    collections[this.Metas[colName].ListRef.Collection].FillData();
-                                    ncolumn.Value = collections[this.Metas[colName].ListRef.Collection].Items.FirstOrDefault(p => p.Value == (grow.GetValue(dbColName).GetInt() ?? 0))?.Title ?? grow.GetValue(dbColName);
+                                    if(this.Collections[this.Metas[colName].ListRef.Collection].Items.Count==0)  this.Collections[this.Metas[colName].ListRef.Collection].FillData();
+                                    ncolumn.Value = this.Collections[this.Metas[colName].ListRef.Collection].Items.FirstOrDefault(p => p.Value == (grow.GetValue(dbColName).GetInt() ?? 0))?.Title ?? grow.GetValue(dbColName);
                                 }
                             }
                         }
@@ -604,7 +610,28 @@ namespace Library.V1.Entity
                     case EInput.FileUrl:        // handle later
                     case EInput.FileContent:   // handle later
                     case EInput.Custom:         // handle later
-                    case EInput.Checkbox:       // handle later
+                        break;
+                    case EInput.Checkbox:       // Get Title String
+                        ncolumn.Value = string.Empty;
+                        Column ckCol = this.Metas[colName].QueryCK(this.DSQL, nrow.Key);
+                        Dictionary<string, bool> ckValues = ckCol.Value as Dictionary<string, bool>;
+                        if(ckValues!=null)
+                        {
+                            if (string.IsNullOrWhiteSpace(this.Metas[colName].ListRef.Collection) == false)
+                            {
+                                if (this.Collections.ContainsKey(this.Metas[colName].ListRef.Collection))
+                                {
+                                    if(this.Collections[this.Metas[colName].ListRef.Collection].Items.Count==0) this.Collections[this.Metas[colName].ListRef.Collection].FillData();
+                                    string valString = string.Empty;
+                                    foreach(string ckVal in ckValues.Keys)
+                                    {
+                                        valString = valString.Concat(this.Collections[this.Metas[colName].ListRef.Collection].Items.FirstOrDefault(p => p.Value == (ckVal.GetInt() ?? 0))?.Title ?? ckVal , "; ");
+                                    }
+                                    ncolumn.Value = valString;
+                                }
+                            }
+                        }
+                        nrow.AddColumn(ncolumn);
                         break;
                 }
             }
@@ -800,16 +827,18 @@ namespace Library.V1.Entity
         }
         public string OutputData(JSTable jsTable, Dictionary<string, Collection> collections)
         {
+            this.Collections = collections;
+
             StringBuilder sb = new StringBuilder();
             this.SyncJSTable(jsTable);
-            this.ExportData(collections);
+            this.ExportData();
             if (this.Rows.Count > 0)
             {
                 sb.Append("<table cellpadding='2' cellspacing='2' border='1'>");
                 sb.Append("<tr>");
                 foreach (var colName in this.Metas.Keys)
                 {
-                    if(this.Metas[colName].AllowExport)
+                    if(this.Metas[colName].Export)
                     {
                         sb.Append($"<td align='center' valign='middle' style='background-color:#bbddff;min-width:240px;'>{this.Metas[colName].Title}</td>");
 
@@ -822,7 +851,7 @@ namespace Library.V1.Entity
                     sb.Append("<tr>");
                     foreach (var colName in this.Metas.Keys)
                     {
-                        if (this.Metas[colName].AllowExport)
+                        if (this.Metas[colName].Export)
                         {
                             sb.Append($"<td valign='top' style='min-width:240px;'>{row.GetValue(colName)}</td>");
                         }
@@ -838,7 +867,7 @@ namespace Library.V1.Entity
             }
             return sb.ToString();
         }
-        public Table ExportData(Dictionary<string, Collection> collections)
+        public Table ExportData()
         {
             if (this.User.Rights.ContainsKey("output") == false) return this;
             if (this.User.Rights["output"] == false) return this;
@@ -888,7 +917,7 @@ namespace Library.V1.Entity
                                         break;
                                 }
                                 this.Error.Append(this.DSQL.Error);
-                                foreach (GRow grow in gtable.Rows) this.AddRowExport(grow, collections);
+                                foreach (GRow grow in gtable.Rows) this.AddRowExport(grow);
                                 if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
                             }
                             #endregion
@@ -905,7 +934,7 @@ namespace Library.V1.Entity
                             gtable = this.DSQL.ExecuteSP(this.DbName, this.SqlParams.ToArray());
                             if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|StoreProcedure:[{this.DSQL.Debug}]", @"\n\n");
                             this.Error.Append(this.DSQL.Error);
-                            foreach (GRow grow in gtable.Rows) this.AddRowExport(grow, collections);
+                            foreach (GRow grow in gtable.Rows) this.AddRowExport(grow);
                             if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
                         }
                         break;
