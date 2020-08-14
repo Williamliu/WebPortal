@@ -255,7 +255,12 @@ namespace Web.Portal.WebApi.Controllers
                         Meta password = new Meta { Name = "Password", DbName = "Password", Title = Words("col.password"), Description = Words("confirm.password"), Type = EInput.Passpair, Required = true, MinLength = 6, MaxLength = 32 };
                         Meta branch = new Meta { Name = "BranchId", DbName = "BranchId", Title = Words("col.branch"), Type = EInput.Int, Required = true };
                         branch.AddListRef("BranchList");
-                        UserRegister.AddMetas(id, firstName, lastName, userName, email, phone, cell, gender, photo, password, branch);
+
+                        Meta userType = new Meta { Name = "UserType", DbName = "UserId", Title = Words("col.user.type"), Type = EInput.Checkbox, Value = new { } };
+                        userType.AddListRef("UserTypeList", "Pub_User_UserType", "UserTypeId");
+
+
+                        UserRegister.AddMetas(id, firstName, lastName, userName, email, phone, cell, gender, photo, password, branch, userType);
 
                         UserRegister.AddQueryKV("Id", -1).AddQueryKV("Deleted", false).AddQueryKV("Active", true)
                         .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
@@ -275,7 +280,11 @@ namespace Web.Portal.WebApi.Controllers
                         CollectionTable c1 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail");
                         Collection BranchList = new Collection(ECollectionType.Table, c1);
                         Collection genderList = new Collection("GenderList");
-                        this.DB.AddTables(UserLogin, UserRegister, Password).AddCollections(BranchList, genderList);
+
+                        CollectionTable c2 = new CollectionTable("UserTypeList", "UserType", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection UserTypeList = new Collection(ECollectionType.Category, c2);
+
+                        this.DB.AddTables(UserLogin, UserRegister, Password).AddCollections(BranchList, genderList, UserTypeList);
                     }
                     break;
                 case "ResetPassword":

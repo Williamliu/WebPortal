@@ -88,7 +88,7 @@ namespace Library.V1.Entity
 
         #region Public Fields
         public string Name { get; set; }
-        public IList<CollectItem> Items { get; set; }
+        public List<CollectItem> Items { get; set; }
         public Error Error { get; set; }
         public string Debug { get; set; }
         #endregion
@@ -278,9 +278,9 @@ namespace Library.V1.Entity
     public static class CommonCollection
     {
         #region Common List
-        public static IList<CollectItem> Get(string collectName)
+        public static List<CollectItem> Get(string collectName)
         {
-            IList<CollectItem> items = new List<CollectItem>();
+            List<CollectItem> items = new List<CollectItem>();
             switch (collectName)
             {
                 case "GenderList":
@@ -300,6 +300,9 @@ namespace Library.V1.Entity
                     break;
                 case "StatusList":
                     items = GetStatus().Items;
+                    break;
+                case "PaidMethodList":
+                    items = GetPaidMethod().Items;
                     break;
             }
             return items;
@@ -362,6 +365,15 @@ namespace Library.V1.Entity
             list.AddItem(5, LanguageHelper.Words("status.close"), LanguageHelper.Words("status.close"));
             return list;
         }
+
+        public static Collection GetPaidMethod()
+        {
+            Collection list = new Collection("PaidMethodList");
+            list.AddItem(1, LanguageHelper.Words("class.class"), LanguageHelper.Words("class.class"));
+            list.AddItem(2, LanguageHelper.Words("donation"), LanguageHelper.Words("donation"));
+            return list;
+        }
+
         #endregion
     }
 }

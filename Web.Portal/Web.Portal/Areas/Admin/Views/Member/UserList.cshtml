@@ -125,9 +125,12 @@
             <filter.label db="ViewData.database" tb="Member" col="search_idno"></filter.label>
             <filter.textbox db="ViewData.database" tb="Member" col="search_idno" action="scanCallback()"></filter.textbox>
             <!--
-    <filter.qrscan db="ViewData.database" tb="Member" col="search_scan" gallery="Gallery" action="scanCallback()"></filter.qrscan>
-    -->
-            <wliu.search db="ViewData.database" tb="Member">Search</wliu.search>
+            <filter.qrscan db="ViewData.database" tb="Member" col="search_scan" gallery="Gallery" action="scanCallback()"></filter.qrscan>
+            -->
+            <wliu.search db="ViewData.database" tb="Member"></wliu.search>
+            <wliu.export db="ViewData.database" tb="Member"></wliu.export>
+            <br />
+            <filter.checkcom db="ViewData.database" tb="Member" col="search_usertype" icon="detail"></filter.checkcom>
         </fieldset>
         <div wliu table grow shrink underline style="margin-top:12px;">
             <div row>
@@ -394,6 +397,7 @@
                         <tr>
                             <td colspan="2" width="100%" style="border-bottom:1px solid #cccccc;">
                                 <form.checkcom db="ViewData.database" tb="Member" col="UserRole" icon="detail"></form.checkcom>
+                                <form.checkcom db="ViewData.database" tb="Member" col="UserType" icon="detail"></form.checkcom>
                             </td>
                         </tr>
                         <tr>
@@ -438,6 +442,7 @@
     <checkbox.diag db="ViewData.database"></checkbox.diag>
     <checkcom.diag db="ViewData.database" maxhh="250px"></checkcom.diag>
     <radio.diag db="ViewData.database"></radio.diag>
+    <checkcom.fdiag db="ViewData.database" maxhh="250px"></checkcom.fdiag>
 
     <image.imgview></image.imgview>
     <image.imgedit gallery="Gallery"></image.imgedit>

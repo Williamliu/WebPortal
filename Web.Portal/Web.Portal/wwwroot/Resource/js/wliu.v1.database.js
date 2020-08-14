@@ -564,7 +564,8 @@ WLIU.Table.prototype = {
     },
     CKEditorReset: function () {
         for (let i = 0; i < this.CKEditor.length; i++) {
-            this.CurrentColumn(this.CKEditor[i]).value1 = false; // don't trigger change event of ckeditor
+            if (this.CurrentColumn(this.CKEditor[i]))
+                this.CurrentColumn(this.CKEditor[i]).value1 = false; // don't trigger change event of ckeditor
 
             let content = "";
             if (this.CurrentColumn(this.CKEditor[i]))
@@ -982,12 +983,13 @@ WLIU.Table.prototype = {
     Remove: function (guid) {
         if (this.rows) {
             if (this.CurrentGuid() === guid) {
+                this.CKEditorReset(); // reset ckeditor first if ckeditor exist
                 $.removeInList(this.rows, { guid: guid });
                 this.rowGuid = "";
             } else {
+                this.CKEditorReset(); // reset ckeditor first if ckeditor exist
                 $.removeInList(this.rows, { guid: guid });
             }
-            this.CKEditorReset();
             this.ChangeState();
             return this.GuidRow(guid);
         }

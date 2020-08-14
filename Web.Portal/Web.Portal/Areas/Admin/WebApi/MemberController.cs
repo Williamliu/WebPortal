@@ -55,6 +55,13 @@ namespace Web.Portal.Areas.Admin.WebApi
             this.Init("M3020");
             return Ok(this.DB.ReloadTable(gtb));
         }
+        [HttpPost("ExportUserList")]
+        public IActionResult ExportUserList(JSTable jsTable)
+        {
+            this.Init("M3020");
+            return Ok(this.DB.OutputTable(jsTable, this.DB.Collections));
+        }
+
         [HttpPost("SaveUserList")]
         public IActionResult SaveUserList(JSTable gtb)
         {
@@ -100,6 +107,30 @@ namespace Web.Portal.Areas.Admin.WebApi
             this.Init("M3030");
             return Ok(this.DB.ValidateTable(gtb));
         }
+        [HttpPost("ReloadPubUserPayment")]
+        public IActionResult ReloadPubUserPayment(JSTable gtb)
+        {
+            this.Init("M3030");
+            return Ok(this.DB.ReloadTable(gtb));
+        }
+        [HttpPost("ExportPubUserPayment")]
+        public IActionResult ExportPubUserPayment(JSTable jsTable)
+        {
+            this.Init("M3030");
+            return Ok(this.DB.OutputTable(jsTable, this.DB.Collections));
+        }
+        [HttpPost("ReloadPubUserClass")]
+        public IActionResult ReloadPubUserClass(JSTable gtb)
+        {
+            this.Init("M3030");
+            return Ok(this.DB.ReloadTable(gtb));
+        }
+        [HttpPost("ExportPubUserClass")]
+        public IActionResult ExportPubUserClass(JSTable jsTable)
+        {
+            this.Init("M3030");
+            return Ok(this.DB.OutputTable(jsTable, this.DB.Collections));
+        }
 
         [HttpGet("InitDonate")]
         public IActionResult InitDonate()
@@ -119,7 +150,7 @@ namespace Web.Portal.Areas.Admin.WebApi
         public IActionResult ExportDonate(JSTable jsTable)
         {
             this.Init("M3090");
-            return Ok(this.DB.OutputTable(jsTable));
+            return Ok(this.DB.OutputTable(jsTable, this.DB.Collections));
         }
 
         protected override void InitDatabase(string menuId)
@@ -261,19 +292,19 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Table Member = new Table("Member", "Pub_User", Words("pub.user"));
                         /*******/
                         Meta id = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true, Order = "DESC" };
-                        Meta memberId = new Meta { Name = "MemberId", DbName = "MemberId", Title = Words("col.memberid"), Order = "ASC" };
-                        Meta firstName = new Meta { Name = "FirstName", DbName = "FirstName", Title = Words("col.fullname"), Required = true, Type = EInput.String, MaxLength = 64, Order = "ASC" };
-                        Meta lastName = new Meta { Name = "LastName", DbName = "LastName", Title = Words("col.lastname"), Required = true, Type = EInput.String, MaxLength = 64, Order = "ASC" };
-                        Meta firstNameLegal = new Meta { Name = "FirstNameLegal", DbName = "FirstNameLegal", Title = Words("col.firstname.legal"), Type = EInput.String, MaxLength = 64, Order = "ASC" };
-                        Meta lastNameLegl = new Meta { Name = "LastNameLegal", DbName = "LastNameLegal", Title = Words("col.lastname.legal"), Type = EInput.String, MaxLength = 64, Order = "ASC" };
-                        Meta dharmaName = new Meta { Name = "DharmaName", DbName = "DharmaName", Title = Words("col.dharmaname"), Type = EInput.String, MaxLength = 64, Order = "ASC" };
-                        Meta displayName = new Meta { Name = "DisplayName", DbName = "DisplayName", Title = Words("col.displayname"), Sync = true, Type = EInput.String, MaxLength = 128, Order = "ASC" };
-                        Meta certName = new Meta { Name = "CertificateName", DbName = "CertificateName", Title = Words("col.certificatename"), Sync = true, Type = EInput.String, MaxLength = 128, Order = "ASC" };
-                        Meta aliasname = new Meta { Name = "AliasName", DbName = "AliasName", Title = Words("col.aliasname"), Type = EInput.String, MaxLength = 128, Order = "ASC" };
-                        Meta occupation = new Meta { Name = "Occupation", DbName = "Occupation", Title = Words("col.occupation"), Type = EInput.String, MaxLength = 256 };
-                        Meta memo = new Meta { Name = "Memo", DbName = "Memo", Title = Words("col.memo"), Type = EInput.String, MaxLength = 256 };
-                        Meta userName = new Meta { Name = "UserName", DbName = "UserName", Title = Words("col.username"), Type = EInput.String, Unique = true, MaxLength = 32, Order = "ASC" };
-                        Meta idNumber = new Meta { Name = "IDNumber", DbName = "IDNumber", Title = Words("col.idnumber"), Type = EInput.String, MaxLength = 32 };
+                        Meta memberId = new Meta { Name = "MemberId", DbName = "MemberId", Title = Words("col.memberid"), Order = "ASC", Export=true };
+                        Meta firstName = new Meta { Name = "FirstName", DbName = "FirstName", Title = Words("col.firstname"), Required = true, Type = EInput.String, MaxLength = 64, Order = "ASC", Export = true };
+                        Meta lastName = new Meta { Name = "LastName", DbName = "LastName", Title = Words("col.lastname"), Required = true, Type = EInput.String, MaxLength = 64, Order = "ASC", Export = true };
+                        Meta firstNameLegal = new Meta { Name = "FirstNameLegal", DbName = "FirstNameLegal", Title = Words("col.firstname.legal"), Type = EInput.String, MaxLength = 64, Order = "ASC", Export = true };
+                        Meta lastNameLegl = new Meta { Name = "LastNameLegal", DbName = "LastNameLegal", Title = Words("col.lastname.legal"), Type = EInput.String, MaxLength = 64, Order = "ASC", Export = true };
+                        Meta dharmaName = new Meta { Name = "DharmaName", DbName = "DharmaName", Title = Words("col.dharmaname"), Type = EInput.String, MaxLength = 64, Order = "ASC", Export = true };
+                        Meta displayName = new Meta { Name = "DisplayName", DbName = "DisplayName", Title = Words("col.displayname"), Sync = true, Type = EInput.String, MaxLength = 128, Order = "ASC", Export = true };
+                        Meta certName = new Meta { Name = "CertificateName", DbName = "CertificateName", Title = Words("col.certificatename"), Sync = true, Type = EInput.String, MaxLength = 128, Order = "ASC", Export = true };
+                        Meta aliasname = new Meta { Name = "AliasName", DbName = "AliasName", Title = Words("col.aliasname"), Type = EInput.String, MaxLength = 128, Order = "ASC", Export = true };
+                        Meta occupation = new Meta { Name = "Occupation", DbName = "Occupation", Title = Words("col.occupation"), Type = EInput.String, MaxLength = 256, Export = true };
+                        Meta memo = new Meta { Name = "Memo", DbName = "Memo", Title = Words("col.memo"), Type = EInput.String, MaxLength = 256, Export = true };
+                        Meta userName = new Meta { Name = "UserName", DbName = "UserName", Title = Words("col.username"), Type = EInput.String, Unique = true, MaxLength = 32, Order = "ASC", Export = true };
+                        Meta idNumber = new Meta { Name = "IDNumber", DbName = "IDNumber", Title = Words("col.idnumber"), Type = EInput.String, MaxLength = 32, Export = true };
                         Meta medicalConcern = new Meta { Name = "MedicalConcern", DbName = "MedicalConcern", Title = Words("medical.concern"), Type = EInput.String, MaxLength = 1024 };
                         Meta hearUsOther = new Meta { Name = "HearUs_Other", DbName = "HearUs_Other", Title = Words("other.specify"), Type = EInput.String, MaxLength = 32 };
                         Meta multiLangOther = new Meta { Name = "MultiLang_Other", DbName = "MultiLang_Other", Title = Words("other.specify"), Type = EInput.String, MaxLength = 32 };
@@ -309,16 +340,16 @@ namespace Web.Portal.Areas.Admin.WebApi
 
                         Meta branch = new Meta { Name = "BranchId", DbName = "BranchId", Title = Words("col.branch"), Type = EInput.Int, Required = true, Value = this.DB.User.Branch };
                         branch.AddListRef("BranchList");
-                        Meta gender = new Meta { Name = "Gender", DbName = "Gender", Title = Words("col.gender"), Type = EInput.Int };
+                        Meta gender = new Meta { Name = "Gender", DbName = "Gender", Title = Words("col.gender"), Type = EInput.Int, Export = true };
                         gender.AddListRef("GenderList");
-                        Meta education = new Meta { Name = "Education", DbName = "Education", Title = Words("col.education"), Type = EInput.Int };
+                        Meta education = new Meta { Name = "Education", DbName = "Education", Title = Words("col.education"), Type = EInput.Int, Export = true };
                         education.AddListRef("EducationList");
-                        Meta nationality = new Meta { Name = "Nationality", DbName = "Nationality", Title = Words("col.nationality"), Type = EInput.Int };
+                        Meta nationality = new Meta { Name = "Nationality", DbName = "Nationality", Title = Words("col.nationality"), Type = EInput.Int, Export = true };
                         nationality.AddListRef("CountryList");
-                        Meta religion = new Meta { Name = "Religion", DbName = "Religion", Title = Words("col.religion"), Type = EInput.Int };
+                        Meta religion = new Meta { Name = "Religion", DbName = "Religion", Title = Words("col.religion"), Type = EInput.Int, Export = true };
                         religion.AddListRef("ReligionList");
 
-                        Meta motherLang = new Meta { Name = "MotherLang", DbName = "MotherLang", Title = Words("col.motherlang"), Type = EInput.Int };
+                        Meta motherLang = new Meta { Name = "MotherLang", DbName = "MotherLang", Title = Words("col.motherlang"), Type = EInput.Int, Export = true };
                         motherLang.AddListRef("LanguageList");
                         Meta multiLang = new Meta { Name = "MultiLang", DbName = "UserId", Title = Words("col.multilang"), Type = EInput.Checkbox, Value = new { } };
                         multiLang.AddListRef("LanguageList", "Pub_User_Language", "LanguageId");
@@ -329,25 +360,27 @@ namespace Web.Portal.Areas.Admin.WebApi
                         symbol.AddListRef("SymbolList", "Pub_User_Symbol", "SymbolId");
 
 
-                        Meta email = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Type = EInput.Email, Required = true, Unique = true, MaxLength = 256 };
-                        Meta phone = new Meta { Name = "Phone", DbName = "Phone", Title = Words("col.phone"), Type = EInput.String, MaxLength = 32 };
-                        Meta cell = new Meta { Name = "Cell", DbName = "Cell", Title = Words("col.cell"), Type = EInput.String, MaxLength = 32 };
-                        Meta address = new Meta { Name = "Address", DbName = "Address", Title = Words("col.address"), Type = EInput.String, MaxLength = 256 };
-                        Meta city = new Meta { Name = "City", DbName = "City", Title = Words("col.city"), Type = EInput.String, MaxLength = 64 };
-                        Meta state = new Meta { Name = "State", DbName = "State", Title = Words("col.province"), Type = EInput.Int };
+                        Meta email = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Type = EInput.Email, Required = true, Unique = true, MaxLength = 256, Export = true };
+                        Meta phone = new Meta { Name = "Phone", DbName = "Phone", Title = Words("col.phone"), Type = EInput.String, MaxLength = 32, Export = true };
+                        Meta cell = new Meta { Name = "Cell", DbName = "Cell", Title = Words("col.cell"), Type = EInput.String, MaxLength = 32, Export = true };
+                        Meta address = new Meta { Name = "Address", DbName = "Address", Title = Words("col.address"), Type = EInput.String, MaxLength = 256, Export = true };
+                        Meta city = new Meta { Name = "City", DbName = "City", Title = Words("col.city"), Type = EInput.String, MaxLength = 64, Export = true };
+                        Meta state = new Meta { Name = "State", DbName = "State", Title = Words("col.province"), Type = EInput.Int, Export = true };
                         state.AddListRef("StateList");
-                        Meta country = new Meta { Name = "Country", DbName = "Country", Title = Words("col.country"), Type = EInput.Int, Value = 1 };
+                        Meta country = new Meta { Name = "Country", DbName = "Country", Title = Words("col.country"), Type = EInput.Int, Value = 1, Export = true };
                         country.AddListRef("CountryList");
-                        Meta postal = new Meta { Name = "Postal", DbName = "Postal", Title = Words("col.postal"), Type = EInput.String, MaxLength = 16 };
+                        Meta postal = new Meta { Name = "Postal", DbName = "Postal", Title = Words("col.postal"), Type = EInput.String, MaxLength = 16, Export = true };
                         Meta userRole = new Meta { Name = "UserRole", DbName = "UserId", Title = Words("col.user.role"), Type = EInput.Checkbox };
                         userRole.AddListRef("PubRoleList", "Pub_User_Role", "RoleId");
 
+                        Meta userType = new Meta { Name = "UserType", DbName = "UserId", Title = Words("col.user.type"), Type = EInput.Checkbox };
+                        userType.AddListRef("UserTypeList", "Pub_User_UserType", "UserTypeId");
 
                         Member.AddMetas(id, memberId, firstName, lastName, firstNameLegal, lastNameLegl, dharmaName, displayName, certName, aliasname, occupation, memo)
                         .AddMetas(userName, gender, education, nationality, religion, motherLang, multiLang)
                         .AddMetas(medicalConcern, hearUsOther, symbolOther, multiLangOther, idNumber, email, phone, cell, branch, address, city, state, country, postal)
                         .AddMetas(birthYY, birthMM, birthDD, memberYY, memberMM, memberDD, dharmaYY, dharmaMM, dharmaDD)
-                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, photo, active, loginTime, loginTotal, createdTime, userRole);
+                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, photo, active, loginTime, loginTotal, createdTime, userRole, userType);
 
                         Filter f1 = new Filter() { Name = "search_name", DbName = "FirstName,LastName,FirstNameLegal,LastNameLegal,DharmaName,DisplayName,CertificateName,AliasName,UserName", Title = Words("col.fullname"), Type = EFilter.String, Compare = ECompare.Like };
                         Filter f2 = new Filter() { Name = "search_email", DbName = "Email", Title = Words("col.email"), Type = EFilter.String, Compare = ECompare.Like };
@@ -358,14 +391,17 @@ namespace Web.Portal.Areas.Admin.WebApi
                         //Filter f6 = new Filter() { Name = "fitler_branch", DbName = "BranchId", Title = "col.branch", Type = EFilter.Hidden, Required = true, Compare = ECompare.In, Value1 = this.DB.User.ActiveBranches };
                         Filter f6 = new Filter() { Name = "search_branch", DbName = "BranchId", Title = Words("col.branch"), Type = EFilter.Int, Compare = ECompare.Equal };
                         f6.AddListRef("BranchList");
+                        Filter f7 = new Filter() { Name = "search_usertype", DbName = "Id", Title = Words("col.user.type"), Type = EFilter.Checkbox, Compare = ECompare.Checkbox };
+                        f7.AddListRef("UserTypeList", "Pub_User_UserType", "UserId|UserTypeId");
 
 
-                        Member.AddFilters(f1, f2, f3, f4, f5, f6);
+                        Member.AddFilters(f1, f2, f3, f4, f5, f6, f7);
                         Member.Navi.IsActive = true;
                         Member.Navi.Order = "DESC";
                         Member.Navi.By = "CreatedTime";
                         Member.GetUrl = "/Admin/api/Member/ReloadUserList";
                         Member.SaveUrl = "/Admin/api/Member/SaveUserList";
+                        Member.ExportUrl = "/Admin/api/Member/ExportUserList";
                         Member.AddQueryKV("Deleted", false).AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds())
                             .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
                             .AddInsertKV("Deleted", false).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
@@ -405,10 +441,13 @@ namespace Web.Portal.Areas.Admin.WebApi
                         CollectionTable c10 = new CollectionTable("PubRoleList", "Pub_Role", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection PubRoleList = new Collection(ECollectionType.Table, c10);
 
+                        CollectionTable c11 = new CollectionTable("UserTypeList", "UserType", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection UserTypeList = new Collection(ECollectionType.Category, c11);
+
                         Collection genderList = new Collection("GenderList");
                         Collection monthList = new Collection("MonthList");
                         Collection dayList = new Collection("DayList");
-                        this.DB.AddTables(Member, PubUserId).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, PubRoleList, genderList, monthList, dayList);
+                        this.DB.AddTables(Member, PubUserId).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, PubRoleList, genderList, monthList, dayList, UserTypeList);
                     }
                     break;
                 case "M3030":
@@ -564,13 +603,91 @@ namespace Web.Portal.Areas.Admin.WebApi
                         idType.AddListRef("IdTypeList");
                         Meta idno = new Meta { Name = "IdNumber", DbName = "IdNumber", Title = Words("col.idno"), Required = true, Type = EInput.String, Unique = true, MaxLength = 128 };
                         PubUserId.AddMetas(uid, idType, idno);
-                        PubUserId.AddRelation(new Relation(ERef.O2M, "UserId", 0));
+                        PubUserId.AddRelation(new Relation(ERef.O2M, "UserId", -1));
                         PubUserId.Navi.IsActive = false;
                         PubUserId.GetUrl = "/Admin/api/Member/ReloadPubUserId";
                         PubUserId.SaveUrl = "/Admin/api/Member/SavePubUserId";
                         PubUserId.AddQueryKV("Deleted", false).AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds()).AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds()).AddInsertKV("Deleted", false).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
-
                         #endregion
+
+                        #region Pub User ClassList
+                        Table UserClass = new Table("UserClass", "VW_Class_Enroll_User", Words("user.class"));
+                        Meta cpid = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
+                        Meta csiteName = new Meta { Name = "SiteName", DbName = "SiteName", Title = Words("col.branch"), Order = "ASC", Type = EInput.String, IsLang = true, Export = true };
+                        Meta cfullName = new Meta { Name = "FullName", DbName = "FullName", Title = Words("col.fullname"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta cemail = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta cclassName = new Meta { Name = "ClassName", DbName = "ClassName", Title = Words("col.class.name"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta cclassTitle = new Meta { Name = "ClassTitle", DbName = "ClassTitle", Title = Words("class.class"), Order = "ASC", Type = EInput.String, IsLang = true, Export = true };
+                        Meta cstartDate = new Meta { Name = "StartDate", DbName = "StartDate", Title = Words("start.date"), Type = EInput.Date, Export = true };
+                        Meta cendDate = new Meta { Name = "EndDate", DbName = "EndDate", Title = Words("end.date"), Type = EInput.Date, Export = true };
+
+                        Meta cisFree = new Meta { Name = "IsFree", DbName = "IsFree", Title = Words("col.isfree"), Description = Words("col.free.charge"), Type = EInput.Bool, Order = "ASC", Export = true };
+                        Meta cfeeAmount = new Meta { Name = "FeeAmount", DbName = "FeeAmount", Title = Words("col.feeamount"), Type = EInput.Float, Order = "DESC", Export = true };
+                        Meta ccurrency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String, Export = true };
+                        ccurrency.AddListRef("CurrencyList");
+
+
+                        Meta cgroup = new Meta { Name = "Grp", DbName = "Grp", Title = Words("col.grp"), Type = EInput.String, MaxLength = 16, Order = "ASC", Export = true };
+                        Meta cisPaid = new Meta { Name = "IsPaid", DbName = "IsPaid", Title = Words("col.ispaid"), Description = Words("col.ispaid.yesno"), Type = EInput.Bool, Order = "DESC", Export = true };
+                        Meta cpaidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EInput.IntDate, Order = "DESC", Export = true };
+                        Meta cpaidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paid.amount"), Type = EInput.Float, MaxLength = 18, Sum = ESUM.Sum, Export = true };
+                        Meta cpaidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paid.invoice"), Type = EInput.String, MaxLength = 32, Order = "ASC", Export = true };
+                        Meta cmemberType = new Meta { Name = "MemberType", DbName = "MemberType", Title = Words("col.membertype"), IsLang=true, Type = EInput.String, Export = true };
+                        cmemberType.AddListRef("MemberTypeList");
+                        Meta ccreatedTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.enrolldate"), Type = EInput.IntDate, Order = "DESC", Export = true };
+                        Meta cactive = new Meta { Name = "Active", DbName = "Active", Title = Words("col.status"), Description = Words("status.active.inactive"), Type = EInput.Bool, Export = true };
+
+                        UserClass.AddMetas(cpid, csiteName, cfullName, cemail, cgroup, cmemberType, cclassName, cclassTitle, cstartDate, cendDate, cisFree, cfeeAmount, ccurrency, cisPaid, cpaidDate, cpaidAmount, cpaidInvoice, ccreatedTime, cactive);
+                        UserClass.AddRelation(new Relation(ERef.O2M, "UserId", -1));
+                        UserClass.Navi.IsActive = true;
+                        UserClass.Navi.By = "StartDate";
+                        UserClass.Navi.Order = "DESC";
+
+                        Filter cf1 = new Filter() { Name = "search_site", DbName = "SiteId", Title = Words("col.site"), Type = EFilter.Int, Compare = ECompare.Equal };
+                        cf1.AddListRef("SiteList");
+                        Filter cf2 = new Filter() { Name = "search_class", DbName = "ClassName", Title = Words("col.class.name"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter cf3 = new Filter() { Name = "search_date", DbName = "StartDate", Title = Words("start.date"), Type = EFilter.Date, Compare = ECompare.Range };
+                        Filter cf4 = new Filter() { Name = "search_invoice", DbName = "PaidInvoice", Title = Words("col.paid.invoice"), Type = EFilter.String, Compare = ECompare.Like };
+
+                        UserClass.AddFilters(cf1, cf2, cf3, cf4);
+
+                        UserClass.GetUrl = "/Admin/api/Member/ReloadPubUserClass";
+                        UserClass.ExportUrl = "/Admin/api/Member/ExportPubUserClass";
+                        #endregion
+                        
+                        #region Pub User Payment History
+                        Table UserPayment = new Table("UserPayment", "VW_Payment_User", Words("class.payment.user"));
+                        Meta upid = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
+                        Meta usiteName = new Meta { Name = "SiteName", DbName = "SiteName", Title = Words("col.branch"), Order = "ASC", Type = EInput.String, IsLang = true, Export = true };
+                        Meta ufullName = new Meta { Name = "FullName", DbName = "FullName", Title = Words("col.fullname"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta uemail = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta upayer = new Meta { Name = "Payer", DbName = "Payer", Title = Words("col.payer"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta upaidMethod = new Meta { Name = "PaidMethod", DbName = "PaidMethod", Title = Words("col.paid.method"), Order = "ASC", Type = EInput.Int, Export = true };
+                        upaidMethod.AddListRef("PaidMethodList");
+                        Meta upaidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paid.invoice"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta upaidStatus = new Meta { Name = "PaidStatus", DbName = "PaidStatus", Title = Words("col.paid.status"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta utrackNumber = new Meta { Name = "TrackNumber", DbName = "TrackNumber", Title = Words("col.track.number"), Order = "ASC", Type = EInput.String, Export = true };
+                        Meta upaidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paid.amount"), Type = EInput.Float, Order = "DESC", Sum = ESUM.Sum, Export = true };
+                        Meta ucurrency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String, Order = "ASC", Export = true };
+                        Meta upaidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EInput.IntDate, Order = "DESC", Export = true };
+                        Meta unotes = new Meta { Name = "Notes", DbName = "Notes", Title = Words("memo.information"), Type = EInput.String, Order = "DESC", Export = true };
+                        UserPayment.AddMetas(upid, upaidMethod, usiteName, ufullName, uemail, upayer, upaidDate, upaidAmount, ucurrency, upaidInvoice, upaidStatus, utrackNumber, unotes);
+                        UserPayment.AddRelation(new Relation(ERef.O2M, "UserId", -1));
+                        UserPayment.Navi.IsActive = true;
+                        UserPayment.Navi.By = "PaidDate";
+                        UserPayment.Navi.Order = "DESC";
+
+                        Filter f1 = new Filter() { Name = "search_site", DbName = "SiteId", Title = Words("col.site"), Type = EFilter.Int, Compare = ECompare.Equal };
+                        f1.AddListRef("SiteList");
+
+                        Filter f2 = new Filter() { Name = "search_invoice", DbName = "PaidInvoice", Title = Words("col.paid.invoice"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f3 = new Filter() { Name = "search_date", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EFilter.IntDate, Compare = ECompare.Range };
+                        UserPayment.AddFilters(f1, f2, f3);
+
+                        UserPayment.GetUrl = "/Admin/api/Member/ReloadPubUserPayment";
+                        UserPayment.ExportUrl = "/Admin/api/Member/ExportPubUserPayment";
+                        #endregion
+
                         #region Collection
                         CollectionTable c1 = new CollectionTable("EducationList", "Education", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection EducationList = new Collection(ECollectionType.Category, c1);
@@ -593,9 +710,15 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Collection genderList = new Collection("GenderList");
                         Collection monthList = new Collection("MonthList");
                         Collection dayList = new Collection("DayList");
+                        Collection paidMethodList = new Collection("PaidMethodList");
+
                         CollectionTable c10 = new CollectionTable("PubRoleList", "Pub_Role", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection PubRoleList = new Collection(ECollectionType.Table, c10);
-                        this.DB.AddTables(pubUser, UserDetail, PubUserId).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, genderList, monthList, dayList, PubRoleList);
+
+                        CollectionTable c11 = new CollectionTable("SiteList", "GSite", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection SiteList = new Collection(ECollectionType.Table, c11);
+
+                        this.DB.AddTables(pubUser, UserDetail, PubUserId, UserClass, UserPayment).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, genderList, monthList, dayList, paidMethodList, PubRoleList, SiteList);
                         #endregion
                     }
                     break;

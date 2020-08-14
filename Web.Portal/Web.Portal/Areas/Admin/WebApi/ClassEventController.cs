@@ -132,7 +132,7 @@ namespace Web.Portal.Areas.Admin.WebApi
         public IActionResult ExportClassEnroll(JSTable jsTable)
         {
             this.Init("M2030");
-            return Ok(this.DB.OutputTable(jsTable));
+            return Ok(this.DB.OutputTable(jsTable, this.DB.Collections));
         }
 
         [HttpPost("ReloadPubUser")]
@@ -223,7 +223,7 @@ namespace Web.Portal.Areas.Admin.WebApi
         public IActionResult ExportClassPayment(JSTable jsTable)
         {
             this.Init("M2060");
-            return Ok(this.DB.OutputTable(jsTable));
+            return Ok(this.DB.OutputTable(jsTable, this.DB.Collections));
         }
 
         protected override void InitDatabase(string menuId)
@@ -489,7 +489,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta ephoto = new Meta { Name = "Photo", DbName = "UserId", Title = Words("col.photo"), Description = "PubUser|tiny|small", Type = EInput.ImageContent };
                         Meta egroup = new Meta { Name = "Grp", DbName = "Grp", Title = Words("col.grp"), Type = EInput.String, MaxLength = 16, Order = "ASC" };
                         Meta eisPaid = new Meta { Name = "IsPaid", DbName = "IsPaid", Title = Words("col.ispaid"), Description = Words("col.ispaid.yesno"), Type = EInput.Bool, Order = "DESC", Export = true };
-                        Meta epaidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paiddate"), Type = EInput.IntDate, Sync = true, Order = "ASC", Export = true };
+                        Meta epaidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EInput.IntDate, Sync = true, Order = "ASC", Export = true };
                         Meta epaidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paidinfo"), Type = EInput.Float, MaxLength = 18, Sum=ESUM.Sum, Export = true };
                         Meta epaidInvoice = new Meta { Name = "PaidInvoice", DbName = "PaidInvoice", Title = Words("col.paidinvoice"), Type = EInput.String, MaxLength = 32, Order = "ASC", Export = true };
                         Meta ememberType = new Meta { Name = "MemberType", DbName = "MemberType", Title = Words("col.membertype"), Type = EInput.Int };
@@ -630,13 +630,15 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta postal = new Meta { Name = "Postal", DbName = "Postal", Title = Words("col.postal"), Type = EInput.String, MaxLength = 16 };
                         Meta userRole = new Meta { Name = "UserRole", DbName = "UserId", Title = Words("col.user.role"), Type = EInput.Checkbox };
                         userRole.AddListRef("PubRoleList", "Pub_User_Role", "RoleId");
+                        Meta userType = new Meta { Name = "UserType", DbName = "UserId", Title = Words("col.user.type"), Type = EInput.Checkbox };
+                        userType.AddListRef("UserTypeList", "Pub_User_UserType", "UserTypeId");
 
 
                         Member.AddMetas(id, memberId, firstName, lastName, firstNameLegal, lastNameLegl, dharmaName, displayName, certName, aliasname, occupation, memo)
                         .AddMetas(userName, password, gender, education, nationality, religion, motherLang, multiLang)
                         .AddMetas(medicalConcern, hearUsOther, symbolOther, multiLangOther, idNumber, email, phone, cell, branch, address, city, state, country, postal)
                         .AddMetas(birthYY, birthMM, birthDD, memberYY, memberMM, memberDD, dharmaYY, dharmaMM, dharmaDD)
-                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, photo, active, loginTime, loginTotal, createdTime, userRole);
+                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, photo, active, loginTime, loginTotal, createdTime, userRole, userType);
 
                         Member.Navi.IsActive = false;
                         Member.Navi.Order = "";
@@ -682,6 +684,8 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Collection CountryList = new Collection(ECollectionType.Table, c19);
                         CollectionTable c23 = new CollectionTable("PubRoleList", "Pub_Role", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection PubRoleList = new Collection(ECollectionType.Table, c23);
+                        CollectionTable c24 = new CollectionTable("UserTypeList", "UserType", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection UserTypeList = new Collection(ECollectionType.Category, c24);
 
                         CollectionTable c20 = new CollectionTable("GenderList", "GenderList");
                         Collection GenderList = new Collection(ECollectionType.Common, c20);
@@ -694,7 +698,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         // Add Objects 
                         this.DB.AddTables(pubUser, classEnroll, Member, PubUserId)
                                 .AddCollections(ClassList, MemberTypeList)
-                                .AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, PubRoleList)
+                                .AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, PubRoleList, UserTypeList)
                                 .AddCollections(GenderList, MonthList, DayList);
                     }
                     break;

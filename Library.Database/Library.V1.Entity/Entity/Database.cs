@@ -118,10 +118,10 @@ namespace Library.V1.Entity
             else
                 return new Table();
         }
-        public string OutputTable(JSTable jsTable)
+        public string OutputTable(JSTable jsTable, Dictionary<string, Collection> collections)
         {
             if (this.Tables.ContainsKey(jsTable.Name))
-                return this.Tables[jsTable.Name].OutputData(jsTable);
+                return this.Tables[jsTable.Name].OutputData(jsTable, collections);
             else
                 return string.Empty;
 

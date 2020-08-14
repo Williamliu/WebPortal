@@ -3514,6 +3514,8 @@ WLIU_NG.directive("assm.checkbox", function () {
             $scope.breakLine = function (idx) {
                 $scope.colnum = parseInt($scope.colnum || 0);
                 if ($scope.colnum > 0) {
+                    if ($scope.colnum == 1) return true;
+
                     if ((idx + 1) % $scope.colnum === 0)
                         return true;
                     else
@@ -3525,6 +3527,50 @@ WLIU_NG.directive("assm.checkbox", function () {
         }
     };
 });
+WLIU_NG.directive("assm.checkbox.br", function () {
+    return {
+        restrict: "E",
+        replace: true,
+        transclude: true,
+        scope: {
+            db: "=",
+            tb: "@",
+            col: "@"
+        },
+        template: [
+            '<div comm assm nolh fixed>',
+            '<span wliu text ',
+            'ng-attr="{\'input-invalid\': db.tables[tb].CurrentColumnHasError(col)}" ',
+            'ng-init="db.tables[tb].rows[db.tables[tb].CurrentIndex()].columns[col].value=db.tables[tb].rows[db.tables[tb].CurrentIndex()].columns[col].value || {}" ',
+            formRowToolTip,
+            '>',
+            '<span style="display:none;" ng-repeat-start="rdObj in db.GetCollection(tb, col).items"></span>',
+            '<input type="checkbox" wliu ',
+            'id="{{db.tables[tb].CurrentColumn(col).guid + \'-ck-\' + rdObj.value}}" ',
+            'ng-model="db.tables[tb].CurrentColumn(col).value[rdObj.value]" ',
+            'ng-value="rdObj.value" ',
+            formRowCommon,
+            '/>',
+            '<label wliu checkbox ',
+            'for="{{db.tables[tb].CurrentColumn(col).guid + \'-ck-\' + rdObj.value}}" title="{{rdObj.title}}"',
+            '>',
+            '{{rdObj.title}}',
+            '</label><br />',
+            '<span style="display:none;" ng-repeat-end></span>',
+            '</span>',
+            '<label assm for="assm_{{tb}}_{{col}}" ',
+            'ng-attr="{\'need\': db.tables[tb].metas[col].required}" ',
+            formRowToolTip,
+            '>',
+            '{{db.tables[tb].metas[col].title}}',
+            '</label>',
+            '</div>'
+        ].join(''),
+        controller: function ($scope) {
+        }
+    };
+});
+
 WLIU_NG.directive("assm.radio1", function () {
     return {
         restrict: "E",

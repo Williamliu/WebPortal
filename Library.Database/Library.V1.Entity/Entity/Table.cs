@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 
 
@@ -520,7 +521,7 @@ namespace Library.V1.Entity
             return this;
 
         }
-        public Table AddRowExport(GRow grow)
+        public Table AddRowExport(GRow grow, Dictionary<string, Collection> collections)
         {
             Row nrow = new Row();
             foreach (var colName in this.Metas.Keys)
@@ -542,7 +543,18 @@ namespace Library.V1.Entity
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.Int:
-                        ncolumn.Value = grow.GetValue(dbColName).GetInt();
+                        ncolumn.Value = (grow.GetValue(dbColName).GetInt()??0)>0 ? grow.GetValue(dbColName):"";
+                        if (this.Metas[colName].ListRef != null)
+                        {
+                            if (string.IsNullOrWhiteSpace(this.Metas[colName].ListRef.Collection) == false)
+                            {
+                                if (collections.ContainsKey(this.Metas[colName].ListRef.Collection))
+                                {
+                                    collections[this.Metas[colName].ListRef.Collection].FillData();
+                                    ncolumn.Value = collections[this.Metas[colName].ListRef.Collection].Items.FirstOrDefault(p => p.Value == (grow.GetValue(dbColName).GetInt() ?? 0))?.Title ?? grow.GetValue(dbColName);
+                                }
+                            }
+                        }
                         nrow.AddColumn(ncolumn);
                         break;
                     case EInput.Long:
@@ -786,11 +798,11 @@ namespace Library.V1.Entity
             return this;
 
         }
-        public string OutputData(JSTable jsTable)
+        public string OutputData(JSTable jsTable, Dictionary<string, Collection> collections)
         {
             StringBuilder sb = new StringBuilder();
             this.SyncJSTable(jsTable);
-            this.ExportData();
+            this.ExportData(collections);
             if (this.Rows.Count > 0)
             {
                 sb.Append("<table cellpadding='2' cellspacing='2' border='1'>");
@@ -826,7 +838,7 @@ namespace Library.V1.Entity
             }
             return sb.ToString();
         }
-        public Table ExportData()
+        public Table ExportData(Dictionary<string, Collection> collections)
         {
             if (this.User.Rights.ContainsKey("output") == false) return this;
             if (this.User.Rights["output"] == false) return this;
@@ -876,7 +888,7 @@ namespace Library.V1.Entity
                                         break;
                                 }
                                 this.Error.Append(this.DSQL.Error);
-                                foreach (GRow grow in gtable.Rows) this.AddRowExport(grow);
+                                foreach (GRow grow in gtable.Rows) this.AddRowExport(grow, collections);
                                 if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
                             }
                             #endregion
@@ -893,7 +905,7 @@ namespace Library.V1.Entity
                             gtable = this.DSQL.ExecuteSP(this.DbName, this.SqlParams.ToArray());
                             if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|StoreProcedure:[{this.DSQL.Debug}]", @"\n\n");
                             this.Error.Append(this.DSQL.Error);
-                            foreach (GRow grow in gtable.Rows) this.AddRowExport(grow);
+                            foreach (GRow grow in gtable.Rows) this.AddRowExport(grow, collections);
                             if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
                         }
                         break;

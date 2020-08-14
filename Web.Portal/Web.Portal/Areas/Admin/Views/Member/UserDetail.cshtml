@@ -15,8 +15,15 @@
                 $scope.ViewData.database.tables.PubUserId.Clear();
                 $scope.ViewData.database.tables.PubUserId.refKey = refKey;
 
+                $scope.ViewData.database.tables.UserPayment.Clear();
+                $scope.ViewData.database.tables.UserPayment.refKey = refKey;
+                $scope.ViewData.database.tables.UserClass.Clear();
+                $scope.ViewData.database.tables.UserClass.refKey = refKey;
+
                 $scope.ViewData.database.tables.UserDetail.Reload().then(d => { $scope.$apply(); }).catch(e => { $scope.$apply(); });
                 $scope.ViewData.database.tables.PubUserId.Reload().then(d => { $scope.$apply(); }).catch(e => { $scope.$apply(); });
+                $scope.ViewData.database.tables.UserPayment.Reload().then(d => { $scope.$apply(); }).catch(e => { $scope.$apply(); });
+                $scope.ViewData.database.tables.UserClass.Reload().then(d => { $scope.$apply(); }).catch(e => { $scope.$apply(); });
 
                 $scope.Gallery.Clear();
                 $scope.Gallery.SetKey(refKey);
@@ -557,6 +564,96 @@
                     </ul>
                     <div wliu tab9 body>
                         <div style="min-height:120px;">
+                            <!------------------------------------------------------------------------->
+                            <filter.label db="ViewData.database" tb="UserClass" col="search_date"></filter.label>
+                            <filter.daterange db="ViewData.database" tb="UserClass" col="search_date"></filter.daterange>
+                            <filter.label db="ViewData.database" tb="UserClass" col="search_site"></filter.label>
+                            <filter.select db="ViewData.database" tb="UserClass" col="search_site"></filter.select>
+                            <filter.label db="ViewData.database" tb="UserClass" col="search_class"></filter.label>
+                            <filter.textbox db="ViewData.database" tb="UserClass" col="search_class"></filter.textbox>
+                            <filter.label db="ViewData.database" tb="UserClass" col="search_invoice"></filter.label>
+                            <filter.textbox size="medium" db="ViewData.database" tb="UserClass" col="search_invoice"></filter.textbox>
+                            <wliu.search db="ViewData.database" tb="UserClass"></wliu.search>
+                            <wliu.export db="ViewData.database" tb="UserClass"></wliu.export>
+                            <div wliu table grow shrink>
+                                <div row>
+                                    <div cell style="background-color:#dddddd;">
+                                        <wliu.navi db="ViewData.database" tb="UserClass"></wliu.navi>
+                                    </div>
+                                </div>
+                                <div row>
+                                    <div head fixed style="width:40px;"></div>
+                                    <div head large><wliu.head db="ViewData.database" tb="UserClass" col="SiteName"></wliu.head></div>
+                                    <div head small><wliu.head db="ViewData.database" tb="UserClass" col="ClassName"></wliu.head></div>
+                                    <div head large><wliu.head db="ViewData.database" tb="UserClass" col="ClassTitle"></wliu.head></div>
+                                    <div head center fixed style="width:80px;"><wliu.head db="ViewData.database" tb="UserClass" col="IsFree"></wliu.head></div>
+                                    <div head center fixed style="width:100px;"><wliu.head db="ViewData.database" tb="UserClass" col="FeeAmount"></wliu.head></div>
+                                    <div head center fixed style="width:80px;"><wliu.head db="ViewData.database" tb="UserClass" col="Grp"></wliu.head></div>
+                                    <div head center fixed style="width:80px;"><wliu.head db="ViewData.database" tb="UserClass" col="MemberType"></wliu.head></div>
+                                    <div head center fixed style="width:80px;"><wliu.head db="ViewData.database" tb="UserClass" col="IsPaid"></wliu.head></div>
+                                    <div head center fixed style="width:140px;"><wliu.head db="ViewData.database" tb="UserClass" col="PaidAmount"></wliu.head></div>
+                                    <div head medium><wliu.head db="ViewData.database" tb="UserClass" col="PaidDate"></wliu.head></div>
+                                    <div head small><wliu.head db="ViewData.database" tb="UserClass" col="CreatedTime"></wliu.head></div>
+                                    <div head center fixed style="width:80px;"><wliu.head db="ViewData.database" tb="UserClass" col="Active"></wliu.head></div>
+                                </div>
+                                <div row ng-repeat="row in ViewData.database.tables.UserClass.rows">
+                                    <div cell center fixed style="width:40px;">
+                                        <wliu.rowstatus db="ViewData.database" tb="UserClass" guid="{{row.guid}}"></wliu.rowstatus>
+                                    </div>
+                                    <div cell large>
+                                        <wliu.text db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="SiteName"></wliu.text>
+                                    </div>
+                                    <div cell small>
+                                        <wliu.text db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="ClassName"></wliu.text>
+                                    </div>
+                                    <div cell large>
+                                        <wliu.template db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="{ClassTitle}<br>{StartDate}~{EndDate}"></wliu.template>
+                                    </div>
+                                    <div cell center fixed style="width:80px;">
+                                        <wliu.booltext db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="IsFree"></wliu.booltext>
+                                    </div>
+                                    <div cell center fixed style="width:100px;">
+                                        <wliu.template db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="${FeeAmount} {Currency}"></wliu.template>
+                                    </div>
+                                    <div cell center fixed style="width:80px;">
+                                        <wliu.text db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="Grp"></wliu.text>
+                                    </div>
+                                    <div cell center fixed style="width:80px;">
+                                        <wliu.text db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="MemberType"></wliu.text>
+                                    </div>
+                                    <div cell center fixed style="width:80px;">
+                                        <wliu.booltext db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="IsPaid"></wliu.booltext>
+                                    </div>
+                                    <div cell right fixed style="width:140px;">
+                                        <wliu.text fit db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="PaidAmount"></wliu.text>
+                                    </div>
+                                    <div cell medium>
+                                        <wliu.template db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="{PaidDate}<br>{PaidInvoice}"></wliu.template>
+                                    </div>
+                                    <div cell small>
+                                        <wliu.text format="yyyy-MM-dd" db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="CreatedTime"></wliu.text>
+                                    </div>
+                                    <div cell center fixed style="width:80px;">
+                                        <wliu.booltext db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="Active"></wliu.booltext>
+                                    </div>
+                                </div>
+                                <div row>
+                                    <div head sum fixed style="width:40px;"></div>
+                                    <div head sum large></div>
+                                    <div head sum small></div>
+                                    <div head sum large></div>
+                                    <div head sum fixed style="width:80px;"></div>
+                                    <div head sum fixed style="width:100px;"></div>
+                                    <div head sum fixed style="width:80px;"></div>
+                                    <div head sum fixed style="width:80px;"></div>
+                                    <div head sum right fixed style="width:80px;"><wliu.title text="@Html.Words("navi.total")"></wliu.title></div>
+                                    <div head sum center right fixed style="width:140px;"><wliu.sum db="ViewData.database" tb="UserClass" col="PaidAmount"></wliu.sum></div>
+                                    <div head sum medium></div>
+                                    <div head sum small></div>
+                                    <div head sum fixed style="width:80px;"></div>
+                                </div>
+                            </div>
+                            <!------------------------------------------------------------------------->
                         </div>
                     </div>
                 </div>
@@ -572,6 +669,79 @@
                     </ul>
                     <div wliu tab9 body>
                         <div style="min-height:120px;">
+                            <!------------------------------------------------------------------------->
+                            <filter.label db="ViewData.database" tb="UserPayment" col="search_date"></filter.label>
+                            <filter.daterange db="ViewData.database" tb="UserPayment" col="search_date"></filter.daterange>
+                            <filter.label db="ViewData.database" tb="UserPayment" col="search_site"></filter.label>
+                            <filter.select db="ViewData.database" tb="UserPayment" col="search_site"></filter.select>
+                            <filter.label db="ViewData.database" tb="UserPayment" col="search_invoice"></filter.label>
+                            <filter.textbox size="medium" db="ViewData.database" tb="UserPayment" col="search_invoice"></filter.textbox>
+                            <wliu.search db="ViewData.database" tb="UserPayment"></wliu.search>
+                            <wliu.export db="ViewData.database" tb="UserPayment"></wliu.export>
+                            <div wliu table grow shrink>
+                                <div row>
+                                    <div cell style="background-color:#dddddd;">
+                                        <wliu.navi db="ViewData.database" tb="UserPayment"></wliu.navi>
+                                    </div>
+                                </div>
+                                <div row>
+                                    <div head fixed style="width:40px;"></div>
+                                    <div head small><wliu.head db="ViewData.database" tb="UserPayment" col="PaidMethod"></wliu.head></div>
+                                    <div head large><wliu.head db="ViewData.database" tb="UserPayment" col="SiteName"></wliu.head></div>
+                                    <div head small><wliu.head db="ViewData.database" tb="UserPayment" col="Payer"></wliu.head></div>
+                                    <div head center fixed style="width:120px;"><wliu.head db="ViewData.database" tb="UserPayment" col="PaidDate"></wliu.head></div>
+                                    <div head center fixed style="width:120px;"><wliu.head db="ViewData.database" tb="UserPayment" col="PaidAmount"></wliu.head></div>
+                                    <div head center fixed style="width:100px;"><wliu.head db="ViewData.database" tb="UserPayment" col="Currency"></wliu.head></div>
+                                    <div head medium><wliu.head db="ViewData.database" tb="UserPayment" col="PaidInvoice"></wliu.head></div>
+                                    <div head large><wliu.head db="ViewData.database" tb="UserPayment" col="Notes"></wliu.head></div>
+                                    <div head small><wliu.head db="ViewData.database" tb="UserPayment" col="PaidStatus"></wliu.head></div>
+                                </div>
+                                <div row ng-repeat="row in ViewData.database.tables.UserPayment.rows">
+                                    <div cell center fixed style="width:40px;">
+                                        <wliu.rowstatus db="ViewData.database" tb="UserPayment" guid="{{row.guid}}"></wliu.rowstatus>
+                                    </div>
+                                    <div cell small>
+                                        <wliu.stext db="ViewData.database" tb="UserPayment" guid="{{row.guid}}" col="PaidMethod"></wliu.stext>
+                                    </div>
+                                    <div cell large>
+                                        <wliu.text db="ViewData.database" tb="UserPayment" guid="{{row.guid}}" col="SiteName"></wliu.text>
+                                    </div>
+                                    <div cell small>
+                                        <wliu.text db="ViewData.database" tb="UserPayment" guid="{{row.guid}}" col="Payer"></wliu.text>
+                                    </div>
+                                    <div cell center fixed style="width:120px;">
+                                        <wliu.text db="ViewData.database" tb="UserPayment" guid="{{row.guid}}" col="PaidDate"></wliu.text>
+                                    </div>
+                                    <div cell right fixed style="width:120px;">
+                                        <wliu.text fit db="ViewData.database" tb="UserPayment" guid="{{row.guid}}" col="PaidAmount"></wliu.text>
+                                    </div>
+                                    <div cell center fixed style="width:100px;">
+                                        <wliu.text db="ViewData.database" tb="UserPayment" guid="{{row.guid}}" col="Currency"></wliu.text>
+                                    </div>
+                                    <div cell medium>
+                                        <wliu.text db="ViewData.database" tb="UserPayment" guid="{{row.guid}}" col="PaidInvoice"></wliu.text>
+                                    </div>
+                                    <div cell large>
+                                        <wliu.text db="ViewData.database" tb="UserPayment" guid="{{row.guid}}" col="Notes"></wliu.text>
+                                    </div>
+                                    <div cell small>
+                                        <wliu.text db="ViewData.database" tb="UserPayment" guid="{{row.guid}}" col="PaidStatus"></wliu.text>
+                                    </div>
+                                </div>
+                                <div row>
+                                    <div head sum fixed style="width:40px;"></div>
+                                    <div head sum small></div>
+                                    <div head sum large></div>
+                                    <div head sum small></div>
+                                    <div head sum right fixed style="width:120px;"><wliu.title text="@Html.Words("navi.total")"></wliu.title></div>
+                                    <div head sum center right fixed style="width:120px;"><wliu.sum db="ViewData.database" tb="UserPayment" col="PaidAmount"></wliu.sum></div>
+                                    <div head sum center fixed style="width:100px;"></div>
+                                    <div head sum medium></div>
+                                    <div head sum large></div>
+                                    <div head sum small></div>
+                                </div>
+                            </div>
+                            <!------------------------------------------------------------------------->
                         </div>
                     </div>
                 </div>

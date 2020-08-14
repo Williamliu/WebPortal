@@ -242,6 +242,8 @@ namespace Library.V1.Entity
                                 {
                                     // { {"1", true}, {"2", false}, {"3", true} }
                                     //  @filter_xxx_1, @filter_xxx_3 
+                                    // Pub_User (Id) -> Pub_User_Role (UserId,RoleId)
+                                    // this.dbName = "Id",  RefList("UserRoleList", "Pub_User_Role", "UserId|RoleId")
                                     List<SqlParameter> sqlParams = new List<SqlParameter>();
                                     string filterString = string.Empty;
                                     foreach (string ckValue in ckValues.Keys)
@@ -254,7 +256,11 @@ namespace Library.V1.Entity
                                     }
                                     if (string.IsNullOrWhiteSpace(filterString) == false)
                                     {
-                                        wcolumn.Add($"{dbName} IN ({filterString})", sqlParams.ToArray());
+                                        string[] refCols = this.ListRef.ValueKey.Split('|');
+                                        wcolumn.Add(
+                                                $"{dbName} IN (SELECT { refCols[0]} FROM {this.ListRef.valueTable} WHERE {refCols[1]} IN ({filterString}) )",
+                                                sqlParams.ToArray()
+                                            );
                                     }
                                 }
                                 break;

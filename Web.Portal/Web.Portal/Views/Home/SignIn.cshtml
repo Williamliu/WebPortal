@@ -195,6 +195,8 @@
                                         <div style="display:block;">
                                             <image.main gallery="Gallery" ww="160" hh="160" icons="upload,camera,text,delete"></image.main>
                                         </div>
+                                        <br />
+                                        <assm.checkbox.br h2 style="display:inline-block;width:auto;" fixed db="ViewData.database" tb="UserRegister" col="UserType" column="1"></assm.checkbox.br>
                                     </div>
                                 </div>
                             </td>
@@ -231,12 +233,13 @@
         <div body style="padding-top:3px;">
         </div>
         <div style="display:block; text-align:center;">
-            <a href="javascript:void(0)"  diag-toggle="emailsentclose" class="btn btn-primary" style="margin:0px 6px;">@Html.Words("button.close")</a>
+            <a href="javascript:void(0)" diag-toggle="emailsentclose" class="btn btn-primary" style="margin:0px 6px;">@Html.Words("button.close")</a>
         </div>
     </div>
 
     <image.imgedit gallery="Gallery"></image.imgedit>
     <image.camera gallery="Gallery"></image.camera>
+
 
     <table.error></table.error>
     <form.error></form.error>

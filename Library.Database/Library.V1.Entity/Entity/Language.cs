@@ -71,8 +71,11 @@ namespace Library.V1.Entity
             WordBook.Add("cn", new Dictionary<string, string>());
             foreach (var row in rows)
             {
-                WordBook["en"].Add(row["Keyword"].GetString().ToLower(), row["Word_en"].GetString());
-                WordBook["cn"].Add(row["Keyword"].GetString().ToLower(), row["Word_cn"].GetString());
+                if (WordBook["en"].ContainsKey(row["Keyword"].GetString().ToLower()) == false)
+                {
+                    WordBook["en"].Add(row["Keyword"].GetString().ToLower(), row["Word_en"].GetString());
+                    WordBook["cn"].Add(row["Keyword"].GetString().ToLower(), row["Word_cn"].GetString());
+                }
             }
             DSQL.ExecuteQuery("Update GSetting SET ItemValue = 'False' WHERE ItemName='Translation'");
         }
