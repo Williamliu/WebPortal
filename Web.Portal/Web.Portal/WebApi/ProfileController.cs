@@ -125,12 +125,14 @@ namespace Web.Portal.WebApi.Controllers
                         Meta loginTotal= new Meta { Name = "LoginTotal", DbName = "LoginTotal", Title = Words("col.logintotal"), Type = EInput.Int };
                         Meta createdTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.createdtime"), Type = EInput.Int };
 
+                        Meta userType = new Meta { Name = "UserType", DbName = "UserId", Title = Words("col.user.type"), Type = EInput.Checkbox, Value = new { } };
+                        userType.AddListRef("UserTypeList", "Pub_User_UserType", "UserTypeId");
 
                         PubUser.AddMetas(id, firstName, lastName, firstNameLegal, lastNameLegl, dharmaName, displayName, certName, aliasname, occupation, memo)
                         .AddMetas(gender, education, nationality, religion, motherLang, multiLang)
                         .AddMetas(medicalConcern, hearUsOther, symbolOther, multiLangOther, memberId, idNumber, email, phone, cell, branch, address, city, state, country, postal)
                         .AddMetas(birthYY, birthMM, birthDD, memberYY, memberMM, memberDD, dharmaYY, dharmaMM, dharmaDD)
-                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, userName, password, loginTime, loginTotal, createdTime);
+                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, userName, password, loginTime, loginTotal, createdTime, userType);
 
                         PubUser.AddQueryKV("Deleted", false).AddQueryKV("Active", true)
                             .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds());
@@ -162,7 +164,10 @@ namespace Web.Portal.WebApi.Controllers
                         Collection genderList = new Collection("GenderList");
                         Collection monthList = new Collection("MonthList");
                         Collection dayList = new Collection("DayList");
-                        this.DB.AddTables(PubUser).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, genderList, monthList, dayList);
+                        CollectionTable c10 = new CollectionTable("UserTypeList", "UserType", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection UserTypeList = new Collection(ECollectionType.Category, c10);
+
+                        this.DB.AddTables(PubUser).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, genderList, monthList, dayList, UserTypeList);
                     }
                     break;
                 case "P02":

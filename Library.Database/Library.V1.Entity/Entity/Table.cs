@@ -544,7 +544,7 @@ namespace Library.V1.Entity
                         break;
                     case EInput.Int:
                         ncolumn.Value = (grow.GetValue(dbColName).GetInt()??0)>0 ? grow.GetValue(dbColName):"";
-                        if (this.Metas[colName].ListRef != null)
+                        if (this.Metas[colName].ListRef != null && string.IsNullOrWhiteSpace(ncolumn.Value.ToString()) ==false)
                         {
                             if (string.IsNullOrWhiteSpace(this.Metas[colName].ListRef.Collection) == false)
                             {

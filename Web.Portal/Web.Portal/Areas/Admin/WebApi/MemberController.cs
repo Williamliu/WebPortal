@@ -580,13 +580,15 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta createdTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.createdtime"), Type = EInput.Int };
                         Meta userRole = new Meta { Name = "UserRole", DbName = "UserId", Title = Words("col.user.role"), Type = EInput.Checkbox };
                         userRole.AddListRef("PubRoleList", "Pub_User_Role", "RoleId");
+                        Meta userType = new Meta { Name = "UserType", DbName = "UserId", Title = Words("col.user.type"), Type = EInput.Checkbox };
+                        userType.AddListRef("UserTypeList", "Pub_User_UserType", "UserTypeId");
 
 
                         UserDetail.AddMetas(id, firstName, lastName, firstNameLegal, lastNameLegl, dharmaName, displayName, certName, aliasname, occupation, memo)
                         .AddMetas(gender, education, nationality, religion, motherLang, multiLang)
                         .AddMetas(medicalConcern, hearUsOther, symbolOther, multiLangOther, memberId, idNumber, email, phone, cell, branch, address, city, state, country, postal)
                         .AddMetas(birthYY, birthMM, birthDD, memberYY, memberMM, memberDD, dharmaYY, dharmaMM, dharmaDD, active)
-                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, userName, password, loginTime, loginTotal, createdTime, userRole);
+                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, userName, password, loginTime, loginTotal, createdTime, userRole, userType);
 
                         UserDetail.AddQueryKV("Deleted", false).AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds());
 
@@ -715,10 +717,13 @@ namespace Web.Portal.Areas.Admin.WebApi
                         CollectionTable c10 = new CollectionTable("PubRoleList", "Pub_Role", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection PubRoleList = new Collection(ECollectionType.Table, c10);
 
-                        CollectionTable c11 = new CollectionTable("SiteList", "GSite", true, "Id", "Title", "Detail", "", "DESC", "Sort");
-                        Collection SiteList = new Collection(ECollectionType.Table, c11);
+                        CollectionTable c11 = new CollectionTable("UserTypeList", "UserType", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection UserTypeList = new Collection(ECollectionType.Category, c11);
 
-                        this.DB.AddTables(pubUser, UserDetail, PubUserId, UserClass, UserPayment).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, genderList, monthList, dayList, paidMethodList, PubRoleList, SiteList);
+                        CollectionTable c12 = new CollectionTable("SiteList", "GSite", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection SiteList = new Collection(ECollectionType.Table, c12);
+
+                        this.DB.AddTables(pubUser, UserDetail, PubUserId, UserClass, UserPayment).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, genderList, monthList, dayList, paidMethodList, PubRoleList, UserTypeList, SiteList);
                         #endregion
                     }
                     break;
