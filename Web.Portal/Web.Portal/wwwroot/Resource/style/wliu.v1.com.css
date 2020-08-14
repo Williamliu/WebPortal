@@ -47,6 +47,9 @@ div.wliu-success > p.message-body {
     font-size:              24px;
     color:                  green;
 }
+*[align-both] {
+    text-align: justify;
+}
 
 /* label */
 label {
