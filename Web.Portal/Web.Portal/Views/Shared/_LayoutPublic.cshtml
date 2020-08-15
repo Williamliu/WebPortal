@@ -48,7 +48,7 @@
             }
         }
         $(function () {
-            $(document).off("click", "a[pub][menu][toggle]").on("click", "a[pub][menu][toggle]", function (evt) {
+            $(document).off("click", "a[pub][menu][toggle][dropdown]").on("click", "a[pub][menu][toggle][dropdown]", function (evt) {
                 if ($("div[pub][menu][body] ul[first]").is(":hidden"))
                     $("div[pub][menu][body] ul[first]").addAttr("show");
                 else
@@ -68,10 +68,20 @@
     <div pub menu shadow>
         <div pub menu body>
             <div pub menu left>
-                <img src="~/Resource/style/Images/shaolin_log.png" style="height: 100%;">
+                <img src="~/Resource/style/Images/shaolin_log.png">
             </div>
             <div pub menu center>
-                <a pub menu toggle>@Html.Words("pub.menu")</a>
+                <a pub menu toggle dropdown>@Html.Words("pub.menu")</a>
+                @{
+                    if (PubUser.Id > 0)
+                    {
+                        <a pub menu mobile toggle href="/Profile/MyAccount">@Html.Words("my.account")</a>
+                    }
+                    else
+                    {
+                        <a pub menu mobile toggle href="/Home/SignIn">@Html.Words("sign.in")</a>
+                    }
+                }
                 <partial name="_TopNav.cshtml" />
             </div>
             <div pub menu right>
@@ -86,8 +96,8 @@
                                 </ul>
                             </a>
                         </td>
-                        <td style="padding-left:5px; padding-right:5px;">|</td>
-                        <td>
+                        <td desktop style="padding-left:5px; padding-right:5px;">|</td>
+                        <td desktop>
                             @{ 
                                 if (PubUser.Id>0)
                                 {
