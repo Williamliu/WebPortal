@@ -27,28 +27,32 @@
 
 <div ng-app="myApp" ng-controller="mycontrl">
     <ng-form>
-        <span style="display:none;" ng-repeat-start="row in ViewData.database.tables.ClassList.rows"></span>
-        <!-- Grid row -->
-        <div wliu card frame>
-            <layout.card db="ViewData.database"
-                         tb="ClassList"
-                         guid="{{row.guid}}"
-                         imgsrc="Photo"
-                         subject="ClassTitle"
-                         number="ClassName"
-                         start="StartDate"
-                         end="EndDate"
-                         site="SiteTitle"
-                         address="Address"
-                         phone="Phone"
-                         email="Email"
-                         actiondetail="detail()"
-                         actionenroll="enroll()"
-                         icons="detail">
-            </layout.card>
+        <div class="container-fluid">
+            <span style="display:none;" ng-repeat-start="row in ViewData.database.tables.ClassList.rows"></span>
+            <!-- Grid row -->
+            <div class="row">
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <layout.card3 db="ViewData.database"
+                                 tb="ClassList"
+                                 guid="{{row.guid}}"
+                                 imgsrc="Photo"
+                                 subject="ClassTitle"
+                                 number="ClassName"
+                                 start="StartDate"
+                                 end="EndDate"
+                                 site="SiteTitle"
+                                 address="Address"
+                                 phone="Phone"
+                                 email="Email"
+                                 actiondetail="detail()"
+                                 actionenroll="enroll()"
+                                 icons="detail">
+                    </layout.card3>
+                </div>
+            </div>
+            <!-- Grid row -->
+            <span style="display:none;" ng-repeat-end></span>
         </div>
-        <!-- Grid row -->
-        <span style="display:none;" ng-repeat-end></span>
     </ng-form>
 
     <div wliu diag maskable maskclick movable resizable id="detailInfo" style="width:720px;">

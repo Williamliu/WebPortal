@@ -138,86 +138,84 @@
 }
 <div ng-app="myApp" ng-controller="mycontrl">
     <ng-form>
-        <table cellpadding="0" cellspacing="0" width="100%">
-            <tr>
-                <td width="50%" valign="top">
-                    <table cellpadding="0" cellspacing="0" width="100%">
-                        <tr>
-                            <td>
-                                <layout.card2 db="ViewData.database"
-                                              tb="ClassList"
-                                              guid="{{ViewData.database.tables.ClassList.rowGuid}}"
-                                              imgsrc="Photo"
-                                              subject="ClassTitle"
-                                              number="ClassName"
-                                              start="StartDate"
-                                              end="EndDate"
-                                              site="SiteTitle"
-                                              address="Address"
-                                              phone="Phone"
-                                              notes="ClassNotes"
-                                              email="Email"
-                                              isfree="IsFree"
-                                              amount="FeeAmount"
-                                              payment="OweAmount"
-                                              currency="Currency">
-                                </layout.card2>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div id="message" style="display:none;">
-                                    <p class="message-body"></p>
-                                    <a href="javascript:goBack()" class="btn btn-info">@Html.Words("button.back.classlist")</a>
-                                </div>
-                                <div id="payment_message" style="display:none;">
-                                    <p class="message-body"></p>
-                                    <a href="javascript:goBack()" style="display:none;" class="btn btn-info">@Html.Words("button.back.classlist")</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="display:block; width:320px;">
-                                    <div id="paypal-button-container"></div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td width="50%" valign="top" style="padding-left:20px;">
-                    <label wliu text h2>@Html.Words("class.schedule")</label>
-                    <div wliu table grow shrink underline>
-                        <div row>
-                            <div head fixed style="width:40px;"></div>
-                            <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
-                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
-                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
-                            <div head medium><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
+        <div class="row">
+            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td>
+                            <layout.card2 db="ViewData.database"
+                                          tb="ClassList"
+                                          guid="{{ViewData.database.tables.ClassList.rowGuid}}"
+                                          imgsrc="Photo"
+                                          subject="ClassTitle"
+                                          number="ClassName"
+                                          start="StartDate"
+                                          end="EndDate"
+                                          site="SiteTitle"
+                                          address="Address"
+                                          phone="Phone"
+                                          notes="ClassNotes"
+                                          email="Email"
+                                          isfree="IsFree"
+                                          amount="FeeAmount"
+                                          payment="OweAmount"
+                                          currency="Currency">
+                            </layout.card2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="message" style="display:none;">
+                                <p class="message-body"></p>
+                                <a href="javascript:goBack()" class="btn btn-info">@Html.Words("button.back.classlist")</a>
+                            </div>
+                            <div id="payment_message" style="display:none;">
+                                <p class="message-body"></p>
+                                <a href="javascript:goBack()" style="display:none;" class="btn btn-info">@Html.Words("button.back.classlist")</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display:block;">
+                                <div id="paypal-button-container"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <label wliu text h2>@Html.Words("class.schedule")</label>
+                <div wliu table grow shrink underline>
+                    <div row>
+                        <div head fixed style="width:40px;"></div>
+                        <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
+                        <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
+                        <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
+                        <div head medium><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
+                    </div>
+                    <div row ng-repeat="row in ViewData.database.tables.ClassDetail.rows">
+                        <div cell center fixed style="width:40px;">
+                            <wliu.rowstatus db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}"></wliu.rowstatus>
                         </div>
-                        <div row ng-repeat="row in ViewData.database.tables.ClassDetail.rows">
-                            <div cell center fixed style="width:40px;">
-                                <wliu.rowstatus db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}"></wliu.rowstatus>
-                            </div>
-                            <div cell fixed style="width:140px;">
-                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="ClassDate"></wliu.text>
-                            </div>
-                            <div cell fixed style="width:100px;">
-                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="StartTime"></wliu.text>
-                            </div>
-                            <div cell fixed style="width:100px;">
-                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="EndTime"></wliu.text>
-                            </div>
-                            <div cell medium nowrap>
-                                <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title"></wliu.text>
-                            </div>
+                        <div cell fixed style="width:140px;">
+                            <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="ClassDate"></wliu.text>
                         </div>
-                        <div row>
-                            <wliu.total db="ViewData.database" tb="ClassDetail"></wliu.total>
+                        <div cell fixed style="width:100px;">
+                            <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="StartTime"></wliu.text>
+                        </div>
+                        <div cell fixed style="width:100px;">
+                            <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="EndTime"></wliu.text>
+                        </div>
+                        <div cell medium nowrap>
+                            <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title"></wliu.text>
                         </div>
                     </div>
-                </td>
-            </tr>
-        </table>
+                    <div row>
+                        <wliu.total db="ViewData.database" tb="ClassDetail"></wliu.total>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ng-form>
 </div>

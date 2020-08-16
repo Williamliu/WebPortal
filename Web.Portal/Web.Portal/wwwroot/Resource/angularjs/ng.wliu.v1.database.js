@@ -1209,12 +1209,11 @@ WLIU_NG.directive("wliu.navi", function () {
         template: [
             '<div>',
                 '<div ng-if="db.tables[tb].navi.isActive" style="display:block; height:40px; line-height:40px;">',
-
                     '<div style="float:left;">',
-                        '<span style="vertical-align:middle;">{{Words("navi.page")}}: </span>',
-                        '<input type="text" wliu style="text-align:center; width:60px; vertical-align:middle;" ng-keypress="keypress($event)" ng-model="db.tables[tb].navi.pageNo" />',
-                        '<span style="font-size:1.5em; vertical-align:middle;"> / </span>',
-                        '<span style="font-size:1.2em; vertical-align:middle; font-weight:600;">{{db.tables[tb].navi.pageTotal}}</span>',
+                        '<span  wliu desktop style="vertical-align:middle;">{{Words("navi.page")}}: </span>',
+                        '<input wliu desktop type="text" wliu style="text-align:center; width:60px; vertical-align:middle;" ng-keypress="keypress($event)" ng-model="db.tables[tb].navi.pageNo" />',
+                        '<span  wliu desktop style="font-size:1.5em; vertical-align:middle;"> / </span>',
+                        '<span  wliu desktop style="font-size:1.2em; vertical-align:middle; font-weight:600;">{{db.tables[tb].navi.pageTotal}}</span>',
 
                         '<span style="font-size:1.2em; vertical-align:middle;" > | </span >', 
                         '<a wliu btn24 first    ng-click="firstPage()"    ng-attr="{\'disabled\': db.tables[tb].firstState()}"      title="{{Words(\'navi.first\')}}"></a>',
@@ -1231,7 +1230,7 @@ WLIU_NG.directive("wliu.navi", function () {
                         '<span style="font-size:1.2em; vertical-align:middle; font-weight:600;">{{db.tables[tb].navi.rowTotal}}</span>',
                     '</div>',
 
-                    '<div style="float:right;">',
+                    '<div wliu desktop style="float:right;">',
                         '<span style="vertical-align:middle;">{{Words("navi.size")}}: </span>',
                         '<input type="text" wliu style="text-align:center; width:40px; vertical-align:middle;" ng-model="db.tables[tb].navi.pageSize" ng-keypress="keypress($event)" />',
                         '<a wliu btn24 reload ng-click="reloadPage()" title="{{Words(\'navi.reload\')}}" ng-hide="db.tables[tb].navi.isLoading==1"></a>',
