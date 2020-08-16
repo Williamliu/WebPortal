@@ -391,11 +391,14 @@ namespace Web.Portal.WebApi.Controllers
                         Meta amount = new Meta { Name = "FeeAmount", DbName = "FeeAmount", Title = Words("col.feeamount"), Type = EInput.Float };
                         Meta oweamount = new Meta { Name = "OweAmount", DbName = "OweAmount", Title = Words("col.owe.amount"), Type = EInput.Float };
                         Meta currency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String };
+                        Meta discountText = new Meta { Name = "DiscountText", DbName = "DiscountText", Title = Words("col.discount.text"), IsLang = true, Type = EInput.String };
+                        Meta discountAmt = new Meta { Name = "DiscountAmount", DbName = "DiscountAmount", Title = Words("col.discount.amount"), Type = EInput.Float };
+                        Meta discount = new Meta { Name = "Discount", DbName = "Discount", Title = Words("col.discount"), Type = EInput.Float };
 
                         Filter f1 = new Filter() { Name = "ClassId", SqlParam = "ClassId", Title = Words("col.class.id"), Type = EFilter.Int, Compare = ECompare.Equal };
                         Filter f2 = new Filter() { Name = "UserId", SqlParam = "UserId", Title = Words("col.userid"), Type = EFilter.Int, Compare = ECompare.Equal, Value1 = this.DB.User.Id};
 
-                        classList.AddMetas(id, className, classTitle, siteTitle, classNotes, startDate, endDate, email, phone, address, photo)
+                        classList.AddMetas(id, className, classTitle, siteTitle, classNotes, startDate, endDate, email, phone, address, photo, discountText, discountAmt, discount)
                                  .AddMetas(isfree, amount, oweamount, currency);
                         classList.AddFilters(f1, f2);
 

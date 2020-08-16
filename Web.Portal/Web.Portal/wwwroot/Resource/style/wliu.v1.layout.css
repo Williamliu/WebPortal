@@ -964,7 +964,7 @@ div[wliu][card][nohead] > div[wliu][card][body] p {
 }
 
 div[wliu][card][noshadow] {
-    min-height: 480px;
+    min-height: 520px;
     height:     initial;
     box-shadow: none;
 }
@@ -1099,6 +1099,9 @@ div[wliu][card3][center] > p[class-address] {
 }
 div[wliu][card3][center] > p[class-contact] {
     font-size:          20px;
+}
+div[wliu][card3][center] > p[class-notes] {
+    font-size:          16px;
 }
 
 @media (max-width: 800px) {

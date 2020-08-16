@@ -290,6 +290,9 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta cdetailEN = new Meta { Name = "Detail_en", DbName = "Detail_en", Title = Words("detail.en"), Type = EInput.String, MaxLength = 500 * 1024 };
                         Meta cdetailCN = new Meta { Name = "Detail_cn", DbName = "Detail_cn", Title = Words("detail.cn"), Type = EInput.String, MaxLength = 500 * 1024 };
                         Meta cisFree = new Meta { Name = "IsFree", DbName = "IsFree", Title = Words("col.isfree"), Description = Words("col.free.charge"), Type = EInput.Bool, Order = "ASC" };
+                        Meta cDiscount = new Meta { Name = "Discount", DbName = "Discount", Title = Words("col.discount"), Type = EInput.Int, Min=0, Max=100, Order = "ASC" };
+                        Meta cDiscountText_en = new Meta { Name = "DiscountText_en", DbName = "DiscountText_en", Title = Words("col.discount.text.en"), Type = EInput.String, MaxLength=64, Order = "ASC" };
+                        Meta cDiscountText_cn = new Meta { Name = "DiscountText_cn", DbName = "DiscountText_cn", Title = Words("col.discount.text.cn"), Type = EInput.String, MaxLength = 64, Order = "ASC" };
                         Meta cfeeAmount = new Meta { Name = "FeeAmount", DbName = "FeeAmount", Title = Words("col.feeamount"), Type = EInput.Float, Order = "DESC" };
                         Meta ccurrency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.Int };
                         ccurrency.AddListRef("CurrencyList");
@@ -311,7 +314,7 @@ namespace Web.Portal.Areas.Admin.WebApi
 
 
                         ClassEvt.AddMetas(cid, ccourseId, ctitleCN, ctitleEN, cdetailCN, cdetailEN, cisFree, cfeeAmount, ccurrency, cstartDate, cendDate, cstatus)
-                            .AddMetas(cclassName, ccolor, cnotesEN, cnotesCN);
+                            .AddMetas(cclassName, ccolor, cnotesEN, cnotesCN, cDiscount, cDiscountText_en, cDiscountText_cn);
 
                         ClassEvt.AddFilter(f6);
                         ClassEvt.AddQueryKV("Active", true).AddQueryKV("Deleted", false)
