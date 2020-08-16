@@ -1,4 +1,6 @@
 ﻿
+
+
 CREATE VIEW [dbo].[VW_Payment_Class]
 AS
 SELECT a.Id
@@ -27,6 +29,10 @@ SELECT a.Id
 	  ,b.EndDate
 	  ,b.Title_en as ClassTitle_en
 	  ,b.Title_cn as ClassTitle_cn
+	  ,b.FeeAmount
+	  ,b.DiscountText_en
+	  ,b.DiscountText_cn
+	  ,b.Discount
   FROM Class_UserPayment a
   INNER JOIN Class b ON b.Id = a.ClassId
   INNER JOIN Course c ON c.id = b.CourseId

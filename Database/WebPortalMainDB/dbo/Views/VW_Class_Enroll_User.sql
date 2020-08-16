@@ -1,5 +1,6 @@
 ﻿
 
+
 CREATE VIEW [dbo].[VW_Class_Enroll_User]
 AS
 SELECT  
@@ -13,6 +14,9 @@ SELECT
 	Class.Title_cn AS ClassTitle_cn,
 	Class.IsFree,
 	Class.FeeAmount,
+	Class.DiscountText_en,
+	Class.DiscountText_cn,
+	Class.Discount,
 	c.Title_en AS Currency,
 	Class.StartDate,
 	Class.EndDate,
