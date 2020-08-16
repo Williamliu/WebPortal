@@ -108,120 +108,119 @@
             $("#donate_amount").html(amt);
         }
     </script>
-}
-<div class="container-fluid">
     <ng-form>
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <div style="display:block; padding:12px;">
-                    <table cellpadding="0" cellspacing="6" width="100%">
-                        <tr>
-                            <td colspan="2" style="padding-top:12px;">
-                                <label wliu text h2 bold>@Html.Words("donation")</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="padding-top:12px;">
-                                @{
-                                    if (PubUser.Id <= 0)
-                                    {
-                                        <a style="font-size:18px;" href="/Home/SignIn?url=/ClassEvent/Donate">@Html.Words("is.a.member") <span style="color:#0275d8;text-decoration:underline;">@Html.Words("sign.in")</span></a>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div style="display:block;">
+                        <table cellpadding="0" cellspacing="6" width="100%">
+                            <tr>
+                                <td colspan="2" style="padding-top:12px;">
+                                    <label wliu text h2 bold>@Html.Words("donation")</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding-top:12px;">
+                                    @{
+                                        if (PubUser.Id <= 0)
+                                        {
+                                            <a style="font-size:18px;" href="/Home/SignIn?url=/ClassEvent/Donate">@Html.Words("is.a.member") <span style="color:#0275d8;text-decoration:underline;">@Html.Words("sign.in")</span></a>
+                                        }
                                     }
-                                }
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
-                                <label wliu text>@Html.Words("col.fullname")</label>
-                            </td>
-                            <td style="padding-left:10px; padding-top:12px;" valign="middle">
-                                <input wliu fit style="padding:3px;" id="FullName" type="text" value="@(PubUser.FirstName + ' ' + PubUser.LastName)" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
-                                <label wliu text>@Html.Words("col.email")</label>
-                            </td>
-                            <td style="padding-left:10px; padding-top:12px;" valign="middle">
-                                <input wliu fit style="padding:3px;" id="Email" type="text" value="@PubUser.Email" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
-                                <label wliu text>@Html.Words("col.branch")</label>
-                            </td>
-                            <td style="padding-left:10px; padding-top:12px;" valign="middle">
-                                @Html.WLSelect("SiteId", siteList, "fit style='height:34px;'", (PubUser.Id == 0 ? 1 : PubUser.Id))
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="12%" valign="top" style="padding-top:12px;white-space:nowrap;">
-                                <label wliu text>@Html.Words("memo.information")</label>
-                            </td>
-                            <td style="padding-left:10px; padding-top:12px;" valign="top">
-                                <textarea wliu fit style="padding:3px;" id="Notes" style="width:100%;height:60px;"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
-                                <label wliu text>@Html.Words("col.option")</label>
-                            </td>
-                            <td style="padding-left:10px; padding-top:12px;" valign="top">
-                                <ul style="list-style-type:none;padding:0px;margin:0px;">
-                                    <li style="display:inline-block; margin:6px 2px;"><input id="opt_1" name="donate_opt" type="radio" wliu value="10" /><label wliu radio for="opt_1"> $ 10</label></li>
-                                    <li style="display:inline-block; margin:6px 2px;"><input id="opt_2" name="donate_opt" type="radio" wliu value="20" /><label wliu radio for="opt_2"> $ 20</label></li>
-                                    <li style="display:inline-block; margin:6px 2px;"><input id="opt_3" name="donate_opt" type="radio" wliu value="50" /><label wliu radio for="opt_3"> $ 50</label></li>
-                                    <li style="display:inline-block; margin:6px 2px;"><input id="opt_4" name="donate_opt" type="radio" wliu value="100" /><label wliu radio for="opt_4"> $ 100</label></li>
-                                    <li style="display:inline-block; margin:6px 2px;"><input id="opt_5" name="donate_opt" type="radio" wliu value="other" /><label wliu radio for="opt_5"> @Html.Words("other.option")</label></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
-                                <label wliu text h2>@Html.Words("col.paid.amount")</label>
-                            </td>
-                            <td style="padding-left:10px; padding-top:12px;" valign="middle">
-                                <span id="text_opt"><label wliu text h2>$</label><label id="donate_amount" wliu text h2>0.00</label> <label wliu text h2>CAD</label></span>
-                                <span id="span_opt" style="display:none;"><label wliu text h2>$</label> <input wliu fit h3 id="dAmount" style="width:80px; font-size:18px; font-weight:bold; text-align:right;" onchange="changeAmount(this.value)" type="text" value="" /> <label wliu text h2>CAD</label></span>
-                                <input type="hidden" id="UserId" value="@PubUser.Id" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="padding-top:12px;">
-                                <div id="message" style="display:none;">
-                                    <p class="message-body"></p>
-                                    <a href="javascript:goBack()" class="btn btn-info">@Html.Words("button.back.classlist")</a>
-                                </div>
-                                <div id="payment_message" style="display:none;">
-                                    <p class="message-body"></p>
-                                    <a href="javascript:goBack()" style="display:none;" class="btn btn-info">@Html.Words("button.back.classlist")</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="padding-top:12px;">
-                                <div style="display:block;">
-                                    <div id="paypal-button-container"></div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
+                                    <label wliu text>@Html.Words("col.fullname")</label>
+                                </td>
+                                <td style="padding-left:10px; padding-top:12px;" valign="middle">
+                                    <input wliu fit style="padding:3px;" id="FullName" type="text" value="@(PubUser.FirstName + ' ' + PubUser.LastName)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
+                                    <label wliu text>@Html.Words("col.email")</label>
+                                </td>
+                                <td style="padding-left:10px; padding-top:12px;" valign="middle">
+                                    <input wliu fit style="padding:3px;" id="Email" type="text" value="@PubUser.Email" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
+                                    <label wliu text>@Html.Words("col.branch")</label>
+                                </td>
+                                <td style="padding-left:10px; padding-top:12px;" valign="middle">
+                                    @Html.WLSelect("SiteId", siteList, "fit style='height:34px;'", (PubUser.Id == 0 ? 1 : PubUser.Id))
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="12%" valign="top" style="padding-top:12px;white-space:nowrap;">
+                                    <label wliu text>@Html.Words("memo.information")</label>
+                                </td>
+                                <td style="padding-left:10px; padding-top:12px;" valign="top">
+                                    <textarea wliu fit style="padding:3px;" id="Notes" style="width:100%;height:60px;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
+                                    <label wliu text>@Html.Words("col.option")</label>
+                                </td>
+                                <td style="padding-left:10px; padding-top:12px;" valign="top">
+                                    <ul style="list-style-type:none;padding:0px;margin:0px;">
+                                        <li style="display:inline-block; margin:6px 2px;"><input id="opt_1" name="donate_opt" type="radio" wliu value="10" /><label wliu radio for="opt_1"> $ 10</label></li>
+                                        <li style="display:inline-block; margin:6px 2px;"><input id="opt_2" name="donate_opt" type="radio" wliu value="20" /><label wliu radio for="opt_2"> $ 20</label></li>
+                                        <li style="display:inline-block; margin:6px 2px;"><input id="opt_3" name="donate_opt" type="radio" wliu value="50" /><label wliu radio for="opt_3"> $ 50</label></li>
+                                        <li style="display:inline-block; margin:6px 2px;"><input id="opt_4" name="donate_opt" type="radio" wliu value="100" /><label wliu radio for="opt_4"> $ 100</label></li>
+                                        <li style="display:inline-block; margin:6px 2px;"><input id="opt_5" name="donate_opt" type="radio" wliu value="other" /><label wliu radio for="opt_5"> @Html.Words("other.option")</label></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="12%" valign="middle" style="padding-top:12px;white-space:nowrap;">
+                                    <label wliu text h2>@Html.Words("col.paid.amount")</label>
+                                </td>
+                                <td style="padding-left:10px; padding-top:12px;" valign="middle">
+                                    <span id="text_opt"><label wliu text h2>$</label><label id="donate_amount" wliu text h2>0.00</label> <label wliu text h2>CAD</label></span>
+                                    <span id="span_opt" style="display:none;"><label wliu text h2>$</label> <input wliu fit h3 id="dAmount" style="width:80px; font-size:18px; font-weight:bold; text-align:right;" onchange="changeAmount(this.value)" type="text" value="" /> <label wliu text h2>CAD</label></span>
+                                    <input type="hidden" id="UserId" value="@PubUser.Id" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding-top:12px;">
+                                    <div id="message" style="display:none;">
+                                        <p class="message-body"></p>
+                                        <a href="javascript:goBack()" class="btn btn-info">@Html.Words("button.back.classlist")</a>
+                                    </div>
+                                    <div id="payment_message" style="display:none;">
+                                        <p class="message-body"></p>
+                                        <a href="javascript:goBack()" style="display:none;" class="btn btn-info">@Html.Words("button.back.classlist")</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding-top:12px;">
+                                    <div style="display:block;">
+                                        <div id="paypal-button-container"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <div style="display:block; padding:12px;">
-                    <table cellpadding="0" cellspacing="0" width="100%">
-                        <tr>
-                            <td width="100%">
-                                <div align-both>
-                                    @Html.WebContent("right")
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div style="display:block; padding:12px;">
+                        <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td width="100%">
+                                    <div align-both>
+                                        @Html.WebContent("right")
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </ng-form>
-</div>
-<wliu.hint></wliu.hint>
+    <wliu.hint></wliu.hint>
