@@ -71,8 +71,8 @@
     </script>
 }
 <div ng-app="myApp" ng-controller="myControl">
-    <div class="container-fluid">
-        <ng-form>
+    <ng-form>
+        <div class="container-fluid">
             <fieldset>
                 <legend>@Html.Words("search.by")</legend>
                 <filter.label db="ViewData.database" tb="ClassCalendar" col="CountryFilter"></filter.label>
@@ -82,8 +82,8 @@
                 <wliu.search db="ViewData.database" tb="ClassCalendar" action="reloadCalendar()"></wliu.search>
             </fieldset>
             <div wliu calendar style="margin-top:12px;"></div>
-        </ng-form>
-    </div>
+        </div>
+    </ng-form>
 
     <div wliu diag maskable maskclick movable resizable id="detailInfo" style="width:720px;">
         <div head>@Html.Words("detail.information")</div>

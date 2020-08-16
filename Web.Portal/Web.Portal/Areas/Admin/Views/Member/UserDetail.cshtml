@@ -614,7 +614,7 @@
                                         <wliu.booltext db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="IsFree"></wliu.booltext>
                                     </div>
                                     <div cell center fixed style="width:100px;">
-                                        <wliu.template db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="${FeeAmount} {Currency}"></wliu.template>
+                                        <wliu.template db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="${FeeAmount} {Currency}<br>{Discount}%"></wliu.template>
                                     </div>
                                     <div cell center fixed style="width:80px;">
                                         <wliu.text db="ViewData.database" tb="UserClass" guid="{{row.guid}}" col="Grp"></wliu.text>

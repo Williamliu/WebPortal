@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>08/15/2020 15:02:49</publishTime>
+      <publishTime>08/16/2020 12:58:13</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>08/15/2020 15:02:46</publishTime>
+      <publishTime>08/16/2020 12:58:10</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>08/15/2020 15:02:31</publishTime>
+      <publishTime>08/16/2020 12:57:57</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>08/15/2020 15:02:31</publishTime>
+      <publishTime>08/16/2020 12:57:58</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>08/15/2020 15:02:31</publishTime>
+      <publishTime>08/16/2020 12:57:57</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
       <publishTime>08/08/2020 23:51:42</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>08/15/2020 15:02:35</publishTime>
+      <publishTime>08/16/2020 12:58:02</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>08/15/2020 15:02:35</publishTime>
+      <publishTime>08/16/2020 12:58:02</publishTime>
     </File>
     <File Include="wwwroot/favicon.png">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -323,10 +323,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/19/2020 22:08:34</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.database.js">
-      <publishTime>08/14/2020 10:15:26</publishTime>
+      <publishTime>08/15/2020 22:58:51</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.layout.js">
-      <publishTime>07/23/2020 22:09:36</publishTime>
+      <publishTime>08/16/2020 12:57:16</publishTime>
     </File>
     <File Include="wwwroot/Resource/bootstrap/css/bootstrap-grid.min.css">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -2834,7 +2834,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/13/2020 23:22:16</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/wliu.v1.layout.css">
-      <publishTime>08/15/2020 14:27:01</publishTime>
+      <publishTime>08/16/2020 12:52:08</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/wliu.v1.pub.layout.css">
       <publishTime>08/15/2020 11:08:05</publishTime>

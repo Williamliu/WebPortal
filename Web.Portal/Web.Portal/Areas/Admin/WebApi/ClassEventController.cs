@@ -723,7 +723,9 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta paidAmount = new Meta { Name = "PaidAmount", DbName = "PaidAmount", Title = Words("col.paid.amount"), Type = EInput.Float, Order = "DESC", Sum=ESUM.Sum, Export = true };
                         Meta currency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String, Order = "ASC", Export = true };
                         Meta paidDate = new Meta { Name = "PaidDate", DbName = "PaidDate", Title = Words("col.paid.date"), Type = EInput.IntDate, Order = "DESC", Export = true };
-                        table.AddMetas(id, siteName, className, classTitle, startDate, endDate, fullName, email, payer, paidDate, paidAmount, currency, paidInvoice, paidStatus, trackNumber);
+                        Meta feeAmount = new Meta { Name = "FeeAmount", DbName = "FeeAmount", Title = Words("col.feeamount"), Type = EInput.Float, Order = "DESC", Export = true };
+                        Meta discount = new Meta { Name = "Discount", DbName = "Discount", Title = Words("col.discount"), Type = EInput.Int, Order = "DESC", Export = true };
+                        table.AddMetas(id, siteName, className, classTitle, startDate, endDate, feeAmount, discount, fullName, email, payer, paidDate, paidAmount, currency, paidInvoice, paidStatus, trackNumber);
 
                         Filter f1 = new Filter() { Name = "fitler_branch", DbName = "BranchId", Title = "col.branch", Type = EFilter.Hidden, Required = true, Compare = ECompare.In, Value1 = this.DB.User.ActiveBranches };
                         Filter f2 = new Filter() { Name = "fitler_site", DbName = "SiteId", Title = "col.site", Type = EFilter.Hidden, Required = true, Compare = ECompare.In, Value1 = this.DB.User.ActiveSites };

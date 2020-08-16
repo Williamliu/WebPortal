@@ -72,15 +72,15 @@
                 <img src="~/Resource/style/Images/shaolin_log.png" style="height: 100%;">
             </div>
             <div pub menu center>
-                <a pub menu toggle topmenu>@Html.Words("pub.menu")</a>
+                <a pub menu toggle mobile topmenu>@Html.Words("pub.menu")</a>
                 @{
                     if (PubUser.Id > 0)
                     {
-                        <a pub menu mobile toggle href="/Profile/MyAccount">@Html.Words("my.account")</a>
+                        <a pub menu mobile toggle mobile href="/Profile/MyAccount">@Html.Words("my.account")</a>
                     }
                     else
                     {
-                        <a pub menu mobile toggle href="/Home/SignIn">@Html.Words("sign.in")</a>
+                        <a pub menu mobile toggle mobile href="/Home/SignIn">@Html.Words("sign.in")</a>
                     }
                 }
                 <partial name="_TopNav.cshtml" />

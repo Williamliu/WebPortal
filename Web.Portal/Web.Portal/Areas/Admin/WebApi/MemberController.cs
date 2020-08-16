@@ -626,6 +626,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta cisFree = new Meta { Name = "IsFree", DbName = "IsFree", Title = Words("col.isfree"), Description = Words("col.free.charge"), Type = EInput.Bool, Order = "ASC", Export = true };
                         Meta cfeeAmount = new Meta { Name = "FeeAmount", DbName = "FeeAmount", Title = Words("col.feeamount"), Type = EInput.Float, Order = "DESC", Export = true };
                         Meta ccurrency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String, Export = true };
+                        Meta cdiscount = new Meta { Name = "Discount", DbName = "Discount", Title = Words("col.discount"), Type = EInput.Int, Order = "DESC", Export = true };
                         ccurrency.AddListRef("CurrencyList");
 
 
@@ -639,7 +640,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta ccreatedTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.enrolldate"), Type = EInput.IntDate, Order = "DESC", Export = true };
                         Meta cactive = new Meta { Name = "Active", DbName = "Active", Title = Words("col.status"), Description = Words("status.active.inactive"), Type = EInput.Bool, Export = true };
 
-                        UserClass.AddMetas(cpid, csiteName, cfullName, cemail, cgroup, cmemberType, cclassName, cclassTitle, cstartDate, cendDate, cisFree, cfeeAmount, ccurrency, cisPaid, cpaidDate, cpaidAmount, cpaidInvoice, ccreatedTime, cactive);
+                        UserClass.AddMetas(cpid, csiteName, cfullName, cemail, cgroup, cmemberType, cclassName, cclassTitle, cstartDate, cendDate, cisFree, cfeeAmount, cdiscount, ccurrency, cisPaid, cpaidDate, cpaidAmount, cpaidInvoice, ccreatedTime, cactive);
                         UserClass.AddRelation(new Relation(ERef.O2M, "UserId", -1));
                         UserClass.Navi.IsActive = true;
                         UserClass.Navi.By = "StartDate";
