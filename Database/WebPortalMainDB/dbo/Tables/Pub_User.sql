@@ -18,6 +18,8 @@
     [DharmaYY]          VARCHAR (4)      NULL,
     [DharmaMM]          VARCHAR (2)      NULL,
     [DharmaDD]          VARCHAR (2)      NULL,
+    [IsMember]          BIT              NULL,
+    [MemberExpiry]      DATE             NULL,
     [MemberYY]          VARCHAR (4)      NULL,
     [MemberMM]          VARCHAR (2)      NULL,
     [MemberDD]          VARCHAR (2)      NULL,
@@ -59,6 +61,8 @@
     CONSTRAINT [PK_Pub_User] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [IX_Pub_User] UNIQUE NONCLUSTERED ([MemberId] ASC)
 );
+
+
 
 
 

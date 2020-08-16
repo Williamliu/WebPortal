@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE USP_Class_UserPayment(@ClassId Int, @UserId Int)
+﻿CREATE PROCEDURE [dbo].[USP_Class_UserPayment](@ClassId Int, @UserId Int)
 AS
 SELECT 
 	  Class.Id,
@@ -33,9 +33,13 @@ SELECT
 			) AS Address_cn,
 	  CAST(ISNULL(Class.IsFree, 0) AS bit) AS IsFree,
 	  ISNULL(Class.FeeAmount,0) AS FeeAmount,
+	  Class.DiscountText_en,
+	  Class.DiscountText_cn,
+	  ISNULL(Class.Discount,0) AS Discount,
+	  CAST(ISNULL(Class.FeeAmount,0) * ISNULL(Class.Discount,0) / 100 AS money) AS DiscountAmount,
 	  ISNULL(GCategoryItem.Detail_en, '') AS Currency,
-	  ISNULL(Payment.PaidAmount, 0) AS PaidAmount,
-	  ISNULL(Class.FeeAmount,0) - ISNULL(Payment.PaidAmount, 0) AS OweAmount,
+	  ISNULL(Payment.PaidAmount, 0) + CAST(ISNULL(Class.FeeAmount,0) * ISNULL(Class.Discount,0) / 100 AS money) AS PaidAmount,
+	  ISNULL(Class.FeeAmount,0) - ISNULL(Payment.PaidAmount, 0) - CAST(ISNULL(Class.FeeAmount,0) * ISNULL(Class.Discount,0) / 100 AS money) AS OweAmount,
 	  ISNULL(Class_Enroll.UserId, 0) AS UserId,
 	  CAST(IIF(Class_Enroll.UserId>0, 1, 0) AS bit) AS IsEnroll
   FROM Class
