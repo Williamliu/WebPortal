@@ -197,6 +197,12 @@ namespace Web.Portal.WebApi.Controllers
 
             return Ok(this.DB.SaveTable(jsTable));
         }
+        [HttpPost("ReloadPaymentClassDetail1")]
+        public IActionResult ReloadPaymentClassDetail1(JSTable jsTable)
+        {
+            this.Init("ClassPayment");
+            return Ok(this.DB.ReloadTable(jsTable));
+        }
 
 
         [HttpPost("SaveDonate")]
@@ -274,9 +280,9 @@ namespace Web.Portal.WebApi.Controllers
                         Table ClassDetail = new Table("ClassDetail", "Class_Detail", Words("class.detail"));
                         Meta did = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
                         Meta dtitle = new Meta { Name = "Title", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang=true, MaxLength = 64 };
-                        Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Required = true, Order = "ASC", Type = EInput.Date };
-                        Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Required = true, Type = EInput.Time };
-                        Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Required = true, Type = EInput.Time };
+                        Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Order = "ASC", Type = EInput.Date };
+                        Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Type = EInput.Time };
+                        Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Type = EInput.Time };
 
                         ClassDetail.AddMetas(did, dtitle, dclassDate, dstartTime, dendTime);
                         ClassDetail.Navi.IsActive = false;
@@ -405,9 +411,9 @@ namespace Web.Portal.WebApi.Controllers
                         Table ClassDetail = new Table("ClassDetail", "Class_Detail", Words("class.detail"));
                         Meta did = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
                         Meta dtitle = new Meta { Name = "Title", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang = true, MaxLength = 64 };
-                        Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Required = true, Order = "ASC", Type = EInput.Date };
-                        Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Required = true, Type = EInput.Time };
-                        Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Required = true, Type = EInput.Time };
+                        Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Order = "ASC", Type = EInput.Date };
+                        Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Type = EInput.Time };
+                        Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Type = EInput.Time };
 
                         ClassDetail.AddMetas(did, dtitle, dclassDate, dstartTime, dendTime);
                         ClassDetail.Navi.IsActive = false;
@@ -415,6 +421,7 @@ namespace Web.Portal.WebApi.Controllers
                         ClassDetail.Navi.Order = "ASC";
                         ClassDetail.Navi.By = "ClassDate";
                         ClassDetail.AddQueryKV("Deleted", false).AddQueryKV("Active", true);
+                        ClassDetail.GetUrl = "/api/ClassEvent/ReloadPaymentClassDetail1";
 
 
                         Table classEnroll = new Table("ClassEnroll", "Class_Enroll", Words("class.enroll"));

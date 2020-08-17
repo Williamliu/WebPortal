@@ -102,26 +102,26 @@
                     <div wliu table grow shrink underline>
                         <div row>
                             <div head fixed style="width:40px;"></div>
-                            <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
-                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
-                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
-                            <div head medium><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
+                            <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
+                            <div head fixed style="width:80px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
+                            <div head fixed style="width:80px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
+                            <div head medium desktop><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
                         </div>
                         <div scroll-bar style="height:300px;">
                             <div row ng-repeat="row in ViewData.database.tables.ClassDetail.rows">
                                 <div cell center fixed style="width:40px;">
                                     <wliu.rowstatus db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}"></wliu.rowstatus>
                                 </div>
-                                <div cell fixed style="width:140px;">
+                                <div cell fixed style="width:100px;">
                                     <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="ClassDate"></wliu.text>
                                 </div>
-                                <div cell fixed style="width:100px;">
+                                <div cell fixed style="width:80px;">
                                     <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="StartTime"></wliu.text>
                                 </div>
-                                <div cell fixed style="width:100px;">
+                                <div cell fixed style="width:80px;">
                                     <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="EndTime"></wliu.text>
                                 </div>
-                                <div cell medium nowrap>
+                                <div cell medium nowrap desktop>
                                     <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title"></wliu.text>
                                 </div>
                             </div>

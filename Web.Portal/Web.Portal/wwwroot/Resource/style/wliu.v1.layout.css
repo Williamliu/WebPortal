@@ -474,6 +474,7 @@ div[pub][menu][left] > img {
     position:           relative;
     object-fit:         contain;
     width:              100%;
+    margin-top:         2px;
 }
 div[pub][menu][center] {
     display:            block;
@@ -529,6 +530,7 @@ a[pub][button] {
     transition:         0.5s;
     user-select:        none;
     box-sizing:         content-box;
+    margin-top:         6px;
 }
 a[pub][button]:hover {
     background-color:   orange;
@@ -552,6 +554,7 @@ a[pub][menu][toggle] {
     color:              #ffffff;
     transition:         0.5s;
     margin:             0px 2px;
+    margin-top:         6px;
     box-sizing:         content-box;
     vertical-align:     middle;
     min-width:          32px;
@@ -560,6 +563,18 @@ a[pub][menu][toggle]:hover {
     background:         linear-gradient(40deg, orange, orangered);
 }
 @media (max-width: 800px) {
+    div[pub][menu],
+    div[pub][menu][short]
+    {
+        height:     40px;
+    }
+    div[pub][menu][body] {
+        height:     40px;
+    }
+    div[pub][webcontent],
+    div[pub][webcontent][short] {
+        margin-top: 42px;
+    }
     div[pub][menu][center] {
         text-align:         left;
     }
@@ -572,9 +587,9 @@ a[pub][menu][toggle]:hover {
         list-style-type: none;
         padding: 0px;
         margin: 2px;
-        top: 64px;
-        left: 0px;
-        right: 0px;
+        top:    40px;
+        left:   0px;
+        right:  0px;
         font-size: 0px;
         border: 1px solid#cccccc;
         border-radius: 8px;
@@ -583,7 +598,7 @@ a[pub][menu][toggle]:hover {
         z-index: 99999;
     }
     div[pub][menu][body] ul[first][short] {
-        top:                48px;
+        top:                40px;
     }
     div[pub][menu][body] ul[first][show] {
         display:            block;
@@ -639,8 +654,17 @@ a[pub][menu][toggle]:hover {
         color:              #333333 !important;
         text-decoration:    none !important;
     }
+
+    a[pub][menu][toggle] {
+        font-size:          12px;
+        padding:            4px 8px 2px 8px;
+        min-width:          24px;
+    }
+    a[pub][button] {
+        font-size:          10px;
+    }
     td[desktop] {
-        display:            none;
+        display: none;
     }
 }
 @media (min-width: 800px) {
@@ -847,43 +871,13 @@ div[wliu][card1]
     display:            block;
     position:           relative;
     box-sizing:         border-box;
-    box-shadow:         0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-    height:             420px;
     background-color:   white;
 }
-div[wliu][card1][head] 
-{
+div[wliu][card1][subject] {
     display:        block;
-    position:       absolute;
-    left:           0px;
-    top:            0px;
-    right:          0px;
-    height:         200px;
-    box-shadow:     initial;
-    margin:         0px;
-    padding:        0px;
-} 
-div[wliu][card11][head] > img 
-{
-    display:        block;
-    width:          100%;
-    height:         100%;
-    object-fit:     cover;
-    border:         0px;
-}
-
-div[wliu][card1][title] {
-    display:        block;
-    position:       absolute;
-    top:            200px;
-    left:           0px;
-    right:          0px;
-    height:         2em;
-    line-height:    2em;
+    position:       relative;
+    line-height:    1.5em;
     font-size:      24px;
-    text-overflow:  ellipsis;
-    white-space:    nowrap;
-    overflow:       hidden;
     padding:        0px 0px;
     box-shadow:     initial;
     margin:         0px;
@@ -891,34 +885,25 @@ div[wliu][card1][title] {
 }
 div[wliu][card1][body] {
     display:        block;
-    position:       absolute;
-    top:            240px;
-    left:           0px;
-    right:          0px;
-    bottom:         32px;
-    height:         auto;
+    position:       relative;
     padding:        3px 0px;
     box-shadow:     initial;
-    text-overflow:  ellipsis;
-    white-space:    nowrap;
-    overflow:       hidden;
     margin:         0px;
 }
 div[wliu][card1][body]  p {
     display:        block;
-    text-overflow:  ellipsis;
-    white-space:    nowrap;
-    overflow:       hidden;
     line-height:    1.5em;
     font-size:      16px;
     margin:         0px;
 }
+div[wliu][card1][body]  p[class-title] {
+    font-size:      20px;
+    color:          orangered;
+}
+
 div[wliu][card1][foot] {
     display:        block;
-    position:       absolute;
-    left:           0px;
-    right:          0px;
-    bottom:         0px;
+    position:       relative;
     height:         60px;
     line-height:    60px;
     padding:        0px 0px;
@@ -926,34 +911,16 @@ div[wliu][card1][foot] {
     margin:         0px;
 }
 
-div[wliu][card1][nohead] {
-    min-height:     380px;
-    height:         initial;
-    box-shadow:     none;
-}
 
-div[wliu][card1][nohead] > div[wliu][card1][title] {
-    top:            0px;
-    font-size:      32px;
-}
-div[wliu][card1][nohead] > div[wliu][card1][body] {
-    top:            64px;
-    overflow-y:     auto;
-    bottom:         0px;
-}
-div[wliu][card1][nohead] > div[wliu][card1][body] p {
-    white-space:    initial;
-    overflow:       initial;
-    text-overflow:  initial;
-    height:         initial;
-    font-size:      20px;
-}
 @media (max-width: 800px) {
-    div[wliu][card1][nohead] > div[wliu][card1][body] p {
+    div[wliu][card1] > div[wliu][card1][subject] {
         font-size:      16px;
     }
-    div[wliu][card1][nohead] > div[wliu][card1][title] {
-        font-size:      24px;
+    div[wliu][card1] > div[wliu][card1][body] p {
+        font-size:      12px;
+    }
+    div[wliu][card1] > div[wliu][card1][body] p[class-title] {
+        font-size:      14px;
     }
 }
 
@@ -1047,15 +1014,14 @@ div[wliu][card2] > div[wliu][card2][body] > p[class-pay] {
 
 /** Card 3 */
 div[wliu][card3] {
-    display: block;
-    position: relative;
-    box-sizing: border-box;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-    width: 100%;
-    height: 180px;
-    background-color: white;
-    padding: 0px;
-    margin: 6px 0px;
+    display:                block;
+    position:               relative;
+    box-sizing:             border-box;
+    box-shadow:             0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    width:                  100%;
+    background-color:       white;
+    padding:                0px;
+    margin:                 6px 0px;
 }
 div[wliu][card3][body] {
     display:            flex;
@@ -1129,6 +1095,7 @@ div[wliu][card3][center] > p {
     padding:            0px 6px;
     box-shadow:         initial;
     margin:             0px;
+    font-size:          20px;
 }
 div[wliu][card3][center] > p > span {
     color:              blue;
@@ -1144,17 +1111,7 @@ div[wliu][card3][center] > p[class-subject] {
 }
 
 div[wliu][card3][center] > p[class-title] {
-    font-size:          20px;
     color:              orangered;    
-}
-div[wliu][card3][center] > p[class-site] {
-    font-size:          20px;
-}
-div[wliu][card3][center] > p[class-address] {
-    font-size:          20px;
-}
-div[wliu][card3][center] > p[class-contact] {
-    font-size:          20px;
 }
 div[wliu][card3][center] > p[class-notes] {
     font-size:          16px;
@@ -1164,16 +1121,35 @@ div[wliu][card3][center] > p[class-notes] {
     div[wliu][card3][left] {
         display:        none;
     }
-    div[wliu][desktop] {
-        display:        none;
+    div[wliu][card3]  div[wliu][desktop] {
+        display: none;
     }
-    span[wliu][desktop] {
-        display:        none;
+    div[wliu][card3]  span[wliu][desktop] {
+        display: none;
     }
-    input[wliu][desktop] {
-        display:        none;
+    div[wliu][card3]  input[wliu][desktop] {
+        display: none;
+    }
+
+    div[wliu][card3][center] > p {
+        font-size:      12px;
+        white-space:    initial;
+        text-overflow:  initial;
+        overflow:       initial;
+    }
+    div[wliu][card3][center] > p[class-subject] {
+        font-size:      14px;
+    }
+    div[wliu][card3][center] > p[class-title] {
+        font-size:      14px;
+    }
+    div[wliu][card3][center] > p[class-notes] {
+        font-size:      12px;
     }
 }
 
 @media (min-width: 800px) {
+    div[wliu][card3] div[wliu][mobile] {
+        display: none;
+    }
 }
