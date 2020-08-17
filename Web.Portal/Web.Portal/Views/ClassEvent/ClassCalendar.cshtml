@@ -115,7 +115,7 @@
                             <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
                             <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
                             <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
-                            <div head medium><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
+                            <div head medium><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="ClassTitle"></wliu.head></div>
                         </div>
                         <div scroll-bar style="height:300px;">
                             <div row ng-repeat="row in ViewData.database.tables.ClassDetail.rows">
@@ -132,7 +132,7 @@
                                     <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="EndTime"></wliu.text>
                                 </div>
                                 <div cell medium nowrap>
-                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title"></wliu.text>
+                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="ClassTitle"></wliu.text>
                                 </div>
                             </div>
                         </div>

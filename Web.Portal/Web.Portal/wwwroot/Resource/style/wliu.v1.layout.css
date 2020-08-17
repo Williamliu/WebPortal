@@ -1017,13 +1017,14 @@ div[wliu][card3] {
     display:                block;
     position:               relative;
     box-sizing:             border-box;
-    box-shadow:             0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    box-shadow:             0 2px 5px 0 rgba(0,0,0,0.3),0 2px 10px 0 rgba(0,0,0,0.2);
     width:                  100%;
     background-color:       white;
     padding:                0px;
     margin:                 6px 0px;
 }
 div[wliu][card3][body] {
+    box-shadow:         initial;
     display:            flex;
     align-items:        center;
     justify-content:    center;
@@ -1048,6 +1049,8 @@ div[wliu][card3][left] {
     height:             100%;
     text-align:         left;
     justify-content:    left;
+    padding:            0px;
+    margin:             0px;
 }
 
 div[wliu][card3][right] {
@@ -1060,6 +1063,22 @@ div[wliu][card3][right] {
     height:             100%;
     text-align:         left;
     padding-right:      6px;
+    padding:            0px;
+    margin:             0px;
+    align-self:         flex-end;
+}
+div[wliu][card3][detail] {
+    box-shadow:         initial;
+    display:            none;
+    position:           relative;
+    text-align:         left;
+    min-height:         140px;
+    padding:            1px;
+    margin:             0px;
+    margin-top:         12px;
+}
+div[wliu][card3][detail][show] {
+    display:            block;
 }
 
 

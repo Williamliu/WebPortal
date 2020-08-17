@@ -89,7 +89,7 @@ namespace Web.Portal.WebApi.Controllers
 
                         Table ClassDetail = new Table("ClassDetail", "Class_Detail", Words("class.detail"));
                         Meta did = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
-                        Meta dtitle = new Meta { Name = "Title", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang = true, MaxLength = 64 };
+                        Meta dtitle = new Meta { Name = "ClassTitle", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang = true, MaxLength = 64 };
                         Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Order = "ASC", Type = EInput.Date };
                         Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Type = EInput.Time };
                         Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Type = EInput.Time };
@@ -140,7 +140,7 @@ namespace Web.Portal.WebApi.Controllers
 
                         Table ClassDetail = new Table("ClassDetail", "Class_Detail", Words("class.detail"));
                         Meta did = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
-                        Meta dtitle = new Meta { Name = "Title", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang = true, MaxLength = 64 };
+                        Meta dtitle = new Meta { Name = "ClassTitle", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang = true, MaxLength = 64 };
                         Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Order = "ASC", Type = EInput.Date };
                         Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Type = EInput.Time };
                         Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Type = EInput.Time };

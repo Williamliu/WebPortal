@@ -426,7 +426,7 @@ WLIU_NG.directive("wliu.bicon", function () {
                             break;
                     }
                     if ($scope.actioncancel) if ($.isFunction($scope.actioncancel)) $scope.actioncancel();
-                }
+                };
             };
         }
     };

@@ -13,8 +13,11 @@
                 let refKey = $scope.ViewData.database.tables.ClassList.CurrentKey();
                 $scope.ViewData.database.tables.ClassDetail.refKey = refKey;
                 $scope.ViewData.database.tables.ClassDetail.Reload().then(d => {
-                    $scope.$apply(); $("#detailInfo").diag("show");
-                }).catch(e => { $scope.$apply(); });
+                    $scope.$apply();
+                    //$("#detailInfo").diag("show");
+                }).catch(e => {
+                    $scope.$apply();
+                });
 
             };
             $scope.enroll = function () {
@@ -47,34 +50,25 @@
             </div>
         </div>
         <div class="container-fluid">
-        <span style="display:none;" ng-repeat-start="row in ViewData.database.tables.ClassList.rows"></span>
-        <!-- Grid row -->
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <layout.card3 db="ViewData.database"
-                              tb="ClassList"
-                              guid="{{row.guid}}"
-                              imgsrc="Photo"
-                              subject="ClassTitle"
-                              number="ClassName"
-                              start="StartDate"
-                              end="EndDate"
-                              site="SiteTitle"
-                              address="Address"
-                              phone="Phone"
-                              email="Email"
-                              notes="ClassNotes"
-                              actiondetail="detail()"
-                              actionenroll="enroll()"
-                              icons="enroll,detail">
-                </layout.card3>
+            <span style="display:none;" ng-repeat-start="row in ViewData.database.tables.ClassList.rows"></span>
+            <!-- Grid row -->
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <layout.card4 db="ViewData.database"
+                                  tb="ClassList"
+                                  tb1="ClassDetail"
+                                  guid="{{row.guid}}"
+                                  actiondetail="detail()"
+                                  actionenroll="enroll()"
+                                  icons="enroll,detail">
+                    </layout.card4>
+                </div>
             </div>
-        </div>
-        <!-- Grid row -->
-        <span style="display:none;" ng-repeat-end></span>
+            <!-- Grid row -->
+            <span style="display:none;" ng-repeat-end></span>
         </div>
     </ng-form>
-
+    <!-- 
     <div wliu diag maskable maskclick movable resizable id="detailInfo" style="width:720px;">
         <div head>@Html.Words("detail.information")</div>
         <div body style="padding-top:3px;">
@@ -137,4 +131,5 @@
             </div>
         </div>
     </div>
+    -->
 </div>
