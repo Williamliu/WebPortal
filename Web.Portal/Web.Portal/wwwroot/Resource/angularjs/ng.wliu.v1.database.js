@@ -2446,13 +2446,17 @@ WLIU_NG.directive("form.save", function () {
         controller: function ($scope, $window) {
             $scope.Words = $window.Words;
             $scope.saveAction = function (guid) {
+                console.log("saveAction");
                 if ($scope.db.tables[$scope.tb].CurrentRow()) {
+                    console.log("currentrow");
                     switch ($scope.db.tables[$scope.tb].CurrentRow().state) {
                         case 0:
                         case 1:
                             if ($scope.db.user && $scope.db.user.rights && $scope.db.user.rights.save) {
+                                console.log("right save");
                                 $scope.db.tables[$scope.tb].Save(guid)
                                     .then(data => {
+                                        console.log("after save");
                                         if ($scope.action) if ($.isFunction($scope.action)) $scope.action();
                                         $scope.$apply();
                                     })
@@ -2469,6 +2473,7 @@ WLIU_NG.directive("form.save", function () {
                             break;
                         case 2:
                             if ($scope.db.user && $scope.db.user.rights && $scope.db.user.rights.add) {
+
                                 $scope.db.tables[$scope.tb].Save(guid)
                                     .then(data => {
                                         if ($scope.action) if ($.isFunction($scope.action)) $scope.action();

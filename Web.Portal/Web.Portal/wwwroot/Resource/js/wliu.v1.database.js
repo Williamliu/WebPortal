@@ -637,6 +637,12 @@ WLIU.Table.prototype = {
             this.ChangeState();
         }
     },
+    CurrentSetChange: function (colName) {
+        if (this.CurrentRow()) {
+            this.CurrentRow().SetChange(colName);
+            this.ChangeState();
+        }
+    },
     SetChange: function (guid, colName) {
         if (this.GuidRow(guid)) {
             this.GuidRow(guid).SetChange(colName);
