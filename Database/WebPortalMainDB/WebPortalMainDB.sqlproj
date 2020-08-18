@@ -147,7 +147,7 @@
     <None Include="Connection\Sql2Local.scmp" />
     <None Include="Backup\ReadMe.txt" />
     <None Include="Connection\Local2Product.scmp" />
-    <None Include="Backup\ShaoLin_WinHost_20200816.bak" />
-    <None Include="Backup\ShaoLinLocalDB_20200816.bak" />
+    <None Include="Backup\ShaoLin_WinHost_20200817.bak" />
+    <None Include="Backup\ShaoLinLocalDB_20200817.bak" />
   </ItemGroup>
 </Project>
