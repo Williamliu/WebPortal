@@ -136,6 +136,14 @@ namespace Web.Portal.WebApi.Controllers
                     myemail.addTo(email);
                     myemail.addReply("info@shaolinworld.org");
                     if (string.IsNullOrWhiteSpace(siteemail) ==false) myemail.addBCC(siteemail, "SysAdmin");
+
+                    List<Dictionary<string, string>> sysEmailRows = this.DB.DSQL.Query("SELECT ItemValue FROM GSetting WHERE Deleted=0 AND Active=1 AND ItemName='ClassEmail'", new Dictionary<string, object>());
+                    foreach (Dictionary<string, string> emailRow in sysEmailRows)
+                    {
+                        if(string.IsNullOrWhiteSpace(emailRow.GetValue("ItemValue"))==false)
+                            myemail.addBCC(emailRow.GetValue("ItemValue"));
+                    }
+
                     myemail.Subject = Words("email.enroll.success.subject");// "New Student Enrolled";
                     myemail.Content = "<html><body>";
                     myemail.Content += string.Format(Words("email.enroll.success.content"), fname, lname, classname); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
@@ -184,6 +192,14 @@ namespace Web.Portal.WebApi.Controllers
                     myemail.addTo(email);
                     myemail.addReply("info@shaolinworld.org");
                     if (string.IsNullOrWhiteSpace(siteemail) == false) myemail.addBCC(siteemail, "SysAdmin");
+
+                    List<Dictionary<string, string>> sysEmailRows = this.DB.DSQL.Query("SELECT ItemValue FROM GSetting WHERE Deleted=0 AND Active=1 AND ItemName='ClassEmail'", new Dictionary<string, object>());
+                    foreach (Dictionary<string, string> emailRow in sysEmailRows)
+                    {
+                        if (string.IsNullOrWhiteSpace(emailRow.GetValue("ItemValue"))==false)
+                            myemail.addBCC(emailRow.GetValue("ItemValue"));
+                    }
+
                     myemail.Subject = Words("email.enroll.success.subject");
                     myemail.Content = "<html><body>";
                     myemail.Content += string.Format(Words("email.enroll.success.content"), fname, lname, classname); 
@@ -225,7 +241,14 @@ namespace Web.Portal.WebApi.Controllers
                 myemail.addFrom("info@shaolinworld.org");
                 myemail.addTo(data.GetValue("Email"));
                 myemail.addReply("info@shaolinworld.org");
-                myemail.addBCC("info@shaolinworld.org");
+
+                List<Dictionary<string, string>> sysEmailRows = this.DB.DSQL.Query("SELECT ItemValue FROM GSetting WHERE Deleted=0 AND Active=1 AND ItemName='DonationEmail'", new Dictionary<string, object>());
+                foreach (Dictionary<string, string> emailRow in sysEmailRows)
+                {
+                    if (string.IsNullOrWhiteSpace(emailRow.GetValue("ItemValue"))==false)
+                        myemail.addBCC(emailRow.GetValue("ItemValue"));
+                }
+
                 myemail.Subject = Words("donate.success");// "New Student Enrolled";
                 myemail.Content = "<html><body>";
                 myemail.Content += string.Format(Words("email.donate.success.content"), data.GetValue("FullName")); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
