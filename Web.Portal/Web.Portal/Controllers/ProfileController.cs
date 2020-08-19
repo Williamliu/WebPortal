@@ -13,18 +13,23 @@ namespace Web.Portal.Controllers
         public ProfileController(AppSetting appConfig) : base(appConfig) { }
         public IActionResult MyAccount()
         {
-            this.Init("P01");
+            this.Init("P10");
+            return View();
+        }
+        public IActionResult ResetPassword()
+        {
+            this.Init("P20");
             return View();
         }
 
         public IActionResult MyMessage()
         {
-            this.Init("P02");
+            this.Init("P30");
             return View();
         }
         public IActionResult SignOut()
         {
-            Init("P03");
+            Init("P90");
             this.HttpContext.DeleteSession("pubSite_jwtToken");
             this.HttpContext.DeleteSession("pubSite_Session");
             return Redirect("/Home/Index");

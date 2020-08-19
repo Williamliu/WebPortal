@@ -203,6 +203,74 @@ namespace Web.Portal.Areas.Admin.WebApi
             this.Init("M2030");
             return Ok(this.DB.SaveTable(jsTable));
         }
+        [HttpPost("ReloadEmailNotify")]
+        public IActionResult ReloadEmailNotify(JSTable gtb)
+        {
+            this.Init("M2030");
+            return Ok(this.DB.ReloadTable(gtb));
+        }
+        [HttpPost("EmailClassEnroll")]
+        public IActionResult EmailClassEnroll(JSTable jsTable)
+        {
+            this.Init("M2030");
+            Table table = new Table();
+            int eid = jsTable.Other.GetValue("EmailNotify").GetInt() ?? -1;
+            if (eid < 0)
+            {
+                table.SyncJSTable(jsTable);
+                table.Error.Append(ErrorCode.ValueValidate, Words("please.select.email.template"));
+            }
+            else
+            {
+                table = this.DB.EmailTable(jsTable, new List<string> { "Id", "FirstName", "LastName", "UserName", "Email" });
+
+                Dictionary<string, string> row = this.DB.DSQL.QuerySingle("SELECT Subject, Detail FROM Email_Notification WHERE Deleted=0 AND Active=1 AND Id=@eid", new Dictionary<string, object> { { "eid", eid } });
+                string subject = row.GetValue("Subject");
+                string detail = row.GetValue("Detail");
+
+
+                MMEmail myemail = new MMEmail("mail.shaolinworld.org", "info@shaolinworld.org", "SL2020$");
+                myemail.Port = 26;
+                myemail.enableSSL = false;
+                myemail.addFrom("info@shaolinworld.org");
+                //myemail.addReply("info@shaolinworld.org");
+                myemail.Subject = subject;
+                if (string.IsNullOrWhiteSpace(subject) == false)
+                {
+                    foreach (Row erow in table.Rows)
+                    {
+                        myemail.addTo(erow.GetValue("Email").GetString());
+                        myemail.Content = "<html><body>";
+                        myemail.Content += detail.Replace("{FirstName}", erow.GetValue("FirstName").GetString())
+                                                .Replace("{LastName}", erow.GetValue("LastName").GetString())
+                                                .Replace("{UserName}", erow.GetValue("UserName").GetString())
+                                                .Replace("{Email}", erow.GetValue("Email").GetString())
+                                                ;
+                        myemail.Content += "</body></html>";
+                        try 
+                        {
+                            myemail.Send();
+                        }
+                        catch { }
+                        
+
+                        this.DB.DSQL.ExecuteQuery("Insert into Email_Notification_User(Category, EmailId, UserId, CreatedTime) values('Class', @eid, @uid, @ctime)",
+                                new Dictionary<string, object> { { "eid", eid }, { "uid", erow.GetValue("Id").GetInt() }, { "ctime", DateTime.Now.UTCSeconds() } }
+                        );
+                    }
+
+                }
+                else
+                {
+                    table.Error.Append(ErrorCode.ValueValidate, Words("please.select.email.template"));
+                }
+
+
+                table.Rows = new List<Row>();
+            }
+
+            return Ok(table);
+        }
 
 
         [HttpGet("InitClassPayment")]
@@ -441,7 +509,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta pcity = new Meta { Name = "City", DbName = "City", Title = Words("col.city"), Type = EInput.Read, Order = "ASC" };
                         Meta pphoto = new Meta { Name = "Photo", DbName = "Id", Title = Words("col.photo"), Description = "PubUser|tiny|small", Type = EInput.ImageContent };
 
-                        Filter f111 = new Filter() { Name = "search_name", DbName = "FirstName,LastName,FirstNameLegal,LastNameLegal,DharmaName,DisplayName,CertificateName,AliasName", Title = Words("col.fullname"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f111 = new Filter() { Name = "search_name", DbName = "FirstName,LastName,UserName,FirstNameLegal,LastNameLegal,DharmaName,DisplayName,CertificateName,AliasName", Title = Words("col.fullname"), Type = EFilter.String, Compare = ECompare.Like };
                         Filter f112 = new Filter() { Name = "search_email", DbName = "Email", Title = Words("col.email"), Type = EFilter.String, Compare = ECompare.Like };
                         Filter f113 = new Filter() { Name = "search_phone", DbName = "Phone,Cell", Title = Words("col.phone"), Type = EFilter.String, Compare = ECompare.Like };
                         Filter f114 = new Filter() { Name = "search_idno", DbName = "Id", Title = Words("col.idno"), Type = EFilter.String, Compare = ECompare.Include };
@@ -473,6 +541,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta ememberId = new Meta { Name = "UserId", DbName = "UserId", Title = Words("col.userid") };
                         Meta efirstName = new Meta { Name = "FirstName", DbName = "FirstName", Title = Words("col.fullname"), Type = EInput.Read, Order = "ASC", Export=true };
                         Meta elastName = new Meta { Name = "LastName", DbName = "LastName", Title = Words("col.lastname"), Type = EInput.Read, Order = "ASC", Export = true };
+                        Meta euserName = new Meta { Name = "UserName", DbName = "UserName", Title = Words("col.username"), Type = EInput.Read, Order = "ASC", Export = true };
                         Meta efirstNameLegal = new Meta { Name = "FirstNameLegal", DbName = "FirstNameLegal", Title = Words("col.fullname.legal"), Type = EInput.Read, Order = "ASC", Export = true };
                         Meta elastNameLegl = new Meta { Name = "LastNameLegal", DbName = "LastNameLegal", Title = Words("col.lastname.legal"), Type = EInput.Read, Order = "ASC", Export = true };
                         Meta edharmaName = new Meta { Name = "DharmaName", DbName = "DharmaName", Title = Words("col.dharmaname"), Type = EInput.Read, Order = "ASC" };
@@ -503,7 +572,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Filter f10 = new Filter() { Name = "search_class", DbName = "ClassId", Title = Words("class.class"), Type = EFilter.Int, Compare = ECompare.Equal };
                         f10.AddListRef("ClassList");
 
-                        Filter f11 = new Filter() { Name = "search_name", DbName = "FirstName,LastName,FirstNameLegal,LastNameLegal,DharmaName,DisplayName,CertificateName,AliasName", Title = Words("col.fullname"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f11 = new Filter() { Name = "search_name", DbName = "FirstName,LastName,UserName,FirstNameLegal,LastNameLegal,DharmaName,DisplayName,CertificateName,AliasName", Title = Words("col.fullname"), Type = EFilter.String, Compare = ECompare.Like };
                         Filter f12 = new Filter() { Name = "search_email", DbName = "Email", Title = Words("col.email"), Type = EFilter.String, Compare = ECompare.Like };
                         Filter f13 = new Filter() { Name = "search_phone", DbName = "Phone,Cell", Title = Words("col.phone"), Type = EFilter.String, Compare = ECompare.Like };
                         Filter f14 = new Filter() { Name = "search_idno", DbName = "UserId", Title = Words("col.idno"), Type = EFilter.String, Compare = ECompare.Include };
@@ -530,6 +599,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         classEnroll.GetUrl = "/Admin/api/ClassEvent/ReloadClassEnroll";
                         classEnroll.SaveUrl = "/Admin/api/ClassEvent/SaveClassEnroll";
                         classEnroll.ExportUrl = "/Admin/api/ClassEvent/ExportClassEnroll";
+                        classEnroll.EmailUrl = "/Admin/api/ClassEvent/EmailClassEnroll";
 
                         classEnroll.AddQueryKV("Deleted", false)
                                     .AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds())
@@ -540,7 +610,7 @@ namespace Web.Portal.Areas.Admin.WebApi
 
 
                         // Table Class Enroll
-                        classEnroll.AddMetas(eid, eclassId, ememberId, efirstName, elastName, efirstNameLegal, elastNameLegl, ecreatedTime)
+                        classEnroll.AddMetas(eid, eclassId, ememberId, efirstName, elastName, euserName, efirstNameLegal, elastNameLegl, ecreatedTime)
                                    .AddMetas(edharmaName, edisplayName, ecertName, ealiasname, egender, eactive, eemail, ephone, ecell, ecity, ephoto)
                                    .AddMetas(egroup, eisPaid, epaidDate, epaidAmount, epaidInvoice, ememberType);
 
@@ -572,6 +642,7 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Meta symbolOther = new Meta { Name = "Symbol_Other", DbName = "Symbol_Other", Title = Words("other.specify"), Type = EInput.String, MaxLength = 32 };
                         Meta photo = new Meta { Name = "Photo", DbName = "Id", Title = Words("col.photo"), Description = "PubUser|tiny|small", Type = EInput.ImageContent };
                         Meta active = new Meta { Name = "Active", DbName = "Active", Title = Words("col.status"), Description = Words("status.active.inactive"), Type = EInput.Bool };
+                        Meta retsetPass = new Meta { Name = "ResetPassword", DbName = "ResetPassword", Title = Words("account.resetpass"), Description = Words("status.required.notrequired"), Type = EInput.Bool, Order = "ASC" };
                         Meta loginTime = new Meta { Name = "LoginTime", DbName = "LoginTime", Title = Words("col.lastlogin"), Type = EInput.Int };
                         Meta loginTotal = new Meta { Name = "LoginTotal", DbName = "LoginTotal", Title = Words("col.logintotal"), Type = EInput.Int };
                         Meta createdTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.createdtime"), Type = EInput.Read, Order = "DESC" };
@@ -635,13 +706,15 @@ namespace Web.Portal.Areas.Admin.WebApi
                         userRole.AddListRef("PubRoleList", "Pub_User_Role", "RoleId");
                         Meta userType = new Meta { Name = "UserType", DbName = "UserId", Title = Words("col.user.type"), Type = EInput.Checkbox };
                         userType.AddListRef("UserTypeList", "Pub_User_UserType", "UserTypeId");
+                        Meta createdBy = new Meta { Name = "CreatedBy", DbName = "CreatedBy", Title = Words("col.created.by"), Type = EInput.Int, Export = true };
+                        createdBy.AddListRef("AdminUserList");
 
 
                         Member.AddMetas(id, memberId, firstName, lastName, firstNameLegal, lastNameLegl, dharmaName, displayName, certName, aliasname, occupation, memo)
                         .AddMetas(userName, password, gender, education, nationality, religion, motherLang, multiLang)
                         .AddMetas(medicalConcern, hearUsOther, symbolOther, multiLangOther, idNumber, email, phone, cell, branch, address, city, state, country, postal)
                         .AddMetas(birthYY, birthMM, birthDD, memberYY, memberMM, memberDD, dharmaYY, dharmaMM, dharmaDD)
-                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, photo, active, loginTime, loginTotal, createdTime, userRole, userType);
+                        .AddMetas(emerRelation, emerPerson, emerPhone, emerCell, hearUs, symbol, photo, active, retsetPass, loginTime, loginTotal, createdTime, userRole, userType, createdBy);
 
                         Member.Navi.IsActive = false;
                         Member.Navi.Order = "";
@@ -667,6 +740,28 @@ namespace Web.Portal.Areas.Admin.WebApi
                             .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
                             .AddInsertKV("Deleted", false).AddInsertKV("Active", true).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
 
+                        #region 
+                        Table emailNotify = new Table("EmailNotify", "Email_Notification", Words("email.notification"));
+                        /*******/
+                        Meta email_id = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true, Order = "DESC" };
+                        Meta email_subject = new Meta { Name = "Subject", DbName = "Subject", Title = Words("col.subject"), Required = true, Type = EInput.String, MaxLength = 128 };
+                        Meta email_content = new Meta { Name = "Detail", DbName = "Detail", Title = Words("col.email.content"), Required = true, Type = EInput.String };
+                        emailNotify.AddMetas(email_id, email_subject, email_content);
+                        emailNotify.Navi.IsActive = false;
+                        emailNotify.AddRelation(new Relation(ERef.O2M, "Id", -1));
+                        emailNotify.AddQueryKV("Deleted", false).AddQueryKV("Active", true);
+                        emailNotify.GetUrl = "/Admin/api/ClassEvent/ReloadEmailNotify";
+
+                        Filter emailFilter = new Filter() { Name = "search_email", DbName = "Id", Title = Words("email.notification"), Type = EFilter.Int, Compare = ECompare.Equal };
+                        emailFilter.AddListRef("EmailNotificationList");
+                        CollectionTable emailNotificationTable = new CollectionTable("EmailNotificationList", "Email_Notification", true, "Id", "Title", "", "", "DESC", "LastUpdated");
+                        Collection EmailNotificationList = new Collection(ECollectionType.Table, emailNotificationTable);
+
+                        emailNotify.AddFilter(emailFilter);
+                        #endregion
+
+
+
                         CollectionTable c11 = new CollectionTable("EducationList", "Education", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection EducationList = new Collection(ECollectionType.Category, c11);
                         CollectionTable c12 = new CollectionTable("LanguageList", "Language", true, "Id", "Title", "Detail", "", "DESC", "Sort");
@@ -689,6 +784,8 @@ namespace Web.Portal.Areas.Admin.WebApi
                         Collection PubRoleList = new Collection(ECollectionType.Table, c23);
                         CollectionTable c24 = new CollectionTable("UserTypeList", "UserType", true, "Id", "Title", "Detail", "", "DESC", "Sort");
                         Collection UserTypeList = new Collection(ECollectionType.Category, c24);
+                        CollectionTable c25 = new CollectionTable("AdminUserList", "Admin_User", false, "Id", "UserName", "", "", "ASC", "UserName");
+                        Collection AdminUserList = new Collection(ECollectionType.Table, c25);
 
                         CollectionTable c20 = new CollectionTable("GenderList", "GenderList");
                         Collection GenderList = new Collection(ECollectionType.Common, c20);
@@ -699,9 +796,9 @@ namespace Web.Portal.Areas.Admin.WebApi
 
 
                         // Add Objects 
-                        this.DB.AddTables(pubUser, classEnroll, Member, PubUserId)
-                                .AddCollections(ClassList, MemberTypeList)
-                                .AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, PubRoleList, UserTypeList)
+                        this.DB.AddTables(pubUser, classEnroll, Member, PubUserId, emailNotify)
+                                .AddCollections(EmailNotificationList, ClassList, MemberTypeList)
+                                .AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, PubRoleList, UserTypeList, AdminUserList)
                                 .AddCollections(GenderList, MonthList, DayList);
                     }
                     break;

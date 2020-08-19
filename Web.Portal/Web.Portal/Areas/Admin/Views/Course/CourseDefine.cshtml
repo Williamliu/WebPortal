@@ -17,7 +17,9 @@
             };
 
         });
-        viewData.Init("/Admin/api/Course/InitCourse");
+        viewData.Init("/Admin/api/Course/InitCourse").then(data => {
+             data.database.tables.CourseDefine.CKEditor = ["Detail_en", "Detail_cn"];
+        });
     </script>
 }
 <div ng-app="myApp" ng-controller="mycontrl">

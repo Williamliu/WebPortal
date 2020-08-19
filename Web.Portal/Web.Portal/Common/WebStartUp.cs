@@ -320,8 +320,8 @@ namespace Web.Portal.Common
                 rows = DSQL.Query(query, ps);
                 publicUser.PrivateMenuIDs.AddRange(rows.Select(p => p["MenuId"].GetString()).ToList<string>());
 
-                AdminSharedMenus AdminPubMenu = new AdminSharedMenus();
-                publicUser.PublicMenuIDs.AddRange(AdminPubMenu.GetSharedMenus());
+                PubSharedMenus PubMenu = new PubSharedMenus();
+                publicUser.PublicMenuIDs.AddRange(PubMenu.GetSharedMenus());
 
                 query = "SELECT MenuId FROM VW_Pub_User_Menu_Public";
                 rows = DSQL.Query(query, ps);

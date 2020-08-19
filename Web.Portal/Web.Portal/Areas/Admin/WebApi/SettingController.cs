@@ -106,6 +106,36 @@ namespace Web.Portal.Areas.Admin.WebApi
             this.Init("M8040");
             return Ok(this.DB.SaveTable(jsTable));
         }
+        [HttpGet("InitEmail")]
+        public IActionResult InitEmail()
+        {
+            this.Init("M8045");
+            this.DB.FillAll();
+            if (this.DB.Error.HasError)
+                return BadRequest(this.DB);
+            else
+                return Ok(this.DB);
+        }
+        [HttpPost("ReloadEmail")]
+        public IActionResult ReloadEmail(JSTable jsTable)
+        {
+            this.Init("M8045");
+            return Ok(this.DB.ReloadTable(jsTable));
+        }
+
+        [HttpPost("SaveEmail")]
+        public IActionResult SaveEmail(JSTable jsTable)
+        {
+            this.Init("M8045");
+            return Ok(this.DB.SaveTable(jsTable));
+        }
+        [HttpPost("ReloadEmailNotify")]
+        public IActionResult ReloadEmailNotify(JSTable gtb)
+        {
+            this.Init("M8045");
+            return Ok(this.DB.ReloadTable(gtb));
+        }
+
         [HttpGet("InitTranslation")]
         public IActionResult InitTranslation()
         {
@@ -293,6 +323,34 @@ namespace Web.Portal.Areas.Admin.WebApi
                         this.DB.AddTable(table).AddCollection(CategoryList);
                     }
                     break;
+                case "M8045":
+                    {
+                        Table table = new Table("EmailTemp", "Email_Notification", Words("email.notification"));
+                        Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
+                        Meta titleEN = new Meta { Name = "Title_en", DbName = "Title_en", Title = Words("title.en"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 64 };
+                        Meta titleCN = new Meta { Name = "Title_cn", DbName = "Title_cn", Title = Words("title.cn"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 64 };
+                        Meta subject = new Meta { Name = "Subject", DbName = "Subject", Title = Words("col.subject"), Required = true, Type = EInput.String, MaxLength = 128 };
+                        Meta detail = new Meta { Name = "Detail", DbName = "Detail", Title = Words("col.email.content"), Type = EInput.String, MaxLength = 500 * 1024 };
+                        Meta active = new Meta { Name = "Active", DbName = "Active", Title = Words("status.active"), Description = Words("status.active.inactive"), Type = EInput.Bool };
+                        Meta sort = new Meta { Name = "Sort", DbName = "Sort", Title = Words("col.sort"), Type = EInput.Int, Order = "DESC" };
+                        table.AddMetas(id, titleEN, titleCN, subject, detail, active, sort);
+
+                        Filter f1 = new Filter() { Name = "search_keyword", DbName = "Title_en,Title_cn", Title = Words("col.keyword"), Type = EFilter.String, Compare = ECompare.Like };
+
+                        table.AddFilters(f1);
+                        table.Navi.IsActive = true;
+                        table.Navi.Order = "DESC";
+                        table.Navi.By = "Sort";
+                        table.GetUrl = "/Admin/api/Setting/ReloadEmail";
+                        table.SaveUrl = "/Admin/api/Setting/SaveEmail";
+                        table.AddQueryKV("Deleted", false).AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds())
+                              .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
+                              .AddInsertKV("Deleted", false).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
+
+
+                        this.DB.AddTable(table);
+                    }
+                    break;
                 case "M8050":
                     {
                         Table table = new Table("Translation", "GTranslation", Words("website.translation"));
@@ -350,17 +408,20 @@ namespace Web.Portal.Areas.Admin.WebApi
                     {
                         Table table = new Table("GSetting", "GSetting", Words("website.settings"));
                         Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
-                        Meta itemName = new Meta { Name = "ItemName", DbName = "ItemName", Title = Words("col.itemname"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 32, Unique = true };
+                        Meta itemName = new Meta { Name = "ItemName", DbName = "ItemName", Title = Words("col.itemname"), Order = "ASC", Required = true, Type = EInput.String, MaxLength = 32 };
                         Meta itemTitle = new Meta { Name = "ItemTitle", DbName = "ItemTitle", Title = Words("col.itemtitle"), Order = "ASC", Type = EInput.String, MaxLength = 64 };
                         Meta itemValue = new Meta { Name = "ItemValue", DbName = "ItemValue", Title = Words("col.itemvalue"), Order = "ASC", Type = EInput.String, MaxLength = 64 };
-                        Meta lastUpdate = new Meta { Name = "LastUpdated", DbName = "LastUpdated", Title = Words("col.lastupdated"), Order = "DESC", Type = EInput.Int };
+                        Meta lastUpdate = new Meta { Name = "LastUpdated", DbName = "LastUpdated", Title = Words("col.lastupdated"), Sync=true, Order = "DESC", Type = EInput.Int };
                         Meta active = new Meta { Name = "Active", DbName = "Active", Title = Words("status.active"), Order = "", Type = EInput.Bool, Value = true };
                         table.AddMetas(id, itemName, itemTitle, itemValue, lastUpdate, active);
 
                         table.Navi.IsActive = true;
                         table.GetUrl = "/Admin/api/Setting/ReloadSettings";
                         table.SaveUrl = "/Admin/api/Setting/SaveSettings";
-                        table.AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds());
+                        table.AddQueryKV("Deleted", false)
+                            .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
+                            .AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds())
+                            .AddInsertKV("LastUpdated", DateTime.Now.UTCSeconds());
                         this.DB.AddTable(table);
                     }
                     break;

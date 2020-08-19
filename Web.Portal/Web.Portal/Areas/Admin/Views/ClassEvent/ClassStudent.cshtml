@@ -177,7 +177,7 @@
                     <filter.label h1 fit right db="ViewData.database" tb="ClassEnroll" col="search_class"></filter.label>
                 </div>
                 <div cell large>
-                    <filter.linkselect h1 style="min-width:320px;" db="ViewData.database" tb="ClassEnroll" col="search_class" action="classChange()"></filter.linkselect>
+                    <filter.linkselect h2 style="min-width:420px;" db="ViewData.database" tb="ClassEnroll" col="search_class" action="classChange()"></filter.linkselect>
                 </div>
                 <div cell small>
                 </div>
@@ -293,6 +293,7 @@
                     <filter.select db="ViewData.database" tb="ClassEnroll" col="search_type"></filter.select>
                     <wliu.search db="ViewData.database" tb="ClassEnroll"></wliu.search>
                     <wliu.export db="ViewData.database" tb="ClassEnroll"></wliu.export>
+                    <wliu.email db="ViewData.database" tb="EmailNotify"></wliu.email>
                 </fieldset>
                 <div wliu table grow shrink underline style="margin-top:12px;">
                     <div row>
@@ -330,13 +331,13 @@
                         </div>
                         <div cell medium>
                             <wliu.template db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="{FirstName} {LastName}<br>{AliasName}"></wliu.template>
-                            <wliu.stext db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="Gender"></wliu.stext>
                         </div>
                         <div cell medium>
                             <wliu.template db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="{DisplayName}<br>{CertificateName}"></wliu.template>
                         </div>
                         <div cell large>
-                            <wliu.text db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="Email"></wliu.text>
+                            <wliu.text db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="Email"></wliu.text><br />
+                            <wliu.stext db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="Gender"></wliu.stext>
                         </div>
                         <div cell small>
                             <wliu.template db="ViewData.database" tb="ClassEnroll" guid="{{row.guid}}" col="{Phone}<br>{Cell}"></wliu.template>
@@ -569,13 +570,40 @@
                 <div>
                     <table border="0" cellpadding="2" cellspacing="2" style="width:100%;">
                         <tr>
-                            <td colspan="2" width="100%" style="border-bottom:1px solid #cccccc;">
+                            <td width="80%" style="border-bottom:1px solid #cccccc;">
                                 <form.checkcom db="ViewData.database" tb="Member" col="UserRole" icon="detail"></form.checkcom>
                                 <form.checkcom db="ViewData.database" tb="Member" col="UserType" icon="detail"></form.checkcom>
+                                <table>
+                                    <tr>
+                                        <td valign="middle">
+                                            <form.label db="ViewData.database" tb="Member" col="ResetPassword"></form.label>:
+                                            <form.bool db="ViewData.database" tb="Member" col="ResetPassword"></form.bool>
+                                        </td>
+                                        <td valign="middle">
+                                            <form.label db="ViewData.database" tb="Member" col="CreatedBy"></form.label>:
+                                            <form.stext db="ViewData.database" tb="Member" col="CreatedBy"></form.stext>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td rowspan="2" width="20%" valign="top" align="center" style="position:relative;">
+                                <div id="vcard_card" style="display:block; width:60mm;text-align:center;">
+                                    <card.vcard gallery="Gallery" db="ViewData.database" tb="Member" company="SHAOLIN MEMBER" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.vcard>
+                                </div>
+                                <div id="shaolin_card" style="display:none; width:60mm;text-align:center;">
+                                    <card.shaolin gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.shaolin>
+                                </div>
+                                <div id="member_card" style="display:none; width:60mm;text-align:center;">
+                                    <card.member gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.member>
+                                </div>
+                                <div id="hcard_card" style="display:none; width:60mm;text-align:center;">
+                                    <card.hcard gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.hcard>
+                                </div>
+                                <card.print db="ViewData.database" gallery="Gallery" action="cardPrint()"></card.print>
                             </td>
                         </tr>
                         <tr>
-                            <td width="50%" valign="top" align="center">
+                            <td width="80%" valign="top" align="center">
                                 <vcard.select gallery="Gallery" action="vcardClick()"></vcard.select>
                                 <br />
                                 <shaolin.select gallery="Gallery" action="shaolinClick()"></shaolin.select>
@@ -583,21 +611,6 @@
                                 <member.select gallery="Gallery" action="memberClick()"></member.select>
                                 <br />
                                 <hcard.select gallery="Gallery" action="hcardClick()"></hcard.select>
-                                <card.print db="ViewData.database" gallery="Gallery" action="cardPrint()"></card.print>
-                            </td>
-                            <td width="50%" valign="top" align="center" style="position:relative;">
-                                <div id="vcard_card" style="display:block; width:60mm;height:90mm;text-align:center;">
-                                    <card.vcard gallery="Gallery" db="ViewData.database" tb="Member" company="SHAOLIN MEMBER" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.vcard>
-                                </div>
-                                <div id="shaolin_card" style="display:none; width:60mm;height:90mm;text-align:center;">
-                                    <card.shaolin gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.shaolin>
-                                </div>
-                                <div id="member_card" style="display:none; width:60mm;height:90mm;text-align:center;">
-                                    <card.member gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.member>
-                                </div>
-                                <div id="hcard_card" style="display:none; width:60mm;height:90mm;text-align:center;">
-                                    <card.hcard gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.hcard>
-                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -612,6 +625,9 @@
             <form.cancel h2 db="ViewData.database" tb="Member" label="@Html.Words("button.cancel")" action="rowCancelAction()" style="margin:0px 6px;" diag-toggle="detailInfo"></form.cancel>
         </center>
     </div>
+
+    <wliu.email.notification db="ViewData.database" tb="EmailNotify" tb1="ClassEnroll" action=""></wliu.email.notification>
+    <wliu.diag></wliu.diag>
 
     <checkbox.diag db="ViewData.database"></checkbox.diag>
     <checkcom.diag db="ViewData.database" maxhh="250px"></checkcom.diag>

@@ -128,6 +128,10 @@ namespace Web.Portal.WebApi.Controllers
                         query = "INSERT Pub_User_Session(PubUserId, Session, Deleted, CreatedTime) Values(@UserId, @Session, 0, @LastTime)";
                         sess_ps.Add("Session", guid.ToString());
                         this.DB.DSQL.ExecuteQuery(query, sess_ps);
+
+                        Dictionary<string, string> loginRow = this.DB.DSQL.QuerySingle("SELECT ResetPassword FROM Pub_User WHERE Id=@UserId", new Dictionary<string, object> { { "UserId", pubUserId } });
+                        bool resetPassword = loginRow.GetValue("ResetPassword").GetBool()??false;
+                        row.SetValue("ResetPassword", resetPassword);
                     }
                     else
                     {
@@ -232,7 +236,8 @@ namespace Web.Portal.WebApi.Controllers
                         Meta loginEmail = new Meta { Name = "LoginUser", DbName = "Email", Title = Words("login.user"), Type = EInput.String, Required = true, MaxLength = 256 };
                         Meta loginPassword = new Meta { Name = "Password", DbName = "Password", Title = Words("col.password"), Type = EInput.Password, Required = true, MinLength = 6, MaxLength = 32 };
                         Meta memo = new Meta { Name = "Memo", DbName = "Phone", Title = Words("col.phone"), Type = EInput.String };
-                        UserLogin.AddMetas(loginEmail, loginPassword, memo);
+                        Meta resetPassword = new Meta { Name = "ResetPassword", DbName = "ResetPassword", Title = Words("col.reset.password"), Sync=true, Type = EInput.Bool};
+                        UserLogin.AddMetas(loginEmail, loginPassword, memo, resetPassword);
                         UserLogin.SaveUrl = "/api/Home/SaveSignIn";
                         UserLogin.AddQueryKV("Id", -1).AddQueryKV("Deleted", false).AddQueryKV("Active", true)
                         .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
@@ -264,7 +269,10 @@ namespace Web.Portal.WebApi.Controllers
 
                         UserRegister.AddQueryKV("Id", -1).AddQueryKV("Deleted", false).AddQueryKV("Active", true)
                         .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
-                        .AddInsertKV("Deleted", false).AddInsertKV("Active", true).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
+                        .AddInsertKV("Deleted", false).AddInsertKV("Active", true)
+                        .AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds())
+                        .AddInsertKV("CreatedBy",0)
+                        .AddInsertKV("ResetPassword", false);
 
                         UserRegister.SaveUrl = "/api/Home/SaveRegister";
 
@@ -296,7 +304,8 @@ namespace Web.Portal.WebApi.Controllers
                         UserPass.SaveUrl = "/api/Home/SaveResetPassword";
                         UserPass.AddRelation(new Relation(ERef.O2O, "Id", -1));
                         UserPass.AddQueryKV("Deleted", false).AddQueryKV("Active", true)
-                            .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds()).AddUpdateKV("Expiry", DateTime.Now.AddHours(-2).UTCSeconds());
+                            .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds()).AddUpdateKV("Expiry", DateTime.Now.AddHours(-2).UTCSeconds())
+                            .AddUpdateKV("ResetPassword", false);
 
                         Filter f1 = new Filter { Name="filterGuid", DbName="guid", Type=EFilter.Hidden, Compare=ECompare.Equal, Value1=Guid.Empty.ToString() };
                         UserPass.AddFilter(f1);

@@ -136,9 +136,10 @@ namespace Library.V1.Entity
         }
         public void InitProfile()
         {
-            this.ProfileMenus.Add(new Menu { MenuId = "P01", Title = LanguageHelper.Words("my.account"),      Url = "/Profile/MyAccount" });
-            this.ProfileMenus.Add(new Menu { MenuId = "P02", Title = LanguageHelper.Words("my.message"),      Url = "/Profile/MyMessage" });
-            this.ProfileMenus.Add(new Menu { MenuId = "P03", Title = LanguageHelper.Words("logout"),          Url = "/Profile/SignOut" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P10", Title = LanguageHelper.Words("my.account"),      Url = "/Profile/MyAccount" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P20", Title = LanguageHelper.Words("reset.password"), Url = "/Profile/ResetPassword" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P30", Title = LanguageHelper.Words("my.message"),      Url = "/Profile/MyMessage" });
+            this.ProfileMenus.Add(new Menu { MenuId = "P90", Title = LanguageHelper.Words("logout"),          Url = "/Profile/SignOut" });
         }
         public void InitHide()
         {

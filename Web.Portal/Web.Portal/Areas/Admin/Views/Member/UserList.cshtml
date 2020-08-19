@@ -1,4 +1,5 @@
 ﻿@section scripts {
+    <script src="~/resource/js/ckeditor_full/ckeditor.js" type="text/javascript"></script>
     <style>
         .member-card-border {
             border: 1px solid #cccccc;
@@ -106,7 +107,12 @@
                 }
             };
         });
-        viewData.Init("/Admin/api/Member/InitUserList");
+        viewData.Init("/Admin/api/Member/InitUserList").then(data => {
+            data.database.tables.EmailNotify.CKEditor = ["Detail"];
+            //data.database.tables.EmailNotify.NewRowB();
+            data.Apply();
+        });
+
         gallery.Init("/api/Image/InitGallery/PubUser?view=tiny&edit=large");
     </script>
 }
@@ -129,6 +135,7 @@
             -->
             <wliu.search db="ViewData.database" tb="Member"></wliu.search>
             <wliu.export db="ViewData.database" tb="Member"></wliu.export>
+            <wliu.email db="ViewData.database" tb="EmailNotify"></wliu.email>
             <br />
             <filter.checkcom db="ViewData.database" tb="Member" col="search_usertype" icon="detail"></filter.checkcom>
         </fieldset>
@@ -395,13 +402,40 @@
                 <div>
                     <table border="0" cellpadding="2" cellspacing="2" style="width:100%;">
                         <tr>
-                            <td colspan="2" width="100%" style="border-bottom:1px solid #cccccc;">
+                            <td width="80%" style="border-bottom:1px solid #cccccc;">
                                 <form.checkcom db="ViewData.database" tb="Member" col="UserRole" icon="detail"></form.checkcom>
                                 <form.checkcom db="ViewData.database" tb="Member" col="UserType" icon="detail"></form.checkcom>
+                                <table>
+                                    <tr>
+                                        <td valign="middle">
+                                            <form.label db="ViewData.database" tb="Member" col="ResetPassword"></form.label>:
+                                            <form.bool db="ViewData.database" tb="Member" col="ResetPassword"></form.bool>
+                                        </td>
+                                        <td valign="middle">
+                                            <form.label db="ViewData.database" tb="Member" col="CreatedBy"></form.label>:
+                                            <form.stext db="ViewData.database" tb="Member" col="CreatedBy"></form.stext>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td rowspan="2" width="20%" valign="top" align="center" style="position:relative; border-left:1px solid #cccccc;">
+                                <div id="vcard_card" style="display:block; width:60mm;text-align:center;">
+                                    <card.vcard gallery="Gallery" db="ViewData.database" tb="Member" company="SHAOLIN MEMBER" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.vcard>
+                                </div>
+                                <div id="shaolin_card" style="display:none; width:60mm;text-align:center;">
+                                    <card.shaolin gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.shaolin>
+                                </div>
+                                <div id="member_card" style="display:none; width:60mm;text-align:center;">
+                                    <card.member gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.member>
+                                </div>
+                                <div id="hcard_card" style="display:none; width:60mm;text-align:center;">
+                                    <card.hcard gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.hcard>
+                                </div>
+                                <card.print db="ViewData.database" gallery="Gallery" action="cardPrint()"></card.print>
                             </td>
                         </tr>
                         <tr>
-                            <td width="50%" valign="top" align="center">
+                            <td width="80%" valign="top" align="center">
                                 <vcard.select gallery="Gallery" action="vcardClick()"></vcard.select>
                                 <br />
                                 <shaolin.select gallery="Gallery" action="shaolinClick()"></shaolin.select>
@@ -409,21 +443,6 @@
                                 <member.select gallery="Gallery" action="memberClick()"></member.select>
                                 <br />
                                 <hcard.select gallery="Gallery" action="hcardClick()"></hcard.select>
-                                <card.print db="ViewData.database" gallery="Gallery" action="cardPrint()"></card.print>
-                            </td>
-                            <td width="50%" valign="top" align="center" style="position:relative;">
-                                <div id="vcard_card" style="display:block; width:60mm;height:90mm;text-align:center;">
-                                    <card.vcard gallery="Gallery" db="ViewData.database" tb="Member" company="SHAOLIN MEMBER" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.vcard>
-                                </div>
-                                <div id="shaolin_card" style="display:none; width:60mm;height:90mm;text-align:center;">
-                                    <card.shaolin gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.shaolin>
-                                </div>
-                                <div id="member_card" style="display:none; width:60mm;height:90mm;text-align:center;">
-                                    <card.member gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.member>
-                                </div>
-                                <div id="hcard_card" style="display:none; width:60mm;height:90mm;text-align:center;">
-                                    <card.hcard gallery="Gallery" db="ViewData.database" tb="Member" photo="Photo" mid="MemberId" cert="DisplayName" alias="AliasName"></card.hcard>
-                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -439,11 +458,13 @@
         </center>
     </div>
 
+    <wliu.email.notification db="ViewData.database" tb="EmailNotify" tb1="Member" action=""></wliu.email.notification>
+    <wliu.diag></wliu.diag>
+
     <checkbox.diag db="ViewData.database"></checkbox.diag>
     <checkcom.diag db="ViewData.database" maxhh="250px"></checkcom.diag>
     <radio.diag db="ViewData.database"></radio.diag>
     <checkcom.fdiag db="ViewData.database" maxhh="250px"></checkcom.fdiag>
-
     <image.imgview></image.imgview>
     <image.imgedit gallery="Gallery"></image.imgedit>
     <image.maintext gallery="Gallery"></image.maintext>

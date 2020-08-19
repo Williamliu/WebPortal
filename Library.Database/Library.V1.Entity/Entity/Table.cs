@@ -46,10 +46,12 @@ namespace Library.V1.Entity
             this.Collections = new Dictionary<string, Collection>();
             this.GetUrl = string.Empty;
             this.ExportUrl = string.Empty;
+            this.EmailUrl = string.Empty;
             this.SaveUrl = string.Empty;
             this.ValidateUrl = string.Empty;
             this.Rows = new List<Row>();
             this.Other = new Dictionary<string, object>();
+            this.EmailColumns = new List<string>();
             this.DSQL = new SqlHelper();
             this.FSQL = new SqlHelper();
             this.User = new WebUser();
@@ -97,6 +99,7 @@ namespace Library.V1.Entity
         public Guid RowGuid { get; set; }
         public string GetUrl { get; set; }
         public string ExportUrl { get; set; }
+        public string EmailUrl { get; set; }
         public string SaveUrl { get; set; }
         public string ValidateUrl { get; set; }
         public string Debug { get; set; }
@@ -123,7 +126,10 @@ namespace Library.V1.Entity
         private Dictionary<string, object> UpdateKVs { get; set; }
         private Dictionary<string, object> InsertKVs { get; set; }
         private Dictionary<string, object> DeleteKVs { get; set; }
-        
+        private List<string> EmailColumns { get; set; }
+        public void AddEmailColumns(List<string> cols)  {
+            this.EmailColumns = cols;
+        }
         private Dictionary<string, Collection> Collections { get; set; }
         private Meta KeyMeta
         {
@@ -183,6 +189,31 @@ namespace Library.V1.Entity
                 return sqlRow;
             }
         }
+        private SQLRow SQLRowEmail
+        {
+            get
+            {
+                SQLRow sqlRow = new SQLRow();
+                foreach (string metaName in this.Metas.Keys)
+                {
+                    if (this.EmailColumns.Contains(metaName))
+                    {
+                        var jsName = this.Metas[metaName].Name;
+                        var dbName = string.IsNullOrWhiteSpace(this.Metas[metaName].DbName) ? jsName : this.Metas[metaName].DbName;
+
+                        if (this.Source == ESource.Table)
+                            dbName = this.Metas[metaName].IsLang ? this.DSQL.LangSmartColumn(dbName) : dbName;
+                        if (this.Source == ESource.StoreProcedure)
+                            dbName = this.Metas[metaName].IsLang ? this.DSQL.LangColumn(dbName) : dbName;
+
+                        sqlRow.Add(dbName, jsName);
+                    }
+
+                }
+                return sqlRow;
+            }
+        }
+
         private SQLRow SumRowGet
         {
             get
@@ -276,7 +307,13 @@ namespace Library.V1.Entity
         {
             get
             {
-                SQLRow sqlRow = this.Relation.SQLRowInsert;
+                SQLRow sqlRow = new SQLRow();
+                if(string.IsNullOrWhiteSpace(this.Relation.ForeignKey)==false)
+                    if (this.Metas[this.Relation.ForeignKey].IsKey == false)
+                    {
+                        sqlRow = this.Relation.SQLRowInsert;
+                    }
+
                 sqlRow.Add(this.InsertKVs);
                 return sqlRow;
             }
@@ -639,6 +676,121 @@ namespace Library.V1.Entity
             return this;
 
         }
+        public Table AddRowEmail(GRow grow)
+        {
+            Row nrow = new Row();
+            foreach (var colName in this.Metas.Keys)
+            {
+                string dbColName = colName;
+                if (this.Source == ESource.StoreProcedure)
+                    dbColName = this.Metas[colName].IsLang ? this.DSQL.LangColumn(this.Metas[colName].DbName) : this.Metas[colName].DbName;
+
+                if (this.Metas[colName].IsKey) nrow.Key = grow.GetValue(dbColName).GetInt() ?? -1;
+
+                if (this.EmailColumns.Contains(colName) == false) continue;
+
+                Column ncolumn = new Column(colName);
+                switch (this.Metas[colName].Type)
+                {
+                    case EInput.Hidden:
+                        break;
+                    case EInput.Object:
+                    case EInput.String:
+                    case EInput.Email:
+                        ncolumn.Value = grow.GetValue(dbColName);
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Int:
+                        ncolumn.Value = (grow.GetValue(dbColName).GetInt() ?? 0) > 0 ? grow.GetValue(dbColName) : "";
+                        if (this.Metas[colName].ListRef != null && string.IsNullOrWhiteSpace(ncolumn.Value.ToString()) == false)
+                        {
+                            if (string.IsNullOrWhiteSpace(this.Metas[colName].ListRef.Collection) == false)
+                            {
+                                if (this.Collections.ContainsKey(this.Metas[colName].ListRef.Collection))
+                                {
+                                    if (this.Collections[this.Metas[colName].ListRef.Collection].Items.Count == 0) this.Collections[this.Metas[colName].ListRef.Collection].FillData();
+                                    ncolumn.Value = this.Collections[this.Metas[colName].ListRef.Collection].Items.FirstOrDefault(p => p.Value == (grow.GetValue(dbColName).GetInt() ?? 0))?.Title ?? grow.GetValue(dbColName);
+                                }
+                            }
+                        }
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Long:
+                        ncolumn.Value = grow.GetValue(dbColName).GetLong();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Float:
+                        ncolumn.Value = grow.GetValue(dbColName).GetFloat();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Bool:
+                        ncolumn.Value = grow.GetValue(dbColName).GetBool();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Date:
+                        ncolumn.Value = grow.GetValue(dbColName).GetDate();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.IntDate:
+                        ncolumn.Value = (grow.GetValue(dbColName).GetLong() ?? 0).IntDate().YMD();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.DateTime:
+                        ncolumn.Value = grow.GetValue(dbColName).GetDate();
+                        ncolumn.Value1 = grow.GetValue(dbColName).GetTime();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Time:
+                        ncolumn.Value = grow.GetValue(dbColName).GetTime();
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Password:  // never return password
+                        ncolumn.Value = "";
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Passpair:
+                        ncolumn.Value = "";  // never return password
+                        ncolumn.Value1 = "";
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.Read:           // only for get data but save data
+                        ncolumn.Value = grow.GetValue(dbColName);
+                        nrow.AddColumn(ncolumn);
+                        break;
+                    case EInput.ImageUrl:       // handle later
+                    case EInput.ImageContent:   // handle later
+                    case EInput.FileUrl:        // handle later
+                    case EInput.FileContent:   // handle later
+                    case EInput.Custom:         // handle later
+                        break;
+                    case EInput.Checkbox:       // Get Title String
+                        ncolumn.Value = string.Empty;
+                        Column ckCol = this.Metas[colName].QueryCK(this.DSQL, nrow.Key);
+                        Dictionary<string, bool> ckValues = ckCol.Value as Dictionary<string, bool>;
+                        if (ckValues != null)
+                        {
+                            if (string.IsNullOrWhiteSpace(this.Metas[colName].ListRef.Collection) == false)
+                            {
+                                if (this.Collections.ContainsKey(this.Metas[colName].ListRef.Collection))
+                                {
+                                    if (this.Collections[this.Metas[colName].ListRef.Collection].Items.Count == 0) this.Collections[this.Metas[colName].ListRef.Collection].FillData();
+                                    string valString = string.Empty;
+                                    foreach (string ckVal in ckValues.Keys)
+                                    {
+                                        valString = valString.Concat(this.Collections[this.Metas[colName].ListRef.Collection].Items.FirstOrDefault(p => p.Value == (ckVal.GetInt() ?? 0))?.Title ?? ckVal, "; ");
+                                    }
+                                    ncolumn.Value = valString;
+                                }
+                            }
+                        }
+                        nrow.AddColumn(ncolumn);
+                        break;
+                }
+            }
+            this.AddRow(nrow);
+            return this;
+
+        }
         public Table AddRowSum(GRow grow)
         {
             foreach (var colName in this.Metas.Keys)
@@ -752,8 +904,18 @@ namespace Library.V1.Entity
                         if(this.Relation.RefType== ERef.O2O || this.Relation.RefType==ERef.O2M)
                         {
                             string fkName = this.Relation.ForeignKey;
-                            if (this.Metas.ContainsKey(this.Relation.ForeignKey)) fkName = this.Metas[this.Relation.ForeignKey].Title;
-                            if(this.Relation.RefKey<=0) row.Error.Append(ErrorCode.ValueValidate, $"{LanguageHelper.Words("key.missing")} {fkName}");
+                            if (this.Metas.ContainsKey(this.Relation.ForeignKey))
+                            {
+                                if(this.Metas[this.Relation.ForeignKey].IsKey==false)  // fselect  by id ,  foreignkey is Id itself  used for  filter 
+                                {
+                                    fkName = this.Metas[this.Relation.ForeignKey].Title;
+                                    if (this.Relation.RefKey <= 0) row.Error.Append(ErrorCode.ValueValidate, $"{LanguageHelper.Words("key.missing")} {fkName}");
+                                }
+                            }
+                            else
+                            {
+                                if (this.Relation.RefKey <= 0) row.Error.Append(ErrorCode.ValueValidate, $"{LanguageHelper.Words("key.missing")} {fkName}");
+                            }
                         }
                         break;
                     case EState.Changed:
@@ -935,6 +1097,84 @@ namespace Library.V1.Entity
                             if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|StoreProcedure:[{this.DSQL.Debug}]", @"\n\n");
                             this.Error.Append(this.DSQL.Error);
                             foreach (GRow grow in gtable.Rows) this.AddRowExport(grow);
+                            if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
+                        }
+                        break;
+                }
+            }
+            return this;
+        }
+        public Table EmailData(JSTable jsTable, List<string> EmailCols)
+        {
+            if (this.User.Rights.ContainsKey("email") == false) return this;
+            if (this.User.Rights["email"] == false) return this;
+
+            this.SyncJSTable(jsTable);
+            this.AddEmailColumns(EmailCols);
+
+            GTable gtable = new GTable();
+            SQLRow sqlRow = this.SQLRowEmail;
+            if (sqlRow.ColumnCount > 0)
+            {
+                switch (this.Source)
+                {
+                    case ESource.Table:
+                        {
+                            #region ESource.Table
+                            SQLWhere sqlWhere = this.WhereGet;
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Cols:[{sqlRow.ColumnGet}]", @"\n\n");
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Where:[{sqlWhere.WhereGetFilter}]", @"\n\n");
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|OrderBy:[{this.Navi.NaviOrderBy(this.Metas)}]", @"\n\n");
+
+                            if (this.Error.HasError == false)
+                            {
+                                switch (this.Relation.RefType)
+                                {
+                                    case ERef.None:
+                                    case ERef.O2M:
+                                        {
+                                            SQLRow sumRow = this.SumRowGet;
+                                            if (sumRow.ColumnCount > 0)
+                                            {
+                                                GTable sumTable = this.DSQL.GetTable(this.DbName, sumRow, sqlWhere);
+                                                if (sumTable.RowCount > 0) this.AddRowSum(sumTable.Rows[0]);
+                                                if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|SumTable:[{this.DSQL.Debug}]", @"\n\n");
+                                            }
+
+                                            int rowCount = this.DSQL.GetRowCount(this.DbName, sqlWhere);
+                                            this.Navi.Reset(rowCount);
+                                            gtable = this.DSQL.GetTable(this.DbName, sqlRow, sqlWhere, this.Navi.NaviOrderBy(this.Metas));
+                                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Table:[{this.DSQL.Debug}]", @"\n\n");
+                                        }
+                                        break;
+                                    case ERef.O2O:
+                                        {
+                                            int rowCount = this.DSQL.GetRowCount(this.DbName, sqlWhere);
+                                            this.Navi.Reset(rowCount);
+                                            gtable = this.DSQL.GetTable(this.DbName, sqlRow, sqlWhere, this.Navi.NaviOrderBy(this.Metas), "", 1);
+                                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|Table:[{this.DSQL.Debug}]", @"\n\n");
+                                        }
+                                        break;
+                                }
+                                this.Error.Append(this.DSQL.Error);
+                                foreach (GRow grow in gtable.Rows) this.AddRowEmail(grow);
+                                if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
+                            }
+                            #endregion
+                        }
+                        break;
+                    case ESource.StoreProcedure:
+                        {
+                            if (this.DSQL.IsDebug)
+                            {
+                                string debugStr = string.Empty;
+                                this.SqlParams.ForEach(p => debugStr = debugStr.Concat($"{p.ParameterName}={p.Value}", ";"));
+                                this.Debug = this.Debug.Concat($"|SqlParams:[{debugStr}]", @"\n\n");
+                            }
+                            gtable = this.DSQL.ExecuteSP(this.DbName, this.SqlParams.ToArray());
+                            if (this.DSQL.IsDebug) this.Debug = this.Debug.Concat($"|StoreProcedure:[{this.DSQL.Debug}]", @"\n\n");
+                            this.Error.Append(this.DSQL.Error);
+                            foreach (GRow grow in gtable.Rows) this.AddRowEmail(grow);
                             if (this.Rows.Count > 0) this.RowGuid = this.Rows[0].Guid;
                         }
                         break;

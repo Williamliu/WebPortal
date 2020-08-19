@@ -40,6 +40,7 @@ WLIU.Database = function (database) {
         this.method = database.method || "get";
         this.getUrl = database.getUrl;
         this.exportUrl = database.exportUrl;
+        this.emailUrl = database.emailUrl;
         this.saveUrl = database.saveUrl;
         this.user = database.user || {};
         this.user.rights = this.user.rights || {};
@@ -53,6 +54,7 @@ WLIU.Database = function (database) {
         this.method = "get";
         this.getUrl = "";
         this.exportUrl = "";
+        this.emailUrl = "";
         this.saveUrl = "";
         this.user = {};
         this.user.rights = {};
@@ -235,6 +237,7 @@ WLIU.Table = function (table) {
         this.rowGuid = table.rowGuid || "";
         this.getUrl = table.getUrl || "";
         this.exportUrl = table.exportUrl || "";
+        this.emailUrl = table.emailUrl || "";
         this.scanUrl = table.scanUrl || "";
         this.saveUrl = table.saveUrl || "";
         this.validateUrl = table.validateUrl || "";
@@ -257,6 +260,7 @@ WLIU.Table = function (table) {
         this.rowGuid = "";
         this.getUrl = "";
         this.exportUrl = "";
+        this.emailUrl = "";
         this.scanUrl = "";
         this.saveUrl = "";
         this.validateUrl = "";
@@ -783,6 +787,31 @@ WLIU.Table.prototype = {
         });
         return defer.promise();
     },
+    Email: function (url, pageNo) {
+        this.emailUrl = url || this.emailUrl;
+        //prepare post table
+        this.method = "get";
+        let ntable = new WLIU.JSTable(this);
+        let defer = $.Deferred();
+        var self = this;
+        $("div[wliu][loading][method='get']").loading("show");
+        self.TableAjax(self.emailUrl, ntable).then(data => {
+            $("div[wliu][loading][method='get']").loading("hide");
+            self.state = 0;
+            self.navi.isLoading = 0;
+            self.SyncEmailTable(data);
+
+            self.TableAjaxErrorHandle();
+            if (self.error.HasError() === false)
+                defer.resolve(self);
+            else
+                defer.reject(self);
+        }).catch(data => {
+            $("div[wliu][loading][method='get']").loading("hide");
+            defer.reject(self);
+        });
+        return defer.promise();
+    },
     Scan: function (url) {
         return this.Reload(url, 1);
     },
@@ -1148,6 +1177,22 @@ WLIU.Table.prototype = {
         }
 
     },
+    SyncEmailTable: function (gtable) {
+        if (gtable) {
+            let getError = false;
+            // Sync Error
+            // Notes:  back-end code logic:  filter error will add to table error  to prevent query data.
+            this.error = new WLIU.Error(gtable.error);
+            if (this.error.HasError()) getError = true;
+
+            if (gtable && gtable.other) {
+                for (let fName in gtable.other) {
+                    if (gtable.other[fName]) this.other[fName] = gtable.other[fName];
+                }
+            }
+        }
+    },
+
     SyncSaveTable: function (gtable) {
         //this.refKey = gtable.refKey;
         //this.rowGuid = gtable.rowGuid;

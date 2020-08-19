@@ -572,6 +572,108 @@ WLIU_NG.directive("wliu.export", function () {
     };
 });
 
+WLIU_NG.directive("wliu.email", function () {
+    return {
+        restrict: "E",
+        replace: true,
+        transclude: true,
+        scope: {
+            db: "=",
+            tb: "@",
+            label: "@",
+            action: "&"
+        },
+        template: [
+            '<a wliu button green ',
+                'ng-click="emailAction()" ',
+                'ng-show="emailState()" ',
+                'diag-toggle="EmailNotificationDiagToggle" ',
+            '>{{(label?label:Words("button.email"))}}</a>'
+        ].join(''),
+        controller: function ($scope, $window) {
+            $scope.Words = $window.Words;
+
+            $scope.emailAction = function () {
+                if ($scope.db.tables[$scope.tb]) {
+                    $scope.db.tables[$scope.tb].Export();
+                    if ($scope.action) if ($.isFunction($scope.action)) $scope.action();
+                }
+            };
+
+            $scope.emailState = function () {
+                let flag = true;
+                if ($scope.db.user && $scope.db.user.rights && !$scope.db.user.rights.email) flag = false;
+                return flag;
+            };
+
+        }
+    };
+});
+
+WLIU_NG.directive("wliu.email.notification", function () {
+    return {
+        restrict: "E",
+        replace: true,
+        transclude: true,
+        scope: {
+            db:     "=",
+            tb:     "@",
+            tb1:    "@",
+            label:  "@",
+            action: "&"
+        },
+        template: [
+            '<div id="EmailNotificationDiag" wliu diag maskable movable diag-toggle="EmailNotificationDiagToggle" style="width:800px;">',
+                '<div head>{{Words(\'email.notification\')}}</div>',
+                '<div body>',
+                    '<div>',
+                        '<filter.label db="db" tb="{{tb}}" col="search_email"></filter.label>: ',
+                        '<filter.linkselect style="min-width:320px;" db="db" tb="{{tb}}" col="search_email"></filter.linkselect>',
+                    '</div>',
+                    '<div>',
+                        '<assm.label db="db" tb="{{tb}}" col="Subject">',
+                    '</div>',
+                    '<div>',
+                        '<assm.html db="db" tb="{{tb}}" col="Detail" ww="100%;" hh="320px">',
+                    '</div>',
+                '</div>',
+                '<center>',
+                    '<a wliu button blue ng-click="emailSend()">{{Words(\'button.send\')}}</a>',
+                    '<a wliu button blue diag-toggle="EmailNotificationDiagToggle">{{Words(\'button.close\')}}</a>',
+                '</center>',
+            '</div>'
+        ].join(''),
+        controller: function ($scope, $window) {
+            $scope.Words = $window.Words;
+
+            $scope.emailSend = function () {
+                if ($scope.db.user && $scope.db.user.rights && $scope.db.user.rights.email) {
+
+                    let refKey = $scope.db.tables[$scope.tb].CurrentKey();
+                    console.log("Key:" + refKey);
+                    $scope.db.tables[$scope.tb1].other["EmailNotify"] = refKey;
+                    $scope.db.tables[$scope.tb1].Email().then(d => {
+                        $("#EmailNotificationDiag").diag("hide");
+                        $("#wliuDiag").diag({ content: $scope.Words("email.sent.total") + ": " + d.navi.rowTotal }).diag("show");
+
+                        if ($scope.action) if ($.isFunction($scope.action)) $scope.action();
+                        $scope.$apply();
+                    }).catch(data => {
+                        $scope.$apply();
+                    });
+                } else {
+                    $scope.db.tables[$scope.tb].error.Clear();
+                    $scope.db.tables[$scope.tb].error.Append(4001, $scope.Words("rights.email.na"));
+                    $scope.db.tables[$scope.tb].TableAjaxErrorHandle(0);
+                }
+            };
+        }
+    };
+});
+
+
+
+
 // only for filter type EInput.Image
 WLIU_NG.directive("wliu.scan", function () {
     return {
@@ -1411,6 +1513,34 @@ WLIU_NG.directive("wliu.imgcontent", function () {
         }
     };
 });
+WLIU_NG.directive("wliu.diag", function () {
+    return {
+        restrict: "E",
+        replace: true,
+        transclude: true,
+        scope: {
+            label:  "@",
+            content: "@"
+        },
+        template: [
+            '<div id="wliuDiag" wliu diag maskable movable diag-toggle="wliuDiagToggle">',
+            '<div head>',
+                '{{label}}',
+            '</div>',
+            '<div body style="min-height:60px;">',
+                '{{content}}',
+            '</div>',
+            '<center><a wliu button blue diag-toggle="wliuDiagToggle">{{Words(\'button.close\')}}</a></center>',
+            '</div>'
+        ].join(''),
+        controller: function ($scope, $window) {
+            $scope.Words = $window.Words;
+        },
+        link: function (sc, el, attr) {
+        }
+    };
+});
+
 WLIU_NG.directive("table.error", function () {
     return {
         restrict: "E",
@@ -2799,7 +2929,7 @@ WLIU_NG.directive("form.ckeditor", function () {
         },
         template: [
             '<span>',
-                '<label wliu fit h2 ng-if="label" ',
+                '<label wliu fit ng-if="label" ',
                     'ng-attr="{\'need\': db.tables[tb].metas[col].required, \'input-invalid\': db.tables[tb].CurrentColumnHasError(col)}" ',
                     'title="{{db.tables[tb].metas[col].title?db.tables[tb].metas[col].title:col}}"',
                 '>',
@@ -2886,14 +3016,14 @@ WLIU_NG.directive("form.ckinline", function () {
         },
         template: [
             '<span>',
-            '<label wliu fit h2 ng-if="label" ',
+            '<label wliu fit ng-if="label" ',
             'ng-attr="{\'need\': db.tables[tb].metas[col].required, \'input-invalid\': db.tables[tb].CurrentColumnHasError(col)}" ',
             'title="{{db.tables[tb].metas[col].title?db.tables[tb].metas[col].title:col}}"',
             '>',
             '{{db.tables[tb].metas[col].title}}',
             '</label>',
             '<input type="hidden" ',
-            formRowModel,
+                formRowModel,
             ' />',
             '<textarea wliu fit id="{{tb}}_{{col}}_ckeditor"></textarea>',
             '</span>'
@@ -2985,12 +3115,13 @@ WLIU_NG.directive("assm.html", function () {
             db:     "=",
             tb:     "@",
             col:    "@",
-            hh:     "@"
+            hh:     "@",
+            ww:     "@"
         },
         template: [
             '<div comm assm fixed>',
                 '<label text for="assm_{{tb}}_{{col}}">',
-                    '<div style="max-height:{{hh}};" ng-bind-html="getHTML(db.tables[tb].CurrentColumn(col).value)"></div>',
+                    '<div style="display:block;height:{{hh}};width:{{ww}};overflow:auto; padding-top:32px;" ng-bind-html="getHTML(db.tables[tb].CurrentColumn(col).value)"></div>',
                 '</label>',
                 '<label assm id="assm_{{tb}}_{{col}}" ',
                     'title="{{db.tables[tb].metas[col].title?db.tables[tb].metas[col].title:col}}"',
@@ -3001,6 +3132,7 @@ WLIU_NG.directive("assm.html", function () {
         ].join(''),
         controller: function ($scope, $sce) {
             $scope.hh = $scope.hh || "80px";
+            $scope.ww = $scope.ww || "100%";
             $scope.getHTML = function (htmlText) {
                 return $sce.trustAsHtml(htmlText);
             };
@@ -4409,8 +4541,8 @@ WLIU_NG.directive("card.print", function () {
             action: "&"
         },
         template: [
-            '<div style="display:block;text-align:left;margin-top:12px;">',
-                '<a wliu button h2 green ng-if="printState()" ng-click="print()">{{Words("button.print")}}</a>',
+            '<div style="display:inline-block;text-align:left;position:absolute;bottom:6px;">',
+                '<a wliu button green ng-if="printState()" ng-click="print()" style="display:inline-block;position:relative;">{{Words("button.print")}}</a>',
             '</div>'
         ].join(''),
         controller: function ($scope, $window, $sce) {

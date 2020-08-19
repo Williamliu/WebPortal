@@ -21,7 +21,7 @@ namespace Web.Portal.WebApi.Controllers
         [HttpGet("InitPubUser")]
         public IActionResult InitPubUser()
         {
-            this.Init("P01");
+            this.Init("P10");
             this.DB.FillAll();
             return Ok(this.DB);
         }
@@ -29,21 +29,35 @@ namespace Web.Portal.WebApi.Controllers
         [HttpPost("SavePubUser")]
         public IActionResult SavePubUser(JSTable gtb)
         {
-            this.Init("P01");
+            this.Init("P10");
             return Ok(this.DB.SaveTable(gtb));
         }
         [HttpPost("ValidatePubUser")]
         public IActionResult ValidatePubUser(JSTable gtb)
         {
-            this.Init("P01");
+            this.Init("P10");
             return Ok(this.DB.ValidateTable(gtb));
+        }
+
+        [HttpGet("InitResetPassword")]
+        public IActionResult InitResetPassword()
+        {
+            this.Init("P20");
+            this.DB.FillAll();
+            return Ok(this.DB);
+        }
+        [HttpPost("SaveResetPassword")]
+        public IActionResult SaveResetPassword(JSTable gtb)
+        {
+            this.Init("P20");
+            return Ok(this.DB.SaveTable(gtb));
         }
 
         protected override void InitDatabase(string menuId)
         {
             switch (menuId)
             {
-                case "P01":
+                case "P10":
                     {
                         Table PubUser = new Table("PubUser", "Pub_User", Words("pub.user"));
                         Meta id = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true };
@@ -170,10 +184,25 @@ namespace Web.Portal.WebApi.Controllers
                         this.DB.AddTables(PubUser).AddCollections(EducationList, LanguageList, ReligionList, HearUsList, SymbolList, IdTypeList, BranchList, StateList, CountryList, genderList, monthList, dayList, UserTypeList);
                     }
                     break;
-                case "P02":
+                case "P20":
+                    {
+                        Table PubUser = new Table("PubUser", "Pub_User", Words("pub.user"));
+                        Meta id = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true };
+                        Meta password = new Meta { Name = "Password", DbName = "Password", Title = Words("col.password"), Description = Words("confirm.password"), Required=true, Type = EInput.Passpair, MinLength = 6, MaxLength = 32 };
+                        PubUser.AddMetas(id, password);
+                        PubUser.AddQueryKV("Deleted", false).AddQueryKV("Active", true)
+                                .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
+                                .AddUpdateKV("ResetPassword", false);
+                        PubUser.AddRelation(new Relation(ERef.O2O, "Id", this.DB.User.Id));
+
+                        PubUser.SaveUrl = "/api/Profile/SaveResetPassword";
+                        this.DB.AddTables(PubUser);
+                    }
+                    break;
+                case "P30":
                     // My Message
                     break;
-                case "P03":
+                case "P90":
                     // Logout: don't need code for SignOut
                     break;
             }
