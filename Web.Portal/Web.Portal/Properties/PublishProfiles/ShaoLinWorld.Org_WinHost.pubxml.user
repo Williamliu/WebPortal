@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>08/19/2020 15:16:16</publishTime>
+      <publishTime>08/19/2020 17:20:09</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>08/19/2020 15:16:14</publishTime>
+      <publishTime>08/19/2020 17:20:07</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>08/19/2020 15:15:59</publishTime>
+      <publishTime>08/19/2020 17:20:05</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>08/19/2020 15:16:00</publishTime>
+      <publishTime>08/19/2020 17:20:05</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>08/19/2020 15:15:59</publishTime>
+      <publishTime>08/19/2020 17:20:05</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
       <publishTime>08/08/2020 23:51:42</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>08/19/2020 15:16:03</publishTime>
+      <publishTime>08/19/2020 17:20:07</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>08/19/2020 15:16:03</publishTime>
+      <publishTime>08/19/2020 17:20:07</publishTime>
     </File>
     <File Include="wwwroot/favicon.png">
       <publishTime>07/05/2020 23:15:03</publishTime>
