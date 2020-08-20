@@ -60,37 +60,35 @@
     </script>
 }
 <div ng-app="myApp" ng-controller="myControl">
-    <div class="container-fluid">
-        <ng-form>
-            <fieldset>
-                <legend>@Html.Words("search.by")</legend>
-                <filter.label db="ViewData.database" tb="ClassCalendar" col="search_branch"></filter.label>
-                <filter.select db="ViewData.database" tb="ClassCalendar" col="search_branch" reload="0" action="reloadCalendar()"></filter.select>
-                <filter.label db="ViewData.database" tb="ClassCalendar" col="search_site"></filter.label>
-                <filter.fselect db="ViewData.database" tb="ClassCalendar" col="search_site" fcol="search_branch" reload="0" action="reloadCalendar()"></filter.fselect>
-                <wliu.search db="ViewData.database" tb="ClassCalendar" action="reloadCalendar()">Search</wliu.search>
-            </fieldset>
-            <div wliu calendar style="margin-top:20px;"></div>
-            <div>
-                <span style="vertical-align:middle;">@Html.Words("col.status"):</span>
-                <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#b8870d;"></div>
-                -
-                <span style="vertical-align:middle;">@Html.Words("status.hidden")</span>
-                <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#ff5103;"></div>
-                -
-                <span style="vertical-align:middle;">@Html.Words("status.internal")</span>
-                <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#000000;"></div>
-                -
-                <span style="vertical-align:middle;">@Html.Words("status.publish")</span>
-                <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#c101c4;"></div>
-                -
-                <span style="vertical-align:middle;">@Html.Words("status.progress")</span>
-                <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#008743;"></div>
-                -
-                <span style="vertical-align:middle;">@Html.Words("status.close")</span>
-            </div>
-        </ng-form>
-    </div>
+    <ng-form>
+        <fieldset>
+            <legend>@Html.Words("search.by")</legend>
+            <filter.label db="ViewData.database" tb="ClassCalendar" col="search_branch"></filter.label>
+            <filter.select db="ViewData.database" tb="ClassCalendar" col="search_branch" reload="0" action="reloadCalendar()"></filter.select>
+            <filter.label db="ViewData.database" tb="ClassCalendar" col="search_site"></filter.label>
+            <filter.fselect db="ViewData.database" tb="ClassCalendar" col="search_site" fcol="search_branch" reload="0" action="reloadCalendar()"></filter.fselect>
+            <wliu.search db="ViewData.database" tb="ClassCalendar" action="reloadCalendar()">Search</wliu.search>
+        </fieldset>
+        <div wliu calendar style="margin-top:6px;"></div>
+        <div>
+            <span style="vertical-align:middle;">@Html.Words("col.status"):</span>
+            <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#b8870d;"></div>
+            -
+            <span style="vertical-align:middle;">@Html.Words("status.hidden")</span>
+            <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#ff5103;"></div>
+            -
+            <span style="vertical-align:middle;">@Html.Words("status.internal")</span>
+            <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#000000;"></div>
+            -
+            <span style="vertical-align:middle;">@Html.Words("status.publish")</span>
+            <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#c101c4;"></div>
+            -
+            <span style="vertical-align:middle;">@Html.Words("status.progress")</span>
+            <div style="display:inline-block; width:16px; height:16px; border:1px solid #cccccc; margin-left:6px; vertical-align:middle; background-color:#008743;"></div>
+            -
+            <span style="vertical-align:middle;">@Html.Words("status.close")</span>
+        </div>
+    </ng-form>
 
     <div wliu diag maskable movable resizable id="detailInfo" style="width:800px;" diag-toggle="detailInfo">
         <div head>@Html.Words("detail.information")</div>

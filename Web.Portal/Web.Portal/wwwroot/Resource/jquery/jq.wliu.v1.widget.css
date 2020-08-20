@@ -1993,7 +1993,8 @@ div[wliu-tooltip] s[arrow][active] {
 
 div[wliu][calendar] {
     display:            block;
-    min-width:          260px;
+    padding:            0px;
+    margin:             0px;
 }
 div[wliu][calendar] > table {
     width:      100%;

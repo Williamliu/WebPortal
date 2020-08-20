@@ -167,8 +167,8 @@
     }
 
     [wliu][layout] > [body] {
-        left:           0px;
-        padding:        0px 0px;
+        left:          0px;
+        padding:       0px 2px;
     }
 }
 @media (min-width: 800px) {
@@ -211,7 +211,7 @@
 
     [wliu][layout] > [body] {
         left:           160px;
-        padding:        0px 32px;
+        padding:        0px 12px;
     }
 }
 
@@ -562,6 +562,11 @@ a[pub][menu][toggle] {
 a[pub][menu][toggle]:hover {
     background:         linear-gradient(40deg, orange, orangered);
 }
+
+div[calendar] {
+    margin: 68px 2px 2px 2px;
+}
+
 @media (max-width: 800px) {
     div[pub][menu],
     div[pub][menu][short]
@@ -665,6 +670,10 @@ a[pub][menu][toggle]:hover {
     }
     td[desktop] {
         display: none;
+    }
+
+    div[calendar] {
+        margin-top: 42px;
     }
 }
 @media (min-width: 800px) {

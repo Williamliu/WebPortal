@@ -72,17 +72,15 @@
 }
 <div ng-app="myApp" ng-controller="myControl">
     <ng-form>
-        <div class="container-fluid">
-            <fieldset>
-                <legend>@Html.Words("search.by")</legend>
-                <filter.label db="ViewData.database" tb="ClassCalendar" col="CountryFilter"></filter.label>
-                <filter.select db="ViewData.database" tb="ClassCalendar" col="CountryFilter" ww="200px" reload="0" action="reloadCalendar()"></filter.select>
-                <filter.label db="ViewData.database" tb="ClassCalendar" col="SiteFilter"></filter.label>
-                <filter.fselect db="ViewData.database" tb="ClassCalendar" col="SiteFilter" ww="250px" fcol="CountryFilter" reload="0" action="reloadCalendar()"></filter.fselect>
-                <wliu.search db="ViewData.database" tb="ClassCalendar" action="reloadCalendar()"></wliu.search>
-            </fieldset>
-            <div wliu calendar style="margin-top:12px;"></div>
-        </div>
+        <fieldset>
+            <legend>@Html.Words("search.by")</legend>
+            <filter.label db="ViewData.database" tb="ClassCalendar" col="CountryFilter"></filter.label>
+            <filter.select db="ViewData.database" tb="ClassCalendar" col="CountryFilter" ww="200px" reload="0" action="reloadCalendar()"></filter.select>
+            <filter.label db="ViewData.database" tb="ClassCalendar" col="SiteFilter"></filter.label>
+            <filter.fselect db="ViewData.database" tb="ClassCalendar" col="SiteFilter" ww="250px" fcol="CountryFilter" reload="0" action="reloadCalendar()"></filter.fselect>
+            <wliu.search db="ViewData.database" tb="ClassCalendar" action="reloadCalendar()"></wliu.search>
+        </fieldset>
+        <div wliu calendar style="margin-top:6px;"></div>
     </ng-form>
 
     <div wliu diag maskable maskclick movable resizable id="detailInfo" style="width:720px;">

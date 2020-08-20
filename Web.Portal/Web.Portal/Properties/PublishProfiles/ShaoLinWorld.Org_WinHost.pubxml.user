@@ -104,22 +104,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="Library.V1.Common.dll">
-      <publishTime>08/13/2020 13:16:17</publishTime>
+      <publishTime>08/20/2020 10:59:11</publishTime>
     </File>
     <File Include="Library.V1.Common.pdb">
-      <publishTime>08/13/2020 13:16:17</publishTime>
+      <publishTime>08/20/2020 10:59:11</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>08/19/2020 14:20:24</publishTime>
+      <publishTime>08/20/2020 10:59:14</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>08/19/2020 14:20:24</publishTime>
+      <publishTime>08/20/2020 10:59:14</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
-      <publishTime>08/13/2020 13:16:19</publishTime>
+      <publishTime>08/20/2020 10:59:13</publishTime>
     </File>
     <File Include="Library.V1.SQL.pdb">
-      <publishTime>08/13/2020 13:16:19</publishTime>
+      <publishTime>08/20/2020 10:59:13</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.JwtBearer.dll">
       <publishTime>05/21/2020 20:26:48</publishTime>
@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>08/19/2020 17:20:09</publishTime>
+      <publishTime>08/20/2020 10:59:50</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>08/19/2020 17:20:07</publishTime>
+      <publishTime>08/20/2020 10:59:21</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>08/19/2020 17:20:05</publishTime>
+      <publishTime>08/20/2020 10:59:18</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>08/19/2020 17:20:05</publishTime>
+      <publishTime>08/20/2020 10:59:18</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>08/19/2020 17:20:05</publishTime>
+      <publishTime>08/20/2020 10:59:17</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
-      <publishTime>08/08/2020 23:51:42</publishTime>
+      <publishTime>08/20/2020 10:59:21</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>08/19/2020 17:20:07</publishTime>
+      <publishTime>08/20/2020 10:59:21</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>08/19/2020 17:20:07</publishTime>
+      <publishTime>08/20/2020 10:59:21</publishTime>
     </File>
     <File Include="wwwroot/favicon.png">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -467,7 +467,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.v1.widget.css">
-      <publishTime>08/17/2020 16:53:21</publishTime>
+      <publishTime>08/20/2020 09:57:11</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.v1.widget.js">
       <publishTime>08/19/2020 12:41:17</publishTime>
@@ -2750,7 +2750,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/Images/ShaolinBackground/baduanjing.jpg">
-      <publishTime>07/19/2020 16:14:43</publishTime>
+      <publishTime>08/19/2020 22:02:10</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/Images/ShaolinBackground/shaolintemple_bg.jpg">
       <publishTime>07/11/2020 13:03:33</publishTime>
@@ -2834,7 +2834,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/17/2020 19:23:33</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/wliu.v1.layout.css">
-      <publishTime>08/17/2020 17:41:18</publishTime>
+      <publishTime>08/20/2020 10:13:11</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/wliu.v1.pub.layout.css">
       <publishTime>08/15/2020 11:08:05</publishTime>
