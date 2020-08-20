@@ -6,6 +6,7 @@
 
 
 
+
 CREATE VIEW [dbo].[VW_Class_Enroll_Member]
 AS
 SELECT  
@@ -17,6 +18,7 @@ SELECT
 	MemberType,
 	FirstName,
 	LastName,
+	UserName,
 	FirstNameLegal,
 	LastNameLegal,
 	DharmaName,
