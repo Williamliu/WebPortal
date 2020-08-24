@@ -98,13 +98,13 @@
             font-weight: bold;
             font-variant: small-caps;
             color: #dddddd !important;
-            margin-left: 12px;
             background-image: initial;
             background-color: transparent;
             min-height: initial;
             height: initial;
             line-height: 1.5em;
             margin-bottom: 20px;
+            text-align:     center;
         }
 
         div[sl-card][contact][body] {
@@ -143,6 +143,12 @@
         @@media (max-width:800px) {
             div[content-body] {
                 padding: 20px 0px 60px 0px;
+            }
+            div[sl-card][body] {
+                padding: 6px 6px 6px 6px;
+            }
+            h3[subject] {
+                font-size: 18px;
             }
         }
     </style>

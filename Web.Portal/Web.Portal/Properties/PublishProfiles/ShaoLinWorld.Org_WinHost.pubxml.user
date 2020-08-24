@@ -104,22 +104,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="Library.V1.Common.dll">
-      <publishTime>08/20/2020 10:59:11</publishTime>
+      <publishTime>08/23/2020 23:24:34</publishTime>
     </File>
     <File Include="Library.V1.Common.pdb">
-      <publishTime>08/20/2020 10:59:11</publishTime>
+      <publishTime>08/23/2020 23:24:34</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>08/20/2020 10:59:14</publishTime>
+      <publishTime>08/23/2020 23:24:37</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>08/20/2020 10:59:14</publishTime>
+      <publishTime>08/23/2020 23:24:37</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
-      <publishTime>08/20/2020 10:59:13</publishTime>
+      <publishTime>08/23/2020 23:24:36</publishTime>
     </File>
     <File Include="Library.V1.SQL.pdb">
-      <publishTime>08/20/2020 10:59:13</publishTime>
+      <publishTime>08/23/2020 23:24:36</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.JwtBearer.dll">
       <publishTime>05/21/2020 20:26:48</publishTime>
@@ -287,31 +287,106 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>08/20/2020 18:26:06</publishTime>
+      <publishTime>08/24/2020 00:09:32</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>08/20/2020 18:26:03</publishTime>
+      <publishTime>08/24/2020 00:09:28</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>08/20/2020 18:26:01</publishTime>
+      <publishTime>08/24/2020 00:09:24</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>08/20/2020 18:26:01</publishTime>
+      <publishTime>08/24/2020 00:09:25</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>08/20/2020 18:26:01</publishTime>
+      <publishTime>08/24/2020 00:09:24</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
-      <publishTime>08/20/2020 10:59:21</publishTime>
+      <publishTime>08/23/2020 23:24:49</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>08/20/2020 18:26:03</publishTime>
+      <publishTime>08/24/2020 00:09:28</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>08/20/2020 18:26:03</publishTime>
+      <publishTime>08/24/2020 00:09:28</publishTime>
     </File>
     <File Include="wwwroot/favicon.png">
       <publishTime>07/05/2020 23:15:03</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/home_01.jpg">
+      <publishTime>08/22/2020 20:14:47</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/home_02.jpg">
+      <publishTime>08/23/2020 20:16:50</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/home_03.jpg">
+      <publishTime>08/23/2020 20:16:03</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/home_04.jpg">
+      <publishTime>08/23/2020 20:17:46</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/shaolin_bg1.png">
+      <publishTime>08/23/2020 18:22:45</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/shaolin_lg1.png">
+      <publishTime>08/23/2020 18:29:30</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/arrows.png">
+      <publishTime>06/28/2013 16:06:16</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/bullet.png">
+      <publishTime>06/28/2013 16:06:16</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/fullscreen.png">
+      <publishTime>02/14/2012 10:28:22</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/pause.png">
+      <publishTime>07/23/2013 10:56:32</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/play.png">
+      <publishTime>07/23/2013 10:56:32</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/Thumbs.db">
+      <publishTime>10/23/2013 14:01:30</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/triangle.png">
+      <publishTime>06/28/2013 16:06:16</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/jslider_style.css">
+      <publishTime>08/22/2020 20:59:12</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/images/01.png">
+      <publishTime>08/23/2020 23:55:23</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/images/02.png">
+      <publishTime>08/23/2020 23:55:48</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/images/03.PNG">
+      <publishTime>08/23/2020 23:56:14</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/images/Thumbs.db">
+      <publishTime>10/23/2013 13:45:31</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/tooltips/01.png">
+      <publishTime>08/23/2020 16:59:10</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/tooltips/02.png">
+      <publishTime>08/23/2020 16:59:37</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/tooltips/03.PNG">
+      <publishTime>08/23/2020 17:00:09</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/tooltips/Thumbs.db">
+      <publishTime>10/23/2013 14:23:43</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/jquery.js">
+      <publishTime>06/25/2013 11:33:42</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/jslider_class.js">
+      <publishTime>10/23/2013 14:26:04</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/jslider_init.js">
+      <publishTime>08/22/2020 21:00:45</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/angular.min.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
