@@ -165,7 +165,7 @@ LWH.CALENDAR.prototype = {
 				html += 'Date: ';
 				html += '</td style="width:300px;">';
 				html += '<td align="left" valign="top"  style="padding:0px 5px 0px 5px; font-size:12px;  text-transform:none; font-weight:bold;">';
-				html += tObj.date + ' ' + this.month_short[tObj.month] + ', ' + tObj.year + '  ' + this.day_desc[this.getWDay(tObj.year,tObj.month,tObj.date)];
+				html += tObj.date + ' ' + this.month_short[tObj.month] + ', ' + tObj.year + '  ' + this.day_short[this.getWDay(tObj.year,tObj.month,tObj.date)];
 				html += '<input type="button" class="date-btn-clear" yy="' + tObj.year + '" mm="' + tObj.month + '" dd="' + tObj.date + '" style="float:right;" value="Delete" />';
 				html += '</td>';
 				html += '</tr><tr>';
