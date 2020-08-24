@@ -1,0 +1,20 @@
+$(function(){
+	$("#myslider").wowSlider({
+		effect:"fade", //basic, basic_linear, blinds, blur, blast, book fade, cube,  domino, fly
+		prev:"",
+		next:"",
+		duration:20*100,
+		delay:20*100,
+		width:800,
+		height:500,
+		autoPlay:true,
+		playPause:true,
+		stopOnHover:false,
+		loop:false,
+		bullets:true,
+		caption:false,
+		captionEffect:"move",
+		controls:true,
+		onBeforeStep:0,
+		images:0});
+});
