@@ -1537,6 +1537,9 @@ WLIU_NG.directive("wliu.diag", function () {
             $scope.Words = $window.Words;
         },
         link: function (sc, el, attr) {
+            $(function () {
+                $("#wliuDiag", el).diag({});
+            });
         }
     };
 });

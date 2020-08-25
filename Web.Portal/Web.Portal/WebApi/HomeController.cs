@@ -206,8 +206,6 @@ namespace Web.Portal.WebApi.Controllers
             this.DB.Tables["UserPassword"].Filters["filterGuid"].Value1 = gtb.Other.GetValue("token");
             return Ok(this.DB.SaveTable(gtb));
         }
-
-
         private string CreateAuthToken(string email, string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -225,6 +223,56 @@ namespace Web.Portal.WebApi.Controllers
             var stringToken = tokenHandler.WriteToken(token);
             return stringToken;
         }
+
+
+        [HttpGet("InitContactUs")]
+        public IActionResult InitContactUs()
+        {
+            Init("M90");
+            this.DB.FillAll();
+            return Ok(this.DB);
+        }
+        [HttpPost("SaveContactUs")]
+        public IActionResult SaveContactUs(JSTable gtb)
+        {
+            this.Init("M90");
+            Table contactUs = this.DB.ValidateTableOnly(gtb);
+            if (contactUs.IndexFirst())
+            {
+                Row row = contactUs.IndexFetch();
+                if (row.HasError == false)
+                {
+                    string userName = row.GetValue("FullName").GetString();
+                    string userEmail = row.GetValue("Email").GetString();
+                    string userPhone = row.GetValue("Phone").GetString();
+                    string message = row.GetValue("Detail").GetString().NL2BR();
+
+                    MMEmail myemail = new MMEmail("mail.shaolinworld.org", "info@shaolinworld.org", "SL2020$");
+                    myemail.Port = 26;
+                    myemail.enableSSL = false;
+                    myemail.addFrom("info@shaolinworld.org");
+
+                    List<Dictionary<string, string>> sysEmailRows = this.DB.DSQL.Query("SELECT ItemValue FROM GSetting WHERE Deleted=0 AND Active=1 AND ItemName='ContactUsEmail'", new Dictionary<string, object>());
+                    foreach (Dictionary<string, string> emailRow in sysEmailRows)
+                    {
+                        if (string.IsNullOrWhiteSpace(emailRow.GetValue("ItemValue")) == false)
+                            myemail.addTo(emailRow.GetValue("ItemValue"));
+                    }
+
+                    myemail.Subject = Words("contact.us.message.subject");// "New Student Enrolled";
+                    myemail.Content = "<html><body>";
+                    myemail.Content += string.Format(Words("contact.us.message.content"), userName, userPhone, userEmail, message); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
+                    myemail.Content += "</body></html>";
+                    myemail.SendAsync();
+
+                    this.DB.SaveTableOnly(gtb);
+                    this.DB.SaveTableClear(gtb);
+                }
+            }
+
+            return Ok(contactUs);
+        }
+
 
         protected override void InitDatabase(string menuId)
         {
@@ -311,6 +359,23 @@ namespace Web.Portal.WebApi.Controllers
                         UserPass.AddFilter(f1);
 
                         this.DB.AddTable(UserPass);
+                    }
+                    break;
+                case "M90":
+                    {
+                        Table ContactUs = new Table("ContactUs", "ContactUs", Words("contact.us"));
+                        Meta id = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true };
+                        Meta userId = new Meta { Name = "UserId", DbName = "UserId", Title = Words("col.userid"), Type=EInput.Int, Value=this.DB.User.Id };
+                        Meta fullName = new Meta { Name = "FullName", DbName = "FullName", Title = Words("col.fullname"), Required = true, Type = EInput.String, MaxLength = 128, Value=$"{this.DB.User.FirstName} {this.DB.User.LastName}" };
+                        Meta email = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Type = EInput.Email, Required = true, MaxLength = 256, Value=$"{this.DB.User.Email}" };
+                        Meta phone = new Meta { Name = "Phone", DbName = "Phone", Title = Words("col.phone"), Type = EInput.String, MaxLength = 32, Value = $"{(string.IsNullOrWhiteSpace(this.DB.User.Phone)?this.DB.User.Cell:this.DB.User.Phone)}" };
+                        Meta detail = new Meta { Name = "Detail", DbName = "Detail", Title = Words("contact.content"), Required = true, Type = EInput.String, MaxLength = 4000, Value = "" };
+                        ContactUs.AddMetas(id, userId, fullName, email, phone, detail);
+                        ContactUs.AddQueryKV("Id", -1)
+                            .AddInsertKV("Deleted", false).AddInsertKV("Active", true)
+                            .AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());
+                        ContactUs.SaveUrl = "/api/Home/SaveContactUs";
+                        this.DB.AddTable(ContactUs);
                     }
                     break;
             }

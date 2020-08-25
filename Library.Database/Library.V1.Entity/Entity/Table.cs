@@ -1270,6 +1270,21 @@ namespace Library.V1.Entity
         {
             this.SyncJSTable(jsTable);
             this.ValidateRow();
+
+            this.SaveDataOnly();
+            this.SaveDataClear();
+            return this;
+        }
+
+
+        public Table ValidateTableOnly(JSTable jsTable)
+        {
+            this.SyncJSTable(jsTable);
+            this.ValidateRow();
+            return this;
+        }
+        public Table SaveDataOnly()
+        {
             foreach (Row row in this.Rows)
             {
                 if (this.Error.HasError == false && row.HasError == false)
@@ -1324,14 +1339,69 @@ namespace Library.V1.Entity
                                             {
                                                 string sync_dbName = this.Metas[colName].IsLang ? this.DSQL.LangColumn(this.Metas[colName].DbName) : this.Metas[colName].DbName;
                                                 IList<Dictionary<string, string>> syncRows = this.DSQL.Query($"SELECT {sync_dbName} as {colName} FROM {this.DbName} WHERE {this.KeyMeta.DbName}={row.Key}", new Dictionary<string, object>());
-                                                if (row.Columns.ContainsKey(colName))
+                                                if (syncRows.Count > 0)
                                                 {
-                                                    row.Columns[colName].Value = "";
-                                                    if (syncRows.Count > 0) row.Columns[colName].Value = syncRows[0][colName];
-                                                }
-                                                else
-                                                {
-                                                    row.AddColumn(new Column(colName, syncRows[0][colName]));
+                                                    object syncValue = "";
+                                                    object syncValue1 = "";
+                                                    switch (this.Metas[colName].Type)
+                                                    {
+                                                        case EInput.Hidden:
+                                                        case EInput.Object:
+                                                        case EInput.String:
+                                                        case EInput.Email:
+                                                            syncValue = syncRows[0][colName];
+                                                            break;
+                                                        case EInput.Int:
+                                                            syncValue = syncRows[0][colName].GetInt();
+                                                            break;
+                                                        case EInput.Long:
+                                                            syncValue = syncRows[0][colName].GetLong();
+                                                            break;
+                                                        case EInput.Float:
+                                                            syncValue = syncRows[0][colName].GetFloat();
+                                                            break;
+                                                        case EInput.Bool:
+                                                            syncValue = syncRows[0][colName].GetBool();
+                                                            break;
+                                                        case EInput.Date:
+                                                            syncValue = syncRows[0][colName].GetDate();
+                                                            break;
+                                                        case EInput.IntDate:
+                                                            syncValue = (syncRows[0][colName].GetLong() ?? 0).IntDate().YMD();
+                                                            break;
+                                                        case EInput.DateTime:
+                                                            syncValue = syncRows[0][colName].GetDate();
+                                                            syncValue1 = syncRows[0][colName].GetTime();
+                                                            break;
+                                                        case EInput.Time:
+                                                            syncValue = syncRows[0][colName].GetTime();
+                                                            break;
+                                                        case EInput.Password:  // never return password
+                                                            syncValue = "";
+                                                            break;
+                                                        case EInput.Passpair: // never return password
+                                                            syncValue = "";
+                                                            syncValue1 = "";
+                                                            break;
+                                                        case EInput.Read:           // only for get data but save data
+                                                            syncValue = syncRows[0][colName];
+                                                            break;
+                                                        default:
+                                                            syncValue = syncRows[0][colName];
+                                                            break;
+                                                    }
+
+
+
+                                                    if (row.Columns.ContainsKey(colName))
+                                                    {
+                                                        row.Columns[colName].Value = syncValue;
+                                                        row.Columns[colName].Value1 = syncValue1;
+                                                    }
+                                                    else
+                                                    {
+                                                        row.AddColumn(new Column(colName, syncValue));
+                                                    }
                                                 }
 
                                             }
@@ -1365,7 +1435,7 @@ namespace Library.V1.Entity
                                         if (this.Metas[colName].AllowSave)
                                         {
                                             string dbName = this.Metas[colName].IsLang ? this.DSQL.LangColumn(this.Metas[colName].DbName) : this.Metas[colName].DbName;
-                                            if(sqlRow.ContainCol(dbName)==false)
+                                            if (sqlRow.ContainCol(dbName) == false)
                                                 sqlRow.Add(this.Metas[colName].DbName, this.Metas[colName].DbName, row.Columns[colName].Value);
                                         }
                                     }
@@ -1446,12 +1516,16 @@ namespace Library.V1.Entity
                     }
                 }
             }
-
+            return this;
+        }
+        public Table SaveDataClear()
+        {
             this.Metas.Clear();
             this.Filters.Clear();
             this.Navi = null;
             return this;
         }
+
         #endregion
     }
 

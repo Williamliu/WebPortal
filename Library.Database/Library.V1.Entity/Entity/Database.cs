@@ -150,11 +150,44 @@ namespace Library.V1.Entity
                 return new Table();
             }
         }
+        public Table ValidateTableOnly(JSTable jsTable)
+        {
+            if (this.Tables.ContainsKey(jsTable.Name))
+            {
+                return this.Tables[jsTable.Name].ValidateTableOnly(jsTable);
+            }
+            else
+            {
+                return new Table();
+            }
+        }
         public Table SaveTable(JSTable jstable)
         {
             if (this.Tables.ContainsKey(jstable.Name))
             {
                 return this.Tables[jstable.Name].SaveData(jstable);
+            }
+            else
+            {
+                return new Table();
+            }
+        }
+        public Table SaveTableOnly(JSTable jstable)
+        {
+            if (this.Tables.ContainsKey(jstable.Name))
+            {
+                return this.Tables[jstable.Name].SaveDataOnly();
+            }
+            else
+            {
+                return new Table();
+            }
+        }
+        public Table SaveTableClear(JSTable jstable)
+        {
+            if (this.Tables.ContainsKey(jstable.Name))
+            {
+                return this.Tables[jstable.Name].SaveDataClear();
             }
             else
             {

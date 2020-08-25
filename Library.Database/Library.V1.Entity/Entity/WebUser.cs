@@ -32,6 +32,8 @@ namespace Library.V1.Entity
         [JsonIgnore]
         public string Phone { get; set; }
         [JsonIgnore]
+        public string Cell { get; set; }
+        [JsonIgnore]
         public string ImageUrl { get; set; }
         [JsonIgnore]
         public int Branch { get; set; }

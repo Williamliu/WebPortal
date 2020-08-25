@@ -183,6 +183,7 @@ namespace Web.Portal.Common
                     adminUser.UserName = rows[0]["UserName"].GetString();
                     adminUser.Email = rows[0]["Email"].GetString();
                     adminUser.Phone = rows[0]["Phone"].GetString();
+                    adminUser.Cell = rows[0]["Cell"].GetString();
                     adminUser.Branch = rows[0]["BranchId"].GetInt() ?? 0;
                     adminUser.IsAdmin = rows[0]["IsAdmin"].GetBool() ?? false;
                 }
@@ -309,6 +310,7 @@ namespace Web.Portal.Common
                     publicUser.UserName = rows[0]["UserName"].GetString();
                     publicUser.Email = rows[0]["Email"].GetString();
                     publicUser.Phone = rows[0]["Phone"].GetString();
+                    publicUser.Cell = rows[0]["Cell"].GetString();
                     publicUser.Branch = rows[0]["BranchId"].GetInt() ?? 0;
                     publicUser.IsAdmin = false;
                 }

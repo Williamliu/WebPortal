@@ -1,0 +1,265 @@
+﻿@{
+    WebUser PubUser = Context.Items["PubUser"] as WebUser;
+}
+
+@section scripts {
+    <style>
+        div[sl-card] {
+            display: block;
+            min-height: 480px;
+            background-color: #dddddd;
+            box-shadow: 6px 6px 8px 0px rgba(0,0,0,0.3);
+            margin: 12px 0px;
+        }
+
+            div[sl-card][logo] {
+                display: block;
+                position: relative;
+                min-height: initial;
+                background-image: initial;
+                background-color: transparent;
+                box-shadow: initial;
+                margin: 0px;
+                margin-bottom: 6px;
+            }
+
+            div[sl-card][subject] {
+                font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+                font-weight: bold;
+                font-variant: small-caps;
+                box-shadow: initial;
+                color: #333 !important;
+                background-image: initial;
+                background-color: transparent;
+                min-height: initial;
+                height: initial;
+                line-height: 1.5em;
+                text-align: center;
+                font-size: 20px;
+                margin: 0px;
+                padding-top: 20px;
+            }
+
+            div[sl-card][body] {
+                font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+                font-weight: normal;
+                box-shadow: initial;
+                color: #333 !important;
+                background-image: initial;
+                background-color: transparent;
+                min-height: initial;
+                height: initial;
+                line-height: 1.5em;
+                text-align: left;
+                font-size: 16px;
+                text-align: justify;
+                padding: 0px 12px 12px 12px;
+                margin: 0px;
+            }
+
+                div[sl-card][body] > p[contact] {
+                    display: block;
+                    padding: 0px;
+                    margin: 0px;
+                    text-align: center;
+                    font-size: 18px;
+                    line-height: 1.5em;
+                    color: #333333;
+                }
+
+                div[sl-card][body] label[wliu] {
+                    color: #333333;
+                }
+
+            div[sl-card][contact] {
+                background-color: rgb(73, 0, 1);
+                background-image: url(/HomePage/Images/shaolin_bg1.png);
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: 50%;
+            }
+
+                div[sl-card][contact][logo] {
+                    display: block;
+                    position: relative;
+                    height: 160px;
+                    min-height: initial;
+                    background-image: initial;
+                    background-color: transparent;
+                    box-shadow: initial;
+                }
+
+                div[sl-card][contact][subject] {
+                    box-shadow: initial;
+                    font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+                    font-weight: bold;
+                    font-variant: small-caps;
+                    color: #dddddd !important;
+                    background-image: initial;
+                    background-color: transparent;
+                    min-height: initial;
+                    height: initial;
+                    line-height: 1.5em;
+                    margin-bottom: 20px;
+                    text-align: center;
+                }
+
+                div[sl-card][contact][body] {
+                    box-shadow: initial;
+                    font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+                    font-weight: normal;
+                    font-variant: small-caps;
+                    color: #dddddd !important;
+                    margin-left: 12px;
+                    background-image: initial;
+                    background-color: transparent;
+                    min-height: initial;
+                    height: initial;
+                    line-height: 1.5em;
+                }
+
+                    div[sl-card][contact][body] > p {
+                        margin-bottom: 6px;
+                    }
+
+        @@media (max-width:800px) {
+            div[sl-card][body] {
+                padding: 6px 6px 6px 6px;
+            }
+        }
+    </style>
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("myControl", function ($scope) {
+            viewData.LinkScope($scope);
+
+            $scope.saveCallback = function () {
+                $scope.ViewData.database.tables["ContactUs"].Empty();
+                $scope.ViewData.database.tables["ContactUs"].CurrentSet("UserId", @PubUser.Id);
+                $("#wliuDiag").diag({ content: "@Html.Words("message.sent.success")" }).diag("show");
+            }
+            $scope.cancelCallback = function () {
+            }
+
+        });
+
+        viewData.Init("/api/Home/InitContactUs").then(data => {
+            data.database.tables.ContactUs.NewRowB();
+            data.Apply();
+        });
+    </script>
+}
+<div ng-app="myApp" ng-controller="myControl">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-6 col-sm-12">
+                <div sl-card>
+                    <div sl-card subject>
+                        @{if (Context.Items["Lang"].GetString() == "cn")
+                        {
+                            <h3>
+                                联系我们
+                            </h3>
+                        }
+                        else
+                        {
+                            <h3>
+                                SEND US A MESSAGE
+                            </h3>
+                        }
+                        }
+                    </div>
+                    <div sl-card body>
+                        @{if (Context.Items["Lang"].GetString() == "cn")
+                        {
+                            <p contact>如果您有任何疑问或者建议？</p>
+                            <p contact>请给我们发消息，我们感谢您的来信。</p>
+                        }
+                        else
+                        {
+                            <p contact>Have a questions or comments?</p>
+                            <p contact>Send us a message.  We would love to hear from you.</p>
+                        }
+                        }
+                        <table cellpadding="0" cellspacing="2" width="100%">
+                            <tr>
+                                <td colspan="2" align="center">
+                                    @{
+                                if (PubUser.Id <= 0)
+                                {
+                                        <a style="font-size:14px;" href="/Home/SignIn?url=/Home/ContactUs">@Html.Words("is.a.member") <span style="color:#0275d8;text-decoration:underline;">@Html.Words("sign.in")</span></a>
+                                }
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="8%" valign="middle" style="padding-top:6px;white-space:nowrap;">
+                                    <form.label nowrap db="ViewData.database" tb="ContactUs" col="FullName"></form.label>
+                                </td>
+                                <td style="padding-left:10px; padding-top:6px;" valign="middle">
+                                    <form.textbox db="ViewData.database" tb="ContactUs" col="FullName"></form.textbox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="8%" valign="middle" style="padding-top:6px;white-space:nowrap;">
+                                    <form.label nowrap db="ViewData.database" tb="ContactUs" col="Phone"></form.label>
+                                </td>
+                                <td style="padding-left:10px; padding-top:6px;" valign="middle">
+                                    <form.textbox db="ViewData.database" tb="ContactUs" col="Phone"></form.textbox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="8%" valign="middle" style="padding-top:6px;white-space:nowrap;">
+                                    <form.label nowrap db="ViewData.database" tb="ContactUs" col="Email"></form.label>
+                                </td>
+                                <td style="padding-left:10px; padding-top:6px;" valign="middle">
+                                    <form.textbox db="ViewData.database" tb="ContactUs" col="Email"></form.textbox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="8%" valign="top" style="padding-top:6px;white-space:nowrap;">
+                                    <form.label nowrap db="ViewData.database" tb="ContactUs" col="Detail"></form.label>
+                                </td>
+                                <td style="padding-left:10px; padding-top:6px;" valign="top">
+                                    <form.textarea db="ViewData.database" tb="ContactUs" col="Detail" hh="160px"></form.textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center" style="padding-top:6px;">
+                                    <form.save db="ViewData.database" tb="ContactUs" label="@Html.Words("button.send")" action="saveCallback()" style="margin-right:10px;"></form.save>
+                                    <form.cancel db="ViewData.database" tb="ContactUs" label="@Html.Words("button.cancel")"></form.cancel>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div sl-card contact>
+                    <div sl-card contact logo>
+                        <img src="/HomePage/Images/shaolin_lg1.png" style="object-fit: contain; height:140px; margin:20px 0px 10px 20px;">
+                    </div>
+                    <div sl-card contact subject><h4>Shaolin Temple of Canada</h4></div>
+                    <div sl-card contact body>
+                        <p>Unit 120, 11300 No. 5 Road</p>
+                        <p>Richmond, British Columbia V7A 5J7</p>
+                        <p>info@shaolincanada.org</p>
+                        <p>604.370.3299</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table.error></table.error>
+    <form.error></form.error>
+    <wliu.diag></wliu.diag>
+
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+</div>
+

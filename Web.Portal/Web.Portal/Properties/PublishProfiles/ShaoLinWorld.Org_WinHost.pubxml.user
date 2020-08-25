@@ -110,10 +110,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2020 23:24:34</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>08/23/2020 23:24:37</publishTime>
+      <publishTime>08/24/2020 22:30:04</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>08/23/2020 23:24:37</publishTime>
+      <publishTime>08/24/2020 22:30:04</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
       <publishTime>08/23/2020 23:24:36</publishTime>
@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>08/24/2020 00:09:32</publishTime>
+      <publishTime>08/24/2020 22:31:00</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>08/24/2020 00:09:28</publishTime>
+      <publishTime>08/24/2020 22:30:57</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>08/24/2020 00:09:24</publishTime>
+      <publishTime>08/24/2020 22:30:09</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>08/24/2020 00:09:25</publishTime>
+      <publishTime>08/24/2020 22:30:10</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>08/24/2020 00:09:24</publishTime>
+      <publishTime>08/24/2020 22:30:09</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
       <publishTime>08/23/2020 23:24:49</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>08/24/2020 00:09:28</publishTime>
+      <publishTime>08/24/2020 22:30:14</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>08/24/2020 00:09:28</publishTime>
+      <publishTime>08/24/2020 22:30:14</publishTime>
     </File>
     <File Include="wwwroot/favicon.png">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -398,7 +398,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/19/2020 22:08:34</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.database.js">
-      <publishTime>08/19/2020 13:18:55</publishTime>
+      <publishTime>08/24/2020 15:41:12</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.layout.js">
       <publishTime>08/17/2020 17:33:53</publishTime>
@@ -536,7 +536,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.v1.calendar.js">
-      <publishTime>07/21/2020 21:57:33</publishTime>
+      <publishTime>08/24/2020 00:49:33</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.v1.com.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -2702,7 +2702,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/jquery.lwh.calendar.js">
-      <publishTime>07/05/2020 23:15:03</publishTime>
+      <publishTime>08/24/2020 00:38:59</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.browser.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -2909,7 +2909,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/17/2020 19:23:33</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/wliu.v1.layout.css">
-      <publishTime>08/20/2020 10:13:11</publishTime>
+      <publishTime>08/24/2020 11:51:49</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/wliu.v1.pub.layout.css">
       <publishTime>08/15/2020 11:08:05</publishTime>

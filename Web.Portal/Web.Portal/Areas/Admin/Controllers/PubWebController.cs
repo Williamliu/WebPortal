@@ -19,6 +19,11 @@ namespace Web.Portal.Areas.Admin.Controllers
             this.Init("M7020");
             return View();
         }
+        public IActionResult ContactUs()
+        {
+            this.Init("M7040");
+            return View();
+        }
         public IActionResult WebContent()
         {
             this.Init("M7050");

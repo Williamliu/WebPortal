@@ -1,0 +1,84 @@
+﻿@section scripts {
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+        });
+        viewData.Init("/Admin/api/PubWeb/InitContactUs");
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl">
+    <div class="container-fluid" id="course_List">
+        <ng-form>
+            <fieldset>
+                <legend>@Html.Words("search.by")</legend>
+                <filter.label db="ViewData.database" tb="ContactUs" col="search_branch"></filter.label>
+                <filter.select db="ViewData.database" tb="ContactUs" col="search_branch"></filter.select>
+                <filter.label db="ViewData.database" tb="ContactUs" col="search_name"></filter.label>
+                <filter.textbox db="ViewData.database" tb="ContactUs" col="search_name"></filter.textbox>
+                <filter.label db="ViewData.database" tb="ContactUs" col="search_email"></filter.label>
+                <filter.textbox db="ViewData.database" tb="ContactUs" col="search_email"></filter.textbox>
+                <filter.label db="ViewData.database" tb="ContactUs" col="search_phone"></filter.label>
+                <filter.textbox db="ViewData.database" tb="ContactUs" col="search_phone"></filter.textbox>
+                <wliu.search db="ViewData.database" tb="ContactUs"></wliu.search>
+            </fieldset>
+            <div wliu table grow shrink style="margin-top:12px;">
+                <div row>
+                    <div cell style="background-color:#dddddd;">
+                        <wliu.navi db="ViewData.database" tb="ContactUs"></wliu.navi>
+                    </div>
+                </div>
+                <div row>
+                    <div head fixed style="width:40px;"></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="ContactUs" col="BranchTitle"></wliu.head></div>
+                    <div head small><wliu.head db="ViewData.database" tb="ContactUs" col="FullName"></wliu.head></div>
+                    <div head small><wliu.head db="ViewData.database" tb="ContactUs" col="UserFullName"></wliu.head></div>
+                    <div head large><wliu.head db="ViewData.database" tb="ContactUs" col="Detail"></wliu.head></div>
+                    <div head large><wliu.head db="ViewData.database" tb="ContactUs" col="Notes"></wliu.head></div>
+                    <div head fixed style="width:110px;"><wliu.head db="ViewData.database" tb="ContactUs" col="CreatedTime"></wliu.head></div>
+                    <div head fixed style="width:110px;"><wliu.head db="ViewData.database" tb="ContactUs" col="Resolved"></wliu.head></div>
+                    <div head fixed style="width:56px;"></div>
+                </div>
+                <div row ng-repeat="row in ViewData.database.tables.ContactUs.rows">
+                    <div cell center fixed style="width:40px;">
+                        <wliu.rowstatus db="ViewData.database" tb="ContactUs" guid="{{row.guid}}"></wliu.rowstatus>
+                    </div>
+                    <div cell medium>
+                        <wliu.text db="ViewData.database" tb="ContactUs" guid="{{row.guid}}" col="BranchTitle"></wliu.text>
+                    </div>
+                    <div cell small>
+                        <wliu.template db="ViewData.database" tb="ContactUs" guid="{{row.guid}}" col="{FullName}<br>{Email}<br>{Phone}<br>{UserName}"></wliu.template>
+                    </div>
+                    <div cell small>
+                        <wliu.template db="ViewData.database" tb="ContactUs" guid="{{row.guid}}" col="{UserFullName}<br>{UserEmail}<br>{UserPhone}"></wliu.template>
+                    </div>
+                    <div cell large>
+                        <wliu.textarea db="ViewData.database" tb="ContactUs" guid="{{row.guid}}" col="Detail" hh="120px"></wliu.textarea>
+                    </div>
+                    <div cell large>
+                        <wliu.textarea db="ViewData.database" tb="ContactUs" guid="{{row.guid}}" col="Notes" hh="120px"></wliu.textarea>
+                    </div>
+                    <div cell fixed style="width:110px;">
+                        <wliu.text db="ViewData.database" tb="ContactUs" guid="{{row.guid}}" col="CreatedTime"></wliu.text>
+                    </div>
+                    <div cell fixed style="width:110px;">
+                        <wliu.bool db="ViewData.database" tb="ContactUs" guid="{{row.guid}}" col="Resolved"></wliu.bool>
+                    </div>
+                    <div cell fixed style="width:56px;">
+                        <wliu.bicon db="ViewData.database" tb="ContactUs" guid="{{row.guid}}" icons="detail,save,cancel"></wliu.bicon>
+                    </div>
+                </div>
+            </div>
+        </ng-form>
+    </div>
+
+    <table.error></table.error>
+    <form.error></form.error>
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+
+</div>
