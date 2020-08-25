@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>08/24/2020 22:31:00</publishTime>
+      <publishTime>08/25/2020 12:52:41</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>08/24/2020 22:30:57</publishTime>
+      <publishTime>08/25/2020 12:52:36</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>08/24/2020 22:30:09</publishTime>
+      <publishTime>08/25/2020 12:52:17</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>08/24/2020 22:30:10</publishTime>
+      <publishTime>08/25/2020 12:52:18</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>08/24/2020 22:30:09</publishTime>
+      <publishTime>08/25/2020 12:52:17</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
       <publishTime>08/23/2020 23:24:49</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>08/24/2020 22:30:14</publishTime>
+      <publishTime>08/25/2020 12:52:24</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>08/24/2020 22:30:14</publishTime>
+      <publishTime>08/25/2020 12:52:24</publishTime>
     </File>
     <File Include="wwwroot/favicon.png">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -2850,6 +2850,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="wwwroot/Resource/style/Images/ShaolinCard/shaolin-logo1.png">
       <publishTime>07/05/2020 23:15:03</publishTime>
+    </File>
+    <File Include="wwwroot/Resource/style/Images/ShaolinCard/wechar_icon.png">
+      <publishTime>08/25/2020 11:11:45</publishTime>
+    </File>
+    <File Include="wwwroot/Resource/style/Images/ShaolinCard/wechat_pay.jpg">
+      <publishTime>08/25/2020 11:09:52</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/Images/shaolin_log.png">
       <publishTime>07/10/2020 14:06:08</publishTime>
