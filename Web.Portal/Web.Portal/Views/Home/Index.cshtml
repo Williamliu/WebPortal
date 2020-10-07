@@ -1,3 +1,394 @@
-﻿<div align-both>
+﻿<!--
+<div align-both>
     @Html.WebContent("top")
+</div>
+-->
+@{
+    Layout = "_LayoutPublic_Home";
+}
+
+@section scripts {
+    <link rel="stylesheet" type="text/css" href="/HomePage/jslider/css/jslider_style.css" />
+    <script type="text/javascript" src="/HomePage/jslider/jslider_class.js"></script>
+    <script type="text/javascript" src="/HomePage/jslider/jslider_init.js"></script>
+    <style>
+        div[content-body] {
+            display: block;
+            min-height: 420px;
+            background-size: 100% 120px, 100% 120px;
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMzVweCIgdmlld0JveD0iMCAwIDEyODAgMTQwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGZpbGw9InJnYmEoMCwwLDAsMC4xNSkiPjxwYXRoIGQ9Ik0xMjgwIDBMNjQwIDcwIDAgMHYxNDBsNjQwLTcwIDY0MCA3MFYweiIgZmlsbC1vcGFjaXR5PSIuNSIvPjxwYXRoIGQ9Ik0xMjgwIDBIMGw2NDAgNzAgNjQwLTcweiIvPjwvZz48L3N2Zz4=),url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMzVweCIgdmlld0JveD0iMCAwIDEyODAgMTQwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGZpbGw9InJnYmEoMCwwLDAsMC4xNSkiPjxwYXRoIGQ9Ik0wIDE0MGw2NDAtNzAgNjQwIDcwVjBMNjQwIDcwIDAgMHYxNDB6IiBmaWxsLW9wYWNpdHk9Ii41Ii8+PHBhdGggZD0iTTAgMTQwaDEyODBMNjQwIDcwIDAgMTQweiIvPjwvZz48L3N2Zz4=);
+            background-position: top center, bottom center;
+            background-repeat: no-repeat;
+            padding: 40px 0px 60px 0px;
+        }
+
+        div[sl-card] {
+            display: block;
+            min-height: 440px;
+            background-color: #cccccc;
+            box-shadow: 6px 6px 8px 0px rgba(0,0,0,0.3);
+            margin: 12px 0px;
+        }
+
+        div[sl-card][logo] {
+            display: block;
+            position: relative;
+            min-height: initial;
+            background-image: initial;
+            background-color: transparent;
+            box-shadow: initial;
+            margin: 0px;
+            margin-bottom: 6px;
+        }
+
+        div[sl-card][subject] {
+            font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+            font-weight: bold;
+            font-variant: small-caps;
+            box-shadow: initial;
+            color: #333 !important;
+            background-image: initial;
+            background-color: transparent;
+            min-height: initial;
+            height: initial;
+            line-height: 1.5em;
+            text-align: center;
+            font-size: 20px;
+            margin: 0px;
+        }
+
+        div[sl-card][body] {
+            font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+            font-weight: normal;
+            box-shadow: initial;
+            color: #333 !important;
+            background-image: initial;
+            background-color: transparent;
+            min-height: initial;
+            height: initial;
+            line-height: 1.5em;
+            text-align: left;
+            font-size: 16px;
+            text-align: justify;
+            padding: 6px 12px 12px 12px;
+            margin: 0px;
+        }
+
+
+        div[sl-card][contact] {
+            background-color: rgb(73, 0, 1);
+            background-image: url(shaolin_bg1.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50%;
+        }
+
+        div[sl-card][contact][logo] {
+            box-shadow: initial;
+            display: block;
+            position: relative;
+            height: 160px;
+            min-height: initial;
+            background-image: initial;
+            background-color: transparent;
+        }
+
+        div[sl-card][contact][subject] {
+            box-shadow: initial;
+            font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+            font-weight: bold;
+            font-variant: small-caps;
+            color: #dddddd !important;
+            background-image: initial;
+            background-color: transparent;
+            min-height: initial;
+            height: initial;
+            line-height: 1.5em;
+            margin-bottom: 20px;
+            text-align:     center;
+        }
+
+        div[sl-card][contact][body] {
+            box-shadow: initial;
+            font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+            font-weight: normal;
+            font-variant: small-caps;
+            color: #dddddd !important;
+            margin-left: 12px;
+            background-image: initial;
+            background-color: transparent;
+            min-height: initial;
+            height: initial;
+            line-height: 1.5em;
+        }
+
+        div[sl-card][contact][body] > p {
+            margin-bottom: 6px;
+        }
+
+        h3[subject] {
+            color: #333;
+            font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+            font-weight: 700;
+            font-variant: small-caps;
+            font-size: 26px;
+        }
+
+        p[subject] {
+            color: #333;
+            font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+            font-weight: 500;
+            font-variant: small-caps;
+            font-size: 16px;
+        }
+
+        @@media (max-width:800px) {
+            div[content-body] {
+                padding: 20px 0px 60px 0px;
+            }
+            div[sl-card][body] {
+                padding: 6px 6px 6px 6px;
+            }
+            h3[subject] {
+                font-size: 18px;
+            }
+        }
+    </style>
+
+}
+
+<div class="jslider" id="myslider">
+    <div class="ws_images">
+        <ul>
+            <li><img src="/HomePage/jslider/data/images/01.png" alt="" title="" id="1" width="1360" /></li>
+            <li><img src="/HomePage/jslider/data/images/02.png" alt="" title="" id="2" width="1360" /></li>
+            <li><img src="/HomePage/jslider/data/images/03.png" alt="" title="" id="3" width="1360" /></li>
+        </ul>
+    </div>
+    <div class="ws_bullets">
+        <div>
+            <a href="#" title=""><img src="/HomePage/jslider/data/tooltips/01.png" alt="" />1</a>
+            <a href="#" title=""><img src="/HomePage/jslider/data/tooltips/02.png" alt="" />2</a>
+            <a href="#" title=""><img src="/HomePage/jslider/data/tooltips/03.png" alt="" />3</a>
+        </div>
+    </div>
+    <div class="ws_shadow"></div>
+</div>
+<div content-body>
+    <div class="container-fluid" style="display:block; max-width:1360px; margin:auto;">
+        <div class="row">
+            <div class="col-lg-8 col-md-9 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h3 subject>
+                            @{if (Context.Items["Lang"].GetString() == "cn")
+                                {
+                                    @:欢迎来到加拿大少林寺文化中心
+                                }
+                                else
+                                {
+                                    @:Welcome to Shaolin Temple of Canada
+                                }
+                            }
+                        </h3>
+                        <p>
+                            @{if (Context.Items["Lang"].GetString() == "cn")
+                                {
+                                    <text>
+                                        少林寺是众多佛教宗派的源头，与各宗派有着深厚的渊源，体现了少林寺在中国佛教发展史上的特殊地位。少林寺方丈释永信大和尚，长期致力于中国佛教文化在海外的弘扬与传播.<br />
+                                        2016年应加拿大当地善心民众的大力支持下，提出筹建“加拿大少林寺”。时隔两年，于2018年9月16日，加拿大少林寺文化中心正式在温哥华揭幕启用，现有建筑面积500多平方米，在当地已形成初步规模，文化中心之设立为筹建加拿大少林寺前期准备工作。<br />
+                                        少林寺的释延竤，释延荻两位法师受永信大和尚派遣，不远万里来到温哥华，将少林寺以禅，武，医为主体的文化带到了加拿大，与加国民众共享这一健康的生活方式
+                                    </text>
+                                }
+                                else
+                                {
+                                    <text>
+                                        Shaolin Temple has long been committed to the promotion and dissemination of Chinese Buddhist culture overseas. Under the active promotion of Shi Yongxin and the strong support of all colleagues, Shaolin Temple officially proposed the establishment of the Shaolin Temple of Canada in Vancouver in 2016. After two years of hard work, the center has opened its doors in its first location in the Greater Vancouver region, with an existing building area of ​​over 500 square meters.<br /><br />
+                                        In March 2018, the Shaolin Temple of Canada was created and two senior monks, Shi Yanhong and Shi Yandi were entrusted by Shi Yongxin to lead the Shaolin Temple of Canada.The Shaolin Temple is dedicated to disseminating the culture of Chan Buddhism, martial arts and medicine to improve the health and lives of the people of Canada.
+                                    </text>
+                                }
+                            }
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-md-9 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div sl-card>
+                            <div sl-card logo>
+                                <img src="/HomePage/images/home_01.jpg" style="width:100%; object-fit:contain;" />
+                            </div>
+                            <div sl-card subject>
+                                @{if (Context.Items["Lang"].GetString() == "cn")
+                                    {
+                                        <text>
+                                        加拿大少林寺文化中心
+                                        </text>
+                                    }
+                                    else
+                                    {
+                                        <text>
+                                        Shaolin Temple of Canada
+                                        </text>
+                                    }
+                                }
+                            </div>
+                            <div sl-card body>
+                                @{if (Context.Items["Lang"].GetString() == "cn")
+                                    {
+                                        <text>
+                                            加拿大少林寺文化中心是应温哥华本地社团邀请、经中国嵩山少林寺授权，于2016年12月在加拿大不列颠哥伦比亚省注册成立的非盈利机构。经过近两年时间筹备，该文化中心方正式揭幕。
+                                            目前文化中心以面向当地社团、社区开展讲座、辅导、培训为主，对当地各类少林禅修和功夫、佛医等机构及爱好者提供支持、指导和互动交流平台。<a href="/ClassEvent/Donate" style="color:#222222;text-decoration:underline;">点击这里捐款，功德无量</a>
+                                        </text>
+                                    }
+                                    else
+                                    {
+                                        <text>
+                                            Shaolin Temple has long been committed to the promotion and dissemination of Chinese Buddhist culture overseas. Under the active promotion of Shi Yongxin and the strong support of all colleagues, Shaolin Temple officially proposed the establishment of the Shaolin Temple of Canada in Vancouver in 2016. <a href="/ClassEvent/Donate" style="color:#222222;text-decoration:underline;">Please donate，kindness and merits</a>
+                                        </text>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div sl-card>
+                            <div sl-card logo high>
+                                <img src="/HomePage/images/home_02.jpg" style="width:100%; object-fit:contain;" />
+                            </div>
+                            <div sl-card subject>
+                                @{if (Context.Items["Lang"].GetString() == "cn")
+                                    {
+                                        <text>
+                                            释延荻法师
+                                        </text>
+                                    }
+                                    else
+                                    {
+                                        <text>
+                                            Master Shi Yandi
+                                        </text>
+                                    }
+                                }
+                            </div>
+                            <div sl-card body>
+                                @{if (Context.Items["Lang"].GetString() == "cn")
+                                    {
+                                        <text>
+                                            中国嵩山少林寺第34代弟子，武僧教头，少林功夫非物质文化遗产传承人。八岁入少林，礼上永下信大和尚为师。法师朝夕参禅，习武不輟。 十几年来，随方丈、中国政府及相关机构先后出访过全球三十多个国家与地区，文化交流经验丰富、成果丰硕。                                       
+                                        </text>
+                                    }
+                                    else
+                                    {
+                                        <text>
+                                            Shi Yandi is among the 34th generation disciples of the Songshan Shaolin Temple of China, the Kungfu instructor of the monks as well as the representative inheritor of the National Intangible Cultural Heritage of Shaolin Kungfu
+                                        </text>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div sl-card>
+                            <div sl-card logo high>
+                                <img src="/HomePage/images/home_03.jpg" style="width:100%; object-fit:contain;" />
+                            </div>
+                            <div sl-card subject>
+                                @{if (Context.Items["Lang"].GetString() == "cn")
+                                    {
+                                        <text>
+                                            少林功夫课程
+                                        </text>
+                                    }
+                                    else
+                                    {
+                                        <text>
+                                            Shaolin Kung Fu Classes
+                                        </text>
+                                    }
+                                }
+                            </div>
+                            <div sl-card body>
+                                @{if (Context.Items["Lang"].GetString() == "cn")
+                                    {
+                                        <text>
+                                            嵩山少林寺落户温哥华，文化中心从2019年5月1日起开设一系列课程，利益大众，回馈社会，广结善缘，随喜参加。“天下功夫出少林”，少林功夫，以武强身，以禅修心，养生，功夫，禅修课程，多种选择适合成人及儿童。<a href="/ClassEvent/ClassList" style="color:#222222;text-decoration:underline;">点击这里查看课程</a>
+                                        </text>
+                                    }
+                                    else
+                                    {
+                                        <text>
+                                            Songshan Shaolin Temple has established its Shaolin Temple of Canada in Vancouver. It runs a series of courses of the public good, so as to promote the time-honoured Chinese culture and benefit the general public.<a href="/ClassEvent/ClassList" style="color:#222222;text-decoration:underline;">Click here to view more course</a>
+                                        </text>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div sl-card>
+                            <div sl-card logo high>
+                                <img src="/HomePage/images/home_04.jpg" style="width:100%; object-fit:contain;" />
+                            </div>
+                            <div sl-card subject>
+                                @{if (Context.Items["Lang"].GetString() == "cn")
+                                    {
+                                        <text>
+                                            少林禅武
+                                        </text>
+                                    }
+                                    else
+                                    {
+                                        <text>
+                                            Chan (禅) Buddhism
+                                        </text>
+                                    }
+                                }
+                            </div>
+                            <div sl-card body>
+                                @{if (Context.Items["Lang"].GetString() == "cn")
+                                    {
+                                        <text>
+                                            武术禅并不纯粹是拳脚，纯粹的武术是不可能练就不动心的。把武和禅融化在一起，包含在每一拳、脚在运动中。达到物与我双忘的境界，故能出神入化，淋漓尽致。武术禅不是纯粹每天习武, 也要结合其它法门，如坐禅。
+                                        </text>
+                                    }
+                                    else
+                                    {
+                                        <text>
+                                            Chan is short for Chan-na, which was originally transliterated from Indian Dhyana and translated as meditative state, and it is also known as Zen, the equivalent term in Japanese….Read More
+                                        </text>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
+                <div sl-card contact>
+                    <div sl-card contact logo>
+                        <img src="/HomePage/Images/shaolin_lg1.png" style="object-fit: contain; height:140px; margin:20px 0px 10px 20px;">
+                    </div>
+                    <div sl-card contact subject><h4>Shaolin Temple of Canada</h4></div>
+                    <div sl-card contact body>
+                        <p>Unit 120, 11300 No. 5 Road</p>
+                        <p>Richmond, British Columbia V7A 5J7</p>
+                        <p>info@shaolincanada.org</p>
+                        <p>604.370.3299</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

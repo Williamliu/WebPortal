@@ -52,6 +52,25 @@ namespace Web.Portal.Areas.Admin.WebApi
             return Ok(this.DB.ReloadTable(jsTable));
         }
 
+        [HttpGet("InitContactUs")]
+        public IActionResult InitContactUs()
+        {
+            this.Init("M7040");
+            this.DB.FillAll();
+            return Ok(this.DB);
+        }
+        [HttpPost("ReloadContactUs")]
+        public IActionResult ReloadContactUs(JSTable jsTable)
+        {
+            this.Init("M7040");
+            return Ok(this.DB.ReloadTable(jsTable));
+        }
+        [HttpPost("SaveContactUs")]
+        public IActionResult SaveContactUs(JSTable jsTable)
+        {
+            this.Init("M7040");
+            return Ok(this.DB.SaveTable(jsTable));
+        }
 
         [HttpGet("InitWebContent")]
         public IActionResult InitWebContent()
@@ -223,6 +242,47 @@ namespace Web.Portal.Areas.Admin.WebApi
                         UserRole.GetUrl = "/Admin/api/PubWeb/ReloadUserRole";
 
                         this.DB.AddTables(firstMenu, secondMenu, UserRole);
+                    }
+                    break;
+                case "M7040":
+                    {
+                        Table table = new Table("ContactUs", "VW_ContactUs", Words("contact.us"));
+                        Meta id = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
+                        Meta bracnchTitle = new Meta { Name = "BranchTitle", DbName = "BranchTitle", Title = Words("col.branch"), Order = "ASC", Type = EInput.String, IsLang = true };
+                        Meta fullName = new Meta { Name = "FullName", DbName = "FullName", Title = Words("col.pub.user"), Order = "ASC", Type = EInput.String };
+                        Meta email = new Meta { Name = "Email", DbName = "Email", Title = Words("col.email"), Order = "ASC", Type = EInput.String };
+                        Meta phone = new Meta { Name = "Phone", DbName = "Phone", Title = Words("col.phone"), Order = "ASC", Type = EInput.String };
+                        Meta uUserName = new Meta { Name = "UserName", DbName = "UserName", Title = Words("col.username"), Order = "ASC", Type = EInput.String };
+                        Meta ufullName = new Meta { Name = "UserFullName", DbName = "UserFullName", Title = Words("col.contact.us"), Order = "ASC", Type = EInput.String };
+                        Meta uemail = new Meta { Name = "UserEmail", DbName = "UserEmail", Title = Words("col.email"), Order = "ASC", Type = EInput.String };
+                        Meta uphone = new Meta { Name = "UserPhone", DbName = "UserPhone", Title = Words("col.phone"), Order = "ASC", Type = EInput.String };
+                        Meta resolved = new Meta { Name = "Resolved", DbName = "Resolved", Title = Words("col.resolved"), Order = "ASC", Description = Words("status.resolved.unresolved"), Type = EInput.Bool };
+                        Meta detail = new Meta { Name = "Detail", DbName = "Detail", Title = Words("contact.content"), Type = EInput.Read };
+                        Meta notes = new Meta { Name = "Notes", DbName = "Notes", Title = Words("memo.information"), Type = EInput.String, MaxLength=4000 };
+                        Meta createdTime = new Meta { Name = "CreatedTime", DbName = "CreatedTime", Title = Words("col.createdtime"), Type = EInput.IntDate, Order = "DESC" };
+
+                        table.AddMetas(id, bracnchTitle, fullName, email, phone, uUserName, ufullName, uemail, uphone, resolved, detail, notes, createdTime);
+
+                        Filter f1 = new Filter() { Name = "search_branch", DbName = "BranchId", Title = Words("col.branch"), Type = EFilter.Int, Compare = ECompare.Equal };
+                        f1.AddListRef("BranchList");
+
+                        Filter f2 = new Filter() { Name = "search_name", DbName = "FullName,UserName,UserFullName", Title = Words("col.fullname"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f3 = new Filter() { Name = "search_phone", DbName = "Phone, UserPhone", Title = Words("col.phone"), Type = EFilter.String, Compare = ECompare.Like };
+                        Filter f4 = new Filter() { Name = "search_email", DbName = "Email, UserEmail", Title = Words("col.email"), Type = EFilter.String, Compare = ECompare.Like };
+
+                        table.AddFilters(f1, f2, f3, f4);
+
+                        table.Navi.IsActive = true;
+                        table.Navi.Order = "DESC";
+                        table.Navi.By = "CreatedTime";
+                        table.GetUrl = "/Admin/api/PubWeb/ReloadContactUs";
+                        table.SaveUrl = "/Admin/api/PubWeb/SaveContactUs";
+
+                        CollectionTable c1 = new CollectionTable("BranchList", "GBranch", true, "Id", "Title", "Detail", "", "DESC", "Sort");
+                        Collection BranchList = new Collection(ECollectionType.Table, c1);
+                        BranchList.AddFilter("Id", ECompare.In, this.DB.User.ActiveBranches);
+
+                        this.DB.AddTable(table).AddCollections(BranchList);
                     }
                     break;
                 case "M7050":

@@ -48,7 +48,7 @@
             }
         }
         $(function () {
-            $(document).off("click", "a[pub][menu][toggle][dropdown]").on("click", "a[pub][menu][toggle][dropdown]", function (evt) {
+            $(document).off("click", "a[pub][menu][toggle][topmenu]").on("click", "a[pub][menu][toggle][topmenu]", function (evt) {
                 if ($("div[pub][menu][body] ul[first]").is(":hidden"))
                     $("div[pub][menu][body] ul[first]").addAttr("show");
                 else
@@ -71,7 +71,7 @@
                 <img src="~/Resource/style/Images/shaolin_log.png">
             </div>
             <div pub menu center>
-                <a pub menu toggle dropdown>@Html.Words("pub.menu")</a>
+                <a pub menu toggle mobile topmenu>@Html.Words("pub.menu")</a>
                 @{
                     if (PubUser.Id > 0)
                     {
@@ -112,7 +112,7 @@
             </div>
         </div>
     </div>
-    <div pub webcontent class="container" style="max-width:1360px;">@RenderBody()</div>
+    <div pub webcontent style="max-width:1360px;">@RenderBody()</div>
     @Html.LangForm()
 </body>
 </html>

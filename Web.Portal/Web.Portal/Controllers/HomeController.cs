@@ -33,6 +33,11 @@ namespace Web.Portal.Controllers
             ViewBag.Guid = Id;
             return View();
         }
+        public IActionResult ContactUs()
+        {
+            Init("M90");
+            return View();
+        }
         protected override void InitDatabase(string menuId)
         {
 

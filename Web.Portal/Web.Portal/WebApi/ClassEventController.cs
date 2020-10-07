@@ -136,6 +136,14 @@ namespace Web.Portal.WebApi.Controllers
                     myemail.addTo(email);
                     myemail.addReply("info@shaolinworld.org");
                     if (string.IsNullOrWhiteSpace(siteemail) ==false) myemail.addBCC(siteemail, "SysAdmin");
+
+                    List<Dictionary<string, string>> sysEmailRows = this.DB.DSQL.Query("SELECT ItemValue FROM GSetting WHERE Deleted=0 AND Active=1 AND ItemName='ClassEmail'", new Dictionary<string, object>());
+                    foreach (Dictionary<string, string> emailRow in sysEmailRows)
+                    {
+                        if(string.IsNullOrWhiteSpace(emailRow.GetValue("ItemValue"))==false)
+                            myemail.addBCC(emailRow.GetValue("ItemValue"));
+                    }
+
                     myemail.Subject = Words("email.enroll.success.subject");// "New Student Enrolled";
                     myemail.Content = "<html><body>";
                     myemail.Content += string.Format(Words("email.enroll.success.content"), fname, lname, classname); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
@@ -184,6 +192,14 @@ namespace Web.Portal.WebApi.Controllers
                     myemail.addTo(email);
                     myemail.addReply("info@shaolinworld.org");
                     if (string.IsNullOrWhiteSpace(siteemail) == false) myemail.addBCC(siteemail, "SysAdmin");
+
+                    List<Dictionary<string, string>> sysEmailRows = this.DB.DSQL.Query("SELECT ItemValue FROM GSetting WHERE Deleted=0 AND Active=1 AND ItemName='ClassEmail'", new Dictionary<string, object>());
+                    foreach (Dictionary<string, string> emailRow in sysEmailRows)
+                    {
+                        if (string.IsNullOrWhiteSpace(emailRow.GetValue("ItemValue"))==false)
+                            myemail.addBCC(emailRow.GetValue("ItemValue"));
+                    }
+
                     myemail.Subject = Words("email.enroll.success.subject");
                     myemail.Content = "<html><body>";
                     myemail.Content += string.Format(Words("email.enroll.success.content"), fname, lname, classname); 
@@ -196,6 +212,12 @@ namespace Web.Portal.WebApi.Controllers
             }
 
             return Ok(this.DB.SaveTable(jsTable));
+        }
+        [HttpPost("ReloadPaymentClassDetail1")]
+        public IActionResult ReloadPaymentClassDetail1(JSTable jsTable)
+        {
+            this.Init("ClassPayment");
+            return Ok(this.DB.ReloadTable(jsTable));
         }
 
 
@@ -219,7 +241,14 @@ namespace Web.Portal.WebApi.Controllers
                 myemail.addFrom("info@shaolinworld.org");
                 myemail.addTo(data.GetValue("Email"));
                 myemail.addReply("info@shaolinworld.org");
-                myemail.addBCC("info@shaolinworld.org");
+
+                List<Dictionary<string, string>> sysEmailRows = this.DB.DSQL.Query("SELECT ItemValue FROM GSetting WHERE Deleted=0 AND Active=1 AND ItemName='DonationEmail'", new Dictionary<string, object>());
+                foreach (Dictionary<string, string> emailRow in sysEmailRows)
+                {
+                    if (string.IsNullOrWhiteSpace(emailRow.GetValue("ItemValue"))==false)
+                        myemail.addBCC(emailRow.GetValue("ItemValue"));
+                }
+
                 myemail.Subject = Words("donate.success");// "New Student Enrolled";
                 myemail.Content = "<html><body>";
                 myemail.Content += string.Format(Words("email.donate.success.content"), data.GetValue("FullName")); // $"Dear {fname} {lname}, <br><br>Welcome to {classname}<br><br>We are looking forward to see you soon.<br><br>Shaolin";
@@ -248,6 +277,7 @@ namespace Web.Portal.WebApi.Controllers
                         Meta id = new Meta { Name = "Id", DbName = "Id", Title = Words("col.id"), IsKey = true };
                         Meta className = new Meta { Name = "ClassName", DbName = "ClassName", Title = Words("col.class.name"), Type = EInput.String };
                         Meta classTitle = new Meta { Name = "ClassTitle", DbName = "ClassTitle", Title = Words("class.title"), IsLang=true, Type = EInput.String };
+                        Meta classDetail = new Meta { Name = "ClassDetail", DbName = "ClassDetail", Title = Words("class.detail"), IsLang = true, Type = EInput.String };
                         Meta classNotes = new Meta { Name = "ClassNotes", DbName = "ClassNotes", Title = Words("col.notes"), IsLang = true, Type = EInput.String };
                         Meta siteTitle = new Meta { Name = "SiteTitle", DbName = "SiteTitle", Title = Words("col.center"), IsLang = true, Type = EInput.String };
                         Meta startDate = new Meta { Name = "StartDate", DbName = "StartDate", Title = Words("start.date"), Description= Words("col.date"), Type = EInput.Date };
@@ -257,7 +287,7 @@ namespace Web.Portal.WebApi.Controllers
                         Meta address = new Meta { Name = "Address", DbName = "Address", Title = Words("col.address"), IsLang = true, Type = EInput.String };
                         Meta photo = new Meta { Name = "Photo", DbName = "Id", Title = Words("col.photo"), Description = "ClassEvent|Medium", Type = EInput.ImageUrl };
 
-                        classList.AddMetas(id, className, classTitle, siteTitle, classNotes, startDate, endDate, email, phone, address, photo);
+                        classList.AddMetas(id, className, classTitle, classDetail, siteTitle, classNotes, startDate, endDate, email, phone, address, photo);
                         classList.Navi.IsActive = true;
                         classList.Navi.Order = "ASC";
                         classList.Navi.By = "StartDate";
@@ -273,10 +303,10 @@ namespace Web.Portal.WebApi.Controllers
 
                         Table ClassDetail = new Table("ClassDetail", "Class_Detail", Words("class.detail"));
                         Meta did = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
-                        Meta dtitle = new Meta { Name = "Title", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang=true, MaxLength = 64 };
-                        Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Required = true, Order = "ASC", Type = EInput.Date };
-                        Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Required = true, Type = EInput.Time };
-                        Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Required = true, Type = EInput.Time };
+                        Meta dtitle = new Meta { Name = "ClassTitle", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang=true, MaxLength = 64 };
+                        Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Order = "ASC", Type = EInput.Date };
+                        Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Type = EInput.Time };
+                        Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Type = EInput.Time };
 
                         ClassDetail.AddMetas(did, dtitle, dclassDate, dstartTime, dendTime);
                         ClassDetail.Navi.IsActive = false;
@@ -350,7 +380,7 @@ namespace Web.Portal.WebApi.Controllers
 
                         Table ClassDetail = new Table("ClassDetail", "Class_Detail", Words("class.detail"));
                         Meta did = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
-                        Meta dtitle = new Meta { Name = "Title", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang = true, MaxLength = 64 };
+                        Meta dtitle = new Meta { Name = "ClassTitle", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang = true, MaxLength = 64 };
                         Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Required = true, Order = "ASC", Type = EInput.Date };
                         Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Required = true, Type = EInput.Time };
                         Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Required = true, Type = EInput.Time };
@@ -391,20 +421,23 @@ namespace Web.Portal.WebApi.Controllers
                         Meta amount = new Meta { Name = "FeeAmount", DbName = "FeeAmount", Title = Words("col.feeamount"), Type = EInput.Float };
                         Meta oweamount = new Meta { Name = "OweAmount", DbName = "OweAmount", Title = Words("col.owe.amount"), Type = EInput.Float };
                         Meta currency = new Meta { Name = "Currency", DbName = "Currency", Title = Words("col.currency"), Type = EInput.String };
+                        Meta discountText = new Meta { Name = "DiscountText", DbName = "DiscountText", Title = Words("col.discount.text"), IsLang = true, Type = EInput.String };
+                        Meta discountAmt = new Meta { Name = "DiscountAmount", DbName = "DiscountAmount", Title = Words("col.discount.amount"), Type = EInput.Float };
+                        Meta discount = new Meta { Name = "Discount", DbName = "Discount", Title = Words("col.discount"), Type = EInput.Float };
 
                         Filter f1 = new Filter() { Name = "ClassId", SqlParam = "ClassId", Title = Words("col.class.id"), Type = EFilter.Int, Compare = ECompare.Equal };
                         Filter f2 = new Filter() { Name = "UserId", SqlParam = "UserId", Title = Words("col.userid"), Type = EFilter.Int, Compare = ECompare.Equal, Value1 = this.DB.User.Id};
 
-                        classList.AddMetas(id, className, classTitle, siteTitle, classNotes, startDate, endDate, email, phone, address, photo)
+                        classList.AddMetas(id, className, classTitle, siteTitle, classNotes, startDate, endDate, email, phone, address, photo, discountText, discountAmt, discount)
                                  .AddMetas(isfree, amount, oweamount, currency);
                         classList.AddFilters(f1, f2);
 
                         Table ClassDetail = new Table("ClassDetail", "Class_Detail", Words("class.detail"));
                         Meta did = new Meta { Name = "Id", DbName = "Id", Title = "ID", IsKey = true };
                         Meta dtitle = new Meta { Name = "Title", DbName = "Title", Title = Words("class.content"), Type = EInput.String, IsLang = true, MaxLength = 64 };
-                        Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Required = true, Order = "ASC", Type = EInput.Date };
-                        Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Required = true, Type = EInput.Time };
-                        Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Required = true, Type = EInput.Time };
+                        Meta dclassDate = new Meta { Name = "ClassDate", DbName = "ClassDate", Title = Words("class.date"), Order = "ASC", Type = EInput.Date };
+                        Meta dstartTime = new Meta { Name = "StartTime", DbName = "StartTime", Title = Words("start.time"), Type = EInput.Time };
+                        Meta dendTime = new Meta { Name = "EndTime", DbName = "EndTime", Title = Words("end.time"), Type = EInput.Time };
 
                         ClassDetail.AddMetas(did, dtitle, dclassDate, dstartTime, dendTime);
                         ClassDetail.Navi.IsActive = false;
@@ -412,6 +445,7 @@ namespace Web.Portal.WebApi.Controllers
                         ClassDetail.Navi.Order = "ASC";
                         ClassDetail.Navi.By = "ClassDate";
                         ClassDetail.AddQueryKV("Deleted", false).AddQueryKV("Active", true);
+                        ClassDetail.GetUrl = "/api/ClassEvent/ReloadPaymentClassDetail1";
 
 
                         Table classEnroll = new Table("ClassEnroll", "Class_Enroll", Words("class.enroll"));

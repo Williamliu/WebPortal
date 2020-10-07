@@ -71,19 +71,17 @@
     </script>
 }
 <div ng-app="myApp" ng-controller="myControl">
-    <div class="container-fluid">
-        <ng-form>
-            <fieldset>
-                <legend>@Html.Words("search.by")</legend>
-                <filter.label db="ViewData.database" tb="ClassCalendar" col="CountryFilter"></filter.label>
-                <filter.select db="ViewData.database" tb="ClassCalendar" col="CountryFilter" ww="200px" reload="0" action="reloadCalendar()"></filter.select>
-                <filter.label db="ViewData.database" tb="ClassCalendar" col="SiteFilter"></filter.label>
-                <filter.fselect db="ViewData.database" tb="ClassCalendar" col="SiteFilter" ww="250px" fcol="CountryFilter" reload="0" action="reloadCalendar()"></filter.fselect>
-                <wliu.search db="ViewData.database" tb="ClassCalendar" action="reloadCalendar()"></wliu.search>
-            </fieldset>
-            <div wliu calendar style="margin-top:12px;"></div>
-        </ng-form>
-    </div>
+    <ng-form>
+        <fieldset>
+            <legend>@Html.Words("search.by")</legend>
+            <filter.label db="ViewData.database" tb="ClassCalendar" col="CountryFilter"></filter.label>
+            <filter.select db="ViewData.database" tb="ClassCalendar" col="CountryFilter" ww="200px" reload="0" action="reloadCalendar()"></filter.select>
+            <filter.label db="ViewData.database" tb="ClassCalendar" col="SiteFilter"></filter.label>
+            <filter.fselect db="ViewData.database" tb="ClassCalendar" col="SiteFilter" ww="250px" fcol="CountryFilter" reload="0" action="reloadCalendar()"></filter.fselect>
+            <wliu.search db="ViewData.database" tb="ClassCalendar" action="reloadCalendar()"></wliu.search>
+        </fieldset>
+        <div wliu calendar short style="margin-top:6px;"></div>
+    </ng-form>
 
     <div wliu diag maskable maskclick movable resizable id="detailInfo" style="width:720px;">
         <div head>@Html.Words("detail.information")</div>
@@ -115,7 +113,7 @@
                             <div head fixed style="width:140px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="ClassDate"></wliu.head></div>
                             <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="StartTime"></wliu.head></div>
                             <div head fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassDetail" col="EndTime"></wliu.head></div>
-                            <div head medium><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="Title"></wliu.head></div>
+                            <div head medium><wliu.head nowrap db="ViewData.database" tb="ClassDetail" col="ClassTitle"></wliu.head></div>
                         </div>
                         <div scroll-bar style="height:300px;">
                             <div row ng-repeat="row in ViewData.database.tables.ClassDetail.rows">
@@ -132,7 +130,7 @@
                                     <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="EndTime"></wliu.text>
                                 </div>
                                 <div cell medium nowrap>
-                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="Title"></wliu.text>
+                                    <wliu.text db="ViewData.database" tb="ClassDetail" guid="{{row.guid}}" col="ClassTitle"></wliu.text>
                                 </div>
                             </div>
                         </div>

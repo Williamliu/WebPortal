@@ -139,12 +139,17 @@
     <Build Include="dbo\Tables\Donation.sql" />
     <Build Include="dbo\Views\VW_Payment_Donation.sql" />
     <Build Include="dbo\Views\VW_Payment_Class.sql" />
+    <Build Include="dbo\Tables\Pub_User_UserType.sql" />
+    <Build Include="dbo\Views\VW_Payment_User.sql" />
+    <Build Include="dbo\Views\VW_Class_Enroll_User.sql" />
+    <Build Include="dbo\Tables\Email_Notification_User.sql" />
+    <Build Include="dbo\Tables\Email_Notification.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connection\Sql2Local.scmp" />
     <None Include="Backup\ReadMe.txt" />
     <None Include="Connection\Local2Product.scmp" />
-    <None Include="Backup\ShaoLinLocalDB_20200813.bak" />
-    <None Include="Backup\ShaolinDB_WinHost_20200813.bak" />
+    <None Include="Backup\ShaoLin_WinHost_20200825.bak" />
+    <None Include="Backup\ShaoLinLocalDB_20200825.bak" />
   </ItemGroup>
 </Project>

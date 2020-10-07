@@ -104,22 +104,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="Library.V1.Common.dll">
-      <publishTime>08/13/2020 13:16:17</publishTime>
+      <publishTime>09/02/2020 23:00:26</publishTime>
     </File>
     <File Include="Library.V1.Common.pdb">
-      <publishTime>08/13/2020 13:16:17</publishTime>
+      <publishTime>09/02/2020 23:00:26</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>08/14/2020 13:15:00</publishTime>
+      <publishTime>09/02/2020 23:00:32</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>08/14/2020 13:15:00</publishTime>
+      <publishTime>09/02/2020 23:00:32</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
-      <publishTime>08/13/2020 13:16:19</publishTime>
+      <publishTime>09/02/2020 23:00:30</publishTime>
     </File>
     <File Include="Library.V1.SQL.pdb">
-      <publishTime>08/13/2020 13:16:19</publishTime>
+      <publishTime>09/02/2020 23:00:30</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.JwtBearer.dll">
       <publishTime>05/21/2020 20:26:48</publishTime>
@@ -287,31 +287,106 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>08/14/2020 13:15:37</publishTime>
+      <publishTime>09/02/2020 23:01:04</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>08/14/2020 13:15:34</publishTime>
+      <publishTime>09/02/2020 23:00:45</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>08/14/2020 13:15:04</publishTime>
+      <publishTime>09/02/2020 23:00:38</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>08/14/2020 13:15:05</publishTime>
+      <publishTime>09/02/2020 23:00:39</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>08/14/2020 13:15:04</publishTime>
+      <publishTime>09/02/2020 23:00:38</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
-      <publishTime>08/08/2020 23:51:42</publishTime>
+      <publishTime>08/23/2020 23:24:49</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>08/14/2020 13:15:09</publishTime>
+      <publishTime>09/02/2020 23:00:44</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>08/14/2020 13:15:09</publishTime>
+      <publishTime>09/02/2020 23:00:44</publishTime>
     </File>
     <File Include="wwwroot/favicon.png">
       <publishTime>07/05/2020 23:15:03</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/home_01.jpg">
+      <publishTime>08/22/2020 20:14:47</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/home_02.jpg">
+      <publishTime>08/23/2020 20:16:50</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/home_03.jpg">
+      <publishTime>08/23/2020 20:16:03</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/home_04.jpg">
+      <publishTime>08/23/2020 20:17:46</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/shaolin_bg1.png">
+      <publishTime>08/23/2020 18:22:45</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/images/shaolin_lg1.png">
+      <publishTime>08/23/2020 18:29:30</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/arrows.png">
+      <publishTime>06/28/2013 16:06:16</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/bullet.png">
+      <publishTime>06/28/2013 16:06:16</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/fullscreen.png">
+      <publishTime>02/14/2012 10:28:22</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/pause.png">
+      <publishTime>07/23/2013 10:56:32</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/play.png">
+      <publishTime>07/23/2013 10:56:32</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/Thumbs.db">
+      <publishTime>10/23/2013 14:01:30</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/images/triangle.png">
+      <publishTime>06/28/2013 16:06:16</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/css/jslider_style.css">
+      <publishTime>08/22/2020 20:59:12</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/images/01.png">
+      <publishTime>08/23/2020 23:55:23</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/images/02.png">
+      <publishTime>08/23/2020 23:55:48</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/images/03.PNG">
+      <publishTime>08/23/2020 23:56:14</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/images/Thumbs.db">
+      <publishTime>10/23/2013 13:45:31</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/tooltips/01.png">
+      <publishTime>08/23/2020 16:59:10</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/tooltips/02.png">
+      <publishTime>08/23/2020 16:59:37</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/tooltips/03.PNG">
+      <publishTime>08/23/2020 17:00:09</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/data/tooltips/Thumbs.db">
+      <publishTime>10/23/2013 14:23:43</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/jquery.js">
+      <publishTime>06/25/2013 11:33:42</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/jslider_class.js">
+      <publishTime>10/23/2013 14:26:04</publishTime>
+    </File>
+    <File Include="wwwroot/HomePage/jslider/jslider_init.js">
+      <publishTime>08/22/2020 21:00:45</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/angular.min.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -323,10 +398,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/19/2020 22:08:34</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.database.js">
-      <publishTime>08/14/2020 10:15:26</publishTime>
+      <publishTime>08/24/2020 15:41:12</publishTime>
     </File>
     <File Include="wwwroot/Resource/angularjs/ng.wliu.v1.layout.js">
-      <publishTime>07/23/2020 22:09:36</publishTime>
+      <publishTime>08/17/2020 17:33:53</publishTime>
     </File>
     <File Include="wwwroot/Resource/bootstrap/css/bootstrap-grid.min.css">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -461,16 +536,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.v1.calendar.js">
-      <publishTime>07/21/2020 21:57:33</publishTime>
+      <publishTime>08/24/2020 00:49:33</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.v1.com.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.v1.widget.css">
-      <publishTime>07/20/2020 13:52:33</publishTime>
+      <publishTime>08/20/2020 09:57:11</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.v1.widget.js">
-      <publishTime>07/25/2020 11:24:37</publishTime>
+      <publishTime>08/19/2020 12:41:17</publishTime>
     </File>
     <File Include="wwwroot/Resource/jquery/jq.wliu.widget.css">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -2627,7 +2702,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/jquery.lwh.calendar.js">
-      <publishTime>07/05/2020 23:15:03</publishTime>
+      <publishTime>08/24/2020 00:38:59</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.browser.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -2645,7 +2720,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/31/2020 22:22:57</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.v1.database.js">
-      <publishTime>08/14/2020 10:32:03</publishTime>
+      <publishTime>08/19/2020 13:34:15</publishTime>
     </File>
     <File Include="wwwroot/Resource/js/wliu.v1.image.js">
       <publishTime>07/05/2020 23:15:03</publishTime>
@@ -2750,7 +2825,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/Images/ShaolinBackground/baduanjing.jpg">
-      <publishTime>07/19/2020 16:14:43</publishTime>
+      <publishTime>08/19/2020 22:02:10</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/Images/ShaolinBackground/shaolintemple_bg.jpg">
       <publishTime>07/11/2020 13:03:33</publishTime>
@@ -2775,6 +2850,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="wwwroot/Resource/style/Images/ShaolinCard/shaolin-logo1.png">
       <publishTime>07/05/2020 23:15:03</publishTime>
+    </File>
+    <File Include="wwwroot/Resource/style/Images/ShaolinCard/wechar_icon.png">
+      <publishTime>08/25/2020 11:11:45</publishTime>
+    </File>
+    <File Include="wwwroot/Resource/style/Images/ShaolinCard/wechat_pay.jpg">
+      <publishTime>08/25/2020 11:09:52</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/Images/shaolin_log.png">
       <publishTime>07/10/2020 14:06:08</publishTime>
@@ -2831,10 +2912,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2020 23:15:03</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/wliu.v1.com.css">
-      <publishTime>08/13/2020 23:22:16</publishTime>
+      <publishTime>08/17/2020 19:23:33</publishTime>
     </File>
     <File Include="wwwroot/Resource/style/wliu.v1.layout.css">
-      <publishTime>08/13/2020 23:16:16</publishTime>
+      <publishTime>08/24/2020 11:51:49</publishTime>
+    </File>
+    <File Include="wwwroot/Resource/style/wliu.v1.pub.layout.css">
+      <publishTime>08/15/2020 11:08:05</publishTime>
     </File>
     <File Include="zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll">
       <publishTime>09/12/2019 17:09:00</publishTime>

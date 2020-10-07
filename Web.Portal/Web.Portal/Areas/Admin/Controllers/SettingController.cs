@@ -29,6 +29,11 @@ namespace Web.Portal.Areas.Admin.Controllers
             this.Init("M8040");
             return View();
         }
+        public IActionResult Email()
+        {
+            this.Init("M8045");
+            return View();
+        }
         public IActionResult Translation()
         {
             this.Init("M8050");

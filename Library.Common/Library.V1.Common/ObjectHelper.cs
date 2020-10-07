@@ -134,6 +134,11 @@ namespace Library.V1.Common
         {
             try
             {
+                if(val==null)
+                {
+                    return null;
+                }
+
                 if (val.GetType().ToString() == "System.Boolean")
                 {
                     bool ok = (bool)val;

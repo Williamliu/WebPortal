@@ -364,8 +364,8 @@ namespace Web.Portal.Areas.Admin.WebApi
                         secondMenu.AddFilters(f1_s);
 
                         secondMenu.Navi.IsActive = false;
-                        secondMenu.Navi.By = "Position,Sort";
-                        secondMenu.Navi.Order = "ASC,DESC";
+                        secondMenu.Navi.By = "Sort";
+                        secondMenu.Navi.Order = "DESC";
                         secondMenu.AddQueryKV("Deleted", false).AddDeleteKV("LastUpdated", DateTime.Now.UTCSeconds())
                             .AddUpdateKV("LastUpdated", DateTime.Now.UTCSeconds())
                             .AddInsertKV("Deleted", false).AddInsertKV("Position",1).AddInsertKV("CreatedTime", DateTime.Now.UTCSeconds());

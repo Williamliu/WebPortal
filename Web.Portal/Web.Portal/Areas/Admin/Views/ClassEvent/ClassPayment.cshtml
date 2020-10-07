@@ -42,14 +42,13 @@
                 <div row>
                     <div head fixed style="width:40px;"></div>
                     <div head large><wliu.head db="ViewData.database" tb="ClassPayment" col="SiteName"></wliu.head></div>
-                    <div head small><wliu.head db="ViewData.database" tb="ClassPayment" col="ClassName"></wliu.head></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="ClassPayment" col="ClassName"></wliu.head></div>
                     <div head large><wliu.head db="ViewData.database" tb="ClassPayment" col="ClassTitle"></wliu.head></div>
                     <div head large><wliu.head db="ViewData.database" tb="ClassPayment" col="FullName"></wliu.head></div>
                     <div head center fixed style="width:120px;"><wliu.head db="ViewData.database" tb="ClassPayment" col="PaidAmount"></wliu.head></div>
                     <div head center fixed style="width:100px;"><wliu.head db="ViewData.database" tb="ClassPayment" col="Currency"></wliu.head></div>
                     <div head medium><wliu.head db="ViewData.database" tb="ClassPayment" col="Payer"></wliu.head></div>
-                    <div head center fixed style="width:120px;"><wliu.head db="ViewData.database" tb="ClassPayment" col="PaidDate"></wliu.head></div>
-                    <div head medium><wliu.head db="ViewData.database" tb="ClassPayment" col="PaidInvoice"></wliu.head></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="ClassPayment" col="PaidDate"></wliu.head></div>
                     <div head small><wliu.head db="ViewData.database" tb="ClassPayment" col="PaidStatus"></wliu.head></div>
                 </div>
                 <div row ng-repeat="row in ViewData.database.tables.ClassPayment.rows">
@@ -59,8 +58,8 @@
                     <div cell large>
                         <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="SiteName"></wliu.text>
                     </div>
-                    <div cell small>
-                        <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="ClassName"></wliu.text>
+                    <div cell medium>
+                        <wliu.template db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="{ClassName}<br>${FeeAmount}{Currency}-{Discount}%"></wliu.template>
                     </div>
                     <div cell large>
                         <wliu.template db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="{ClassTitle}<br>{StartDate}~{EndDate}"></wliu.template>
@@ -77,11 +76,8 @@
                     <div cell medium>
                         <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="Payer"></wliu.text>
                     </div>
-                    <div cell center fixed style="width:120px;">
-                        <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="PaidDate"></wliu.text>
-                    </div>
                     <div cell medium>
-                        <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="PaidInvoice"></wliu.text>
+                        <wliu.template db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="{PaidDate}<br>{PaidInvoice}"></wliu.template>
                     </div>
                     <div cell small>
                         <wliu.text db="ViewData.database" tb="ClassPayment" guid="{{row.guid}}" col="PaidStatus"></wliu.text>
@@ -90,13 +86,12 @@
                 <div row>
                     <div head sum fixed style="width:40px;"></div>
                     <div head sum large></div>
-                    <div head sum small></div>
+                    <div head sum medium></div>
                     <div head sum large></div>
                     <div head sum large right><wliu.title text="@Html.Words("navi.total")"></wliu.title></div>
                     <div head sum center right fixed style="width:120px;"><wliu.sum db="ViewData.database" tb="ClassPayment" col="PaidAmount"></wliu.sum></div>
                     <div head sum center fixed style="width:100px;"></div>
                     <div head sum medium></div>
-                    <div head sum center fixed style="width:120px;"></div>
                     <div head sum medium></div>
                     <div head sum small></div>
                 </div>

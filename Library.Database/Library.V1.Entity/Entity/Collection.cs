@@ -110,7 +110,7 @@ namespace Library.V1.Entity
             this.Items.Add(new CollectItem { Value = value, Title = title, Detail = detail, RefValue = refVal });
             return this;
         }
-        public void AddFilter(string dbColName, ECompare compare, object value)
+        public Collection AddFilter(string dbColName, ECompare compare, object value)
         {
 
             if (string.IsNullOrWhiteSpace(dbColName) == false)
@@ -158,6 +158,7 @@ namespace Library.V1.Entity
                         break;
                 }
             }
+            return this;
         }
         public void FillData()
         {

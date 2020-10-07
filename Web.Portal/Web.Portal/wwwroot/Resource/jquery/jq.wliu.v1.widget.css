@@ -517,7 +517,7 @@ div[wliu][masker-diag] {
 }
 
 [wliu][flip][reverse] > [frame] > [back] {
-    opacity: 1 !important;
+    opacity:        1 !important;
     z-index:        9 !important;
 }
 
@@ -616,7 +616,7 @@ ul[wliu][tab9] {
 	overflow:				visible; 
     white-space:            nowrap;
     padding:                0px;
-    margin:                 0px !important;
+    margin:                 4px 0px 0px 0px!important;
     box-sizing:             border-box;
 
     min-width:              220px; /*** container: 200px + 20px ***/
@@ -743,9 +743,7 @@ ul[wliu][tab9] > li[selected] {
 	margin-top:			    -2px;
 
 	background-position:	-2px -40px;
-	
 	z-index:				99;
-
 }
 
 ul[wliu][tab9] > li[selected] > span {
@@ -772,7 +770,7 @@ ul[wliu][tab9] + div[wliu][tab9][body] {
     padding:            2px;
 	border-top:		    0px;  
  
-    min-width:          320px; /** container: 300px + 20px **/
+    min-width:          220px; /** container: 300px + 20px **/
 }
 ul[wliu][tab9][border] + div[wliu][tab9][body] {
 	border:			    2px solid #19c2fa;
@@ -783,7 +781,7 @@ ul[wliu][tab9] + div[wliu][tab9][body] > div {
     display:            	none; 
     position:           	relative; 
 	background-color:		#ffffff;     
-	padding: 				8px;
+	padding: 				0px;
 	text-align:				left;  
     box-sizing:             border-box;
     overflow-x:             hidden;
@@ -1993,7 +1991,8 @@ div[wliu-tooltip] s[arrow][active] {
 
 div[wliu][calendar] {
     display:            block;
-    min-width:          260px;
+    padding:            0px;
+    margin:             0px;
 }
 div[wliu][calendar] > table {
     width:      100%;

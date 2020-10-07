@@ -309,7 +309,8 @@
                 html += '<td class="date' + today_css + date_na + '"  yy="' + this._weekdays[i][j].year + '" mm="' + this._weekdays[i][j].month + '" dd="' + this._weekdays[i][j].date + '" valign="top" width="14.25%">';
                 html += '<div class="datedigi' + (this._weekdays[i][j].status ? "" : " datedigi-status") + (this._weekdays[i][j].na? " datedigi-na" : "") + '">';
                 html += this._weekdays[i][j].date;
-                html += this.options.short?'':' <sup style="font-size:10px;font-weight:500;text-decoration:none;">' + this._words[this.options.lang].months_short[this._weekdays[i][j].month] + '</sup>';
+                //html += this.options.short ? '' : ' <sup style="font-size:10px;font-weight:500;text-decoration:none;">' + this._words[this.options.lang].months_short[this._weekdays[i][j].month] + '</sup>';
+                html += ' <sup style="font-size:10px;font-weight:500;text-decoration:none;">' + this._words[this.options.lang].months_short[this._weekdays[i][j].month] + '</sup>';
                 html += '</div>';
                 html += '<div class="date-event" yy="' + this._weekdays[i][j].year + '" mm="' + this._weekdays[i][j].month + '" dd="' + this._weekdays[i][j].date + '">';
                 html += '</div>';

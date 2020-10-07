@@ -15,6 +15,7 @@ namespace Library.V1.Entity
             this.Method = "get";
             this.GetUrl = string.Empty;
             this.ExportUrl = string.Empty;
+            this.EmailUrl = string.Empty;
             this.SaveUrl = string.Empty;
 
             this.Tables = new Dictionary<string, Table>();
@@ -44,6 +45,7 @@ namespace Library.V1.Entity
         public string Method { get; set; }
         public string GetUrl { get; set; }
         public string ExportUrl { get; set; }
+        public string EmailUrl { get; set; }
         public string SaveUrl { get; set; }
         public bool IsDebug { get; set; }
         [JsonIgnore]
@@ -126,6 +128,14 @@ namespace Library.V1.Entity
                 return string.Empty;
 
         }
+        public Table EmailTable(JSTable jsTable, List<string> EmailCols)
+        {
+            if (this.Tables.ContainsKey(jsTable.Name))
+                return this.Tables[jsTable.Name].EmailData(jsTable, EmailCols);
+            else
+                return new Table();
+
+        }
         #endregion
 
         #region Database SaveData Method
@@ -140,11 +150,44 @@ namespace Library.V1.Entity
                 return new Table();
             }
         }
+        public Table ValidateTableOnly(JSTable jsTable)
+        {
+            if (this.Tables.ContainsKey(jsTable.Name))
+            {
+                return this.Tables[jsTable.Name].ValidateTableOnly(jsTable);
+            }
+            else
+            {
+                return new Table();
+            }
+        }
         public Table SaveTable(JSTable jstable)
         {
             if (this.Tables.ContainsKey(jstable.Name))
             {
                 return this.Tables[jstable.Name].SaveData(jstable);
+            }
+            else
+            {
+                return new Table();
+            }
+        }
+        public Table SaveTableOnly(JSTable jstable)
+        {
+            if (this.Tables.ContainsKey(jstable.Name))
+            {
+                return this.Tables[jstable.Name].SaveDataOnly();
+            }
+            else
+            {
+                return new Table();
+            }
+        }
+        public Table SaveTableClear(JSTable jstable)
+        {
+            if (this.Tables.ContainsKey(jstable.Name))
+            {
+                return this.Tables[jstable.Name].SaveDataClear();
             }
             else
             {

@@ -1,19 +1,18 @@
-﻿CREATE VIEW [dbo].[VW_Payment_Class]
+﻿
+
+
+CREATE VIEW [dbo].[VW_Payment_Class]
 AS
 SELECT a.Id
 	  ,c.BranchId
 	  ,c.SiteId
 	  ,s.Title_en as SiteName_en
 	  ,s.Title_cn as SiteName_cn
-      ,[ClassId]
-	  ,b.ClassName
-	  ,b.StartDate
-	  ,b.EndDate
-	  ,b.Title_en as ClassTitle_en
-	  ,b.Title_cn as ClassTitle_cn
       ,[UserId]
+	  ,p.UserName
 	  ,Concat(p.FirstName, ' ', P.LastName) as FullName
 	  ,p.Email
+	  ,'' as Notes
       ,[Payer]
       ,[PaidDate]
       ,[PaidAmount]
@@ -24,6 +23,16 @@ SELECT a.Id
       ,[PaidStatus]
       ,[IsSuccess]
       ,[TrackNumber]
+      ,[ClassId]
+	  ,b.ClassName
+	  ,b.StartDate
+	  ,b.EndDate
+	  ,b.Title_en as ClassTitle_en
+	  ,b.Title_cn as ClassTitle_cn
+	  ,b.FeeAmount
+	  ,b.DiscountText_en
+	  ,b.DiscountText_cn
+	  ,b.Discount
   FROM Class_UserPayment a
   INNER JOIN Class b ON b.Id = a.ClassId
   INNER JOIN Course c ON c.id = b.CourseId

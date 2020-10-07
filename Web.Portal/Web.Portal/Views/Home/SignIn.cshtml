@@ -16,22 +16,35 @@
             $scope.saveCallback = function () {
                 let refKey = $scope.ViewData.database.tables.UserRegister.rows[0].key;
                 $scope.Gallery.SetKey(refKey);
-                $scope.Gallery.SaveImage($scope.Gallery.CurrentGuid(), 1);
-
+                $scope.Gallery.SaveImage($scope.Gallery.CurrentGuid(), 1).then(d => {
+                    $scope.Gallery.NewRowB();
+                    $scope.Apply();
+                });
                 $scope.ViewData.database.tables["UserRegister"].Empty();
-                $("div[wliu][flip]").flip("toggle");
+                $("#register").hide();
+                $("#registerOk").diag("show");
             }
             $scope.cancelCallback = function () {
-                $("div[wliu][flip]").flip("toggle");
             }
             $scope.loginSuccess = function () {
-                if (window.location.search) 
-                    if (UrlParams("url") != "")
+                if (window.location.search) {
+                    if (UrlParams("url") != "") {
                         window.location.href = UrlParams("url");
-                    else
+                    } else {
+                        if ($scope.ViewData.database.tables.UserLogin.CurrentValue("ResetPassword")) {
+                            window.location.href = "/Profile/ResetPassword";
+                        } else {
+                            window.location.href = "/Profile/MyAccount";
+                        }
+                    } 
+                }
+                else {
+                    if ($scope.ViewData.database.tables.UserLogin.CurrentValue("ResetPassword")) {
+                        window.location.href = "/Profile/ResetPassword";
+                    } else {
                         window.location.href = "/Profile/MyAccount";
-                 else 
-                    window.location.href = "/Profile/MyAccount";
+                    }
+                }
             }
             $scope.resetPass = function () {
                 $scope.ViewData.database.tables.UserPassword.SaveAll().then(d => {
@@ -62,152 +75,169 @@
     <style>
     </style>
 }
-<div ng-app="myApp" ng-controller="myControl" class="container">
-    <div wliu flip style="height:640px;" flip-toggle="flipme">
-        <div frame>
-            <div front>
-                <div style="display:block;position:relative;height:120px; background:center center url(/resource/style/Images/shaolin-temple.jpg) no-repeat; background-size:cover;"></div>
-                <div style="display:inline-block;position:absolute;height:120px; width:120px; top:60px; left:50%; transform:translateX(-50%); background:center center url(/resource/style/Images/login-user.png) no-repeat; background-size:contain; background-color:white; border:1px solid white; border-radius:60px;"></div>
+<div ng-app="myApp" ng-controller="myControl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="container-fluid" style="box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);border:1px solid #cccccc; margin-top:12px;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div style="display:block;position:relative;margin:0px -2px; height:80px; background:center center url(/resource/style/Images/shaolin-temple.jpg) no-repeat; object-fit:cover; background-size:cover;"></div>
+                            <div style="display:inline-block;position:absolute;height:100px; width:100px; top:20px; left:50%; transform:translateX(-50%); background:center center url(/resource/style/Images/login-user.png) no-repeat; background-size:contain; background-color:white; border:1px solid white; border-radius:60px;"></div>
 
-                <div class="text-center" style="margin-top:80px;">
-                    <h3><i class="fa fa-lock"></i> <span style="text-transform:uppercase;">@Html.Words("button.login")</span></h3>
-                    <hr class="mt-2 mb-2">
-                </div>
-                <a flip-toggle="flipme" style="margin-left:32px; font-size:24px;">@Html.Words("not.a.member") <span style="color:#0275d8;text-decoration:underline;">@Html.Words("button.register")</span></a>
-                <div wliu table grow shrink style="margin-top:32px;">
-                    <div row>
-                        <div cell fixed style="width:10px;"></div>
-                        <div cell small>
-                            <form.label nowrap h2 right db="ViewData.database" tb="UserLogin" col="LoginUser"></form.label>
+                            <div class="text-center" style="margin-top:40px;">
+                                <h3><i class="fa fa-lock"></i> <span style="text-transform:uppercase;">@Html.Words("button.login")</span></h3>
+                                <hr class="mt-2 mb-2">
+                            </div>
                         </div>
-                        <div cell large>
-                            <form.textbox h2 db="ViewData.database" tb="UserLogin" col="LoginUser" id="loginUser" placeholder="@Html.Words("email.username")"></form.textbox>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div style="padding:0px 20px;">
+                                <form.label nowrap h2 db="ViewData.database" tb="UserLogin" col="LoginUser"></form.label>
+                            </div>
                         </div>
-                        <div cell style="width:40px;"></div>
-                    </div>
-                    <div row style="margin-top:32px;">
-                        <div cell fixed style="width:10px;"></div>
-                        <div cell small>
-                            <form.label nowrap h2 right db="ViewData.database" tb="UserLogin" col="Password"></form.label>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <div style="padding:0px 20px;">
+                                <form.textbox h2 db="ViewData.database" tb="UserLogin" col="LoginUser" id="loginUser" placeholder="@Html.Words("email.username")"></form.textbox>
+                            </div>
                         </div>
-                        <div cell large>
-                            <form.password h2 db="ViewData.database" tb="UserLogin" col="Password" action="loginSuccess()"></form.password>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div style="padding:6px 20px 0px 20px;">
+                                <form.label nowrap h2 db="ViewData.database" tb="UserLogin" col="Password"></form.label>
+                            </div>
                         </div>
-                        <div cell style="width:40px;"></div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <div style="padding:6px 20px 0px 20px;">
+                                <form.password h2 db="ViewData.database" tb="UserLogin" col="Password" action="loginSuccess()"></form.password>
+                            </div>
+                        </div>
                     </div>
-                    <div row center style="margin-top:20px;">
-                        <form.save h2 db="ViewData.database" tb="UserLogin" label="@Html.Words("button.login")" action="loginSuccess()" style="margin:0px 20px;"></form.save>
-                        <form.cancel h2 db="ViewData.database" tb="UserLogin" label="@Html.Words("button.cancel")" style="margin:0px 20px;"></form.cancel>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12 text-center">
+                            <form.save db="ViewData.database" tb="UserLogin" label="@Html.Words("button.login")" action="loginSuccess()" style="margin:0px 10px;"></form.save>
+                            <form.cancel db="ViewData.database" tb="UserLogin" label="@Html.Words("button.cancel")" style="margin:0px 10px;"></form.cancel>
+                        </div>
                     </div>
-                    <div row style="margin-top:40px;">
-                        <a href="javascript:showDiag()" style="margin-left:32px;font-size:24px;"><label>@Html.Words("forget.password")</label> <span style="color:#0275d8;text-decoration:underline;">@Html.Words("reset.password")</span></a>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <a href="javascript:showDiag()" style="font-size:16px;"><label>@Html.Words("forget.password")</label> <span style="color:#0275d8;text-decoration:underline;">@Html.Words("reset.password")</span></a>
+                        </div>
                     </div>
+                    <br />
                 </div>
             </div>
-            <div back>
-                <div class="text-center" style="margin-top:12px;">
-                    <h3><i class="fa fa-user"></i> <span style="text-transform:uppercase;">@Html.Words("button.register")</span></h3>
-                    <hr class="mt-2 mb-2">
-                </div>
-                <a flip-toggle="flipme" style="margin-left:32px; font-size:24px;">@Html.Words("back.to.login") <span style="color:#0275d8;text-decoration:underline;">@Html.Words("button.login")</span></a>
-                <div style="display:block; padding:20px 20px 0px 20px;">
-                    <table cellpadding="0" cellspacing="0" width="100%">
-                        <tr>
-                            <td valign="top" width="33%">
-                                <ul id="d1" wliu tab9 border color="mint">
-                                    <li>@Html.Words("login.information")</li>
-                                </ul>
-                                <div wliu tab9 body style="border-right:none;">
-                                    <div style="height:400px;">
-                                        <div wliu table grow shrink>
-                                            <div row style="margin-top:6px;">
-                                                <div cell>
-                                                    <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="UserName"></assm.textbox>
-                                                </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div id="register" class="container-fluid" style="box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);border:1px solid #cccccc; margin-top:12px;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="text-center">
+                                <div style="display:block;position:relative;margin:0px -2px; height:80px; background:center center url(/resource/style/Images/shaolin-temple.jpg) no-repeat; object-fit:cover; background-size:cover;"></div>
+                                <h3><i class="fa fa-user"></i> <span style="text-transform:uppercase; padding-top:20px;">@Html.Words("button.register")</span></h3>
+                                <hr class="mt-2 mb-2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <ul id="d1" wliu tab9 color="salmon">
+                                <li>@Html.Words("login.information")</li>
+                            </ul>
+                            <div wliu tab9 body>
+                                <div>
+                                    <div wliu table grow shrink>
+                                        <div row style="margin-top:6px;">
+                                            <div cell>
+                                                <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="UserName"></assm.textbox>
                                             </div>
-                                            <div row style="margin-top:6px;">
-                                                <div cell>
-                                                    <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="Email"></assm.textbox>
-                                                </div>
+                                            <div cell>
+                                                <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="Email"></assm.textbox>
                                             </div>
-                                            <div row style="margin-top:6px;">
-                                                <div cell>
-                                                    <assm.password fixed border h2 db="ViewData.database" tb="UserRegister" col="Password"></assm.password>
-                                                </div>
+                                        </div>
+                                        <div row style="margin-top:6px;">
+                                            <div cell>
+                                                <assm.password fixed border h2 db="ViewData.database" tb="UserRegister" col="Password"></assm.password>
                                             </div>
-                                            <div row style="margin-top:6px;">
-                                                <div cell>
-                                                    <assm.confirm fixed border h2 db="ViewData.database" tb="UserRegister" col="Password"></assm.confirm>
-                                                </div>
+                                            <div cell>
+                                                <assm.confirm fixed border h2 db="ViewData.database" tb="UserRegister" col="Password"></assm.confirm>
                                             </div>
-                                            <div row style="margin-top:6px;">
-                                                <div cell>
-                                                    <assm.select fixed border h2 db="ViewData.database" tb="UserRegister" col="BranchId"></assm.select>
-                                                </div>
+                                        </div>
+                                        <div row style="margin-top:6px;">
+                                            <div cell>
+                                                <assm.select fixed border h2 db="ViewData.database" tb="UserRegister" col="BranchId"></assm.select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </td>
-                            <td valign="top" width="33%">
-                                <ul id="d2" wliu tab9 border color="mint">
-                                    <li>@Html.Words("my.account")</li>
-                                </ul>
-                                <div wliu tab9 body>
-                                    <div style="height:400px;">
-                                        <div wliu table grow shrink>
-                                            <div row style="margin-top:6px;">
-                                                <div cell>
-                                                    <assm.textbox fixed border h2 value1="Will" db="ViewData.database" tb="UserRegister" col="FirstName"></assm.textbox>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <ul id="d2" wliu tab9 color="mint">
+                                <li>@Html.Words("my.account")</li>
+                            </ul>
+                            <div wliu tab9 body>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div style="padding:0px 30px;">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <assm.textbox fixed border h2 value1="Will" db="ViewData.database" tb="UserRegister" col="FirstName"></assm.textbox>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="LastName"></assm.textbox>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="Phone"></assm.textbox>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="Cell"></assm.textbox>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <assm.radio fixed border h2 db="ViewData.database" tb="UserRegister" col="Gender"></assm.radio>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div row style="margin-top:6px;">
-                                                <div cell>
-                                                    <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="LastName"></assm.textbox>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-lg-center text-md-center">
+                                            <div style="padding:0px 30px;">
+                                                <label wliu bold>@Html.Words("col.photo")</label>
+                                                <div style="display:block;">
+                                                    <image.main gallery="Gallery" ww="160" hh="160" icons="upload,camera,text,delete"></image.main>
                                                 </div>
-                                            </div>
-                                            <div row style="margin-top:6px;">
-                                                <div cell>
-                                                    <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="Phone"></assm.textbox>
-                                                </div>
-                                            </div>
-                                            <div row style="margin-top:6px;">
-                                                <div cell>
-                                                    <assm.textbox fixed border h2 db="ViewData.database" tb="UserRegister" col="Cell"></assm.textbox>
-                                                </div>
-                                            </div>
-                                            <div row style="margin-top:6px;">
-                                                <div cell>
-                                                    <assm.radio fixed border h2 db="ViewData.database" tb="UserRegister" col="Gender"></assm.radio>
-                                                </div>
+                                                <br />
+                                                <assm.checkbox.br h2 style="display:inline-block;width:auto; text-align:left;" fixed db="ViewData.database" tb="UserRegister" col="UserType" column="1"></assm.checkbox.br>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </td>
-                            <td valign="top" width="33%">
-                                <ul id="d3" wliu tab9 border color="mint">
-                                    <li>@Html.Words("col.photo")</li>
-                                </ul>
-                                <div wliu tab9 body style="border-left:none;">
-                                    <div style="height:400px;">
-                                        <label wliu bold>@Html.Words("col.photo")</label>
-                                        <div style="display:block;">
-                                            <image.main gallery="Gallery" ww="160" hh="160" icons="upload,camera,text,delete"></image.main>
-                                        </div>
-                                        <br />
-                                        <assm.checkbox.br h2 style="display:inline-block;width:auto;" fixed db="ViewData.database" tb="UserRegister" col="UserType" column="1"></assm.checkbox.br>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" align="center" style="padding-top:12px;">
-                                <form.save h2 db="ViewData.database" tb="UserRegister" action="saveCallback()" label="@Html.Words("button.save")" style="margin:0px 20px;"></form.save>
-                                <form.cancel h2 db="ViewData.database" tb="UserRegister" action="cancelCallback()" label="@Html.Words("button.cancel")" style="margin:0px 20px;"></form.cancel>
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                            <form.save db="ViewData.database" tb="UserRegister" action="saveCallback()" label="@Html.Words("button.save")" style="margin:0px 10px;"></form.save>
+                            <form.cancel db="ViewData.database" tb="UserRegister" action="cancelCallback()" label="@Html.Words("button.cancel")" style="margin:0px 10px;"></form.cancel>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
                 </div>
             </div>
         </div>
@@ -230,7 +260,7 @@
     </div>
     <div wliu diag maskable maskclick movable resizable id="emailsent" style="width:320px;" diag-toggle="emailsentclose">
         <div head>@Html.Words("reset.password")</div>
-        <div body style="padding-top:3px;">
+        <div body style="padding-top: 3px;">
         </div>
         <div style="display:block; text-align:center;">
             <a href="javascript:void(0)" diag-toggle="emailsentclose" class="btn btn-primary" style="margin:0px 6px;">@Html.Words("button.close")</a>
@@ -243,6 +273,16 @@
 
     <table.error></table.error>
     <form.error></form.error>
+    <div id="registerOk" wliu diag maskable movable diag-toggle="registerOkToggle">
+        <div head>
+            <a success></a>
+            @Html.Words("register.success")
+        </div>
+        <div body style="min-height:60px;">
+            <label wliu h2>@Html.Words("register.success.content")</label>
+        </div>
+        <center><a wliu button blue diag-toggle="registerOkToggle">@Html.Words("button.close")</a></center>
+    </div>
 
     <wliu.tooltip></wliu.tooltip>
     <wliu.hint></wliu.hint>

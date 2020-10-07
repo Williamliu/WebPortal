@@ -1,0 +1,115 @@
+﻿@section scripts {
+    <script src="~/resource/js/ckeditor_full/ckeditor.js" type="text/javascript"></script>
+    <script>
+        var viewData = new WLIU.ViewData();
+        var app = angular.module("myApp", ["wliu_database"]);
+
+        app.controller("mycontrl", function ($scope) {
+            viewData.LinkScope($scope);
+
+            $scope.detail = function () {
+                $("#course_List").hide();
+                $("#course_Detail").show();
+            };
+            $scope.goBack = function () {
+                $("#course_Detail").hide();
+                $("#course_List").show();
+            };
+
+        });
+        viewData.Init("/Admin/api/Setting/InitEmail").then(data => {
+            data.database.tables.EmailTemp.CKEditor = ["Detail"];
+        });
+    </script>
+}
+<div ng-app="myApp" ng-controller="mycontrl">
+    <div class="container-fluid" id="course_List">
+        <ng-form>
+            <fieldset>
+                <legend>@Html.Words("search.by")</legend>
+                <filter.label db="ViewData.database" tb="EmailTemp" col="search_keyword"></filter.label>
+                <filter.textbox db="ViewData.database" tb="EmailTemp" col="search_keyword"></filter.textbox>
+                <wliu.search db="ViewData.database" tb="EmailTemp">Search</wliu.search>
+            </fieldset>
+            <div wliu table grow shrink style="margin-top:12px;">
+                <div row>
+                    <div cell style="background-color:#dddddd;">
+                        <wliu.navi db="ViewData.database" tb="EmailTemp"></wliu.navi>
+                    </div>
+                </div>
+                <div row>
+                    <div head fixed style="width:40px;"></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="EmailTemp" col="Title_en"></wliu.head></div>
+                    <div head medium><wliu.head db="ViewData.database" tb="EmailTemp" col="Title_cn"></wliu.head></div>
+                    <div head large><wliu.head db="ViewData.database" tb="EmailTemp" col="Subject"></wliu.head></div>
+                    <div head center small><wliu.head db="ViewData.database" tb="EmailTemp" col="Active"></wliu.head></div>
+                    <div head fixed center style="width:60px;"><wliu.head db="ViewData.database" tb="EmailTemp" col="Sort"></wliu.head></div>
+                    <div head fixed style="width:56px;">
+                        <wliu.hicon db="ViewData.database" tb="EmailTemp" icons="add,save,cancel"></wliu.hicon>
+                    </div>
+                </div>
+                <div row ng-repeat="row in ViewData.database.tables.EmailTemp.rows">
+                    <div cell center fixed style="width:40px;">
+                        <wliu.rowstatus db="ViewData.database" tb="EmailTemp" guid="{{row.guid}}"></wliu.rowstatus>
+                    </div>
+                    <div cell medium>
+                        <wliu.textbox db="ViewData.database" tb="EmailTemp" guid="{{row.guid}}" col="Title_en"></wliu.textbox>
+                    </div>
+                    <div cell medium>
+                        <wliu.textbox db="ViewData.database" tb="EmailTemp" guid="{{row.guid}}" col="Title_cn"></wliu.textbox>
+                    </div>
+                    <div cell large>
+                        <wliu.textbox db="ViewData.database" tb="EmailTemp" guid="{{row.guid}}" col="Subject"></wliu.textbox>
+                    </div>
+                    <div cell center small>
+                        <wliu.bool db="ViewData.database" tb="EmailTemp" guid="{{row.guid}}" col="Active"></wliu.bool>
+                    </div>
+                    <div cell center fixed style="width:60px;">
+                        <wliu.textbox db="ViewData.database" tb="EmailTemp" guid="{{row.guid}}" col="Sort"></wliu.textbox>
+                    </div>
+                    <div cell fixed style="width:56px;">
+                        <wliu.bicon db="ViewData.database" tb="EmailTemp" guid="{{row.guid}}" icons="save,cancel,detail,deleted" actiondetail="detail()"></wliu.bicon>
+                    </div>
+                </div>
+            </div>
+        </ng-form>
+    </div>
+    <div id="course_Detail" class="container" style="display:none; margin-top:12px;">
+        <a wliu button blue ng-click="goBack()">@Html.Words("go.back")</a>
+        <form.status db="ViewData.database" tb="EmailTemp"></form.status>
+        <div wliu table grow shrink>
+            <div row style="margin-top:12px;">
+                <div cell>
+                    <assm.textbox fixed border h2 db="ViewData.database" tb="EmailTemp" col="Title_en"></assm.textbox>
+                </div>
+                <div cell>
+                    <assm.textbox fixed border h2 db="ViewData.database" tb="EmailTemp" col="Title_cn"></assm.textbox>
+                </div>
+            </div>
+            <div row style="margin-top:12px;">
+                <div cell style="padding-top:10px;">
+                    <label wliu h2>@Html.Words("email.placeholder"):</label> <label wliu h2>{FirstName} {LastName} {UserName} {Email}</label>
+</div>
+            </div>
+            <div row style="margin-top:12px;">
+                <div cell style="padding-top:10px;">
+                    <form.ckeditor db="ViewData.database" tb="EmailTemp" col="Detail" hh="500px"></form.ckeditor>
+                </div>
+            </div>
+            <div row style="margin-top:12px;">
+                <div cell center>
+                    <form.save h2 db="ViewData.database" tb="EmailTemp" label="@Html.Words("button.save")"></form.save>
+                    <form.cancel h2 db="ViewData.database" tb="EmailTemp" label="@Html.Words("button.cancel")" action="goBack()"></form.cancel>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table.error></table.error>
+    <form.error></form.error>
+    <wliu.tooltip></wliu.tooltip>
+    <wliu.hint></wliu.hint>
+    <wliu.loading oper="get"></wliu.loading>
+    <wliu.loading oper="save"></wliu.loading>
+
+</div>

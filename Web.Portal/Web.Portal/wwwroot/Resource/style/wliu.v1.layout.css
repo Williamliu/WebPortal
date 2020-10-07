@@ -129,7 +129,7 @@
 [wliu][layout] > [body] {
     display:            block;
     position:           fixed;
-    top:                40px;
+    top:                42px;
     left:               120px;
     right:              0px;
     bottom:             0px;
@@ -141,7 +141,7 @@
     z-index:            990 !important;
 }
 [wliu][layout][pub] > [body] {
-    padding-top:        32px;
+    padding-top:        30px;
 }
 
 @media (max-width: 800px) {
@@ -167,8 +167,11 @@
     }
 
     [wliu][layout] > [body] {
-        left:           0px;
-        padding:        0px 0px;
+        left:          0px;
+        padding:       0px 2px;
+    }
+    [wliu][layout][pub] > [body][short] {
+        padding-top:   2px;
     }
 }
 @media (min-width: 800px) {
@@ -211,7 +214,7 @@
 
     [wliu][layout] > [body] {
         left:           160px;
-        padding:        0px 32px;
+        padding:        0px 12px;
     }
 }
 
@@ -474,6 +477,7 @@ div[pub][menu][left] > img {
     position:           relative;
     object-fit:         contain;
     width:              100%;
+    margin-top:         2px;
 }
 div[pub][menu][center] {
     display:            block;
@@ -483,6 +487,7 @@ div[pub][menu][center] {
     flex-shrink:        1;
     flex-grow:          1;
     text-align:         right;
+    padding-right:      40px;
 }
 div[pub][menu][right] {
     display:            inline-block;
@@ -529,6 +534,7 @@ a[pub][button] {
     transition:         0.5s;
     user-select:        none;
     box-sizing:         content-box;
+    margin-top:         6px;
 }
 a[pub][button]:hover {
     background-color:   orange;
@@ -552,6 +558,7 @@ a[pub][menu][toggle] {
     color:              #ffffff;
     transition:         0.5s;
     margin:             0px 2px;
+    margin-top:         6px;
     box-sizing:         content-box;
     vertical-align:     middle;
     min-width:          32px;
@@ -559,29 +566,49 @@ a[pub][menu][toggle] {
 a[pub][menu][toggle]:hover {
     background:         linear-gradient(40deg, orange, orangered);
 }
+
+div[calendar] {
+    margin: 68px 2px 2px 2px;
+}
+
 @media (max-width: 800px) {
+    div[pub][menu],
+    div[pub][menu][short]
+    {
+        height:     40px;
+    }
+    div[pub][menu][body] {
+        height:     40px;
+    }
+    div[pub][webcontent],
+    div[pub][webcontent][short] {
+        margin-top: 42px;
+    }
     div[pub][menu][center] {
         text-align:         left;
+        padding-right:      0px;
     }
-
+    div[pub][menu][right] {
+        margin-right:       12px;
+    }
     div[pub][menu][body] ul[first] {
-        display:            none;
-        position:           fixed;
-        list-style-type:    none;
-        padding:            0px;
-        margin:             2px;
-        top:                64px;
-        left:               0px;
-        right:              0px;
-        font-size:          0px;
-        border:             1px solid#cccccc;
-        border-radius:      8px;
-        box-shadow:         1px 2px 2px #cccccc;
-        background-color:   #ffffff;
-        z-index:            99999;
+        display: none;
+        position: fixed;
+        list-style-type: none;
+        padding: 0px;
+        margin: 2px;
+        top:    40px;
+        left:   0px;
+        right:  0px;
+        font-size: 0px;
+        border: 1px solid#cccccc;
+        border-radius: 8px;
+        box-shadow: 1px 2px 2px #cccccc;
+        background-color: #ffffff;
+        z-index: 99999;
     }
     div[pub][menu][body] ul[first][short] {
-        top:                48px;
+        top:                40px;
     }
     div[pub][menu][body] ul[first][show] {
         display:            block;
@@ -637,14 +664,21 @@ a[pub][menu][toggle]:hover {
         color:              #333333 !important;
         text-decoration:    none !important;
     }
+
     a[pub][menu][toggle] {
-        display: inline-block;
+        font-size:          12px;
+        padding:            4px 8px 2px 8px;
+        min-width:          24px;
+    }
+    a[pub][button] {
+        font-size:          10px;
     }
     td[desktop] {
-        display:    none;
+        display: none;
     }
-    a[pub][menu][toggle][mobile] {
-        display:    inline-block;
+
+    div[calendar] {
+        margin-top: 42px;
     }
 }
 @media (min-width: 800px) {
@@ -756,8 +790,8 @@ a[pub][menu][toggle]:hover {
         color:                  #333333 !important;
         text-decoration:        none !important;
     }
-    a[pub][menu][toggle] {
-        display: none;
+    a[pub][menu][toggle][mobile] {
+        display:                none;
     }
 }
 
@@ -846,178 +880,321 @@ a[wliu][btn-drop][dropdown] > ul > li:hover {
 }     
 /*********************************/
 
-div[wliu][card] 
+div[wliu][card1] 
 {
     display:            block;
     position:           relative;
     box-sizing:         border-box;
-    box-shadow:         0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-    height:             420px;
     background-color:   white;
 }
-div[wliu][card][head] 
-{
+div[wliu][card1][subject] {
     display:        block;
-    position:       absolute;
-    left:           0px;
-    top:            0px;
-    right:          0px;
-    height:         200px;
-    box-shadow:     initial;
-    margin:         0px;
-    padding:        0px;
-} 
-div[wliu][card][head] > img 
-{
-    display:        block;
-    width:          100%;
-    height:         100%;
-    object-fit:     cover;
-    border:         0px;
-}
-
-div[wliu][card][title] {
-    display:        block;
-    position:       absolute;
-    top:            200px;
-    left:           0px;
-    right:          0px;
-    height:         2em;
-    line-height:    2em;
+    position:       relative;
+    line-height:    1.5em;
     font-size:      24px;
-    text-overflow:  ellipsis;
-    white-space:    nowrap;
-    overflow:       hidden;
-    padding:        0px 12px;
+    padding:        0px 0px;
     box-shadow:     initial;
     margin:         0px;
 
 }
-div[wliu][card][body] {
+div[wliu][card1][body] {
     display:        block;
-    position:       absolute;
-    top:            240px;
-    left:           0px;
-    right:          0px;
-    bottom:         32px;
-    height:         auto;
-    padding:        3px 12px;
+    position:       relative;
+    padding:        3px 0px;
     box-shadow:     initial;
-    text-overflow:  ellipsis;
-    white-space:    nowrap;
-    overflow:       hidden;
     margin:         0px;
 }
-div[wliu][card][body]  p {
+div[wliu][card1][body]  p {
     display:        block;
-    text-overflow:  ellipsis;
-    white-space:    nowrap;
-    overflow:       hidden;
-    height:         1.8em;
-    line-height:    1.8em;
+    line-height:    1.5em;
     font-size:      16px;
     margin:         0px;
 }
-div[wliu][card][foot] {
-    display:        block;
-    position:       absolute;
-    left:           0px;
-    right:          0px;
-    bottom:         0px;
-    height:         60px;
-    line-height:    60px;
-    padding:        0px 12px;
-    box-shadow:     initial;
-    margin:         0px;
-}
-div[wliu][card][frame] {
-    display:        block;
-    position:       relative;
-    float:          left;
-    width:          33%;
-    padding:        0px;
-    margin:         0px;
-    box-sizing:     border-box;
-    box-shadow:     initial;
-    padding:        6px;
-    height:         440px;
+div[wliu][card1][body]  p[class-title] {
+    font-size:      20px;
+    color:          orangered;
 }
 
+div[wliu][card1][foot] {
+    display:        block;
+    position:       relative;
+    height:         60px;
+    line-height:    60px;
+    padding:        0px 0px;
+    box-shadow:     initial;
+    margin:         0px;
+}
+
+
 @media (max-width: 800px) {
-    div[wliu][card][frame] {
-        width: 49%;
+    div[wliu][card1] > div[wliu][card1][subject] {
+        font-size:      16px;
+    }
+    div[wliu][card1] > div[wliu][card1][body] p {
+        font-size:      12px;
+    }
+    div[wliu][card1] > div[wliu][card1][body] p[class-title] {
+        font-size:      14px;
     }
 }
 
-@media (max-width: 480px) {
-    div[wliu][card][frame] {
-       width:       99%;
+
+
+div[wliu][card2] {
+    display:            block;
+    position:           relative;
+    box-sizing:         border-box;
+    background-color:   white;
+    box-shadow:         none;
+}
+div[wliu][card2] > div[wliu][card2][head] {
+    display:            block;
+    max-height:         210px;
+    max-width:          420px;
+}
+div[wliu][card2] > div[wliu][card2][head] > img {
+    display:            block;
+    height:             100%;
+    width:              100%;              
+    object-fit:         contain;
+}
+div[wliu][card2] > div[wliu][card2][class-subject] {
+    font-size:          32px;
+}
+div[wliu][card2] > div[wliu][card2][body] {
+    display:            block;
+    position:           relative;
+}
+div[wliu][card2] > div[wliu][card2][body] > p {
+    display:            block;
+    margin:             0px;
+    font-size:          20px;
+    color:              black;
+}
+div[wliu][card2] > div[wliu][card2][body] > p > span {
+    color: blue;
+}
+div[wliu][card2] > div[wliu][card2][body] > p > span[class-notes] {
+    font-weight:        bold;
+}
+div[wliu][card2] > div[wliu][card2][body] > p > span[class-discount] {
+    color:              orangered;
+}
+div[wliu][card2] > div[wliu][card2][body] > p > span[class-pay] {
+    color:              black;
+}
+
+div[wliu][card2] > div[wliu][card2][body] > p[class-title] {
+    color:              orangered;
+}
+div[wliu][card2] > div[wliu][card2][body] > p[class-free] {
+    font-size:          24px;
+}
+div[wliu][card2] > div[wliu][card2][body] > p[class-tuition] {
+    font-size:          24px;
+}
+div[wliu][card2] > div[wliu][card2][body] > p[class-discount] {
+    font-size:          24px;
+    color:              orangered;
+}
+div[wliu][card2] > div[wliu][card2][body] > p[class-pay] {
+    font-size:          32px;
+    font-weight:        bold;
+}
+@media (max-width: 800px) {
+    div[wliu][card2] > div[wliu][card2][class-subject] {
+        font-size:          24px;
+    }
+
+    div[wliu][card2] > div[wliu][card2][body] > p {
+        font-size:          16px;
+    }
+
+    div[wliu][card2] > div[wliu][card2][body] > p[class-free] {
+        font-size:          20px;
+    }
+    div[wliu][card2] > div[wliu][card2][body] > p[class-tuition] {
+        font-size:          20px;
+    }
+    div[wliu][card2] > div[wliu][card2][body] > p[class-discount] {
+        font-size:          20px;
+        color:              orangered;
+    }
+    div[wliu][card2] > div[wliu][card2][body] > p[class-pay] {
+        font-size:          24px;
+        font-weight:        bold;
+    }
+}
+
+/** Card 3 */
+div[wliu][card3] {
+    display:                block;
+    position:               relative;
+    box-sizing:             border-box;
+    box-shadow:             0 2px 5px 0 rgba(0,0,0,0.3),0 2px 10px 0 rgba(0,0,0,0.2);
+    border-radius:          6px;
+    width:                  100%;
+    background-color:       white;
+    padding:                0px;
+    margin:                 2px 0px 8px 0px;
+}
+div[wliu][card3][banner] {
+    box-shadow:         initial;
+    display:            block;
+    position:           relative;
+    width:              100%;
+    height:             2px;
+    background-color:   #138496;
+    padding:            0px;
+    margin:             0px;
+}
+
+div[wliu][card3][body] {
+    box-shadow:         initial;
+    display:            flex;
+    align-items:        center;
+    justify-content:    center;
+    position:           relative;
+    width:              100%;
+    height:             100%;
+    background-color:   white;
+    padding:            0px;
+    margin:             0px;
+}
+
+div[wliu][card3][left] {
+    box-shadow:         initial;
+    display:            block;
+    position:           relative;
+    box-sizing:         border-box;
+    flex-shrink:        1;
+    flex-grow:          0;
+    flex-basis:         360px;
+    max-width:          360px;
+    min-width:          1px;
+    height:             100%;
+    text-align:         left;
+    justify-content:    left;
+    padding:            0px;
+    margin:             0px;
+}
+
+div[wliu][card3][right] {
+    box-shadow:         initial;
+    display:            block;
+    position:           relative;
+    flex-shrink:        0;
+    flex-grow:          0;
+    width:              auto;
+    height:             100%;
+    text-align:         left;
+    padding-right:      6px;
+    padding:            0px;
+    margin:             0px;
+    align-self:         flex-end;
+}
+div[wliu][card3][detail] {
+    box-shadow:         initial;
+    display:            none;
+    position:           relative;
+    text-align:         left;
+    min-height:         140px;
+    padding:            0px;
+    margin:             0px;
+    margin-top:         12px;
+}
+div[wliu][card3][detail][show] {
+    display:            block;
+}
+
+
+div[wliu][card3][left] > img {
+    display:            block;
+    position:           relative;
+    object-fit:         contain;
+    width:              100%;
+    height:             100%;
+}
+
+div[wliu][card3][center] {
+    box-shadow:         initial;
+    display:            block;
+    position:           relative;
+    box-sizing:         border-box;
+    height:             100%;
+    flex-shrink:        1;
+    flex-grow:          1;
+    width:              auto;
+
+    text-overflow:      ellipsis;
+    white-space:        nowrap;
+    overflow:           hidden;
+
+}
+
+div[wliu][card3][center] > p {
+    display:            block;
+    text-overflow:      ellipsis;
+    white-space:        nowrap;
+    overflow:           hidden;
+    padding:            0px 6px;
+    box-shadow:         initial;
+    margin:             0px;
+    font-size:          20px;
+}
+div[wliu][card3][center] > p > span {
+    color:              blue;
+}
+div[wliu][card3][center] > p > span[class-notes] {
+    color:              orangered;
+    font-weight:        bold;
+}
+
+
+div[wliu][card3][center] > p[class-subject] {
+    font-size:          24px;
+}
+
+div[wliu][card3][center] > p[class-title] {
+    color:              orangered;    
+}
+div[wliu][card3][center] > p[class-notes] {
+    font-size:          16px;
+}
+
+@media (max-width: 800px) {
+    div[wliu][card3][left] {
+        display:        none;
+    }
+    div[wliu][card3]  div[wliu][desktop] {
+        display: none;
+    }
+    div[wliu][card3]  span[wliu][desktop] {
+        display: none;
+    }
+    div[wliu][card3]  input[wliu][desktop] {
+        display: none;
+    }
+
+    div[wliu][card3][center] > p {
+        font-size:      12px;
+        white-space:    initial;
+        text-overflow:  initial;
+        overflow:       initial;
+    }
+    div[wliu][card3][center] > p[class-subject] {
+        font-size:      14px;
+    }
+    div[wliu][card3][center] > p[class-title] {
+        font-size:      14px;
+    }
+    div[wliu][card3][center] > p[class-notes] {
+        font-size:      12px;
     }
 }
 
 @media (min-width: 800px) {
-    div[wliu][card][frame] {
-        width: 33%;
+    div[wliu][card3] div[wliu][mobile] {
+        display: none;
     }
-}
-
-@media (min-width: 1360px) {
-    div[wliu][card][frame] {
-        width: 33%;
-    }
-}
-
-div[wliu][card][nohead] {
-    min-height:     380px;
-    height:         initial;
-    box-shadow:     none;
-}
-
-div[wliu][card][nohead] > div[wliu][card][title] {
-    top:            0px;
-    font-size:      32px;
-}
-div[wliu][card][nohead] > div[wliu][card][body] {
-    top:            64px;
-    overflow-y:     auto;
-    bottom:         0px;
-}
-div[wliu][card][nohead] > div[wliu][card][body] p {
-    white-space:    initial;
-    overflow:       initial;
-    text-overflow:  initial;
-    height:         initial;
-    font-size:      20px;
-}
-
-div[wliu][card][noshadow] {
-    min-height: 480px;
-    height:     initial;
-    box-shadow: none;
-}
-div[wliu][card][noshadow] > div[wliu][card][head] {
-    display: block;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    right: 0px;
-    height: 200px;
-    box-shadow: initial;
-    margin: 0px;
-    padding: 0px;
-}
-div[wliu][card][noshadow] > div[wliu][card][head] > img {
-    display:    inline-block;
-    width:      initial;
-    height:     100%;
-    object-fit: contain;
-}
-div[wliu][card][noshadow] > div[wliu][card][title] {
-    top:    200px;
-}
-
-div[wliu][card][noshadow] > div[wliu][card][body] {
-    top:            240px;
-    bottom:         0px;
-
 }

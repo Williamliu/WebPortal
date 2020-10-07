@@ -8,6 +8,8 @@ SELECT
       Class.ClassName,
       Class.Title_en as ClassTitle_en,
       Class.Title_cn as ClassTitle_cn,
+	  Class.Detail_en as ClassDetail_en,
+	  Class.Detail_cn as ClassDetail_cn,
 	  Class.Notes_en as ClassNotes_en,
 	  Class.Notes_cn as ClassNotes_cn,
       Class.StartDate,

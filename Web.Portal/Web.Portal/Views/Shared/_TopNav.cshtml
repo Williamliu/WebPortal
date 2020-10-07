@@ -5,7 +5,7 @@
             if (tmenu.Nodes.Count > 0)
             {
                 <li @(tmenu.MenuId == PubMenu.MenuId ? "selected" : "") submenu>
-                    <a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a>
+                    <a style="display:block;" @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a>
                     <ul second>
                         @foreach (Menu smenu in tmenu.Nodes)
                         {
@@ -15,7 +15,7 @@
                             }
                             else
                             {
-                                <li @(smenu.MenuId == PubMenu.MenuId ? "selected" : "") style="text-indent:@(string.IsNullOrWhiteSpace(smenu.Indent)?"0px":@smenu.Indent);"><a @(smenu.Url==""?"":"href=" + smenu.Url)>@smenu.Title</a></li>
+                                <li @(smenu.MenuId == PubMenu.MenuId ? "selected" : "") style="text-indent:@(string.IsNullOrWhiteSpace(smenu.Indent)?"0px":@smenu.Indent);"><a style="display:block;" @(smenu.Url==""?"":"href=" + smenu.Url)>@smenu.Title</a></li>
                             }
 
                         }
@@ -24,7 +24,7 @@
             }
             else
             {
-                <li @(tmenu.MenuId == PubMenu.MenuId ? "selected" : "")><a @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a></li>
+                <li @(tmenu.MenuId == PubMenu.MenuId ? "selected" : "")><a style="display:block;" @(tmenu.Url == "" ? "" : "href=" + tmenu.Url)>@tmenu.Title</a></li>
             }
         }
     </ul>
