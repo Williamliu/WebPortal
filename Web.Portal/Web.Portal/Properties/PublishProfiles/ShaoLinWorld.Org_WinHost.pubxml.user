@@ -104,22 +104,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="Library.V1.Common.dll">
-      <publishTime>08/23/2020 23:24:34</publishTime>
+      <publishTime>09/02/2020 23:00:26</publishTime>
     </File>
     <File Include="Library.V1.Common.pdb">
-      <publishTime>08/23/2020 23:24:34</publishTime>
+      <publishTime>09/02/2020 23:00:26</publishTime>
     </File>
     <File Include="Library.V1.Entity.dll">
-      <publishTime>08/24/2020 22:30:04</publishTime>
+      <publishTime>09/02/2020 23:00:32</publishTime>
     </File>
     <File Include="Library.V1.Entity.pdb">
-      <publishTime>08/24/2020 22:30:04</publishTime>
+      <publishTime>09/02/2020 23:00:32</publishTime>
     </File>
     <File Include="Library.V1.SQL.dll">
-      <publishTime>08/23/2020 23:24:36</publishTime>
+      <publishTime>09/02/2020 23:00:30</publishTime>
     </File>
     <File Include="Library.V1.SQL.pdb">
-      <publishTime>08/23/2020 23:24:36</publishTime>
+      <publishTime>09/02/2020 23:00:30</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.JwtBearer.dll">
       <publishTime>05/21/2020 20:26:48</publishTime>
@@ -287,28 +287,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/12/2019 17:08:36</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>08/25/2020 12:52:41</publishTime>
+      <publishTime>09/02/2020 23:01:04</publishTime>
     </File>
     <File Include="Web.Portal.deps.json">
-      <publishTime>08/25/2020 12:52:36</publishTime>
+      <publishTime>09/02/2020 23:00:45</publishTime>
     </File>
     <File Include="Web.Portal.dll">
-      <publishTime>08/25/2020 12:52:17</publishTime>
+      <publishTime>09/02/2020 23:00:38</publishTime>
     </File>
     <File Include="Web.Portal.exe">
-      <publishTime>08/25/2020 12:52:18</publishTime>
+      <publishTime>09/02/2020 23:00:39</publishTime>
     </File>
     <File Include="Web.Portal.pdb">
-      <publishTime>08/25/2020 12:52:17</publishTime>
+      <publishTime>09/02/2020 23:00:38</publishTime>
     </File>
     <File Include="Web.Portal.runtimeconfig.json">
       <publishTime>08/23/2020 23:24:49</publishTime>
     </File>
     <File Include="Web.Portal.Views.dll">
-      <publishTime>08/25/2020 12:52:24</publishTime>
+      <publishTime>09/02/2020 23:00:44</publishTime>
     </File>
     <File Include="Web.Portal.Views.pdb">
-      <publishTime>08/25/2020 12:52:24</publishTime>
+      <publishTime>09/02/2020 23:00:44</publishTime>
     </File>
     <File Include="wwwroot/favicon.png">
       <publishTime>07/05/2020 23:15:03</publishTime>

@@ -309,7 +309,14 @@ namespace Library.V1.Entity
             {
                 SQLRow sqlRow = new SQLRow();
                 if(string.IsNullOrWhiteSpace(this.Relation.ForeignKey)==false)
-                    if (this.Metas[this.Relation.ForeignKey].IsKey == false)
+                    if(this.Metas.ContainsKey(this.Relation.ForeignKey))
+                    {
+                        if (this.Metas[this.Relation.ForeignKey].IsKey == false)
+                        {
+                            sqlRow = this.Relation.SQLRowInsert;
+                        }
+                    } 
+                    else
                     {
                         sqlRow = this.Relation.SQLRowInsert;
                     }
