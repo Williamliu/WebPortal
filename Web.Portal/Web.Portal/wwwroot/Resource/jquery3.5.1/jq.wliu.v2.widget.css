@@ -8,9 +8,8 @@
 
 /*** Button ***/
 a:not([href]),
-a:not([href]):hover {
-    color:           white;
-}
+a:not([href]):hover { }
+
 [wliu-button] {
     cursor:             pointer;
     display:            inline-block;
@@ -1384,6 +1383,10 @@ div[wliu-flip][wl-reverse] > div > div[wl-back] {
     opacity:        1 !important;
     z-index:        9 !important;
 }
+a[flip-target]:not([href]),
+a[flip-target]:not([href]):hover {
+    color:              initial;
+}
 
 /*** Popup ***/
 div[wliu-popup] {
@@ -1458,6 +1461,10 @@ div[wliu-popup] > div[wliu-popup-head] > a[wliu-popup-close-icon]:before {
 }
 div[wliu-popup] > div[wliu-popup-head] > a[wliu-popup-close-icon]:hover:before {
     color:              #dddddd;
+}
+a[wliu-popup-close-icon]:not([href]),
+a[wliu-popup-close-icon]:not([href]):hover {
+    color:           white;
 }
 div[wliu-popup] > div[wliu-popup-body] {
     display:            block;
@@ -1571,7 +1578,7 @@ div[wliu-popup-mask] {
 /*** Diag ***/
 /**** Dialog ****/
 div[wliu-diag] {
-    display: 		    block;
+    display: 		    none;
     position:           fixed;
 
     border-radius:      8px;
@@ -1583,7 +1590,7 @@ div[wliu-diag] {
     transform:          translate(-50%,-50%);
     
     margin:             0px;
-    padding: 		    4px 8px 8px 8px;
+    padding: 		    6px 8px 8px 8px;
     background-color:   #ffffff;
 
     min-width:          360px; 
@@ -1655,18 +1662,21 @@ div[wliu-diag] > div[wliu-diag-head] > a[wliu-diag-close-icon]:before {
 div[wliu-diag] > div[wliu-diag-head] > a[wliu-diag-close-icon]:hover:before {
     color:              #dddddd;
 }
+a[wliu-diag-close-icon]:not([href]),
+a[wliu-diag-close-icon]:not([href]):hover {
+    color:           white;
+}
 div[wliu-diag] > div[wliu-diag-body] {
     display:            block;
     position:           absolute;
-    top:                36px;
+    top:                38px;
     left:               0px;
     right:              0px;
     bottom:             48px;
     border-bottom:      1px solid #cccccc;
-    padding:            4px 8px 4px 8px;
+    padding:            2px 8px 4px 8px;
     margin:             0px;
-    overflow-x:         hidden;
-    overflow-y:         auto;
+    overflow:           auto;
     scrollbar-width:    thin;
 }
 div[wliu-diag] > div[wliu-diag-foot] {
@@ -1733,7 +1743,7 @@ div[wliu-diag][wl-pos="rb"] {
     transform:          none;
 }
 iframe[wliu-diag-mask] {
-    display:            block;
+    display:            none;
     position:           fixed;
     border:             0px solid #eeeeee;
     width:              100vw;
@@ -1747,7 +1757,7 @@ iframe[wliu-diag-mask] {
     z-index:            8000;
 }
 div[wliu-diag-mask] {
-    display:            block;
+    display:            none;
     position:           fixed;
     border:             0px solid #eeeeee;
     width:              100vw;
